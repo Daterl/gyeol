@@ -44,3 +44,5 @@ detail broken E9: EXPECTED FAIL — E9: target profile ID differs from actual in
 detail broken E10: EXPECTED FAIL — E10: feed.slots.0.rationale.evidence.0.ref does not resolve to an actual input photo
 detail broken E11: EXPECTED FAIL — E11: describable fact is not a fact of ph_15
 E4/E5/E7: manual spot-check only; real demo review pending.
+Injected model variant 0: E1/E2/E3/E8/E9/E10/E11 PASS; foreign fact E11 EXPECTED FAIL (not AI quality).
+Injected model variant 1: E1/E2/E3/E8/E9/E10/E11 PASS; foreign fact E11 EXPECTED FAIL (not AI quality).
