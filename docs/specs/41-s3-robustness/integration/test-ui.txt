@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/56-integration
+
+
+ Test Files  9 passed (9)
+      Tests  35 passed (35)
+   Start at  20:05:33
+   Duration  516ms (transform 56%, import 32%, tests 10%, worker 2%)
