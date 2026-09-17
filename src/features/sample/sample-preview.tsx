@@ -116,8 +116,7 @@ export function SamplePreview() {
         </ol>
       )}
       <p className="mt-6 border-t border-line-soft pt-4 text-xs leading-6 text-muted-foreground">
-        내 사진 업로드와 편집 기능은 준비 중입니다. 지금은 샘플만 확인할 수
-        있어요.
+        고정 샘플을 살펴보는 경로예요. 내 사진은 위에서 별도로 고를 수 있어요.
       </p>
     </section>
   );
