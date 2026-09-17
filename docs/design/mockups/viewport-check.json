@@ -1,0 +1,110 @@
+[
+  {
+    "view": "a-input",
+    "clientWidth": 1425,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 1440,
+    "minTarget": 44,
+    "scrollWidth": 1425
+  },
+  {
+    "view": "a-result",
+    "clientWidth": 1425,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 1440,
+    "minTarget": 44,
+    "scrollWidth": 1425
+  },
+  {
+    "view": "b-input",
+    "clientWidth": 1425,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 1440,
+    "minTarget": 44,
+    "scrollWidth": 1425
+  },
+  {
+    "view": "b-result",
+    "clientWidth": 1425,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 1440,
+    "minTarget": 44,
+    "scrollWidth": 1425
+  },
+  {
+    "view": "a-input",
+    "clientWidth": 375,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 390,
+    "minTarget": 44,
+    "scrollWidth": 375
+  },
+  {
+    "view": "a-result",
+    "clientWidth": 375,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 390,
+    "minTarget": 44,
+    "scrollWidth": 375
+  },
+  {
+    "view": "b-input",
+    "clientWidth": 375,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 390,
+    "minTarget": 44,
+    "scrollWidth": 375
+  },
+  {
+    "view": "b-result",
+    "clientWidth": 375,
+    "companionDisplay": "block",
+    "imagesLoaded": true,
+    "innerWidth": 390,
+    "minTarget": 44,
+    "scrollWidth": 375
+  },
+  {
+    "view": "a-input",
+    "clientWidth": 305,
+    "companionDisplay": "none",
+    "imagesLoaded": true,
+    "innerWidth": 320,
+    "minTarget": 47.59375,
+    "scrollWidth": 305
+  },
+  {
+    "view": "a-result",
+    "clientWidth": 305,
+    "companionDisplay": "none",
+    "imagesLoaded": true,
+    "innerWidth": 320,
+    "minTarget": 44,
+    "scrollWidth": 305
+  },
+  {
+    "view": "b-input",
+    "clientWidth": 305,
+    "companionDisplay": "none",
+    "imagesLoaded": true,
+    "innerWidth": 320,
+    "minTarget": 47.59375,
+    "scrollWidth": 305
+  },
+  {
+    "view": "b-result",
+    "clientWidth": 305,
+    "companionDisplay": "none",
+    "imagesLoaded": true,
+    "innerWidth": 320,
+    "minTarget": 44,
+    "scrollWidth": 305
+  }
+]
