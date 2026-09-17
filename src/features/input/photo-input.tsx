@@ -17,6 +17,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [store] = useState(createEditorStore);
   const photos = useStore(store, (state) => state.photos);
   const request = useStore(store, (state) => state.request);
+  const hasResult = useStore(store, (state) => Boolean(state.original));
   const [oldPhotos, setOldPhotos] = useState<SelectedPhoto[]>([]);
   const oldPhotosRef = useRef(oldPhotos);
   oldPhotosRef.current = oldPhotos;
@@ -164,7 +165,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
             )}
           </div>
         </div>
-        {request.status === 'error' && (
+        {request.status === 'error' && !hasResult && (
           <p
             role="alert"
             id="request-error"
@@ -266,7 +267,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           </button>
         )}
       </form>
-      <ResultScreen store={store} />
+      <ResultScreen store={store} mock={mock} />
       <div className="mt-12">
         <SamplePreview />
       </div>

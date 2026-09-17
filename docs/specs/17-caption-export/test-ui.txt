@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/17-caption-export
+
+
+ Test Files  9 passed (9)
+      Tests  34 passed (34)
+   Start at  19:53:09
+   Duration  493ms (transform 48%, import 40%, tests 10%, worker 2%)
