@@ -1,0 +1,48 @@
+# 비밀 — 절대 커밋하지 않는다
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+config/credentials*.json
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.npm/
+.pnpm-store/
+
+# Python (스크립트용)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.python-version
+
+# 빌드 / 배포
+.vercel/
+dist/
+build/
+.cache/
+
+# 테스트 / 도구
+coverage/
+.nyc_output/
+.eslintcache
+
+# 수집 결과 — 용량이 크고 재생성 가능하다.
+# 단 데모용 스냅샷은 커밋한다: fixtures/ig_feed.json
+storage/
+apify_storage/
+uploads/
+tmp/
+*.log
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
