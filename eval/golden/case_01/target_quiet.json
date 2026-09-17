@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "profile_id": "tgt_synthetic_quiet",
+  "profile_id": "tgt_quiet_freetext",
   "axis": "target",
   "present": true,
   "source": "freetext",
@@ -8,20 +8,22 @@
   "sample_size": 1,
   "completeness": {
     "visual": 0.2,
-    "language": 0.4,
+    "language": 0.6,
     "sequence": 0
   },
   "visual": {
     "tone_words": {
       "value": [
-        "조용하고 짧게"
+        "조용",
+        "짧게",
+        "이모지 없이"
       ],
       "confidence": 1,
       "evidence": [
         {
           "kind": "user_text",
-          "ref": "tgt_synthetic_quiet:input",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          "ref": "tgt_quiet_freetext:raw",
+          "note": "사용자가 쓴 표현을 그대로 옮겼다"
         }
       ]
     }
@@ -29,27 +31,53 @@
   "language": {
     "caption_len": {
       "value": {
-        "p50": 18,
-        "p90": 18,
+        "p50": 15,
+        "p90": 30,
         "unit": "자"
       },
-      "confidence": 1,
+      "confidence": 0.6,
       "evidence": [
         {
           "kind": "user_text",
-          "ref": "tgt_synthetic_quiet:input",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          "ref": "tgt_quiet_freetext:짧게",
+          "note": "입력 문장에서 \"짧게\" 를 찾았다"
+        },
+        {
+          "kind": "rule",
+          "ref": "docs/specs/10-target-profile/spec.md#3",
+          "note": "짧게·간결·짤막·한 줄 → p50 15자 / p90 30자"
         }
       ]
     },
-    "empty_caption_ratio": {
-      "value": 0.5,
-      "confidence": 1,
+    "emoji_rate": {
+      "value": 0,
+      "confidence": 0.7,
       "evidence": [
         {
           "kind": "user_text",
-          "ref": "tgt_synthetic_quiet:input",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          "ref": "tgt_quiet_freetext:이모지 없이",
+          "note": "입력 문장에서 \"이모지 없이\" 를 찾았다"
+        },
+        {
+          "kind": "rule",
+          "ref": "docs/specs/10-target-profile/spec.md#3",
+          "note": "이모지 없이 → 0개"
+        }
+      ]
+    },
+    "ending_style": {
+      "value": "해요",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "kind": "user_text",
+          "ref": "tgt_quiet_freetext:해요",
+          "note": "입력 문장에서 \"해요\" 를 찾았다"
+        },
+        {
+          "kind": "rule",
+          "ref": "docs/specs/10-target-profile/spec.md#3",
+          "note": "해요·존댓말 → 해요체"
         }
       ]
     },
@@ -64,6 +92,6 @@
   "sequence": {
     "carousel_count": 0
   },
-  "raw_freetext": "조용하고 짧게",
+  "raw_freetext": "조용하고 짧게, 이모지 없이 해요체로",
   "created_at": "2026-09-17T00:00:00.000Z"
 }

@@ -1,55 +1,114 @@
 {
   "schema_version": "1.0",
-  "profile_id": "tgt_synthetic_detail",
+  "profile_id": "tgt_detail_ig_29cm",
   "axis": "target",
   "present": true,
   "source": "ig_reference",
   "account_scope": "n/a",
-  "sample_size": 1,
+  "sample_size": 30,
   "completeness": {
-    "visual": 0.2,
-    "language": 0.4,
+    "visual": 0,
+    "language": 1,
     "sequence": 0
   },
-  "visual": {
-    "tone_words": {
-      "value": [
-        "자세하게 기록"
-      ],
-      "confidence": 1,
-      "evidence": [
-        {
-          "kind": "aggregate",
-          "ref": "synthetic_reference_snapshot",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
-        }
-      ]
-    }
-  },
+  "visual": {},
   "language": {
     "caption_len": {
       "value": {
-        "p50": 80,
-        "p90": 80,
+        "p50": 292,
+        "p90": 914,
         "unit": "자"
       },
-      "confidence": 1,
+      "confidence": 0.9,
       "evidence": [
         {
           "kind": "aggregate",
-          "ref": "synthetic_reference_snapshot",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          "ref": "ig_snapshot_29cm_2026-09-17",
+          "note": "비어 있지 않은 캡션 30건의 길이 분포"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdVDlTviVrG",
+          "note": "캡션 292자"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdFvaJRiXnx",
+          "note": "캡션 914자"
+        }
+      ]
+    },
+    "emoji_rate": {
+      "value": 5.5,
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "kind": "aggregate",
+          "ref": "ig_snapshot_29cm_2026-09-17",
+          "note": "캡션 30건의 그림문자 코드포인트 평균"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdWHSQGlMt4",
+          "note": "그림문자 5개"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdTkfyOlGMo",
+          "note": "그림문자 6개"
+        }
+      ]
+    },
+    "ending_style": {
+      "value": "명사형",
+      "confidence": 0.72,
+      "evidence": [
+        {
+          "kind": "aggregate",
+          "ref": "ig_snapshot_29cm_2026-09-17",
+          "note": "분류된 캡션 29건 중 \"명사형\" 21건 (72%)"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdWHSQGlMt4",
+          "note": "마지막 문장 \"택으로 취향 가득한 발걸음을 완성하기\""
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdVKdyACaC1",
+          "note": "마지막 문장 \"나이키스킴스 쇼케이스 플러스\""
+        }
+      ]
+    },
+    "linebreak_habit": {
+      "value": "문단",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "kind": "aggregate",
+          "ref": "ig_snapshot_29cm_2026-09-17",
+          "note": "캡션당 평균 17.4줄, 줄당 평균 40.15자"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "Dc-2OOrFBnb",
+          "note": "17줄"
+        },
+        {
+          "kind": "ig_post",
+          "ref": "DdQ30v-lDhe",
+          "note": "19줄"
         }
       ]
     },
     "empty_caption_ratio": {
-      "value": 0.5,
-      "confidence": 1,
+      "value": 0,
+      "confidence": 0.95,
       "evidence": [
         {
           "kind": "aggregate",
-          "ref": "synthetic_reference_snapshot",
-          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          "ref": "ig_snapshot_29cm_2026-09-17",
+          "note": "게시물 30건 중 빈 캡션 0건"
         }
       ]
     },
@@ -62,7 +121,7 @@
     ]
   },
   "sequence": {
-    "carousel_count": 0
+    "carousel_count": 26
   },
   "raw_freetext": null,
   "created_at": "2026-09-17T00:00:00.000Z"
