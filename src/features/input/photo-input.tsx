@@ -5,6 +5,7 @@ import { tv } from 'tailwind-variants';
 import { useStore } from 'zustand';
 import { Button } from '../../components/ui/button';
 import { createEditorStore, type SelectedPhoto } from '../editor/store';
+import { ResultScreen } from '../result/result-screen';
 import { SamplePreview } from '../sample/sample-preview';
 import { addFiles, type IdentityFields, submitPhotos } from './input';
 import { PhotoPicker } from './photo-picker';
@@ -16,7 +17,6 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [store] = useState(createEditorStore);
   const photos = useStore(store, (state) => state.photos);
   const request = useStore(store, (state) => state.request);
-  const original = useStore(store, (state) => state.original);
   const [oldPhotos, setOldPhotos] = useState<SelectedPhoto[]>([]);
   const oldPhotosRef = useRef(oldPhotos);
   oldPhotosRef.current = oldPhotos;
@@ -27,7 +27,6 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   });
   const [errors, setErrors] = useState<string[]>([]);
   const form = useRef<HTMLFormElement>(null);
-  const resultHeading = useRef<HTMLHeadingElement>(null);
   const loading = request.status === 'loading';
   useEffect(
     () => () => {
@@ -36,9 +35,6 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
     },
     [store],
   );
-  useEffect(() => {
-    if (original) resultHeading.current?.focus();
-  }, [original]);
   function add(incoming: File[], previous = false) {
     const selected = previous ? oldPhotos : photos;
     const result = addFiles(
@@ -270,39 +266,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           </button>
         )}
       </form>
-      {original && (
-        <section
-          className="my-10 border-y border-line py-8"
-          aria-labelledby="input-result"
-        >
-          <h2
-            ref={resultHeading}
-            tabIndex={-1}
-            id="input-result"
-            className="text-2xl font-semibold"
-          >
-            사진 {original.feed.slots.length}장을 확인했어요.
-          </h2>
-          <p className="mt-3">
-            {'kind' in original.context.target
-              ? '개인화 정보 없이 사진을 바탕으로 준비했어요.'
-              : '입력한 지향과 사진을 함께 확인했어요.'}
-          </p>
-          <ol className="mt-5 space-y-3">
-            {original.feed.slots.map((slot) => (
-              <li key={slot.photo_id}>
-                <span className="mr-3 font-mono">
-                  {String(slot.position).padStart(2, '0')}
-                </span>
-                {slot.rationale.value}
-              </li>
-            ))}
-          </ol>
-          <p className="mt-4 text-sm text-muted-foreground">
-            사진의 픽셀과 입력한 정보만 확인했어요.
-          </p>
-        </section>
-      )}
+      <ResultScreen store={store} />
       <div className="mt-12">
         <SamplePreview />
       </div>
