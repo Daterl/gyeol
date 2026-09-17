@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/18-pipeline-adapters
+
+
+ Test Files  6 passed (6)
+      Tests  26 passed (26)
+   Start at  19:19:58
+   Duration  261ms (transform 57%, import 25%, tests 15%, worker 2%)

@@ -11,12 +11,12 @@ const round = n => Math.round(n * 100) / 100;
 const snapshot = await read('fixtures/ig_snapshot.json');
 const photos = await read('fixtures/photo_analysis.sample.json');
 const carousels = snapshot.posts.filter(post => post.child_count >= 2);
-// 수동 작성 합성 분석이다. 실제 비전 모델 출력이 아니며 file_ref 만 스냅샷의 캐러셀 1번 이미지에 맞춰 둔다.
+// 모델 출력을 모사한 수동 작성 합성 분석이다. 실제 비전 모델 출력이 아니며 file_ref 만 스냅샷의 캐러셀 1번 이미지에 맞춰 둔다.
 const opener = (post, overrides) => ({
   schema_version: '1.0', photo_id: `syn_${post.shortcode}`, file_ref: post.opener_image, input_index: 0,
   color: { hue_mean: 30, sat_mean: 0.3, bright_mean: 0.6, palette_hex: ['#e8dfd2'] },
   composition: 'full_frame', scale: 'fullshot', subjects: ['합성 피사체'], has_face: false, text_in_image: null,
-  describable_facts: ['수동 작성 합성 분석'], quality_flags: [], analysis_source: 'heuristic',
+  describable_facts: ['수동 작성 합성 분석'], quality_flags: [], analysis_source: 'vision_model',
   model: 'manual-synthetic', analyzed_at: NOW, ...overrides
 });
 
@@ -142,7 +142,7 @@ test("어떤 경로에서도 문자열 '불명' 이 나오지 않는다", () => 
 });
 
 test('직접 업로드 경로가 사진 분석에서 visual 을 집계한다', () => {
-  const profile = buildCurrentProfile({ photos }, NOW);
+  const profile = buildCurrentProfile({ photos: photos.map(p => ({...p,analysis_source:'vision_model'})) }, NOW);
   validateProfile(profile, 'current');
   assert.equal(profile.source, 'photo_upload');
   assert.equal(profile.account_scope, 'n/a');
