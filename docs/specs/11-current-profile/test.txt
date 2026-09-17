@@ -1,0 +1,477 @@
+$ npm test
+
+> gyeol@0.1.0 test
+> node --test test/*.test.js
+
+TAP version 13
+# Subtest: GET mock returns 15 slots and all four resources
+ok 1 - GET mock returns 15 slots and all four resources
+  ---
+  duration_ms: 9.583333
+  type: 'test'
+  ...
+# Subtest: live is explicit error, invalid query and method are controlled
+ok 2 - live is explicit error, invalid query and method are controlled
+  ---
+  duration_ms: 0.403791
+  type: 'test'
+  ...
+# Subtest: mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
+ok 3 - mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
+  ---
+  duration_ms: 46.899625
+  type: 'test'
+  ...
+# Subtest: four sample types and independent golden input files satisfy contracts
+ok 4 - four sample types and independent golden input files satisfy contracts
+  ---
+  duration_ms: 12.808792
+  type: 'test'
+  ...
+# Subtest: E1: valid input passes and stored broken fixture fails
+ok 5 - E1: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.165583
+  type: 'test'
+  ...
+# Subtest: E2: valid input passes and stored broken fixture fails
+ok 6 - E2: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 2.176125
+  type: 'test'
+  ...
+# Subtest: E3: valid input passes and stored broken fixture fails
+ok 7 - E3: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.283083
+  type: 'test'
+  ...
+# Subtest: E6: valid input passes and stored broken fixture fails
+ok 8 - E6: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.242958
+  type: 'test'
+  ...
+# Subtest: E8: valid input passes and stored broken fixture fails
+ok 9 - E8: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 0.972416
+  type: 'test'
+  ...
+# Subtest: 3 photo boundary passes
+ok 10 - 3 photo boundary passes
+  ---
+  duration_ms: 0.326708
+  type: 'test'
+  ...
+# Subtest: 20 photo boundary passes
+ok 11 - 20 photo boundary passes
+  ---
+  duration_ms: 0.244709
+  type: 'test'
+  ...
+# Subtest: 2 input photos rejected
+ok 12 - 2 input photos rejected
+  ---
+  duration_ms: 0.304417
+  type: 'test'
+  ...
+# Subtest: 21 input photos rejected
+ok 13 - 21 input photos rejected
+  ---
+  duration_ms: 0.337875
+  type: 'test'
+  ...
+# Subtest: reject duplicate output ID despite true flag
+ok 14 - reject duplicate output ID despite true flag
+  ---
+  duration_ms: 0.176416
+  type: 'test'
+  ...
+# Subtest: reject missing slot despite declared output count
+ok 15 - reject missing slot despite declared output count
+  ---
+  duration_ms: 0.07575
+  type: 'test'
+  ...
+# Subtest: reject foreign replacement ID with same count
+ok 16 - reject foreign replacement ID with same count
+  ---
+  duration_ms: 0.064458
+  type: 'test'
+  ...
+# Subtest: reject lying counts
+ok 17 - reject lying counts
+  ---
+  duration_ms: 0.062
+  type: 'test'
+  ...
+# Subtest: reject count string
+ok 18 - reject count string
+  ---
+  duration_ms: 0.056708
+  type: 'test'
+  ...
+# Subtest: reject unique flag string
+ok 19 - reject unique flag string
+  ---
+  duration_ms: 0.05725
+  type: 'test'
+  ...
+# Subtest: reject position string
+ok 20 - reject position string
+  ---
+  duration_ms: 0.062792
+  type: 'test'
+  ...
+# Subtest: reject duplicate position
+ok 21 - reject duplicate position
+  ---
+  duration_ms: 0.058833
+  type: 'test'
+  ...
+# Subtest: reject zero position
+ok 22 - reject zero position
+  ---
+  duration_ms: 0.094583
+  type: 'test'
+  ...
+# Subtest: reject fractional position
+ok 23 - reject fractional position
+  ---
+  duration_ms: 0.059916
+  type: 'test'
+  ...
+# Subtest: reject missing rationale Claim
+ok 24 - reject missing rationale Claim
+  ---
+  duration_ms: 0.083208
+  type: 'test'
+  ...
+# Subtest: reject evidence missing
+ok 25 - reject evidence missing
+  ---
+  duration_ms: 0.095583
+  type: 'test'
+  ...
+# Subtest: reject evidence wrong type
+ok 26 - reject evidence wrong type
+  ---
+  duration_ms: 0.079291
+  type: 'test'
+  ...
+# Subtest: reject invalid confidence
+ok 27 - reject invalid confidence
+  ---
+  duration_ms: 0.076083
+  type: 'test'
+  ...
+# Subtest: reject empty evidence reference
+ok 28 - reject empty evidence reference
+  ---
+  duration_ms: 0.073917
+  type: 'test'
+  ...
+# Subtest: reject overlap string
+ok 29 - reject overlap string
+  ---
+  duration_ms: 0.071292
+  type: 'test'
+  ...
+# Subtest: reject invented current input
+ok 30 - reject invented current input
+  ---
+  duration_ms: 0.059
+  type: 'test'
+  ...
+# Subtest: reject false corrected claim
+ok 31 - reject false corrected claim
+  ---
+  duration_ms: 0.057959
+  type: 'test'
+  ...
+# Subtest: reject unknown delta
+ok 32 - reject unknown delta
+  ---
+  duration_ms: 0.064917
+  type: 'test'
+  ...
+# Subtest: duplicate/malformed actual input rejected
+ok 33 - duplicate/malformed actual input rejected
+  ---
+  duration_ms: 0.056333
+  type: 'test'
+  ...
+# Subtest: E2 does not trust output input_count/unique flags as expected input IDs
+ok 34 - E2 does not trust output input_count/unique flags as expected input IDs
+  ---
+  duration_ms: 0.151708
+  type: 'test'
+  ...
+# Subtest: E8 uses actual absent input even if response invents consistent correction
+ok 35 - E8 uses actual absent input even if response invents consistent correction
+  ---
+  duration_ms: 0.145583
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with target-only disclosure
+ok 36 - validateFeed rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.861958
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with target-only disclosure
+ok 37 - E8 rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.241917
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with target-only disclosure
+ok 38 - validateFeed rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.12125
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with target-only disclosure
+ok 39 - E8 rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.08475
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with invented correction
+ok 40 - validateFeed rejects missing current context with invented correction
+  ---
+  duration_ms: 0.031583
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with invented correction
+ok 41 - E8 rejects missing current context with invented correction
+  ---
+  duration_ms: 0.090084
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with invented correction
+ok 42 - validateFeed rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.047417
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with invented correction
+ok 43 - E8 rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.064333
+  type: 'test'
+  ...
+# Subtest: profile absence/types/rule-only claims are checked
+ok 44 - profile absence/types/rule-only claims are checked
+  ---
+  duration_ms: 0.252625
+  type: 'test'
+  ...
+# Subtest: photo field types are checked
+ok 45 - photo field types are checked
+  ---
+  duration_ms: 0.112209
+  type: 'test'
+  ...
+# Subtest: reject title null
+ok 46 - reject title null
+  ---
+  duration_ms: 0.046625
+  type: 'test'
+  ...
+# Subtest: reject title []
+ok 47 - reject title []
+  ---
+  duration_ms: 0.022417
+  type: 'test'
+  ...
+# Subtest: reject title ["one","two"]
+ok 48 - reject title ["one","two"]
+  ---
+  duration_ms: 0.020333
+  type: 'test'
+  ...
+# Subtest: reject title ""
+ok 49 - reject title ""
+  ---
+  duration_ms: 0.019708
+  type: 'test'
+  ...
+# Subtest: reject title " "
+ok 50 - reject title " "
+  ---
+  duration_ms: 0.018542
+  type: 'test'
+  ...
+# Subtest: reject title "one\\ntwo"
+ok 51 - reject title "one\\ntwo"
+  ---
+  duration_ms: 0.052667
+  type: 'test'
+  ...
+# Subtest: reject title "one\\rtwo"
+ok 52 - reject title "one\\rtwo"
+  ---
+  duration_ms: 0.019625
+  type: 'test'
+  ...
+# Subtest: reject title 3
+ok 53 - reject title 3
+  ---
+  duration_ms: 0.018916
+  type: 'test'
+  ...
+# Subtest: reject title "one two"
+ok 54 - reject title "one two"
+  ---
+  duration_ms: 0.018917
+  type: 'test'
+  ...
+# Subtest: F3 export retains stable identity at every position, including after reorder
+ok 55 - F3 export retains stable identity at every position, including after reorder
+  ---
+  duration_ms: 0.250167
+  type: 'test'
+  ...
+# Subtest: E4/E5/E7 are intentionally not automated quality checks
+ok 56 - E4/E5/E7 are intentionally not automated quality checks
+  ---
+  duration_ms: 0.082292
+  type: 'test'
+  ...
+# Subtest: user caption rejects photo-only evidence
+ok 57 - user caption rejects photo-only evidence
+  ---
+  duration_ms: 0.072166
+  type: 'test'
+  ...
+# Subtest: user caption accepts valid user_text evidence with additional photo evidence
+ok 58 - user caption accepts valid user_text evidence with additional photo evidence
+  ---
+  duration_ms: 0.10175
+  type: 'test'
+  ...
+# Subtest: present current can be honestly corrected with the single supported delta
+ok 59 - present current can be honestly corrected with the single supported delta
+  ---
+  duration_ms: 0.227292
+  type: 'test'
+  ...
+# Subtest: absent account and extra title fields cannot smuggle contradictory states
+ok 60 - absent account and extra title fields cannot smuggle contradictory states
+  ---
+  duration_ms: 0.0505
+  type: 'test'
+  ...
+# Subtest: 아무것도 안 올리면 present:false 로 정상 종료한다 — 에러가 아니다
+ok 61 - 아무것도 안 올리면 present:false 로 정상 종료한다 — 에러가 아니다
+  ---
+  duration_ms: 2.108958
+  type: 'test'
+  ...
+# Subtest: 부재 프로필은 target_only 공개와 정합하다 (E8)
+ok 62 - 부재 프로필은 target_only 공개와 정합하다 (E8)
+  ---
+  duration_ms: 0.162792
+  type: 'test'
+  ...
+# Subtest: 스냅샷 재생 경로가 source:"cached" 프로필을 만든다
+ok 63 - 스냅샷 재생 경로가 source:"cached" 프로필을 만든다
+  ---
+  duration_ms: 1.846958
+  type: 'test'
+  ...
+# Subtest: 같은 스냅샷을 두 번 재생하면 완전히 같은 결과가 나온다
+ok 64 - 같은 스냅샷을 두 번 재생하면 완전히 같은 결과가 나온다
+  ---
+  duration_ms: 2.373791
+  type: 'test'
+  ...
+# Subtest: 네트워크를 끊어도 스냅샷 재생 결과가 같고 외부 호출 시도가 0회다
+ok 65 - 네트워크를 끊어도 스냅샷 재생 결과가 같고 외부 호출 시도가 0회다
+  ---
+  duration_ms: 45.442709
+  type: 'test'
+  ...
+# Subtest: empty_caption_ratio 는 캡션 입력이 있을 때만 존재한다
+ok 66 - empty_caption_ratio 는 캡션 입력이 있을 때만 존재한다
+  ---
+  duration_ms: 1.4615
+  type: 'test'
+  ...
+# Subtest: 캡션이 전부 비어 있으면 비율만 남고 나머지 언어 습관은 생략된다
+ok 67 - 캡션이 전부 비어 있으면 비율만 남고 나머지 언어 습관은 생략된다
+  ---
+  duration_ms: 0.305792
+  type: 'test'
+  ...
+# Subtest: 캡션 1건이면 p50 === p90 이고 스키마의 p90 >= p50 이 유지된다
+ok 68 - 캡션 1건이면 p50 === p90 이고 스키마의 p90 >= p50 이 유지된다
+  ---
+  duration_ms: 0.133083
+  type: 'test'
+  ...
+# Subtest: opener_tendency 는 캐러셀 1번 분석이 실제로 들어왔을 때만 나온다
+ok 69 - opener_tendency 는 캐러셀 1번 분석이 실제로 들어왔을 때만 나온다
+  ---
+  duration_ms: 1.213333
+  type: 'test'
+  ...
+# Subtest: opener 분류가 동률이거나 스냅샷과 무관하면 opener_tendency 를 생략한다
+ok 70 - opener 분류가 동률이거나 스냅샷과 무관하면 opener_tendency 를 생략한다
+  ---
+  duration_ms: 1.571042
+  type: 'test'
+  ...
+# Subtest: 어떤 경로에서도 문자열 '불명' 이 나오지 않는다
+ok 71 - 어떤 경로에서도 문자열 '불명' 이 나오지 않는다
+  ---
+  duration_ms: 0.99575
+  type: 'test'
+  ...
+# Subtest: 직접 업로드 경로가 사진 분석에서 visual 을 집계한다
+ok 72 - 직접 업로드 경로가 사진 분석에서 visual 을 집계한다
+  ---
+  duration_ms: 0.256625
+  type: 'test'
+  ...
+# Subtest: hue 평균은 원형 평균이라 359도와 1도를 180도로 만들지 않는다
+ok 73 - hue 평균은 원형 평균이라 359도와 1도를 180도로 만들지 않는다
+  ---
+  duration_ms: 0.124333
+  type: 'test'
+  ...
+# Subtest: 모든 프로필 Claim 은 근거를 갖고 rule 만으로 이루어지지 않는다 (E1 · P2)
+ok 74 - 모든 프로필 Claim 은 근거를 갖고 rule 만으로 이루어지지 않는다 (E1 · P2)
+  ---
+  duration_ms: 0.716875
+  type: 'test'
+  ...
+# Subtest: 입력을 섞거나 형식이 어긋나면 거부한다
+ok 75 - 입력을 섞거나 형식이 어긋나면 거부한다
+  ---
+  duration_ms: 0.292542
+  type: 'test'
+  ...
+# Subtest: 스냅샷 fixture 가 A2 판정을 근거와 함께 기록하고 있다
+ok 76 - 스냅샷 fixture 가 A2 판정을 근거와 함께 기록하고 있다
+  ---
+  duration_ms: 0.044375
+  type: 'test'
+  ...
+# Subtest: 같은 사진이라도 캡션 관측 여부가 다르면 다른 프로필 ID 다
+ok 77 - 같은 사진이라도 캡션 관측 여부가 다르면 다른 프로필 ID 다
+  ---
+  duration_ms: 0.243042
+  type: 'test'
+  ...
+1..77
+# tests 77
+# suites 0
+# pass 77
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 113.463292
