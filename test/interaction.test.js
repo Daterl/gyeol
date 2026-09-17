@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import sharp from 'sharp';
 import { validateEditedExport, validateExport } from '../lib/contracts.js';
+import { composeProfile } from '../lib/compose.js';
 import { buildCurrentProfile } from '../lib/current_profile.js';
 import { validateContext, validateErrorResponse, validateFeedResponse, validateGenerateRequest, validateGenerateResponse, validateIdentity, validateOrderRequest, MAX_UPLOAD_BYTES } from '../lib/interaction.js';
 import { readJsonRequest, validateUpload } from '../lib/upload.js';
@@ -26,6 +27,7 @@ test('request boundaries reject foreign IDs, bad versions, false photo targets a
   assert.throws(()=>validateIdentity({target:{kind:'reference',url:'javascript:alert(1)'},current:{kind:'none'}}));
   assert.throws(()=>validateIdentity({target:{kind:'text',text:'  '},current:{kind:'none'}}));
   for(const patch of [{schema_version:'2.0'},{mode:'unknown'},{photo_id:'foreign'}]) assert.throws(()=>validateGenerateRequest({...generate(),...patch}));
+  const target=clone(fixture);target.feed.schema_version='1.1';assert.throws(()=>validateFeedResponse({feed:target.feed,context:target.context}),/1.0/);
   const photo=clone(fixture.photo_only);photo.feed.schema_version='1.0';assert.throws(()=>validateFeedResponse(photo),/1.1/);
   photo.feed.schema_version='1.1';photo.feed.applied_profile.target_profile_id='invented';assert.throws(()=>validateFeedResponse(photo),/photo plan/);
   const draft=clone(fixture.edited);draft.slots[0].photo_id='foreign';assert.throws(()=>validateEditedExport(draft,fixture.feed,ids));
@@ -46,6 +48,10 @@ test('current post evidence resolves to a separate supplied photo set',()=>{
   const photos=[{...fixture.context.photos[0],photo_id:'current_photo',input_index:0}];
   const context={...clone(fixture.context),current_photos:photos,current:buildCurrentProfile({photos,captions:['기존 기록']})};
   validateContext(context);
+  const feed=clone(fixture.feed);feed.applied_profile=composeProfile({currentProfile:context.current,targetProfile:context.target});
+  validateFeedResponse({feed,context});
+  feed.slots[0].rationale.evidence=[{kind:'uploaded_photo',ref:'current_photo',note:'기존 게시물은 새 사진 순서의 근거가 아니다'}];
+  assert.throws(()=>validateFeedResponse({feed,context}),/does not resolve/);
   assert.throws(()=>validateContext({...context,current_photos:[]}));
   context.current.visual.palette.evidence[0].ref=ids[0];assert.throws(()=>validateContext(context),/does not resolve/);
 });
