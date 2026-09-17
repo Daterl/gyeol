@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import handler from '../api/feed.js';
+import handler from '../lib/feed.js';
 async function call(url,method='GET') {
   const headers={}; let body;
   const res={statusCode:200,setHeader:(key,value)=>headers[key]=value,end:value=>{body=JSON.parse(value);}};
@@ -26,7 +26,7 @@ test('mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attemp
     net.connect=net.createConnection=net.Socket.prototype.connect=denied;
     http.request=http.get=https.request=https.get=denied;
     dns.lookup=dns.resolve=dns.promises.lookup=dns.promises.resolve=denied;
-    const {mockResource}=await import('./api/feed.js');
+    const {mockResource}=await import('./lib/feed.js');
     for(const resource of ['ordered_feed','photo_analysis','target_profile','current_profile']) await mockResource(resource);
     if(attempts!==0) throw new Error('Outbound attempted');
     console.log('outbound attempts: '+attempts);

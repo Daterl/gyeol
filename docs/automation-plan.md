@@ -1,5 +1,7 @@
 # AI 실행 계획 — 결 GYEOL
 
+> 2026-09-17 기술 스택·실행 순서는 [ADR-0002](adr/0002-react-stack-and-ai-session-graph.md)와 [AI Session 실행 그래프](ai-session-workflow.md)가 이 문서의 초기 바닐라 구성보다 우선한다. #23이 Next.js·shadcn/ui·mock 어댑터를 인계하며 출력 서버는 #26이다.
+
 작성: 2026-09-17. 범위는 [intent.md](intent.md)의 D1~D6이며 작업 규약은 [CLAUDE.md](../CLAUDE.md)다. 사용자는 AI의 지속적인 로컬 구현·테스트·수정을 승인했다. **사람 소유자는 리뷰 책임자이며, 로컬 초안 편집 권한과 사람 합의·merge 권한을 구분한다.** 공유 파일의 AI 편집도 허용되지만 #1 계약 및 intent C1~C8의 양쪽 사람 합의는 아직 pending이다.
 
 ## 근거와 현재 상태

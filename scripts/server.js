@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import handler from '../api/feed.js';
+import handler from '../lib/feed.js';
 
 const port = Number(process.env.PORT ?? 3000);
 if (!Number.isInteger(port) || port<0 || port>65535) throw new Error('PORT must be an integer from 0 to 65535');
