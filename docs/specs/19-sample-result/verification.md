@@ -12,3 +12,7 @@
 - ⏳ 다른 실제 기기30초·로그인 없는 공개 배포는 미확인. Preview 보호를 변경하지 않는다. #19 전체 DoD는 열어 둔다.
 
 스크린샷 desktop-final.png/mobile390.png. #15 드래그·모바일 result UI 증거, #27 통합 검증에 재사용 가능. 제품 paid API 호출0, Production 미변경.
+
+## Vercel Preview
+
+PR #58 head a2a96ee Vercel SUCCESS. 認証済みブラウザで https://gyeol-git-feat-19-sample-result-jangwons-projects-c001fb62.vercel.app を開き、one-click result, 3 images naturalWidth381, title/omission, single-fill, authored-caption preservation after reorder confirmed. First DOM at0.414s had lazy images not yet loaded; image-complete time was NOT measured. Anonymous/public gate remains pending. preview.png is the actual deployment screenshot.
