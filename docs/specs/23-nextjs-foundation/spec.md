@@ -26,6 +26,6 @@ Forbidden: schemas·fixture 값·입력 분석·모델 호출·편집 상태·�
 - [x] 실제 production server에서 /와 /api/feed?mock=1을 확인한다. fixture가 배포 번들에 포함된다.
 - [x] 샘플 버튼이 고정 예시임을 표시하고 API 성공·실패·재시도를 제공한다. 근거·photo_id를 보존하고 position 순으로 렌더링한다.
 - [x] HTML의 종이색·초록색·타이포·여백과 키보드 포커스를 적용하고 모바일 화면을 확인한다.
-- [ ] PR과 Preview 증거를 남긴다. 사람 리뷰·merge·Production·A1은 별도 게이트다.
+- [x] PR과 Preview 증거를 남긴다. 사람 리뷰·merge·Production·A1은 별도 게이트다.
 
 제품 AI 호출·업로드·실제 개인화·최종 결과 화면은 이 노드의 완료로 주장하지 않는다.

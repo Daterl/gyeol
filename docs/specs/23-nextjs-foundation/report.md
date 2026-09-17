@@ -2,7 +2,7 @@
 
 담당 diego.yoon, 협업 enzo.cho. 기준 main `32eff4f`, 브랜치 `feat/23-nextjs-foundation`.
 
-Verdict: 로컬 PASS. 사람 리뷰·merge·Production·A1은 PENDING. Preview와 결과 SHA는 연결 PR의 배포 상태/실행 기록에서 확인한다.
+Verdict: 로컬 PASS. 사람 리뷰·merge·Production·A1은 PENDING. 구현 SHA `28a3b88`, [Draft PR #32](https://github.com/Daterl/gyeol/pull/32), Project 검토·인수 대기.
 
 ## 완료 조건 대조
 
@@ -17,7 +17,7 @@ Verdict: 로컬 PASS. 사람 리뷰·merge·Production·A1은 PENDING. Preview�
 | 실제 production HTTP | ✅ `npm run test:smoke -- http://localhost:3100`: 첫 화면 200, 4종 fixture 완전 일치, 오류/메서드/헤더. 빌드 trace에 4종 fixture 포함 |
 | 브라우저 성공·실패·재시도 | ✅ Chrome 샘플 15슬롯·근거 펼침. 서버 중단→한국어 실패 안내→서버 재시작 후 재시도 15슬롯 |
 | 반응형·접근성 | ✅ 데스크톱 3열, 390px viewport(콘텐츠폭 375px) 1열, scrollWidth=clientWidth. Tab으로 본문 건너뛰기와 solid 포커스 확인 |
-| PR·Preview | PENDING: Draft 작성 후 실제 배포 URL에서 확인하고 PR/#23에 기록 |
+| PR·Preview | ✅ PR #32, Vercel Ready. 로그인된 Chrome에서 배포 화면→샘플 15슬롯 확인. 익명 HTTP smoke는 Vercel 인증으로 리다이렉트돼 인수 범위에서 제외 |
 
 ## 발견과 수정
 
@@ -32,3 +32,7 @@ Verdict: 로컬 PASS. 사람 리뷰·merge·Production·A1은 PENDING. Preview�
 - package.json/lockfile·Node 24·Next preset을 #6과 공유한다. 별도 vercel.json override는 없다.
 - #24 연결 계약 → #25 Zustand 편집 store 순서. 이번에는 Zustand 설치만 한다. 업로드/실제 분석/생성 UI를 완성했다고 주장하지 않는다.
 - 사람 리뷰·merge 담당은 상대 리뷰어이며 AI는 merge하지 않는다. #6은 Production/A1까지 완료 처리하지 않는다.
+
+Preview: https://gyeol-ggbve05t7-jangwons-projects-c001fb62.vercel.app/
+
+배포 상세: https://vercel.com/jangwons-projects-c001fb62/gyeol/4KYTcSQvkeVBkVWhyHpwjcTpv4Mi (28a3b88). 공개 Production 성공을 뜻하지 않는다.

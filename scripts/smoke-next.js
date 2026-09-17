@@ -6,7 +6,8 @@ const base = process.argv[2];
 assert(base, 'Usage: npm run test:smoke -- http://localhost:3100');
 const page = await fetch(new URL('/', base));
 assert.equal(page.status, 200);
-assert.match(await page.text(), /샘플 순서 살펴보기/);
+assert.equal(page.redirected, false, 'Unexpected redirect; a protected Preview requires browser verification.');
+assert.ok((await page.text()).includes('샘플 순서 살펴보기'), 'GYEOL sample page missing');
 for (const resource of ['ordered_feed', 'photo_analysis', 'target_profile', 'current_profile']) {
   const response = await fetch(new URL(`/api/feed?mock=1&resource=${resource}`, base));
   assert.equal(response.status, 200, resource);

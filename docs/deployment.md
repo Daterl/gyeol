@@ -26,3 +26,9 @@ Production Branch Tracking은 `main`으로 확인했다. 환경변수는 아직 
 #6에 Vercel 팀/프로젝트·공개 URL·기준 SHA·main 자동 배포·함수 제한·A1 실측을 남긴다. #23 완료 시 Next.js preset과 `next build`, Node runtime API를 같은 프로젝트에서 확인한다. 환경변수 값과 OAuth 토큰은 문서·이슈에 기록하지 않는다.
 
 근거: [Vercel 공식 MCP 안내](https://vercel.com/docs/agent-resources/vercel-mcp), [Next.js 설치](https://nextjs.org/docs/app/getting-started/installation).
+
+## #23 Preview 확인 (2026-09-17)
+
+[PR #32](https://github.com/Daterl/gyeol/pull/32), 구현 SHA `28a3b88`의 자동 Preview가 Ready로 완료됐다. [배포 상세](https://vercel.com/jangwons-projects-c001fb62/gyeol/4KYTcSQvkeVBkVWhyHpwjcTpv4Mi), [Preview](https://gyeol-ggbve05t7-jangwons-projects-c001fb62.vercel.app/).
+
+로그인된 Chrome에서 첫 화면·샘플 버튼·15슬롯 응답을 확인했다. 익명 HTTP 접근은 Vercel 인증으로 리다이렉트되므로 공개 URL 인수로 세지 않는다. 보호 설정을 변경하지 않았다. main Production은 사람 리뷰·merge 이후 확인하며 A1 실측도 pending이다.
