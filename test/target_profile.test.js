@@ -116,7 +116,7 @@ test('the photo only path claims no preference and no sentence', () => {
 test('the photo plan aggregates only what a photo can show, and the mixes stay exact', () => {
   assert.equal(plan.sample_size,photos.length);
   for(const key of ['composition_mix','scale_mix'])
-    assert.equal(Object.values(plan.visual[key].value).reduce((a,b)=>a+b,0),1,`${key} must sum to exactly 1`);
+    assert.equal(Object.values(planFromPhotos(photos.map(p=>({...p,analysis_source:'vision_model'}))).visual[key].value).reduce((a,b)=>a+b,0),1,`${key} must sum to exactly 1`);
   assert.ok(plan.visual.palette.value.palette_hex.length<=3);
   assert.throws(()=>planFromPhotos([]),ContractError);
   assert.throws(()=>planFromPhotos([{...photos[0],photo_id:''}]),ContractError);

@@ -1,10 +1,12 @@
 import handler from '../../../../lib/feed.js';
+import { handleFeed } from '../../../../lib/pipeline.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // Preserve the foundation HTTP contract while adapting Node's response to Web Response.
 async function feed(request: Request) {
+  if (request.method === 'POST') return handleFeed(request);
   const headers = new Headers();
   let body: string | undefined;
   const response = {

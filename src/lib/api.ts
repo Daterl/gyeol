@@ -121,9 +121,10 @@ async function post(
 export async function analyzePhoto(
   request: UploadRequest,
   signal?: AbortSignal,
+  mock = false,
 ): Promise<PhotoAnalysis> {
   return (await post(
-    '/api/analyze',
+    mock ? '/api/analyze?mock=1' : '/api/analyze',
     request,
     (value) => {
       validatePhoto(value);
@@ -155,7 +156,7 @@ export async function orderPhotos(
       if (
         target.kind === 'text' &&
         (!('raw_freetext' in result.context.target) ||
-          result.context.target.raw_freetext !== target.text)
+          result.context.target.raw_freetext !== target.text.trim())
       )
         throw new Error('Target text differs');
       if ((current.kind === 'none') !== !result.context.current.present)
