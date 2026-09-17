@@ -1,0 +1,30 @@
+  duration_ms: 0.715125
+  type: 'test'
+  ...
+# Subtest: caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
+ok 79 - caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
+  ---
+  duration_ms: 0.42975
+  type: 'test'
+  ...
+# Subtest: carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
+ok 80 - carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
+  ---
+  duration_ms: 4.137666
+  type: 'test'
+  ...
+# Subtest: rejects inputs the contract cannot accept instead of guessing
+ok 81 - rejects inputs the contract cannot accept instead of guessing
+  ---
+  duration_ms: 0.968833
+  type: 'test'
+  ...
+1..81
+# tests 81
+# suites 0
+# pass 81
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 145.431791

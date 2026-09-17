@@ -1,0 +1,17 @@
+ok 1 - measured fixture itself satisfies the PhotoAnalysis contract
+ok 2 - 3 photos produce 3 slots covering positions 1..3 exactly once
+ok 3 - 15 photos produce 15 slots covering positions 1..15 exactly once
+ok 4 - 20 photos produce 20 slots covering positions 1..20 exactly once
+ok 5 - every eval invariant except the F3 export one passes on a generated feed
+ok 6 - no slot is justified by rules alone, and every photo evidence resolves to its own slot
+ok 7 - rationales never speak of scale, absent faces or "여백"
+ok 8 - two target profiles order the same photos differently
+ok 9 - the same input produces byte-identical output
+ok 10 - an absent current profile ends normally as target_only
+ok 11 - a present current profile is reported but not yet used to correct
+ok 12 - caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
+ok 13 - carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
+ok 14 - rejects inputs the contract cannot accept instead of guessing
+# tests 14
+# pass 14
+# fail 0

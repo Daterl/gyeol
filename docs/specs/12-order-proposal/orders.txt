@@ -1,0 +1,6 @@
+ 3 quiet  ph_02 ph_03 ph_01
+ 3 detail ph_03 ph_01 ph_02
+15 quiet  ph_11 ph_02 ph_09 ph_01 ph_03 ph_06 ph_13 ph_14 ph_04 ph_07 ph_08 ph_15 ph_12 ph_10 ph_05
+15 detail ph_03 ph_11 ph_02 ph_09 ph_01 ph_14 ph_04 ph_15 ph_06 ph_07 ph_08 ph_13 ph_10 ph_12 ph_05
+20 quiet  ph_11 ph_02 ph_19 ph_01 ph_09 ph_04 ph_14 ph_06 ph_03 ph_16 ph_17 ph_12 ph_15 ph_07 ph_18 ph_13 ph_10 ph_20 ph_08 ph_05
+20 detail ph_03 ph_11 ph_02 ph_19 ph_01 ph_09 ph_04 ph_14 ph_06 ph_17 ph_16 ph_13 ph_18 ph_07 ph_08 ph_15 ph_12 ph_10 ph_20 ph_05
