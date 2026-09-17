@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: heuristic output satisfies the PhotoAnalysis contract and is deterministic
+ok 1 - heuristic output satisfies the PhotoAnalysis contract and is deterministic
+  ---
+  duration_ms: 2.865542
+  type: 'test'
+  ...
+# Subtest: heuristic never reports a subject, place, time or mood — only measured values
+ok 2 - heuristic never reports a subject, place, time or mood — only measured values
+  ---
+  duration_ms: 2.704875
+  type: 'test'
+  ...
+# Subtest: model failure falls back to heuristic instead of throwing
+ok 3 - model failure falls back to heuristic instead of throwing
+  ---
+  duration_ms: 1.164625
+  type: 'test'
+  ...
+# Subtest: model observations are accepted but measured color overrides the model estimate
+ok 4 - model observations are accepted but measured color overrides the model estimate
+  ---
+  duration_ms: 0.259375
+  type: 'test'
+  ...
+# Subtest: a contract-violating model response falls back to heuristic and is not cached
+ok 5 - a contract-violating model response falls back to heuristic and is not cached
+  ---
+  duration_ms: 0.50075
+  type: 'test'
+  ...
+# Subtest: an observation cannot relabel which photo was analyzed
+ok 6 - an observation cannot relabel which photo was analyzed
+  ---
+  duration_ms: 0.111708
+  type: 'test'
+  ...
+# Subtest: same bytes twice: zero extra model calls, identity re-stamped, duplicate reported
+ok 7 - same bytes twice: zero extra model calls, identity re-stamped, duplicate reported
+  ---
+  duration_ms: 0.172208
+  type: 'test'
+  ...
+# Subtest: cache is bounded and holds no more than CACHE_LIMIT entries
+ok 8 - cache is bounded and holds no more than CACHE_LIMIT entries
+  ---
+  duration_ms: 1.201167
+  type: 'test'
+  ...
+# Subtest: unobservable bytes fail honestly instead of inventing color
+ok 9 - unobservable bytes fail honestly instead of inventing color
+  ---
+  duration_ms: 0.435625
+  type: 'test'
+  ...
+# Subtest: jpeg DC reader returns a real block grid and rejects what it cannot read
+ok 10 - jpeg DC reader returns a real block grid and rejects what it cannot read
+  ---
+  duration_ms: 0.3795
+  type: 'test'
+  ...
+# Subtest: baseline JPEG is measured, not mis-read: solid colours are exact
+ok 11 - baseline JPEG is measured, not mis-read: solid colours are exact
+  ---
+  duration_ms: 3.011709
+  type: 'test'
+  ...
+# Subtest: baseline and progressive encodings of the same pixels agree
+ok 12 - baseline and progressive encodings of the same pixels agree
+  ---
+  duration_ms: 1.235
+  type: 'test'
+  ...
+# Subtest: SVG is measured only as the flat-colour card it claims to support
+ok 13 - SVG is measured only as the flat-colour card it claims to support
+  ---
+  duration_ms: 0.328292
+  type: 'test'
+  ...
+# Subtest: SVG text is reported only when a viewer could see it, and unescaped
+ok 14 - SVG text is reported only when a viewer could see it, and unescaped
+  ---
+  duration_ms: 0.297709
+  type: 'test'
+  ...
+# Subtest: composition is a documented constant, not a reading of the colour histogram
+ok 15 - composition is a documented constant, not a reading of the colour histogram
+  ---
+  duration_ms: 0.97275
+  type: 'test'
+  ...
+# Subtest: POST one photo returns one PhotoAnalysis
+ok 16 - POST one photo returns one PhotoAnalysis
+  ---
+  duration_ms: 0.357667
+  type: 'test'
+  ...
+# Subtest: there is no many-photos-per-request path
+ok 17 - there is no many-photos-per-request path
+  ---
+  duration_ms: 0.142
+  type: 'test'
+  ...
+# Subtest: request validation is explicit at the trust boundary
+ok 18 - request validation is explicit at the trust boundary
+  ---
+  duration_ms: 63.656666
+  type: 'test'
+  ...
+# Subtest: data URL prefixes are accepted, not silently mangled
+ok 19 - data URL prefixes are accepted, not silently mangled
+  ---
+  duration_ms: 0.301
+  type: 'test'
+  ...
+# Subtest: the heuristic path makes zero outbound attempts with the network disabled
+ok 20 - the heuristic path makes zero outbound attempts with the network disabled
+  ---
+  duration_ms: 299.555208
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 690.437875
