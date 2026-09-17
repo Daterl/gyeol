@@ -144,6 +144,45 @@ test('carousel opener tendency only nudges when it was actually observed, and ca
   assert.equal(orderOf(run(photos20, tendencyTarget('풀샷', 12)))[0], base);
 });
 
+// M1 회귀 (review-codex.md). 보너스가 2위 사진을 1위로 올렸는데도 "측정 점수가 가장 높다"고 말하면
+// 사용자에게 보이는 문장이 선택의 실제 원인을 숨긴다. 보너스가 뒤집은 자리와 안 뒤집은 자리를 둘 다 고정한다.
+test('a bonus that flipped the opener is named as the reason, not hidden behind the measurement', () => {
+  const direction = photo => 0.4 * photo.color.bright_mean + 0.4 * (photo.composition === 'negative_space') + 0.2 * (1 - photo.color.sat_mean);
+  const scoreOf = id => direction(photos20.find(p => p.photo_id === id));
+  const top = photos20.reduce((a, b) => (direction(b) > direction(a) ? b : a));
+  assert.equal(top.photo_id, 'ph_11', '전제: 무보너스 측정 1위는 ph_11 이다');
+
+  // (a) 보너스가 순서를 뒤집은 자리 — 측정 1위가 아니라는 사실과 총점을 둘 다 말해야 한다.
+  const flipped = byPosition(run(faceSeen('ph_09'), tendencyTarget('인물', 12)))[0];
+  assert.equal(flipped.photo_id, 'ph_09');
+  assert.ok(scoreOf('ph_09') < scoreOf('ph_11'), '전제: ph_09 의 측정 점수는 1위가 아니다');
+  assert.match(flipped.rationale.value, /측정 점수는 0\.825 로 입력 20장 중 1위가 아니지만/);
+  assert.match(flipped.rationale.value, /보너스 0\.15 를 더한 총점이 0\.975 로 가장 높아/);
+  assert.ok(!/점수가 입력 20장 중 가장 높아/.test(flipped.rationale.value), '측정 점수가 1위였다고 말하면 안 된다');
+
+  // (b) 보너스가 걸렸지만 측정 점수도 1위인 자리 — 이때는 1위 주장이 맞고, 보너스는 부수적 일치다.
+  const alreadyTop = byPosition(run(faceSeen('ph_11'), tendencyTarget('인물', 12)))[0];
+  assert.equal(alreadyTop.photo_id, 'ph_11');
+  assert.match(alreadyTop.rationale.value, /측정 점수가 0\.906 로 입력 20장 중 가장 높아/);
+  assert.match(alreadyTop.rationale.value, /보너스 0\.15 도 같은 방향이다/);
+
+  // (c) 보너스가 없는 자리의 문장은 그대로다.
+  assert.match(byPosition(run(photos20))[0].rationale.value, /지향 방향\(조용한 쪽\) 점수가 입력 20장 중 가장 높아 1번에 뒀다$/);
+});
+
+// H1 (review-codex.md). 이슈의 "사진만 입력" DoD 는 이 함수의 인수 계약이 아니다.
+// orderFeed 는 targetProfile 없이는 거부한다 — 없는 지향 프로필을 지어내는 것이 E9 가 막는 바로 그 위조이기 때문이다.
+// 이 테스트는 그 경계를 고정해서, 프로필을 주입한 테스트를 "사진만 입력 PASS" 로 다시 읽지 못하게 한다.
+test('photo-only input is rejected here; the photo-only DoD belongs to the wiring layer', () => {
+  assert.throws(() => orderFeed({ photoAnalyses: photos20 }), /targetProfile: expected object/);
+  assert.throws(() => orderFeed({ photoAnalyses: photos20, targetProfile: null, currentProfile: absentCurrent }), /targetProfile: expected object/);
+  // photo_id 보존 자체는 프로필이 주어진 경로에서 3~20장 전부 확인된다 (위 3·15·20장 테스트).
+  for (const count of [3, 15, 20]) {
+    const input = photos20.slice(0, count);
+    assert.deepEqual([...orderOf(run(input))].sort(), input.map(p => p.photo_id).sort());
+  }
+});
+
 test('rejects inputs the contract cannot accept instead of guessing', () => {
   assert.throws(() => run(photos20.slice(0, 2)), /3\.\.20/);
   assert.throws(() => run([...photos20, { ...photos20[0], input_index: 20 }]), /3\.\.20/);

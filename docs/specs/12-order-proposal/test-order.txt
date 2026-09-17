@@ -11,7 +11,9 @@ ok 10 - an absent current profile ends normally as target_only
 ok 11 - a present current profile is reported but not yet used to correct
 ok 12 - caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
 ok 13 - carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
-ok 14 - rejects inputs the contract cannot accept instead of guessing
-# tests 14
-# pass 14
+ok 14 - a bonus that flipped the opener is named as the reason, not hidden behind the measurement
+ok 15 - photo-only input is rejected here; the photo-only DoD belongs to the wiring layer
+ok 16 - rejects inputs the contract cannot accept instead of guessing
+# tests 16
+# pass 16
 # fail 0

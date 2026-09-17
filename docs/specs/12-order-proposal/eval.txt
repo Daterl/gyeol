@@ -1,7 +1,4 @@
-
-> gyeol@0.1.0 eval
 > node eval/run.js
-
 Synthetic manual bootstrap only; no AI quality or human agreement claim.
 ┌─────────┬─────────┬───────────┬────────┬────────┐
 │ (index) │ case    │ invariant │ result │ reason │

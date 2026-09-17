@@ -1,8 +1,11 @@
 # report.md — #12 검증 결과
 
-기준 SHA **`32eff4f`** (= `origin/main`, PR #21 squash merge 이후) · 브랜치 `feat/12-order-proposal` · 워크트리 `.work/gyeol-12` · 실행 2026-09-17 · Node v22+
+기준 SHA **`98cd5c7`** (= `origin/main`, PR #32 Next 기반 merge 이후) · 브랜치 `feat/12-order-proposal` · 워크트리 `.work/gyeol-12` · 실행 2026-09-17 · Node v22+
 
-**Verdict: PASS (명시한 로컬 검증 범위) / 실모델·배포·사람 리뷰 PENDING**
+> **2026-09-17 정정.** 이 문서의 최초 판은 base `32eff4f` 기준이었고, 교차 리뷰(`review-codex.md`)가 완료 주장 2건의 오류를 잡았다.
+> 정정한 행은 아래 표에 ⚠️ 로 표시했고, 정정 근거와 재검증 출력은 같은 폴더 **`fix-report.md`** 에 있다.
+
+**Verdict: 부분 PASS (명시한 로컬 검증 범위) / 사진만 입력 경로·실모델·배포·사람 리뷰 PENDING**
 아래 출력은 전부 실제 실행 결과를 붙인 것이다. 미실행을 PASS 로 쓰지 않았다.
 
 ---
@@ -12,13 +15,15 @@
 | 이슈 DoD | 판정 | 근거 |
 |---|---|---|
 | 사진 15장 → 15슬롯. E2·E3 통과 | **PASS** | 1·3절. 3·15·20장 전부 실행 |
-| 모든 슬롯 `rationale.evidence` 가 PhotoAnalysis 필드/프로필 항목으로 역추적 | **PASS** | 3·4절. 슬롯마다 `uploaded_photo` ref = 그 슬롯 `photo_id` (E10) |
+| 모든 슬롯 `rationale.evidence` 가 PhotoAnalysis 필드/프로필 항목으로 역추적 | ⚠️ **부분 PASS** | 3·4절. 슬롯마다 `uploaded_photo` ref = 그 슬롯 `photo_id` 이고 문장의 숫자가 그 사진 측정값과 일치한다(15슬롯 전수). **E10 이 보장하는 것은 "ref 가 입력 사진 ID 로 해소된다"까지다** — 다른 슬롯의 rationale 을 통째로 복사해도 E10 은 통과한다(`fix-report.md` 6절 M2 수용) |
 | 근거가 전부 `kind:"rule"` 인 슬롯 0개 (S1) | **PASS** | 1절 테스트 6번, 4절 전수 대조 |
 | `caption_inputs` 3종이 슬롯마다 | **PASS** | 1절 테스트 12번. F2 는 캡션 상태를 판단하지 않는다 |
 | `CurrentProfile.present == false` 여도 정상 종료 + `target_only` (E8) | **PASS** | 1절 테스트 10·11번 |
 | A2 반영 — 1순위 근거는 PhotoAnalysis, `opener_tendency` 는 보너스 | **PASS** | 2·5절. 보너스는 관측이 있을 때만 켜지고 상한 0.15 로 측정값 차이를 뒤집지 못한다 |
-| 사진만 입력도 정상 처리, 실제 photo_id 를 3~20장 끝까지 보존 | **PASS** | 1절 테스트 2·3·4번 (프로필은 자연어 1벌로 충분) |
-| 다른 프로필 2벌에서 position 정렬 photo_id 차이 (#20 기록용) | **PASS** | 3절. 두 순서를 그대로 붙였다 |
+| 사진만 입력도 정상 처리 | ⚠️ **PENDING** | **최초 판의 PASS 는 틀렸다.** 근거로 댄 테스트 2·3·4번은 `run()` 헬퍼가 모든 호출에 TargetProfile 을 주입한다(`test/order.test.js:20`). `orderFeed({photoAnalyses})` 는 `targetProfile: expected object` 로 거부한다. 사용자 입력 경로는 아직 없다(`lib/feed.js:28` 이 501). 인수 조건 A1·A2 와 담당(#24)은 `fix-report.md` 1절 |
+| 실제 photo_id 를 3~20장 끝까지 보존 | **PASS** | 1절 테스트 2·3·4·15번. 3·15·20장 전부 입력 집합 == 출력 집합 |
+| 다른 프로필 2벌에서 position 정렬 photo_id 차이 | **PASS** | 3절. 실사진 15·20장 × 프로필 2벌 |
+| ⚠️ 위 순서 차이 **및 #26 캡션 차이**를 **#20 에 남긴다** | ⚠️ **부분 PASS / PENDING** | **최초 판이 조건을 축약했다.** 순서 차이는 PASS. **#26 캡션 차이는 이 PR 이 F3 를 호출하지 않아 만들어지지 않는다**(PENDING, #26·F3 소관). #20 인계는 이 수정에서 댓글로 남긴다 — `fix-report.md` 3절 |
 | 1회 실행 토큰 비용 | **해당 없음** | 순서 결정에 모델을 호출하지 않는다(6절) |
 
 ---
@@ -27,16 +32,16 @@
 
 ### `npm test`
 ```
-1..81
-# tests 81
+1..83
+# tests 83
 # suites 0
-# pass 81
+# pass 83
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
 ```
-기존 67건 + 이번에 추가한 `order.test.js` **14건**. 기존 회귀 0.
+기존 67건 + `order.test.js` **16건**(최초 14건 + 교차 리뷰 수정의 회귀 2건). 기존 회귀 0.
 
 ```
 ok 1 - measured fixture itself satisfies the PhotoAnalysis contract
@@ -52,9 +57,11 @@ ok 10 - an absent current profile ends normally as target_only
 ok 11 - a present current profile is reported but not yet used to correct
 ok 12 - caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
 ok 13 - carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
-ok 14 - rejects inputs the contract cannot accept instead of guessing
-# tests 14
-# pass 14
+ok 14 - a bonus that flipped the opener is named as the reason, not hidden behind the measurement
+ok 15 - photo-only input is rejected here; the photo-only DoD belongs to the wiring layer
+ok 16 - rejects inputs the contract cannot accept instead of guessing
+# tests 16
+# pass 16
 # fail 0
 ```
 
@@ -84,10 +91,11 @@ E4/E5/E7: manual spot-check only; real demo review pending.
 
 ### `npm run check`
 ```
-PASS: 32 JS/JSON files checked; zero dependencies; four schema examples match fixtures.
-JS syntax/JSON parsing only, no separate typechecker or linter.
+PASS: 33 JS/JSON files checked; four schema examples match fixtures.
+Foundation JS syntax/JSON parsing; TypeScript is checked separately by npm run typecheck.
 ```
-**의존성 0개 유지.** `lib/order.js` 는 `node:crypto` 만 쓴다.
+⚠️ **정정.** 최초 판은 `zero dependencies` 출력과 함께 "의존성 0개 유지"라고 적었다. rebase 로 들어온 PR #32(Next 기반)가 next·react 등을 넣어 **레포 수준에서는 더 이상 참이 아니다.**
+유지되는 좁은 주장만 남긴다 — **`lib/order.js` 는 `node:crypto` 하나만 import 하고 이 PR 은 의존성을 0개 추가했다.**
 
 ---
 
@@ -188,7 +196,7 @@ $ node -e "... orderFeed({photoAnalyses: real20.slice(0,15), targetProfile: <각
 | 규칙 | 무엇으로 | 근거 종류 |
 |---|---|---|
 | R1 1번 자리 | 지향 방향 점수 최대 (`composition_mix` → `tone_words` → 없으면 기본) | 사진 측정값 + 프로필 항목 + 규칙 |
-| R1b 캐러셀 보너스 | `opener_tendency` 가 관측됐을 때만 +0.15 | + `ig_post` 근거 |
+| R1b 캐러셀 보너스 | `opener_tendency` 가 관측됐을 때만 +0.15 | + `ig_post` 근거. **보너스가 순서를 뒤집었으면 근거 문장이 측정 점수·보너스·총점을 그대로 말한다**(`fix-report.md` 2절) |
 | R2 마지막 자리 | 남은 사진 중 밝기 최소 | 사진 측정값 + 규칙 |
 | R3 전환 자리 `ceil(2N/3)` | 남은 사진 중 채도 최대 | 사진 측정값 + 규칙 |
 | R4 나머지 | 앞자리 사진과 측정 색 거리 최대 | 사진 측정값 + 규칙 |
