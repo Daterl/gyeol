@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/14-photo-input
+
+
+ Test Files  7 passed (7)
+      Tests  30 passed (30)
+   Start at  19:34:16
+   Duration  243ms (transform 56%, import 25%, tests 16%, worker 2%)

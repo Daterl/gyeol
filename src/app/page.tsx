@@ -1,6 +1,11 @@
-import { SamplePreview } from '../features/sample/sample-preview';
+import { PhotoInput } from '../features/input/photo-input';
 
-export default function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mock?: string | string[] }>;
+}) {
+  const mock = (await searchParams).mock === '1';
   return (
     <>
       <a
@@ -21,7 +26,7 @@ export default function HomePage() {
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-5 pb-16" id="main">
-        <div className="py-14 text-center sm:py-20">
+        <div className="max-w-3xl py-10 sm:py-14">
           <p className="mb-4 font-mono text-xs tracking-[0.16em] text-accent">
             사진은 그대로, 흐름은 나답게
           </p>
@@ -30,13 +35,13 @@ export default function HomePage() {
             <br />
             어떤 결로 이어볼까요?
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-muted-foreground">
+          <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
             사진을 보정하지 않습니다. 어떤 순서로, 뭐라고 열고,
             <br className="hidden sm:block" />
             어디에 말을 붙일지 함께 고릅니다.
           </p>
         </div>
-        <SamplePreview />
+        <PhotoInput mock={mock} />
         <p className="mt-7 text-center text-sm leading-7 text-muted-foreground">
           말을 덜어내도 괜찮아요.
           <br />
