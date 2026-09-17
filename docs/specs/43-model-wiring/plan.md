@@ -5,7 +5,7 @@
 
 1. 기존 사진 테스트로 휴리스틱·identity·캐시 회귀 기준을 확인한다.
 2. lib/model.js와 config/models.json: 공식 기본 모델, 계정 확인, 제한 시간·재시도·안전한 오류·JSON 응답 연결. test/model.test.js에서 fetch 주입으로 확인한다.
-3. lib/photo_analysis.js: 기존 기본 클라이언트 제거·중앙 클라이언트 재사용, 원 응답 계약 검증, 실패 전파, 경로 분리 캐시. 사진 테스트에 실패 주입·복구·키 전환 검증을 추가한다.
+3. lib/photo_analysis.js 및 prompts/input/photo_analysis.md: 기존 기본 클라이언트 제거·중앙 클라이언트 재사용, 원 응답 계약 검증, 실패 전파, 경로 분리 캐시. 사진 테스트에 실패 주입·복구·키 전환 검증을 추가한다.
 4. api/analyze.js: 기존 JSON을 유지하면서 출처 헤더와 모델 오류를 전달한다. HTTP 테스트로 확인한다.
 5. scripts/measure-model.js와 .env.example: 키만 넣는 실행법·실측 기록. 키 없는 PENDING 출력을 확인한다.
 6. eval/model-path.js를 eval/run.js에 연결: 서로 다른 유효 응답을 사진→프로필→순서→불변식 검사에 통과시킨다. 의도적 계약 위반은 테스트에서 실패를 확인한다.

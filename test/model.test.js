@@ -123,3 +123,25 @@ test('HTTP exposes model contract failure instead of returning heuristic success
     resetAnalysisState();
   }
 });
+
+test('key-present SVG is an explicit 415 from the production HTTP client, with no network', async () => {
+  const oldKey = process.env.ANTHROPIC_API_KEY;
+  const oldFetch = globalThis.fetch;
+  process.env.ANTHROPIC_API_KEY = 'fake-key';
+  let attempts = 0;
+  globalThis.fetch = () => { attempts++; throw new Error('must not call'); };
+  resetAnalysisState();
+  try {
+    let output;
+    const res = { setHeader() {}, end(value) { output = JSON.parse(value); } };
+    const image = await readFile(new URL('../eval/golden/case_01/photos/ph_01.svg', import.meta.url));
+    await handler({ method: 'POST', body: { photo_id: 'svg', input_index: 0, file_ref: 'svg', image_base64: image.toString('base64') } }, res);
+    assert.equal(res.statusCode, 415);
+    assert.equal(output.error.code, 'MODEL_MEDIA_UNSUPPORTED');
+    assert.equal(attempts, 0);
+  } finally {
+    globalThis.fetch = oldFetch;
+    if (oldKey === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = oldKey;
+    resetAnalysisState();
+  }
+});

@@ -9,11 +9,11 @@ if (modelRoute().source === 'heuristic') {
     single_photo_latency_ms: 'PENDING', fifteen_photo_total_ms: 'PENDING', cost: 'PENDING' }, null, 2));
 } else {
   const files = process.argv.slice(2);
-  if (![1, 15].includes(files.length)) throw new Error('Pass exactly 1 or 15 image paths.');
   resetAnalysisState();
   const results = [];
   const started = performance.now();
   try {
+    if (![1, 15].includes(files.length)) throw new Error('Pass exactly 1 or 15 image paths.');
     for (const [i, file] of files.entries()) {
       // Measure every requested call, including repeated bytes, rather than cache hits.
       resetAnalysisState();

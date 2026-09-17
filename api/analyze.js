@@ -59,8 +59,10 @@ export default async function handler(req, res) {
     const { analysis, execution } = await analyzePhoto({ bytes, photoId, inputIndex, fileRef, mediaType });
     res.setHeader('X-Gyeol-Analysis-Source', execution.source);
     res.setHeader('X-Gyeol-Analysis-Reason', execution.reason);
+    res.setHeader('X-Gyeol-Analysis-Cache', execution.cache_hit ? 'hit' : 'miss');
     return send(200, analysis);
   } catch (error) {
+    if (error.code === 'MODEL_MEDIA_UNSUPPORTED') return fail(415, error.code, error.message);
     if (error.code?.startsWith('MODEL_')) return fail(error.code === 'MODEL_TIMEOUT' ? 504 : 502, error.code, error.message);
     if (error instanceof AnalysisUnavailableError) return fail(422, 'ANALYSIS_UNAVAILABLE', 'Neither the model nor the pixels could be read; no values were invented.');
     if (error.code === 'UNSUPPORTED_MEDIA_TYPE') return fail(415, 'UNSUPPORTED_MEDIA_TYPE', `Supported: ${SUPPORTED_MEDIA_TYPES.join(', ')}`);

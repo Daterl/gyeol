@@ -5,13 +5,13 @@
 lib/target_profile.js·current_profile.js의 집계와 order·feed의 휴리스틱은 보존한다.
 숫자 집계를 모델로 대체하거나 새로운 프로필 API를 추가하지 않는다. target/current 프롬프트는 계속 미배선이며 그 사실을 숨기지 않는다.
 PhotoAnalysis와 나머지 schemas/ 4종은 바꾸지 않는다. 모델 출처는 기존 analysis_source/model/analyzed_at에 남는다.
-라이브러리 반환값 execution은 경로·사유·캐시 여부·실측 지연·토큰 사용량을 담는다. HTTP는 기존 JSON 계약을 유지하고 X-Gyeol-Analysis-Source/Reason 헤더로 경로를 노출한다.
+라이브러리 반환값 execution은 경로·사유·캐시 여부·관측 당시 지연과 Messages 시도 횟수를 담고, 형제 필드 usage가 응답 토큰 사용량을 담는다. 캐시 히트의 지연은 원 관측 당시 값이며 이번 요청 지연이 아니다. HTTP는 기존 JSON 계약을 유지하고 X-Gyeol-Analysis-Source/Reason/Cache 헤더로 경로를 노출한다.
 
 ## 선택과 실패
 ANTHROPIC_API_KEY가 비어 있으면 호출 0회, heuristic + missing_api_key다.
 키가 있으면 공식 문서에 있는 기본 모델을 Models API로 계정 접근 확인한 뒤 Messages API를 부른다.
 선택적 GYEOL_VISION_MODEL로 바꿀 수 있으나 기본 실행에 추가 환경변수는 필요 없다.
-사진은 JPEG/PNG/WebP/GIF 한 장만 전달한다. SVG는 모델 미지원 오류이며 키 없는 fixture 경로는 유지한다.
+사진은 JPEG/PNG/WebP/GIF 한 장만 전달한다. SVG는 모델 미지원 오류(HTTP 415)이며 키 없는 fixture 경로는 유지한다.
 전체 모델 작업 제한은 20초다. 429/5xx만 최대 한 번 재시도하고 네트워크·시간초과·인증·JSON·계약 오류는 재시도하지 않는다.
 모델 실패 시 휴리스틱으로 전환하지 않고 MODEL_* 오류를 반환한다. 공급자 본문이나 키는 오류에 포함하지 않는다.
 모델 JSON은 모든 필수 필드·타입·범위·알려진 키를 검사한 후에만 실측 색상으로 덮어쓴다.
@@ -30,7 +30,7 @@ ANTHROPIC_API_KEY가 비어 있으면 호출 0회, heuristic + missing_api_key�
 | E11 슬롯 사실이 그 사진 분석에서 옴 | 사진 간 사실 이동 | 원 분석의 환각은 검출 못함 |
 | 오류 후 캐시 0, 키/모델 전환 분리 | 실패 고착·휴리스틱을 AI로 오인 | 프로세스 로컬 캐시 |
 
-E1/E2/E3/E6/E8/E9/E10/E11은 문자열·순서 정답 비교 없이 모델 출력에도 적용한다.
+E1/E2/E3/E8/E9/E10/E11은 문자열·순서 정답 비교 없이 모델 분석을 입력으로 받는 순서 경로에도 적용한다. E6은 제목을 만드는 F3 출력에만 적용하며 이번 사진 모델 eval에는 제목 출력이 없으므로 기존 골든 F3 경로에서 검사한다.
 E4/E5/E7 및 사진에 없는 장소·인물·시간·감정 여부는 원본 사진과 사람이 대조해야 한다(PENDING).
 검사기가 모델이 생성한 describable_facts를 외부 정답으로 취급하면 순환 검증이다. 자동 검사 통과를 실제 AI 품질로 보고하지 않는다.
 빈 facts/subjects는 허용한다(P3). 불확실한 관측을 채우도록 강제하지 않는다.
@@ -51,4 +51,6 @@ E4/E5/E7 및 사진에 없는 장소·인물·시간·감정 여부는 원본 �
 키 설정 뒤 사진 파일을 1개 또는 15개 순차 실행하며 실제 elapsed_ms와 usage만 기록한다. 금액은 실제 청구 증거 없이는 PENDING이다.
 
 공식 계약 확인: 2026-09-17, [Messages](https://platform.claude.com/docs/en/api/messages/create), [Models](https://platform.claude.com/docs/en/api/models/list).
-계정 접근·실제 응답·지연·비용은 키 부재로 PENDING이다.
+계정 접근·실제 응답·지연·비용은 키 부재로 PENDING이다. 계정 접근은 사진 요청마다 다시 확인하며 GET 시간도 elapsed_ms에 포함한다. attempts는 Messages POST 응답 횟수이며 전체 HTTP 요청 횟수가 아니다.
+프롬프트 캐싱·effort 설정은 효과와 모델 지원을 실측하지 않았으므로 요청에서 생략한다.
+호출자가 일부 사진 오류를 받으면 그 사진을 성공 슬롯으로 대체하지 말고 오류를 표시하고 재요청해야 한다. 이 PR은 다중 사진 작업의 UI/재개 동작을 만들지 않는다.
