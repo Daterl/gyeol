@@ -4,6 +4,8 @@
 
 작성: 2026-09-17. 범위는 [intent.md](intent.md)의 D1~D6이며 작업 규약은 [CLAUDE.md](../CLAUDE.md)다. 사용자는 AI의 지속적인 로컬 구현·테스트·수정을 승인했다. **사람 소유자는 리뷰 책임자이며, 로컬 초안 편집 권한과 사람 합의·merge 권한을 구분한다.** 공유 파일의 AI 편집도 허용되지만 #1 계약 및 intent C1~C8의 양쪽 사람 합의는 아직 pending이다.
 
+> 브랜치 정책은 [ADR-0004](adr/0004-develop-and-production-branches.md)가 우선한다. 작업은 최신 `origin/develop`에서 시작하고 PR은 `develop`으로 보낸다. 공개 배포는 별도 `develop → main` 릴리스 PR로 진행한다.
+
 ## 근거와 현재 상태
 
 실행 근거는 [intent.md](intent.md)와 GitHub [#1](https://github.com/Daterl/gyeol/issues/1), [#2](https://github.com/Daterl/gyeol/issues/2), [#7](https://github.com/Daterl/gyeol/issues/7), [#8](https://github.com/Daterl/gyeol/issues/8), [#13](https://github.com/Daterl/gyeol/issues/13), [#16](https://github.com/Daterl/gyeol/issues/16)의 교차검증 반영 내용이다. 아래 인수 예외와 책임 분담은 해당 이슈를 기준으로 한다.
@@ -72,7 +74,7 @@ A1은 배포 환경 사진 1장 측정, 함수 실행 상한, 호출 단위 결�
 
 **필수 리뷰나 검증이 pending이어도 Draft PR을 열 수 있다.** 현재 증거와 미완료 게이트를 본문에 표시하고, 부분 구현·인수 대기는 **`Refs #N`**으로 연결한다. 이슈 전체 인수조건을 충족한 경우에만 `Closes #N`을 사용해 조기 자동 종료를 막는다. Ready for review는 크기별 필수 사전 게이트(필요한 테스트·요구사항 검증·L의 두 모델 리뷰·계약 합의)가 통과한 뒤로 제한한다.
 
-Ready 이후 해당 사람 소유자의 리뷰와 상대 사람 리뷰어의 merge를 거친다. 배포 URL에서 기능을 다시 실행해 증거를 남기며 초기 #6 smoke로 최종 배포 확인을 대신하지 않는다. **시간 초과 자동 승인·자동 merge·main 직푸시는 하지 않는다.** 커밋 권한이 주어진 실행에서는 CLAUDE 5-2의 Lore 형식과 실제 작성자 신원을 사용한다.
+Ready 이후 해당 사람 소유자의 리뷰와 상대 사람 리뷰어의 develop merge를 거친다. Preview 검증과 main 릴리스 후 Production 검증을 구분해 증거를 남기며 초기 #6 smoke로 최종 배포 확인을 대신하지 않는다. **시간 초과 자동 승인·자동 merge·main 직푸시는 하지 않는다.** 커밋 권한이 주어진 실행에서는 CLAUDE 5-2의 Lore 형식과 실제 작성자 신원을 사용한다.
 
 ## 실패 처리와 중단 조건
 

@@ -12,6 +12,8 @@
 
 ---
 
+> **2026-09-17 브랜치 정책 변경:** 사용자 지시에 따라 `develop`에서 작업 브랜치를 만들고 기능 PR의 base는 `develop`으로 한다. `main`은 Production 릴리스 전용이다. 상세: [ADR-0004](docs/adr/0004-develop-and-production-branches.md). 이전 main 단일 브랜치 지침보다 이 결정이 우선한다.
+
 ## 0. 한 장 요약
 
 | | 원재 (enzo, `@onejaejae`) | 디에고 (`@jangwonyoon`) |
@@ -56,7 +58,7 @@ intent.md → spec.md → plan.md → 개발 → 테스트·정적 검사 → �
 | **7** | **다중 모델 리뷰** | PR 코멘트 | 서로 다른 모델 2개 이상에게 **같은 diff** 를 보여 주고 지적을 받았다. 지적마다 **반영 / 반영 안 함(+이유)** 이 적혀 있다. **지적 0건도 유효하다.** 모델 식별자·실행 시각·동일 diff 식별자·실제 응답을 남긴다. 실패·미실행을 0건으로 기록하지 않는다 | 이슈 담당자 |
 | **8** | **Draft PR** | GitHub Draft PR | 제목이 `[<이슈번호>] <한 줄>`, 본문에 `Refs #N` + 현재 증거 + pending 게이트. **Draft는 먼저 열 수 있고, Ready는 크기별 필수 사전 게이트 통과 후**다. 전체 인수조건 충족 시에만 `Closes #N`을 쓴다 | 이슈 담당자 |
 | **9** | **사람 merge** | main 커밋 | **사람 상대 리뷰어가 승인하고 merge한다. AI는 merge하지 않는다.** 무응답이면 pending으로 남기고 독립 작업을 계속한다. 시간 초과 예외는 없다 | 상대방 |
-| **10** | **빌드·배포** | 배포 URL | main 에 merge 되면 Vercel 이 자동 배포한다. 배포 실패 시 원인·실패 커밋을 기록하고 되돌림안을 준비한다. 운영 되돌림 실행은 사람 배포 책임자가 판단한다 | 자동 (실패 시 merge 누른 사람) |
+| **10** | **빌드·배포** | 배포 URL | develop 기능 PR은 Preview에서 검증하고, 사람이 릴리스 PR(develop → main)을 merge하면 Vercel Production이 배포된다. 배포 실패 시 원인·실패 커밋을 기록하고 되돌림안을 준비한다. 운영 되돌림 실행은 사람 배포 책임자가 판단한다 | 자동 (실패 시 merge 누른 사람) |
 | **11** | **배포 환경 검증** | 이슈/PR 코멘트 1줄 | **배포된 URL 을 직접 열어서** 해당 기능을 한 번 돌렸다. 로컬에서 됐다는 것은 이 게이트를 통과시키지 않는다 | 이슈 담당자 |
 | **12** | **다음 개선 후보** | 이슈 1개 또는 "없음" 코멘트 | 하고 싶었는데 안 한 것을 **이슈로 적고 닫지 않는다.** 단, 새 이슈를 여는 것과 **지금 하는 것은 다르다** — 여는 것은 자유, 하는 것은 8절 규칙을 따른다 | 이슈 담당자 |
 
@@ -207,13 +209,15 @@ docs/intent.md       ★ 공동       무엇을 만드는지의 원천. 뒤집�
 
 ### 5-1. 브랜치
 ```
-main                         유일한 장기 브랜치. 여기가 곧 배포다
+main                         Production 릴리스 전용
+develop                      개발 통합·기본 브랜치. 모든 작업 브랜치의 출발점
 feat/<이슈번호>-<슬러그>       기능        예: feat/12-photo-analysis
 fix/<이슈번호>-<슬러그>        버그
 docs/<슬러그>                 문서만
 ```
-- `develop` 을 만들지 않는다. 3.5일에 장기 브랜치가 둘이면 머지 비용만 는다.
-- 브랜치는 **하루를 넘기지 않는다.** 하루 넘게 살아 있으면 이슈가 너무 큰 것이다 — 쪼갠다.
+- 최신 `origin/develop`에서 작업 브랜치를 만들고 기능·수정·문서 PR은 `develop`을 대상으로 한다.
+- `develop → main` PR은 배포할 때만 만든다. `main`과 `develop`은 삭제하거나 force-push하지 않는다.
+- 작업 브랜치는 **하루를 넘기지 않는다.** 하루 넘게 살아 있으면 이슈가 너무 큰 것이다 — 쪼갠다.
 - **AI 변경은 크기와 무관하게 작업 브랜치와 Draft PR을 쓴다.** main 직푸시·자동 merge는 하지 않는다.
 
 ### 5-2. 커밋
@@ -241,7 +245,7 @@ Not-tested: 실제로 확인하지 못한 항목
 - 제목: `[<이슈번호>] <한 줄>`
 - 본문: `Refs #N` / 현재 스크린샷 또는 터미널 출력 / 완료 조건별 통과·pending·해당없음. **부분 구현이나 인수 대기에는 `Refs #N`을 유지**하고, 전체 인수조건이 충족된 이슈에만 `Closes #N`을 사용한다.
 - **merge는 상대 사람 리뷰어가 누른다**(1-1절 9번). 시간 초과 자동 승인·셀프 merge 예외는 없다.
-- merge 방식은 **Squash and merge** 하나만 쓴다. 되돌릴 때 커밋 하나만 revert 하면 되기 때문이다.
+- 작업 브랜치 → `develop`은 **Squash and merge**. 장기 브랜치 `develop → main` 릴리스는 **merge commit**으로 공통 이력을 보존한다. AI는 두 경우 모두 merge하지 않는다.
 - **CI 를 만들지 않는다.** 3.5일에 CI 설정 비용이 이득보다 크다. 필수인 `npm test`는 Ready 전 로컬에서 돌리고, Draft에서 미실행이면 pending으로 표시한다.
 
 ---
@@ -324,7 +328,7 @@ Evidence = { "kind": "ig_post"|"uploaded_photo"|"user_text"|"aggregate"|"rule",
 | **프론트엔드** | **Next.js App Router + React + TypeScript strict** (`src/`) | 사용자 확정 스택. 기존 HTML의 시각·흐름을 재사용한다 (#23) |
 | **상태·스타일** | **Zustand · Tailwind CSS · shadcn/ui · tailwind-variants(tv)** | 공유 편집 상태와 UI 변형을 관리한다. 구현 시 최신 stable·peer 호환을 확인한다 |
 | **서버** | **Next.js Route Handlers** (`src/app/api/**/route.ts`, Node runtime) | 기존 lib/·계약·검증을 재사용하고 API 키를 서버에 둔다. HTTP 경로는 유지한다 |
-| **배포** | **Vercel. `main` push = 자동 배포** | 배포 파이프라인을 따로 만들 시간이 없다. merge 가 곧 배포여야 11단계(배포 환경 검증)가 실제로 돈다 |
+| **배포** | **Vercel. `main` = Production, 나머지 = Preview** | 개발 통합은 develop에서 검증하고, 명시적인 릴리스 PR으로 공개 배포 시점을 분리한다 |
 | **AI** | **Anthropic API, 계정에서 사용 가능함을 확인한 모델** (`config/models.json`) | 실호출 전에 공식 제공 정보·계정 접근을 확인하고 모델 ID·확인 시각·응답 증거를 기록한다. 미확인 모델 ID를 하드코딩하지 않는다. foundation은 호출 0회다 |
 | **데이터 저장** | **없음.** 세션 메모리 + `fixtures/` 정적 JSON | 로그인이 없으므로(6-3 a) 저장된 데이터의 주인을 식별할 수 없다. DB 를 붙이면 붙이는 시간만 든다 |
 | **정적 검사** | **Biome lint·format·import + TypeScript strict** | 신규 src·FE 설정에 적용하며 기존 서버 검증을 유지한다 |
