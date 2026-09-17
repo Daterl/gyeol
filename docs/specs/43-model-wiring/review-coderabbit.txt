@@ -1,0 +1,13 @@
+{"type":"review_context","reviewType":"all","currentBranch":"feat/43-model-wiring","baseBranch":"dev","workingDirectory":"/Users/chowonjae/Desktop/projects/wanted/.work/gyeol-43"}
+{"type":"status","phase":"connecting","status":"connecting_to_review_service"}
+{"type":"status","phase":"analyzing","status":"setting_up","message":"Daterl/gyeol is not connected to a CodeRabbit organization you can access, so this review will use the free CLI allowance.\n\nIf you expected an org plan here, check your signed-in account with coderabbit auth status, or install CodeRabbit for Daterl/gyeol at https://app.coderabbit.ai"}
+{"type":"status","phase":"setup","status":"setting_up"}
+{"type":"status","phase":"analyzing","status":"summarizing"}
+{"type":"status","phase":"analyzing","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"heartbeat","status":"reviewing"}
+{"type":"complete","status":"review_completed","findings":0,"reviewedFiles":[".env.example","api/analyze.js","config/models.json","docs/specs/43-model-wiring/baseline.txt","docs/specs/43-model-wiring/check.txt","docs/specs/43-model-wiring/eval.txt","docs/specs/43-model-wiring/intent.md","docs/specs/43-model-wiring/measurement.txt","docs/specs/43-model-wiring/plan.md","docs/specs/43-model-wiring/report.md","docs/specs/43-model-wiring/spec.md","docs/specs/43-model-wiring/targeted.txt","docs/specs/43-model-wiring/test.txt","eval/model-path.js","eval/run.js","lib/model.js","lib/photo_analysis.js","scripts/measure-model.js","test/model.test.js","test/photo_analysis.test.js"]}
