@@ -1,0 +1,807 @@
+{
+  "schema_version": "1.0",
+  "feed_id": "fd_tgt_quiet_freetext_2273a81b",
+  "session_id": "ss_2273a81b",
+  "applied_profile": {
+    "target_profile_id": "tgt_quiet_freetext",
+    "current_profile_id": "cur_synthetic",
+    "corrected": true,
+    "disclosure": "corrected",
+    "deltas": [
+      {
+        "field": "language.caption_len.p50",
+        "target": 15,
+        "current": 18,
+        "resolved": 16,
+        "rule": "log_midpoint",
+        "note_key": "caption_len_gap",
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:짧게",
+            "note": "입력 문장에서 \"짧게\" 를 찾았다"
+          },
+          {
+            "kind": "rule",
+            "ref": "docs/specs/10-target-profile/spec.md#3",
+            "note": "짧게·간결·짤막·한 줄 → p50 15자 / p90 30자"
+          },
+          {
+            "kind": "user_text",
+            "ref": "tgt_synthetic_quiet:input",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          },
+          {
+            "kind": "rule",
+            "ref": "compose.log_midpoint",
+            "note": "p50=round(expm1((log1p(target)+log1p(current))/2)); p90=max(target.p90,resolved); 설계 규칙이며 재측정한 분포가 아니다"
+          }
+        ]
+      }
+    ],
+    "visual": {
+      "tone_words": {
+        "value": [
+          "조용",
+          "짧게",
+          "이모지 없이"
+        ],
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:raw",
+            "note": "사용자가 쓴 표현을 그대로 옮겼다"
+          }
+        ]
+      }
+    },
+    "language": {
+      "caption_len": {
+        "value": {
+          "p50": 16,
+          "p90": 30,
+          "unit": "자"
+        },
+        "confidence": 0.6,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:짧게",
+            "note": "입력 문장에서 \"짧게\" 를 찾았다"
+          },
+          {
+            "kind": "rule",
+            "ref": "docs/specs/10-target-profile/spec.md#3",
+            "note": "짧게·간결·짤막·한 줄 → p50 15자 / p90 30자"
+          },
+          {
+            "kind": "user_text",
+            "ref": "tgt_synthetic_quiet:input",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          },
+          {
+            "kind": "rule",
+            "ref": "compose.log_midpoint",
+            "note": "p50=round(expm1((log1p(target)+log1p(current))/2)); p90=max(target.p90,resolved); 설계 규칙이며 재측정한 분포가 아니다"
+          }
+        ]
+      },
+      "emoji_rate": {
+        "value": 0,
+        "confidence": 0.7,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:이모지 없이",
+            "note": "입력 문장에서 \"이모지 없이\" 를 찾았다"
+          },
+          {
+            "kind": "rule",
+            "ref": "docs/specs/10-target-profile/spec.md#3",
+            "note": "이모지 없이 → 0개"
+          }
+        ]
+      },
+      "ending_style": {
+        "value": "해요",
+        "confidence": 0.6,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:해요",
+            "note": "입력 문장에서 \"해요\" 를 찾았다"
+          },
+          {
+            "kind": "rule",
+            "ref": "docs/specs/10-target-profile/spec.md#3",
+            "note": "해요·존댓말 → 해요체"
+          }
+        ]
+      },
+      "banned_words": [
+        "이처럼",
+        "또한",
+        "이를 통해",
+        "이러한",
+        "마침내"
+      ]
+    },
+    "sequence": {
+      "carousel_count": 0
+    }
+  },
+  "slots": [
+    {
+      "position": 1,
+      "photo_id": "ph_11",
+      "narrative_role": "opener",
+      "rationale": {
+        "value": "밝기 0.808 · 채도 0.086 · 한 색이 넓게 깔린 화면이라 지향 방향(조용한 쪽) 점수가 입력 20장 중 가장 높아 1번에 뒀다",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_11",
+            "note": "측정값 — 밝기 0.808 · 채도 0.086 · 한 색이 넓게 깔림 · 주요 색 #fcfcfc"
+          },
+          {
+            "kind": "user_text",
+            "ref": "tgt_quiet_freetext:raw",
+            "note": "사용자가 쓴 표현을 그대로 옮겼다"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R1",
+            "note": "서사 규칙 R1 — 첫 자리는 지향 방향 점수가 가장 높은 사진. 지향 문구 \"조용 짧게 이모지 없이\" 를 조용한 쪽으로 읽었다 (측정이 아니라 해석이다)"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1440 세로 이미지",
+          "평균 밝기 0.808 (밝음)",
+          "평균 채도 0.086 (매우 낮음)",
+          "주요 색 #fcfcfc (점유 57%)",
+          "주요 색 #c0c0bf (점유 10%)",
+          "주요 색 #9b9a97 (점유 8%)"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 2,
+      "photo_id": "ph_02",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.296 로 남은 사진 중 가장 멀어 2번에 뒀다 (밝기 0.346 · 채도 0.273)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "측정값 — 밝기 0.346 · 채도 0.273 · 한 색이 넓게 깔림 · 주요 색 #0a1014"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.346 (다소 어두움)",
+          "평균 채도 0.273 (낮음)",
+          "주요 색 #0a1014 (점유 31%)",
+          "주요 색 #bdbbba (점유 12%)",
+          "주요 색 #374249 (점유 11%)"
+        ],
+        "adjacent_overlap": 0.704,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 3,
+      "photo_id": "ph_19",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.229 로 남은 사진 중 가장 멀어 3번에 뒀다 (밝기 0.676 · 채도 0.182)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_19",
+            "note": "측정값 — 밝기 0.676 · 채도 0.182 · 한 색이 넓게 깔리지 않음 · 주요 색 #c6beb8"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1078×1350 세로 이미지",
+          "평균 밝기 0.676 (중간)",
+          "평균 채도 0.182 (낮음)",
+          "주요 색 #c6beb8 (점유 23%)",
+          "주요 색 #dcccbd (점유 17%)",
+          "주요 색 #c8b29c (점유 13%)"
+        ],
+        "adjacent_overlap": 0.771,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 4,
+      "photo_id": "ph_01",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.187 로 남은 사진 중 가장 멀어 4번에 뒀다 (밝기 0.375 · 채도 0.288)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.375 (다소 어두움)",
+          "평균 채도 0.288 (낮음)",
+          "주요 색 #16150f (점유 26%)",
+          "주요 색 #434040 (점유 14%)",
+          "주요 색 #6b6765 (점유 10%)"
+        ],
+        "adjacent_overlap": 0.813,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 5,
+      "photo_id": "ph_09",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.179 로 남은 사진 중 가장 멀어 5번에 뒀다 (밝기 0.612 · 채도 0.097)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_09",
+            "note": "측정값 — 밝기 0.612 · 채도 0.097 · 한 색이 넓게 깔림 · 주요 색 #bfc1bf"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1078×1350 세로 이미지",
+          "평균 밝기 0.612 (중간)",
+          "평균 채도 0.097 (매우 낮음)",
+          "주요 색 #bfc1bf (점유 38%)",
+          "주요 색 #e2e3e3 (점유 10%)",
+          "주요 색 #9c9c97 (점유 10%)"
+        ],
+        "adjacent_overlap": 0.821,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 6,
+      "photo_id": "ph_04",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.165 로 남은 사진 중 가장 멀어 6번에 뒀다 (밝기 0.441 · 채도 0.362)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_04",
+            "note": "측정값 — 밝기 0.441 · 채도 0.362 · 한 색이 넓게 깔리지 않음 · 주요 색 #17100e"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1440×1800 세로 이미지",
+          "평균 밝기 0.441 (다소 어두움)",
+          "평균 채도 0.362 (중간)",
+          "주요 색 #17100e (점유 14%)",
+          "주요 색 #362114 (점유 12%)",
+          "주요 색 #413d3f (점유 10%)"
+        ],
+        "adjacent_overlap": 0.835,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 7,
+      "photo_id": "ph_14",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.116 로 남은 사진 중 가장 멀어 7번에 뒀다 (밝기 0.555 · 채도 0.176)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_14",
+            "note": "측정값 — 밝기 0.555 · 채도 0.176 · 한 색이 넓게 깔리지 않음 · 주요 색 #161618"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1346 세로 이미지",
+          "평균 밝기 0.555 (중간)",
+          "평균 채도 0.176 (낮음)",
+          "주요 색 #161618 (점유 13%)",
+          "주요 색 #e6e6e3 (점유 12%)",
+          "주요 색 #747270 (점유 11%)"
+        ],
+        "adjacent_overlap": 0.884,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 8,
+      "photo_id": "ph_06",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.095 로 남은 사진 중 가장 멀어 8번에 뒀다 (밝기 0.429 · 채도 0.188)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_06",
+            "note": "측정값 — 밝기 0.429 · 채도 0.188 · 한 색이 넓게 깔리지 않음 · 주요 색 #c2c1c1"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.429 (다소 어두움)",
+          "평균 채도 0.188 (낮음)",
+          "주요 색 #c2c1c1 (점유 24%)",
+          "주요 색 #0d1015 (점유 21%)",
+          "주요 색 #403d3b (점유 19%)"
+        ],
+        "adjacent_overlap": 0.905,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 9,
+      "photo_id": "ph_03",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.161 로 남은 사진 중 가장 멀어 9번에 뒀다 (밝기 0.589 · 채도 0.343)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_03",
+            "note": "측정값 — 밝기 0.589 · 채도 0.343 · 한 색이 넓게 깔리지 않음 · 주요 색 #120d0d"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.589 (중간)",
+          "평균 채도 0.343 (중간)",
+          "주요 색 #120d0d (점유 9%)",
+          "주요 색 #e0eaeb (점유 8%)",
+          "주요 색 #777366 (점유 8%)"
+        ],
+        "adjacent_overlap": 0.839,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 10,
+      "photo_id": "ph_16",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.151 로 남은 사진 중 가장 멀어 10번에 뒀다 (밝기 0.419 · 채도 0.124)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_16",
+            "note": "측정값 — 밝기 0.419 · 채도 0.124 · 한 색이 넓게 깔리지 않음 · 주요 색 #3e3e3e"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.419 (다소 어두움)",
+          "평균 채도 0.124 (매우 낮음)",
+          "주요 색 #3e3e3e (점유 22%)",
+          "주요 색 #1b1b1a (점유 21%)",
+          "주요 색 #6c6b69 (점유 13%)"
+        ],
+        "adjacent_overlap": 0.849,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 11,
+      "photo_id": "ph_17",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.107 로 남은 사진 중 가장 멀어 11번에 뒀다 (밝기 0.57 · 채도 0.214)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_17",
+            "note": "측정값 — 밝기 0.57 · 채도 0.214 · 한 색이 넓게 깔리지 않음 · 주요 색 #c0c0b9"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.57 (중간)",
+          "평균 채도 0.214 (낮음)",
+          "주요 색 #c0c0b9 (점유 17%)",
+          "주요 색 #141219 (점유 16%)",
+          "주요 색 #969999 (점유 8%)"
+        ],
+        "adjacent_overlap": 0.893,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 12,
+      "photo_id": "ph_12",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.092 로 남은 사진 중 가장 멀어 12번에 뒀다 (밝기 0.472 · 채도 0.322)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_12",
+            "note": "측정값 — 밝기 0.472 · 채도 0.322 · 한 색이 넓게 깔리지 않음 · 주요 색 #9a8c78"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.472 (중간)",
+          "평균 채도 0.322 (중간)",
+          "주요 색 #9a8c78 (점유 18%)",
+          "주요 색 #746d5f (점유 12%)",
+          "주요 색 #afa28c (점유 12%)"
+        ],
+        "adjacent_overlap": 0.908,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 13,
+      "photo_id": "ph_15",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.068 로 남은 사진 중 가장 멀어 13번에 뒀다 (밝기 0.524 · 채도 0.196)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_15",
+            "note": "측정값 — 밝기 0.524 · 채도 0.196 · 한 색이 넓게 깔리지 않음 · 주요 색 #c2c0bc"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.524 (중간)",
+          "평균 채도 0.196 (낮음)",
+          "주요 색 #c2c0bc (점유 13%)",
+          "주요 색 #141314 (점유 12%)",
+          "주요 색 #433e3b (점유 11%)"
+        ],
+        "adjacent_overlap": 0.932,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 14,
+      "photo_id": "ph_07",
+      "narrative_role": "turn",
+      "rationale": {
+        "value": "채도 0.399 로 남은 사진 중 가장 진해 14번 전환 자리에 뒀다",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_07",
+            "note": "측정값 — 밝기 0.512 · 채도 0.399 · 한 색이 넓게 깔림 · 주요 색 #060e1b"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R3",
+            "note": "서사 규칙 R3 — 전환 자리는 남은 사진 중 채도가 가장 높은 사진"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.512 (중간)",
+          "평균 채도 0.399 (중간)",
+          "주요 색 #060e1b (점유 30%)",
+          "주요 색 #bbbcbd (점유 16%)",
+          "주요 색 #c2b39a (점유 10%)"
+        ],
+        "adjacent_overlap": 0.899,
+        "is_visual_peak": true
+      }
+    },
+    {
+      "position": 15,
+      "photo_id": "ph_18",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.143 로 남은 사진 중 가장 멀어 15번에 뒀다 (밝기 0.416 · 채도 0.221)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_18",
+            "note": "측정값 — 밝기 0.416 · 채도 0.221 · 한 색이 넓게 깔림 · 주요 색 #1a1a1a"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.416 (다소 어두움)",
+          "평균 채도 0.221 (낮음)",
+          "주요 색 #1a1a1a (점유 29%)",
+          "주요 색 #393c3d (점유 18%)",
+          "주요 색 #eae7e4 (점유 9%)"
+        ],
+        "adjacent_overlap": 0.857,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 16,
+      "photo_id": "ph_13",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.067 로 남은 사진 중 가장 멀어 16번에 뒀다 (밝기 0.501 · 채도 0.293)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_13",
+            "note": "측정값 — 밝기 0.501 · 채도 0.293 · 한 색이 넓게 깔리지 않음 · 주요 색 #100e0e"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.501 (중간)",
+          "평균 채도 0.293 (낮음)",
+          "주요 색 #100e0e (점유 21%)",
+          "주요 색 #c3c1bd (점유 11%)",
+          "주요 색 #e8e9e7 (점유 10%)"
+        ],
+        "adjacent_overlap": 0.933,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 17,
+      "photo_id": "ph_10",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.054 로 남은 사진 중 가장 멀어 17번에 뒀다 (밝기 0.456 · 채도 0.214)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_10",
+            "note": "측정값 — 밝기 0.456 · 채도 0.214 · 한 색이 넓게 깔리지 않음 · 주요 색 #6b6865"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1620×2025 세로 이미지",
+          "평균 밝기 0.456 (중간)",
+          "평균 채도 0.214 (낮음)",
+          "주요 색 #6b6865 (점유 16%)",
+          "주요 색 #15171c (점유 14%)",
+          "주요 색 #999492 (점유 12%)"
+        ],
+        "adjacent_overlap": 0.946,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 18,
+      "photo_id": "ph_20",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.029 로 남은 사진 중 가장 멀어 18번에 뒀다 (밝기 0.442 · 채도 0.27)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_20",
+            "note": "측정값 — 밝기 0.442 · 채도 0.27 · 한 색이 넓게 깔림 · 주요 색 #141216"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1080×1346 세로 이미지",
+          "평균 밝기 0.442 (다소 어두움)",
+          "평균 채도 0.27 (낮음)",
+          "주요 색 #141216 (점유 31%)",
+          "주요 색 #f7eee5 (점유 13%)",
+          "주요 색 #403e3e (점유 7%)"
+        ],
+        "adjacent_overlap": 0.971,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 19,
+      "photo_id": "ph_08",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "앞자리 사진과 측정 색 거리 0.02 로 남은 사진 중 가장 멀어 19번에 뒀다 (밝기 0.452 · 채도 0.241)",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_08",
+            "note": "측정값 — 밝기 0.452 · 채도 0.241 · 한 색이 넓게 깔리지 않음 · 주요 색 #44413a"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R4",
+            "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "3072×4096 세로 이미지",
+          "평균 밝기 0.452 (중간)",
+          "평균 채도 0.241 (낮음)",
+          "주요 색 #44413a (점유 17%)",
+          "주요 색 #c2b3a3 (점유 14%)",
+          "주요 색 #6f6860 (점유 12%)"
+        ],
+        "adjacent_overlap": 0.98,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 20,
+      "photo_id": "ph_05",
+      "narrative_role": "closer",
+      "rationale": {
+        "value": "밝기 0.328 로 남은 사진 중 가장 어두워 마지막 20번에 뒀다",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_05",
+            "note": "측정값 — 밝기 0.328 · 채도 0.301 · 한 색이 넓게 깔림 · 주요 색 #171a18"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R2",
+            "note": "서사 규칙 R2 — 마지막 자리는 남은 사진 중 가장 어두운 사진"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "1440×1800 세로 이미지",
+          "평균 밝기 0.328 (다소 어두움)",
+          "평균 채도 0.301 (중간)",
+          "주요 색 #171a18 (점유 29%)",
+          "주요 색 #3a3c3f (점유 15%)",
+          "주요 색 #383e22 (점유 8%)"
+        ],
+        "adjacent_overlap": 0.9,
+        "is_visual_peak": false
+      }
+    }
+  ],
+  "invariants": {
+    "input_count": 20,
+    "output_count": 20,
+    "unique_photo_ids": true
+  },
+  "generated_at": "2026-09-17T00:00:00.000Z"
+}
