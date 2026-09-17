@@ -1,0 +1,62 @@
+{
+  "slots": [
+    {
+      "photo_id": "c7a8e796-0261-448b-a671-e217f2a1bfb4",
+      "position": 1,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "c7a8e796-0261-448b-a671-e217f2a1bfb4",
+          "note": "96×64 가로 이미지"
+        },
+        {
+          "kind": "user_text",
+          "note": "사용자가 설명을 비움",
+          "ref": "c7a8e796-0261-448b-a671-e217f2a1bfb4"
+        }
+      ],
+      "caption_state": "omitted",
+      "text": null,
+      "omit_reason": "직접 비워 두었어요."
+    },
+    {
+      "photo_id": "51c4238f-6a4e-4e8e-b03f-ddff35691cbe",
+      "position": 2,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "51c4238f-6a4e-4e8e-b03f-ddff35691cbe",
+          "note": "96×64 가로 이미지"
+        },
+        {
+          "kind": "user_text",
+          "note": "사용자가 설명을 비움",
+          "ref": "51c4238f-6a4e-4e8e-b03f-ddff35691cbe"
+        }
+      ],
+      "caption_state": "omitted",
+      "text": null,
+      "omit_reason": "직접 비워 두었어요."
+    },
+    {
+      "photo_id": "42d9551d-e708-463e-94ed-26bd87a310b5",
+      "position": 3,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "42d9551d-e708-463e-94ed-26bd87a310b5",
+          "note": "96×64 가로 이미지"
+        },
+        {
+          "kind": "user_text",
+          "note": "사용자가 설명을 비움",
+          "ref": "42d9551d-e708-463e-94ed-26bd87a310b5"
+        }
+      ],
+      "caption_state": "omitted",
+      "text": null,
+      "omit_reason": "직접 비워 두었어요."
+    }
+  ],
+  "title": "모두 비운 QA 기록"
+}

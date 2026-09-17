@@ -6,6 +6,7 @@ import { useStore } from 'zustand';
 import { Button } from '@/components/ui/button';
 import deltaCopy from '@/copy/deltas.ko.json';
 import type { AppliedProfile } from '@/types/contracts';
+import { CaptionEditor, OutputControls } from '../captions/caption-editor';
 import type { EditorStore } from '../editor/store';
 
 export function deltaSentence(delta: AppliedProfile['deltas'][number]) {
@@ -15,7 +16,13 @@ export function deltaSentence(delta: AppliedProfile['deltas'][number]) {
     .replace('{resolved}', String(delta.resolved));
 }
 
-export function ResultScreen({ store }: { store: EditorStore }) {
+export function ResultScreen({
+  store,
+  mock = false,
+}: {
+  store: EditorStore;
+  mock?: boolean;
+}) {
   const original = useStore(store, (state) => state.original);
   const order = useStore(store, (state) => state.order);
   const photos = useStore(store, (state) => state.photos);
@@ -86,6 +93,7 @@ export function ResultScreen({ store }: { store: EditorStore }) {
       <p role="status" className="sr-only">
         {announcement}
       </p>
+      <OutputControls store={store} mock={mock} />
       <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {order.map((id, index) => {
           const slot = feed.slots.find((item) => item.photo_id === id);
@@ -195,6 +203,7 @@ export function ResultScreen({ store }: { store: EditorStore }) {
                   뒤로
                 </Button>
               </div>
+              <CaptionEditor store={store} id={id} mock={mock} />
             </li>
           );
         })}
