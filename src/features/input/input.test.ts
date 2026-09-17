@@ -68,6 +68,15 @@ test('blank identity is valid and mutually exclusive or unsupported URLs fail be
       true,
     ),
   ).rejects.toMatchObject({ code: 'INVALID_IDENTITY' });
+  await expect(
+    submitPhotos(
+      selected(),
+      Array.from({ length: 21 }, () => selected()[0]),
+      fields,
+      new AbortController().signal,
+      true,
+    ),
+  ).rejects.toMatchObject({ code: 'INVALID_SELECTION' });
   expect(fetcher).not.toHaveBeenCalled();
 });
 test('upload-to-feed keeps selected IDs, sends each file once and uses the no-model path', async () => {

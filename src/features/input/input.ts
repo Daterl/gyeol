@@ -112,6 +112,11 @@ export async function submitPhotos(
 ) {
   if (photos.length < 3 || photos.length > 20)
     throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~20장 골라 주세요.');
+  if (oldPhotos.length > 20)
+    throw new ApiError(
+      'INVALID_SELECTION',
+      '기존 게시물 사진은 20장까지 골라 주세요.',
+    );
   // Validate identity conflicts before any file leaves the browser; full posts identity is checked after analysis.
   if (fields.currentUrl.trim() && oldPhotos.length)
     throw new ApiError(
