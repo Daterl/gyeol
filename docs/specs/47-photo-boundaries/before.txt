@@ -1,0 +1,110 @@
+✖ hidden SVG roots and invalid numeric entities fail without invented observations (1.706458ms)
+✖ JPEG invalid headers are rejected before allocating pixel grids (2.804375ms)
+✖ returned facts and measurement cannot mutate later cache hits (2.248084ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 309.797875
+
+✖ failing tests:
+
+test at test/photo-boundaries.test.js:10:1
+✖ hidden SVG roots and invalid numeric entities fail without invented observations (1.706458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + {
+  +   blocks: 1,
+  +   color: {
+  +     bright_mean: 1,
+  +     hue_mean: 0,
+  +     palette_hex: [
+  +       '#ffffff'
+  +     ],
+  +     sat_mean: 0
+  +   },
+  +   detail: 0,
+  +   dominantShare: 1,
+  +   height: 16,
+  +   shares: [
+  +     1
+  +   ],
+  +   source: 'svg-card',
+  +   text_in_image: 'sample',
+  +   width: 16
+  + }
+  - null
+
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/test/photo-boundaries.test.js:17:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { source: 'svg-card', width: 16, height: 16, blocks: 1, detail: 0, dominantShare: 1, text_in_image: 'sample', color: { hue_mean: 0, sat_mean: 0, bright_mean: 1, palette_hex: [Array] }, shares: [ 1 ] },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/photo-boundaries.test.js:23:1
+✖ JPEG invalid headers are rejected before allocating pixel grids (2.804375ms)
+  Error: Invalid header reached pixel allocation
+      at new globalThis.Float64Array (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/test/photo-boundaries.test.js:34:61)
+      at decodeDcScan (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/lib/jpeg_dc.js:106:14)
+      at readJpegBlocks (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/lib/jpeg_dc.js:209:24)
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/test/photo-boundaries.test.js:35:73)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+
+test at test/photo-boundaries.test.js:39:1
+✖ returned facts and measurement cannot mutate later cache hits (2.248084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    {
+      analysis_source: 'heuristic',
+      analyzed_at: '2026-09-17T09:15:47.117Z',
+      color: {
+        bright_mean: 1,
+  ...
+          '#ffffff',
+  +       '#000000'
+        ],
+        sat_mean: 0
+      },
+      composition: 'full_frame',
+      describable_facts: [
+  ...
+        '주요 색 #ffffff (점유 100%)',
+  +     'invented'
+      ],
+      file_ref: 'boundary.svg',
+      has_face: false,
+      input_index: 0,
+      model: 'heuristic-svg-card@1',
+  ...
+      schema_version: '1.0',
+  +   subjects: [
+  +     'not observed'
+  +   ],
+  -   subjects: [],
+      text_in_image: 'sample'
+    }
+
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/47-photo-boundaries/test/photo-boundaries.test.js:47:10)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schema_version: '1.0', photo_id: 'boundary', file_ref: 'boundary.svg', input_index: 0, color: { hue_mean: 0, sat_mean: 0, bright_mean: 1, palette_hex: [Array] }, composition: 'full_frame', scale: 'midshot', subjects: [ 'not observed' ], has_face: false, text_in_image: 'sample', describable_facts: [ '16×16 정사각 이미지', '평균 밝기 1 (밝음)', '평균 채도 0 (매우 낮음)', '주요 색 #ffffff (점유 100%)', 'invented' ], quality_flags: [], analysis_source: 'heuristic', model: 'heuristic-svg-card@1', analyzed_at: '2026-09-17T09:15:47.117Z' },
+    expected: { schema_version: '1.0', photo_id: 'boundary', file_ref: 'boundary.svg', input_index: 0, color: { hue_mean: 0, sat_mean: 0, bright_mean: 1, palette_hex: [Array] }, composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false, text_in_image: 'sample', describable_facts: [ '16×16 정사각 이미지', '평균 밝기 1 (밝음)', '평균 채도 0 (매우 낮음)', '주요 색 #ffffff (점유 100%)' ], quality_flags: [], analysis_source: 'heuristic', model: 'heuristic-svg-card@1', analyzed_at: '2026-09-17T09:15:47.117Z' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
