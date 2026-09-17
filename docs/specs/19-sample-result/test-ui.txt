@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/19-sample-result
+
+
+ Test Files  9 passed (9)
+      Tests  29 passed (29)
+   Start at  20:14:37
+   Duration  406ms (transform 57%, import 32%, tests 9%, worker 2%)

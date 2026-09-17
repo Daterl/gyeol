@@ -1,37 +1,56 @@
-import { afterEach, expect, it, vi } from 'vitest';
-import feed from '../../../fixtures/ordered_feed.sample.json';
-import { loadSample } from './sample';
+import { readFileSync } from 'node:fs';
+import { afterEach, expect, test, vi } from 'vitest';
+import type { F3Export, FeedResponse } from '@/types/contracts';
+import sample from '../../../fixtures/sample_result.json';
+import {
+  validateFeedResponse,
+  validateGenerateResponse,
+} from '../../../lib/interaction.js';
+import { previewOutput } from '../captions/preview-output';
+import { createEditorStore } from '../editor/store';
 
-afterEach(() => vi.restoreAllMocks());
-
-it('orders by position without changing IDs or evidence', async () => {
-  vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-    Response.json({ ...feed, slots: feed.slots.toReversed() }),
+afterEach(() => vi.unstubAllGlobals());
+test('sample photos, observations and output match and local replay makes no network call', async () => {
+  const fetcher = vi.fn();
+  vi.stubGlobal('fetch', fetcher);
+  validateFeedResponse(sample.response);
+  validateGenerateResponse(
+    { output: sample.output },
+    { ...sample.response, schema_version: '1.0', mode: 'all' },
   );
-  const signal = new AbortController().signal;
-  expect(await loadSample(signal)).toEqual(feed.slots);
-  expect(fetch).toHaveBeenCalledWith('/api/feed?mock=1', {
-    cache: 'no-store',
-    signal,
-  });
-});
-
-it.each([
-  {},
-  { slots: [] },
-  { slots: [{ photo_id: 'ph_01', position: 1 }] },
-  { slots: [feed.slots[0], feed.slots[0]] },
-  { slots: [{ ...feed.slots[0], position: 2 }] },
-])('rejects malformed or ambiguous output', async (data) => {
-  vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json(data));
-  await expect(loadSample(new AbortController().signal)).rejects.toThrow();
-});
-
-it('does not present an HTTP failure as a sample', async () => {
-  vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-    new Response(null, { status: 500 }),
-  );
-  await expect(loadSample(new AbortController().signal)).rejects.toThrow(
-    '다시 시도',
-  );
+  expect(sample.provenance.synthetic).toBe(true);
+  expect(
+    sample.output.slots.some((slot) => slot.caption_state === 'omitted'),
+  ).toBe(true);
+  for (const photo of sample.response.context.photos) {
+    const image = sample.images[photo.photo_id as keyof typeof sample.images];
+    expect(image.src).toBe(`/samples/${photo.file_ref}`);
+    const bytes = readFileSync(
+      new URL(`../../../public${image.src}`, import.meta.url),
+    );
+    expect([...bytes.subarray(0, 8)]).toEqual([
+      137, 80, 78, 71, 13, 10, 26, 10,
+    ]);
+    expect(photo.model).toContain('manual sample annotation');
+  }
+  const store = createEditorStore();
+  await store
+    .getState()
+    .loadFeed(async () => structuredClone(sample.response) as FeedResponse);
+  await store.getState().generate(undefined, async () => ({
+    output: structuredClone(sample.output) as F3Export,
+  }));
+  expect(store.getState().request.status).toBe('ready');
+  expect(store.getState().exportDraft().title).toBe('빛이 머문 자리');
+  const omitted = store
+    .getState()
+    .draft?.slots.find((slot) => slot.caption_state === 'omitted');
+  await store.getState().generate(omitted?.photo_id, previewOutput);
+  expect(
+    store
+      .getState()
+      .draft?.slots.find((slot) => slot.photo_id === omitted?.photo_id)
+      ?.caption_state,
+  ).toBe('filled');
+  expect(fetcher).not.toHaveBeenCalled();
 });

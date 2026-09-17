@@ -1,0 +1,453 @@
+{
+  "provenance": {
+    "synthetic": true,
+    "description": "AI로 만든 이미지 3장. 픽셀값은 로컬 측정, 사물 관찰·순서·문장은 사전 작성. 실제 계정·실시간 모델 결과가 아님."
+  },
+  "images": {
+    "sample_coffee": {
+      "src": "/samples/coffee.png",
+      "alt": "나무 테이블 위의 커피잔"
+    },
+    "sample_leaves": {
+      "src": "/samples/leaves.png",
+      "alt": "햇빛이 비치는 초록 잎"
+    },
+    "sample_sea": {
+      "src": "/samples/sea.png",
+      "alt": "초록빛 바다와 주황색 부표"
+    }
+  },
+  "response": {
+    "feed": {
+      "schema_version": "1.1",
+      "feed_id": "fd_a3082326-537a-4ee2-ad50-d1612fb36fa1",
+      "session_id": "sample_editorial_v1",
+      "applied_profile": {
+        "target_profile_id": null,
+        "photo_plan_id": "plan_photo_c78024fb",
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 90.2,
+              "sat_mean": 0.38,
+              "bright_mean": 0.51,
+              "palette_hex": [
+                "#161208",
+                "#47351f",
+                "#bd926b"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_coffee",
+                "note": "분석 출처 heuristic · 밝기 0.49 · 채도 0.465"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_leaves",
+                "note": "분석 출처 heuristic · 밝기 0.438 · 채도 0.417"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_coffee",
+                "note": "분석 출처 heuristic · 밝기 0.49 · 채도 0.465"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_leaves",
+                "note": "분석 출처 heuristic · 밝기 0.438 · 채도 0.417"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "slots": [
+        {
+          "photo_id": "sample_coffee",
+          "position": 1,
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "테이블의 갈색으로 천천히 시작해 봤어요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_coffee",
+                "note": "샘플 편집자가 확인: 나무 테이블에 아이보리색 커피잔이 놓여 있어요."
+              },
+              {
+                "kind": "rule",
+                "ref": "sample.manual_order",
+                "note": "사전 작성한 예시 순서이며 모델이 정한 순서가 아니에요."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "나무 테이블에 아이보리색 커피잔이 놓여 있어요.",
+              "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+              "1122×1402 세로 이미지",
+              "평균 밝기 0.49 (중간)",
+              "평균 채도 0.465 (중간)",
+              "주요 색 #161208 (점유 12%)",
+              "주요 색 #47351f (점유 10%)",
+              "주요 색 #bd926b (점유 8%)"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": false
+          }
+        },
+        {
+          "photo_id": "sample_leaves",
+          "position": 2,
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "갈색 다음에는 초록 잎으로 색을 바꿔 봤어요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_leaves",
+                "note": "샘플 편집자가 확인: 빛이 비치는 둥근 초록 잎과 잎맥이 보여요."
+              },
+              {
+                "kind": "rule",
+                "ref": "sample.manual_order",
+                "note": "사전 작성한 예시 순서이며 모델이 정한 순서가 아니에요."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "빛이 비치는 둥근 초록 잎과 잎맥이 보여요.",
+              "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+              "1122×1402 세로 이미지",
+              "평균 밝기 0.438 (다소 어두움)",
+              "평균 채도 0.417 (중간)",
+              "주요 색 #374020 (점유 19%)",
+              "주요 색 #434732 (점유 10%)",
+              "주요 색 #686944 (점유 9%)"
+            ],
+            "adjacent_overlap": 0.25,
+            "is_visual_peak": false
+          }
+        },
+        {
+          "photo_id": "sample_sea",
+          "position": 3,
+          "narrative_role": "closer",
+          "rationale": {
+            "value": "탁 트인 바다를 마지막에 두어 여운을 남겨 봤어요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_sea",
+                "note": "샘플 편집자가 확인: 잔물결 위로 주황색 부표가 보여요."
+              },
+              {
+                "kind": "rule",
+                "ref": "sample.manual_order",
+                "note": "사전 작성한 예시 순서이며 모델이 정한 순서가 아니에요."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "잔물결 위로 주황색 부표가 보여요.",
+              "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+              "1122×1402 세로 이미지",
+              "평균 밝기 0.603 (중간)",
+              "평균 채도 0.243 (낮음)",
+              "주요 색 #6e9096 (점유 14%)",
+              "주요 색 #c0c6cc (점유 13%)",
+              "주요 색 #3e5f4c (점유 10%)"
+            ],
+            "adjacent_overlap": 0.25,
+            "is_visual_peak": false
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 3,
+        "output_count": 3,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-17T11:08:15.943Z"
+    },
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "sample_coffee",
+          "file_ref": "coffee.png",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 33.4,
+            "sat_mean": 0.465,
+            "bright_mean": 0.49,
+            "palette_hex": [
+              "#161208",
+              "#47351f",
+              "#bd926b"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "나무 테이블에 아이보리색 커피잔이 놓여 있어요.",
+            "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+            "1122×1402 세로 이미지",
+            "평균 밝기 0.49 (중간)",
+            "평균 채도 0.465 (중간)",
+            "주요 색 #161208 (점유 12%)",
+            "주요 색 #47351f (점유 10%)",
+            "주요 색 #bd926b (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-raster-thumbnail-jpeg-dc@1 + manual sample annotation (not model output)",
+          "analyzed_at": "2026-09-17T11:08:15.884Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "sample_leaves",
+          "file_ref": "leaves.png",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 69,
+            "sat_mean": 0.417,
+            "bright_mean": 0.438,
+            "palette_hex": [
+              "#374020",
+              "#434732",
+              "#686944"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "빛이 비치는 둥근 초록 잎과 잎맥이 보여요.",
+            "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+            "1122×1402 세로 이미지",
+            "평균 밝기 0.438 (다소 어두움)",
+            "평균 채도 0.417 (중간)",
+            "주요 색 #374020 (점유 19%)",
+            "주요 색 #434732 (점유 10%)",
+            "주요 색 #686944 (점유 9%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-raster-thumbnail-jpeg-dc@1 + manual sample annotation (not model output)",
+          "analyzed_at": "2026-09-17T11:08:15.913Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "sample_sea",
+          "file_ref": "sea.png",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 168.2,
+            "sat_mean": 0.243,
+            "bright_mean": 0.603,
+            "palette_hex": [
+              "#6e9096",
+              "#c0c6cc",
+              "#3e5f4c"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "잔물결 위로 주황색 부표가 보여요.",
+            "색 수치는 긴 변 최대 512px JPEG 변환본의 근사 측정",
+            "1122×1402 세로 이미지",
+            "평균 밝기 0.603 (중간)",
+            "평균 채도 0.243 (낮음)",
+            "주요 색 #6e9096 (점유 14%)",
+            "주요 색 #c0c6cc (점유 13%)",
+            "주요 색 #3e5f4c (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-raster-thumbnail-jpeg-dc@1 + manual sample annotation (not model output)",
+          "analyzed_at": "2026-09-17T11:08:15.942Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-17T11:08:15.943Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "kind": "photo_plan",
+        "plan_id": "plan_photo_c78024fb",
+        "source": "photo_only",
+        "sample_size": 3,
+        "completeness": {
+          "visual": 0.4,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 90.2,
+              "sat_mean": 0.38,
+              "bright_mean": 0.51,
+              "palette_hex": [
+                "#161208",
+                "#47351f",
+                "#bd926b"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_coffee",
+                "note": "분석 출처 heuristic · 밝기 0.49 · 채도 0.465"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_leaves",
+                "note": "분석 출처 heuristic · 밝기 0.438 · 채도 0.417"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_coffee",
+                "note": "분석 출처 heuristic · 밝기 0.49 · 채도 0.465"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "sample_leaves",
+                "note": "분석 출처 heuristic · 밝기 0.438 · 채도 0.417"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        },
+        "target_profile": null,
+        "created_at": "2026-09-17T11:08:15.942Z",
+        "disclaimer": "업로드한 사진 3장에서 관측된 값이며 사용자의 취향·과거 습관이 아니다"
+      },
+      "current_photos": []
+    }
+  },
+  "output": {
+    "title": "빛이 머문 자리",
+    "slots": [
+      {
+        "photo_id": "sample_coffee",
+        "position": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "sample_coffee",
+            "note": "샘플 편집자가 확인: 나무 테이블에 아이보리색 커피잔이 놓여 있어요."
+          }
+        ],
+        "caption_state": "filled",
+        "text": "커피 한 잔을 놓은 자리.",
+        "omit_reason": null
+      },
+      {
+        "photo_id": "sample_leaves",
+        "position": 2,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "sample_leaves",
+            "note": "샘플 편집자가 확인: 빛이 비치는 둥근 초록 잎과 잎맥이 보여요."
+          }
+        ],
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "잎맥과 빛이 충분히 보여서, 이 장에는 말을 덧붙이지 않아 봤어요."
+      },
+      {
+        "photo_id": "sample_sea",
+        "position": 3,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "sample_sea",
+            "note": "샘플 편집자가 확인: 잔물결 위로 주황색 부표가 보여요."
+          }
+        ],
+        "caption_state": "filled",
+        "text": "잔물결 사이, 작은 주황 점.",
+        "omit_reason": null
+      }
+    ]
+  }
+}
