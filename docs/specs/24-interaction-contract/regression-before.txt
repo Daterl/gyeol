@@ -1,0 +1,52 @@
+✔ contract fixtures cover identities, photo-only, corrected, three states and all omitted (2.002209ms)
+✖ request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities (1.487917ms)
+✔ generation all and single-slot responses keep the requested original photo and position (0.73025ms)
+✖ current post evidence resolves to a separate supplied photo set (1.790792ms)
+✔ actual JPEG/PNG/WebP metadata, MIME and byte/dimension limits are checked (7.199083ms)
+✔ JSON byte limit applies without Content-Length; invalid JSON/errors never become success (7.845166ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 361.544833
+
+✖ failing tests:
+
+test at test/interaction.test.js:23:1
+✖ request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities (1.487917ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/24-interaction-contract/test/interaction.test.js:30:71)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /1.0/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test/interaction.test.js:47:1
+✖ current post evidence resolves to a separate supplied photo set (1.790792ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/24-interaction-contract/test/interaction.test.js:54:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /does not resolve/,
+    operator: 'throws',
+    diff: 'simple'
+  }
