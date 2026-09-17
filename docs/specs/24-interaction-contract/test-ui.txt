@@ -8,5 +8,5 @@
 
  Test Files  2 passed (2)
       Tests  14 passed (14)
-   Start at  18:34:29
-   Duration  162ms (transform 51%, tests 29%, import 17%, worker 3%)
+   Start at  18:50:07
+   Duration  132ms (transform 48%, tests 33%, import 15%, worker 4%)
