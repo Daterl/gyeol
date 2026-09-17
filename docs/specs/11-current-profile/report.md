@@ -175,7 +175,8 @@ empty_caption_ratio = 0
 | 3 | `api/` 응답에 안 붙었다 | 응답 모양 변경은 L 이고 #24 계약 소관 |
 | 4 | 배포 환경 검증 (12단계 11번) | merge 전이라 배포 URL 이 없다. 순수 계산 모듈이라 환경변수 의존은 없다 |
 | 5 | 다중 모델 리뷰 (M = 권장) | 미실행. 미실행을 0건으로 기록하지 않는다 |
-| 6 | 사람 합의 | `fixtures/ig_snapshot.json` 은 공유 파일이다. #24 와 diego.yoon 확인 pending |
+| 6 | **칸반 보드 갱신 (https://github.com/orgs/Daterl/projects/2)** | \`gh\` 토큰에 \`read:project\` 스코프가 없어 칸 이름을 읽지 못했다 (\`error: your authentication token is missing required scopes [read:project]\`). 규약대로 보드를 건너뛰고 이슈 댓글로만 기록했다 |
+| 7 | 사람 합의 | `fixtures/ig_snapshot.json` 은 공유 파일이다. #24 와 diego.yoon 확인 pending |
 
 ## 8. `schemas/` 에 대해 하고 싶었지만 안 한 말
 
