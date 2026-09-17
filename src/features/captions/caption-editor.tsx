@@ -42,7 +42,9 @@ export function OutputControls({
           }
         >
           {loading
-            ? '문장을 살펴보는 중…'
+            ? request.operation === 'feed'
+              ? '사진을 확인하는 중…'
+              : '문장을 살펴보는 중…'
             : draft
               ? '문장 다시 제안받기'
               : '제목과 문장 제안받기'}
@@ -54,7 +56,7 @@ export function OutputControls({
           비워 둡니다. 문장 품질 평가용 결과는 아니에요.
         </p>
       )}
-      {loading && (
+      {loading && request.operation !== 'feed' && (
         <Button
           type="button"
           variant="outline"
@@ -64,7 +66,7 @@ export function OutputControls({
           문장 요청 취소
         </Button>
       )}
-      {request.status === 'error' && (
+      {request.status === 'error' && request.operation !== 'feed' && (
         <p role="alert" className="text-destructive">
           {request.error.message}
         </p>

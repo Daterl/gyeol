@@ -17,7 +17,6 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [store] = useState(createEditorStore);
   const photos = useStore(store, (state) => state.photos);
   const request = useStore(store, (state) => state.request);
-  const hasResult = useStore(store, (state) => Boolean(state.original));
   const [oldPhotos, setOldPhotos] = useState<SelectedPhoto[]>([]);
   const oldPhotosRef = useRef(oldPhotos);
   oldPhotosRef.current = oldPhotos;
@@ -148,8 +147,10 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
               className="min-h-12 px-6"
             >
               {loading
-                ? '사진을 살펴보는 중…'
-                : request.status === 'error'
+                ? request.operation === 'feed'
+                  ? '사진을 살펴보는 중…'
+                  : '문장 요청 중…'
+                : request.status === 'error' && request.operation === 'feed'
                   ? '다시 시도하기'
                   : '이 사진들로 시작하기'}
             </Button>
@@ -165,7 +166,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
             )}
           </div>
         </div>
-        {request.status === 'error' && !hasResult && (
+        {request.status === 'error' && request.operation === 'feed' && (
           <p
             role="alert"
             id="request-error"
@@ -176,9 +177,11 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         )}
         <p role="status" className="sr-only">
           {loading
-            ? '사진을 분석하고 있어요. 취소할 수 있어요.'
+            ? request.operation === 'feed'
+              ? '사진을 분석하고 있어요. 취소할 수 있어요.'
+              : '문장을 준비하고 있어요. 취소할 수 있어요.'
             : request.status === 'ready'
-              ? '사진을 확인했어요.'
+              ? '요청을 마쳤어요.'
               : null}
         </p>
         <fieldset

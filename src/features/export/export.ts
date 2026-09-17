@@ -23,6 +23,8 @@ export function downloadOutput(output: F3Export, format: 'json' | 'txt') {
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = `gyeol.${format}`;
+  document.body.append(anchor);
   anchor.click();
+  anchor.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

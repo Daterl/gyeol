@@ -15,7 +15,7 @@ export type SelectedPhoto = { file: File; photo_id: string; url: string };
 type RequestState =
   | { status: 'idle' | 'ready' }
   | { operation: 'feed' | 'all' | 'slot'; photo_id?: string; status: 'loading' }
-  | { error: ApiError; status: 'error' };
+  | { error: ApiError; operation: 'feed' | 'all' | 'slot'; status: 'error' };
 type EditorState = {
   draft: F3Export | null;
   order: string[];
@@ -71,9 +71,12 @@ export function createEditorStore() {
     };
     const fail = (error: unknown, controller: AbortController) => {
       if (active !== controller) return;
+      const request = get().request;
+      if (request.status !== 'loading') return;
       active = null;
       set({
         request: {
+          operation: request.operation,
           error:
             error instanceof ApiError
               ? error

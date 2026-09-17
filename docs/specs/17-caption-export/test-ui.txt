@@ -7,6 +7,6 @@
 
 
  Test Files  9 passed (9)
-      Tests  34 passed (34)
-   Start at  19:53:09
-   Duration  493ms (transform 48%, import 40%, tests 10%, worker 2%)
+      Tests  35 passed (35)
+   Start at  19:57:57
+   Duration  440ms (transform 55%, import 32%, tests 11%, worker 2%)

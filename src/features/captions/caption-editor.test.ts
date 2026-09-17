@@ -3,8 +3,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, expect, test, vi } from 'vitest';
 import type { FeedResponse, GenerateRequest } from '@/types/contracts';
 import fixture from '../../../fixtures/interaction.sample.json';
+import * as editorModule from '../editor/store';
 import { createEditorStore, type EditorStore } from '../editor/store';
 import { exportText } from '../export/export';
+import { PhotoInput } from '../input/photo-input';
 import { CaptionEditor, OutputControls } from './caption-editor';
 import { previewOutput } from './preview-output';
 
@@ -14,7 +16,10 @@ vi.mock('zustand', () => ({
     selector: (state: ReturnType<EditorStore['getState']>) => unknown,
   ) => selector(store.getState()),
 }));
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 const response = (): FeedResponse =>
   structuredClone({
     feed: fixture.feed,
@@ -96,4 +101,18 @@ test('invalid injected output cannot overwrite an existing draft', async () => {
   const abort = new AbortController();
   abort.abort();
   await expect(previewOutput(input, abort.signal)).rejects.toThrow();
+});
+
+test('caption failure never offers a photo upload retry', async () => {
+  const store = createEditorStore();
+  await store.getState().loadFeed(async () => response());
+  await store.getState().generate(undefined, async () => {
+    throw new Error('failed caption');
+  });
+  vi.spyOn(editorModule, 'createEditorStore').mockReturnValue(store);
+  const markup = renderToStaticMarkup(
+    createElement(PhotoInput, { mock: true }),
+  );
+  expect(markup).not.toContain('>다시 시도하기</button>');
+  expect(markup).toContain('>이 사진들로 시작하기</button>');
 });
