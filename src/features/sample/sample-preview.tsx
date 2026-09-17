@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 import { Button } from '@/components/ui/button';
@@ -23,25 +24,50 @@ export function SamplePreview() {
       }));
   }
   return (
-    <section aria-label="합성 샘플" className="mb-8 border-y border-line py-5">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="font-medium">사진을 고르기 전에, 먼저 만져 보세요.</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            커피, 초록 잎, 바다. 합성 이미지 3장으로 준비한 편집 예시예요.
-          </p>
+    <section aria-label="합성 샘플" className="mb-7 border-y border-line py-5">
+      <div
+        className={
+          original
+            ? 'flex flex-wrap items-center justify-between gap-4'
+            : 'grid items-center gap-6 sm:grid-cols-2 sm:gap-10'
+        }
+      >
+        {!original && (
+          <div className="grid max-w-md grid-cols-3 gap-2" aria-hidden="true">
+            {Object.values(sample.images).map((image) => (
+              <Image
+                key={image.src}
+                src={image.src}
+                alt=""
+                width={1122}
+                height={1402}
+                sizes="(min-width:640px) 170px, 30vw"
+                className="aspect-[4/5] h-auto w-full object-contain"
+              />
+            ))}
+          </div>
+        )}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="font-medium">
+              {original ? '샘플 편집 중' : '먼저, 세 장으로 만져 보세요.'}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              커피, 초록 잎, 바다. 합성 이미지 3장으로 준비한 편집 예시예요.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11"
+            disabled={request.status === 'loading'}
+            onClick={() =>
+              original ? store.getState().reset() : void openSample()
+            }
+          >
+            {original ? '샘플 닫기' : '샘플로 바로 보기'}
+          </Button>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          className="min-h-11"
-          disabled={request.status === 'loading'}
-          onClick={() =>
-            original ? store.getState().reset() : void openSample()
-          }
-        >
-          {original ? '샘플 닫기' : '샘플로 바로 보기'}
-        </Button>
       </div>
       {request.status === 'error' && !original && (
         <p role="alert" className="mt-3 text-destructive">

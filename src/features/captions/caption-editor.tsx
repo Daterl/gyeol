@@ -20,40 +20,62 @@ export function OutputControls({
   const [notice, setNotice] = useState('');
   const loading = request.status === 'loading';
   return (
-    <div className="my-8 space-y-4 border-y border-line py-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h3 className="text-lg font-semibold">
-            말을 붙여도, 비워도 괜찮아요.
-          </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            사진마다 필요한 말만 제안해요. 직접 쓴 문장은 다시 요청해도 남겨
-            둡니다.
-          </p>
-        </div>
-        <Button
-          type="button"
-          className="min-h-11"
-          disabled={loading}
-          onClick={() =>
-            void store
-              .getState()
-              .generate(undefined, mock ? previewOutput : undefined)
-          }
-        >
-          {loading
-            ? request.operation === 'feed'
-              ? '사진을 확인하는 중…'
-              : '문장을 살펴보는 중…'
-            : draft
-              ? '문장 다시 제안받기'
-              : '제목과 문장 제안받기'}
-        </Button>
-      </div>
+    <div className="my-5 flex flex-wrap items-end gap-3 border-b border-line pb-5">
+      {draft && (
+        <label className="block w-full text-sm font-medium sm:max-w-md">
+          기록의 제목
+          <input
+            value={draft.title}
+            onChange={(event) => store.getState().editTitle(event.target.value)}
+            className="mt-2 min-h-11 w-full rounded-md border border-line bg-card px-3 py-2 text-xl tracking-tight"
+          />
+        </label>
+      )}
+      <Button
+        type="button"
+        className="min-h-11"
+        disabled={loading}
+        onClick={() =>
+          void store
+            .getState()
+            .generate(undefined, mock ? previewOutput : undefined)
+        }
+      >
+        {loading
+          ? request.operation === 'feed'
+            ? '사진을 확인하는 중…'
+            : '문장을 살펴보는 중…'
+          : draft
+            ? '문장 다시 제안받기'
+            : '제목과 문장 제안받기'}
+      </Button>
+      {draft &&
+        (['json', 'txt'] as const).map((format) => (
+          <Button
+            key={format}
+            type="button"
+            variant="outline"
+            className="min-h-11"
+            disabled={!draft.title.trim()}
+            onClick={() => {
+              try {
+                downloadOutput(store.getState().exportDraft(), format);
+                setNotice(
+                  `${format === 'json' ? 'JSON' : '텍스트'} 파일을 준비했어요.`,
+                );
+              } catch {
+                setNotice(
+                  '제목과 문장을 확인해 주세요. 입력한 내용은 그대로 남아 있어요.',
+                );
+              }
+            }}
+          >
+            {format === 'json' ? 'JSON 받기' : '텍스트 받기'}
+          </Button>
+        ))}
       {mock && (
-        <p className="text-sm text-muted-foreground">
-          모델 없이 확인하는 예시예요. 선택한 사진의 관찰을 그대로 옮기고 일부를
-          비워 둡니다. 문장 품질 평가용 결과는 아니에요.
+        <p className="w-full text-sm text-muted-foreground">
+          문장은 사전 작성한 관찰 예시이며 실시간 모델 결과가 아니에요.
         </p>
       )}
       {loading && request.operation !== 'feed' && (
@@ -67,55 +89,16 @@ export function OutputControls({
         </Button>
       )}
       {request.status === 'error' && request.operation !== 'feed' && (
-        <p role="alert" className="text-destructive">
+        <p role="alert" className="w-full text-destructive">
           {request.error.message}
         </p>
       )}
-      {draft && (
-        <>
-          <label className="block text-sm font-medium">
-            기록의 제목
-            <input
-              value={draft.title}
-              onChange={(event) =>
-                store.getState().editTitle(event.target.value)
-              }
-              className="mt-2 min-h-11 w-full rounded-md border border-line bg-card px-3 py-2 text-base"
-            />
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {(['json', 'txt'] as const).map((format) => (
-              <Button
-                key={format}
-                type="button"
-                variant="outline"
-                className="min-h-11"
-                disabled={!draft.title.trim()}
-                onClick={() => {
-                  try {
-                    downloadOutput(store.getState().exportDraft(), format);
-                    setNotice(
-                      `${format === 'json' ? 'JSON' : '텍스트'} 파일을 준비했어요.`,
-                    );
-                  } catch {
-                    setNotice(
-                      '제목과 문장을 확인해 주세요. 입력한 내용은 그대로 남아 있어요.',
-                    );
-                  }
-                }}
-              >
-                {format === 'json' ? 'JSON 받기' : '텍스트 받기'}
-              </Button>
-            ))}
-          </div>
-          {!draft.title.trim() && (
-            <p className="text-sm">내보낼 기록에 제목을 붙여 주세요.</p>
-          )}
-          <p role="status" className="text-sm">
-            {notice}
-          </p>
-        </>
+      {draft && !draft.title.trim() && (
+        <p className="w-full text-sm">내보낼 기록에 제목을 붙여 주세요.</p>
       )}
+      <p role="status" className="w-full text-sm">
+        {notice}
+      </p>
     </div>
   );
 }
@@ -141,7 +124,13 @@ export function CaptionEditor({
     slot.caption_state === 'omitted' &&
     slot.evidence.some((item) => item.kind === 'user_text');
   return (
-    <div className="mt-5 border-t border-line-soft pt-4">
+    <div
+      className={
+        slot.caption_state === 'omitted'
+          ? 'border-l-2 border-omission pl-3 sm:mt-4'
+          : 'sm:mt-4'
+      }
+    >
       <p className="text-xs font-semibold text-accent">
         {userEmpty ? '직접 비움' : labels[slot.caption_state]}
       </p>

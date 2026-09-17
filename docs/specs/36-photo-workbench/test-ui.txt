@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/36-photo-workbench
+
+
+ Test Files  9 passed (9)
+      Tests  30 passed (30)
+   Start at  20:38:02
+   Duration  362ms (transform 54%, import 32%, tests 12%, worker 2%)
