@@ -1,0 +1,38 @@
+{
+  "synthetic": true,
+  "provenance": "Hand-authored vector placeholders; no real photographs or model extraction",
+  "photo_ids": [
+    "ph_01",
+    "ph_02",
+    "ph_03",
+    "ph_04",
+    "ph_05",
+    "ph_06",
+    "ph_07",
+    "ph_08",
+    "ph_09",
+    "ph_10",
+    "ph_11",
+    "ph_12",
+    "ph_13",
+    "ph_14",
+    "ph_15"
+  ],
+  "files": [
+    "eval/golden/case_01/photos/ph_01.svg",
+    "eval/golden/case_01/photos/ph_02.svg",
+    "eval/golden/case_01/photos/ph_03.svg",
+    "eval/golden/case_01/photos/ph_04.svg",
+    "eval/golden/case_01/photos/ph_05.svg",
+    "eval/golden/case_01/photos/ph_06.svg",
+    "eval/golden/case_01/photos/ph_07.svg",
+    "eval/golden/case_01/photos/ph_08.svg",
+    "eval/golden/case_01/photos/ph_09.svg",
+    "eval/golden/case_01/photos/ph_10.svg",
+    "eval/golden/case_01/photos/ph_11.svg",
+    "eval/golden/case_01/photos/ph_12.svg",
+    "eval/golden/case_01/photos/ph_13.svg",
+    "eval/golden/case_01/photos/ph_14.svg",
+    "eval/golden/case_01/photos/ph_15.svg"
+  ]
+}

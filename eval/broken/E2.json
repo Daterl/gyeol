@@ -1,0 +1,10 @@
+{
+  "invariant": "E2",
+  "document": "feed",
+  "path": [
+    "slots",
+    0,
+    "photo_id"
+  ],
+  "value": "not_an_input"
+}

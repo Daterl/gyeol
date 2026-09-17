@@ -1,0 +1,433 @@
+{
+  "schema_version": "1.0",
+  "feed_id": "fd_tgt_synthetic_detail",
+  "session_id": "ss_synthetic",
+  "applied_profile": {
+    "target_profile_id": "tgt_synthetic_detail",
+    "current_profile_id": null,
+    "corrected": false,
+    "disclosure": "target_only",
+    "deltas": [],
+    "visual": {
+      "tone_words": {
+        "value": [
+          "자세하게 기록"
+        ],
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "synthetic_reference_snapshot",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      }
+    },
+    "language": {
+      "caption_len": {
+        "value": {
+          "p50": 80,
+          "p90": 80,
+          "unit": "자"
+        },
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "synthetic_reference_snapshot",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "empty_caption_ratio": {
+        "value": 0.5,
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "synthetic_reference_snapshot",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "banned_words": [
+        "이처럼",
+        "또한",
+        "이를 통해",
+        "이러한",
+        "마침내"
+      ]
+    },
+    "sequence": {
+      "carousel_count": 0
+    }
+  },
+  "slots": [
+    {
+      "position": 1,
+      "photo_id": "ph_15",
+      "narrative_role": "opener",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_15",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 15 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": true
+      }
+    },
+    {
+      "position": 2,
+      "photo_id": "ph_14",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_14",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 14 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 3,
+      "photo_id": "ph_13",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_13",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 13 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 4,
+      "photo_id": "ph_12",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_12",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 12 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 5,
+      "photo_id": "ph_11",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_11",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 11 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 6,
+      "photo_id": "ph_10",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_10",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 10 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 7,
+      "photo_id": "ph_09",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_09",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 9 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 8,
+      "photo_id": "ph_08",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_08",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 8 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 9,
+      "photo_id": "ph_07",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_07",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 7 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 10,
+      "photo_id": "ph_06",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_06",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 6 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 11,
+      "photo_id": "ph_05",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_05",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 5 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 12,
+      "photo_id": "ph_04",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_04",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 4 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 13,
+      "photo_id": "ph_03",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_03",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 3 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 14,
+      "photo_id": "ph_02",
+      "narrative_role": "sustain",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 2 표기"
+        ],
+        "adjacent_overlap": 0.8,
+        "is_visual_peak": false
+      }
+    },
+    {
+      "position": 15,
+      "photo_id": "ph_01",
+      "narrative_role": "closer",
+      "rationale": {
+        "value": "합성 입력 순서를 사용한 목업 자리",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "caption_inputs": {
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 1 표기"
+        ],
+        "adjacent_overlap": 0,
+        "is_visual_peak": false
+      }
+    }
+  ],
+  "invariants": {
+    "input_count": 15,
+    "output_count": 15,
+    "unique_photo_ids": true
+  },
+  "generated_at": "2026-09-17T00:00:00.000Z"
+}

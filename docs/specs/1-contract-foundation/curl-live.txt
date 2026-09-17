@@ -1,0 +1,9 @@
+HTTP/1.1 501 Not Implemented
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Date: Thu, 17 Sep 2026 05:37:09 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Content-Length: 125
+
+{"error":{"code":"LIVE_NOT_IMPLEMENTED","message":"Live generation is not implemented; use ?mock=1 for synthetic fixtures."}}

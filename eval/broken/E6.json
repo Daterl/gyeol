@@ -1,0 +1,11 @@
+{
+  "invariant": "E6",
+  "document": "export",
+  "path": [
+    "title"
+  ],
+  "value": [
+    "one",
+    "two"
+  ]
+}
