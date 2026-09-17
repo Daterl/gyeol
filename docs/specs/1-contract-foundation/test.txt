@@ -6,309 +6,369 @@ TAP version 13
 # Subtest: GET mock returns 15 slots and all four resources
 ok 1 - GET mock returns 15 slots and all four resources
   ---
-  duration_ms: 6.683959
+  duration_ms: 10.579042
   type: 'test'
   ...
 # Subtest: live is explicit error, invalid query and method are controlled
 ok 2 - live is explicit error, invalid query and method are controlled
   ---
-  duration_ms: 0.329667
+  duration_ms: 0.337416
   type: 'test'
   ...
 # Subtest: mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
 ok 3 - mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
   ---
-  duration_ms: 39.461667
+  duration_ms: 59.358458
   type: 'test'
   ...
 # Subtest: four sample types and independent golden input files satisfy contracts
 ok 4 - four sample types and independent golden input files satisfy contracts
   ---
-  duration_ms: 8.32625
+  duration_ms: 12.234709
   type: 'test'
   ...
 # Subtest: E1: valid input passes and stored broken fixture fails
 ok 5 - E1: valid input passes and stored broken fixture fails
   ---
-  duration_ms: 0.855417
+  duration_ms: 1.584041
   type: 'test'
   ...
 # Subtest: E2: valid input passes and stored broken fixture fails
 ok 6 - E2: valid input passes and stored broken fixture fails
   ---
-  duration_ms: 0.906542
+  duration_ms: 1.773125
   type: 'test'
   ...
 # Subtest: E3: valid input passes and stored broken fixture fails
 ok 7 - E3: valid input passes and stored broken fixture fails
   ---
-  duration_ms: 1.226458
+  duration_ms: 1.533833
   type: 'test'
   ...
 # Subtest: E6: valid input passes and stored broken fixture fails
 ok 8 - E6: valid input passes and stored broken fixture fails
   ---
-  duration_ms: 0.75525
+  duration_ms: 2.057167
   type: 'test'
   ...
 # Subtest: E8: valid input passes and stored broken fixture fails
 ok 9 - E8: valid input passes and stored broken fixture fails
   ---
-  duration_ms: 0.827459
+  duration_ms: 0.87425
   type: 'test'
   ...
 # Subtest: 3 photo boundary passes
 ok 10 - 3 photo boundary passes
   ---
-  duration_ms: 0.296875
+  duration_ms: 0.403583
   type: 'test'
   ...
 # Subtest: 20 photo boundary passes
 ok 11 - 20 photo boundary passes
   ---
-  duration_ms: 0.449
+  duration_ms: 0.373125
   type: 'test'
   ...
 # Subtest: 2 input photos rejected
 ok 12 - 2 input photos rejected
   ---
-  duration_ms: 0.324458
+  duration_ms: 0.361583
   type: 'test'
   ...
 # Subtest: 21 input photos rejected
 ok 13 - 21 input photos rejected
   ---
-  duration_ms: 0.240875
+  duration_ms: 0.239875
   type: 'test'
   ...
 # Subtest: reject duplicate output ID despite true flag
 ok 14 - reject duplicate output ID despite true flag
   ---
-  duration_ms: 0.140959
+  duration_ms: 0.157791
   type: 'test'
   ...
 # Subtest: reject missing slot despite declared output count
 ok 15 - reject missing slot despite declared output count
   ---
-  duration_ms: 0.071917
+  duration_ms: 0.070875
   type: 'test'
   ...
 # Subtest: reject foreign replacement ID with same count
 ok 16 - reject foreign replacement ID with same count
   ---
-  duration_ms: 0.060708
+  duration_ms: 0.062417
   type: 'test'
   ...
 # Subtest: reject lying counts
 ok 17 - reject lying counts
   ---
-  duration_ms: 0.057084
+  duration_ms: 0.060417
   type: 'test'
   ...
 # Subtest: reject count string
 ok 18 - reject count string
   ---
-  duration_ms: 0.055041
+  duration_ms: 0.054625
   type: 'test'
   ...
 # Subtest: reject unique flag string
 ok 19 - reject unique flag string
   ---
-  duration_ms: 0.09225
+  duration_ms: 0.053708
   type: 'test'
   ...
 # Subtest: reject position string
 ok 20 - reject position string
   ---
-  duration_ms: 0.073375
+  duration_ms: 0.062458
   type: 'test'
   ...
 # Subtest: reject duplicate position
 ok 21 - reject duplicate position
   ---
-  duration_ms: 0.060583
+  duration_ms: 0.066
   type: 'test'
   ...
 # Subtest: reject zero position
 ok 22 - reject zero position
   ---
-  duration_ms: 0.091292
+  duration_ms: 0.087041
   type: 'test'
   ...
 # Subtest: reject fractional position
 ok 23 - reject fractional position
   ---
-  duration_ms: 0.057667
+  duration_ms: 0.059167
   type: 'test'
   ...
 # Subtest: reject missing rationale Claim
 ok 24 - reject missing rationale Claim
   ---
-  duration_ms: 0.071
+  duration_ms: 0.083708
   type: 'test'
   ...
 # Subtest: reject evidence missing
 ok 25 - reject evidence missing
   ---
-  duration_ms: 0.068625
+  duration_ms: 0.089333
   type: 'test'
   ...
 # Subtest: reject evidence wrong type
 ok 26 - reject evidence wrong type
   ---
-  duration_ms: 0.062375
+  duration_ms: 0.0705
   type: 'test'
   ...
 # Subtest: reject invalid confidence
 ok 27 - reject invalid confidence
   ---
-  duration_ms: 0.070792
+  duration_ms: 0.070709
   type: 'test'
   ...
 # Subtest: reject empty evidence reference
 ok 28 - reject empty evidence reference
   ---
-  duration_ms: 0.065416
+  duration_ms: 0.067792
   type: 'test'
   ...
 # Subtest: reject overlap string
 ok 29 - reject overlap string
   ---
-  duration_ms: 0.065042
+  duration_ms: 0.0655
   type: 'test'
   ...
 # Subtest: reject invented current input
 ok 30 - reject invented current input
   ---
-  duration_ms: 0.056542
+  duration_ms: 0.056583
   type: 'test'
   ...
 # Subtest: reject false corrected claim
 ok 31 - reject false corrected claim
   ---
-  duration_ms: 0.055083
+  duration_ms: 0.122625
   type: 'test'
   ...
 # Subtest: reject unknown delta
 ok 32 - reject unknown delta
   ---
-  duration_ms: 0.059791
+  duration_ms: 0.061709
   type: 'test'
   ...
 # Subtest: duplicate/malformed actual input rejected
 ok 33 - duplicate/malformed actual input rejected
   ---
-  duration_ms: 0.065333
+  duration_ms: 0.055667
   type: 'test'
   ...
 # Subtest: E2 does not trust output input_count/unique flags as expected input IDs
 ok 34 - E2 does not trust output input_count/unique flags as expected input IDs
   ---
-  duration_ms: 0.140459
+  duration_ms: 0.347083
   type: 'test'
   ...
 # Subtest: E8 uses actual absent input even if response invents consistent correction
 ok 35 - E8 uses actual absent input even if response invents consistent correction
   ---
-  duration_ms: 0.127125
+  duration_ms: 0.26375
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with target-only disclosure
+ok 36 - validateFeed rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.140042
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with target-only disclosure
+ok 37 - E8 rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.603709
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with target-only disclosure
+ok 38 - validateFeed rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.075375
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with target-only disclosure
+ok 39 - E8 rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.065666
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with invented correction
+ok 40 - validateFeed rejects missing current context with invented correction
+  ---
+  duration_ms: 0.064792
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with invented correction
+ok 41 - E8 rejects missing current context with invented correction
+  ---
+  duration_ms: 0.089917
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with invented correction
+ok 42 - validateFeed rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.047125
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with invented correction
+ok 43 - E8 rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.0745
   type: 'test'
   ...
 # Subtest: profile absence/types/rule-only claims are checked
-ok 36 - profile absence/types/rule-only claims are checked
+ok 44 - profile absence/types/rule-only claims are checked
   ---
-  duration_ms: 0.171042
+  duration_ms: 0.244041
   type: 'test'
   ...
 # Subtest: photo field types are checked
-ok 37 - photo field types are checked
+ok 45 - photo field types are checked
   ---
-  duration_ms: 0.090417
+  duration_ms: 0.108291
   type: 'test'
   ...
 # Subtest: reject title null
-ok 38 - reject title null
+ok 46 - reject title null
   ---
-  duration_ms: 0.07275
+  duration_ms: 0.036958
   type: 'test'
   ...
 # Subtest: reject title []
-ok 39 - reject title []
+ok 47 - reject title []
   ---
-  duration_ms: 0.023291
+  duration_ms: 0.022416
   type: 'test'
   ...
 # Subtest: reject title ["one","two"]
-ok 40 - reject title ["one","two"]
+ok 48 - reject title ["one","two"]
   ---
-  duration_ms: 0.01975
+  duration_ms: 0.020375
   type: 'test'
   ...
 # Subtest: reject title ""
-ok 41 - reject title ""
+ok 49 - reject title ""
   ---
-  duration_ms: 0.0195
+  duration_ms: 0.020083
   type: 'test'
   ...
 # Subtest: reject title " "
-ok 42 - reject title " "
+ok 50 - reject title " "
   ---
-  duration_ms: 0.018667
+  duration_ms: 0.019583
   type: 'test'
   ...
 # Subtest: reject title "one\\ntwo"
-ok 43 - reject title "one\\ntwo"
+ok 51 - reject title "one\\ntwo"
   ---
-  duration_ms: 0.046458
+  duration_ms: 0.057542
   type: 'test'
   ...
 # Subtest: reject title "one\\rtwo"
-ok 44 - reject title "one\\rtwo"
+ok 52 - reject title "one\\rtwo"
   ---
-  duration_ms: 0.019042
+  duration_ms: 0.0185
   type: 'test'
   ...
 # Subtest: reject title 3
-ok 45 - reject title 3
+ok 53 - reject title 3
   ---
-  duration_ms: 0.02
+  duration_ms: 0.018292
   type: 'test'
   ...
 # Subtest: reject title "one two"
-ok 46 - reject title "one two"
+ok 54 - reject title "one two"
   ---
-  duration_ms: 0.024208
+  duration_ms: 0.018417
   type: 'test'
   ...
 # Subtest: F3 export retains stable identity at every position, including after reorder
-ok 47 - F3 export retains stable identity at every position, including after reorder
+ok 55 - F3 export retains stable identity at every position, including after reorder
   ---
-  duration_ms: 0.495958
+  duration_ms: 0.241708
   type: 'test'
   ...
 # Subtest: E4/E5/E7 are intentionally not automated quality checks
-ok 48 - E4/E5/E7 are intentionally not automated quality checks
+ok 56 - E4/E5/E7 are intentionally not automated quality checks
   ---
-  duration_ms: 0.112417
+  duration_ms: 0.079959
+  type: 'test'
+  ...
+# Subtest: user caption rejects photo-only evidence
+ok 57 - user caption rejects photo-only evidence
+  ---
+  duration_ms: 0.070209
+  type: 'test'
+  ...
+# Subtest: user caption accepts valid user_text evidence with additional photo evidence
+ok 58 - user caption accepts valid user_text evidence with additional photo evidence
+  ---
+  duration_ms: 0.099584
   type: 'test'
   ...
 # Subtest: present current can be honestly corrected with the single supported delta
-ok 49 - present current can be honestly corrected with the single supported delta
+ok 59 - present current can be honestly corrected with the single supported delta
   ---
-  duration_ms: 0.269417
+  duration_ms: 0.219083
   type: 'test'
   ...
 # Subtest: absent account and extra title fields cannot smuggle contradictory states
-ok 50 - absent account and extra title fields cannot smuggle contradictory states
+ok 60 - absent account and extra title fields cannot smuggle contradictory states
   ---
-  duration_ms: 0.060291
+  duration_ms: 0.048041
   type: 'test'
   ...
-1..50
-# tests 50
+1..60
+# tests 60
 # suites 0
-# pass 50
+# pass 60
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 83.192959
+# duration_ms 376.17225

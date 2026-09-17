@@ -69,6 +69,24 @@ test('E8 uses actual absent input even if response invents consistent correction
   const forged=mutated(bundle,b=>Object.assign(b.feed.applied_profile,{current_profile_id:'invented',corrected:true,disclosure:'corrected'}));
   assert.equal(evaluate(forged).E8.pass,false);
 });
+for(const invented of [false,true]) for(const context of ['missing','undefined']) {
+  const candidate=mutated(feed,f=>{
+    if(invented) Object.assign(f.applied_profile,{current_profile_id:'invented',corrected:true,disclosure:'corrected'});
+  });
+  test(`validateFeed rejects ${context} current context with ${invented?'invented correction':'target-only disclosure'}`,()=>{
+    const args=[candidate,input.photo_ids];
+    if(context==='undefined') args.push(undefined);
+    assert.throws(()=>validateFeed(...args),/currentProfile: expected object/);
+  });
+  test(`E8 rejects ${context} current context with ${invented?'invented correction':'target-only disclosure'}`,()=>{
+    const candidateBundle={...bundle,feed:candidate};
+    if(context==='missing') delete candidateBundle.currentProfile;
+    else candidateBundle.currentProfile=undefined;
+    const result=evaluate(candidateBundle).E8;
+    assert.equal(result.pass,false);
+    assert.match(result.reason,/currentProfile: expected object/);
+  });
+}
 test('profile absence/types/rule-only claims are checked',()=>{
   for(const edit of [p=>p.present='false',p=>p.profile_id='fake',p=>p.sample_size=1,p=>p.visual={tone_words:{}}]) assert.throws(()=>validateProfile(mutated(currents[1],edit),'current'));
   for(const edit of [p=>p.visual.tone_words.evidence[0].kind='rule',p=>p.language.caption_len.value.p50='18',p=>p.source='photo_upload',p=>p.language=null]) assert.throws(()=>validateProfile(mutated(targets[0],edit),'target'));
@@ -86,6 +104,19 @@ test('F3 export retains stable identity at every position, including after reord
   validateExport(mutated(output,o=>o.slots.reverse()),feed); // Array order is irrelevant; position is explicit.
 });
 test('E4/E5/E7 are intentionally not automated quality checks',()=>assert.deepEqual(Object.keys(evaluate(bundle)),['E1','E2','E3','E6','E8']));
+test('user caption rejects photo-only evidence',()=>{
+  const candidate=mutated(output,o=>o.slots[0].caption_state='user');
+  assert.equal(candidate.slots[0].evidence.every(e=>e.kind==='uploaded_photo'),true);
+  assert.throws(()=>validateExport(candidate,feed),/user caption needs user_text evidence/);
+});
+test('user caption accepts valid user_text evidence with additional photo evidence',()=>{
+  const candidate=mutated(output,o=>{
+    o.slots[0].caption_state='user';
+    o.slots[0].evidence.push({kind:'user_text',ref:'user:caption:1',note:'User supplied this caption'});
+  });
+  assert.equal(validateExport(candidate,feed),candidate);
+  assert.throws(()=>validateExport(mutated(candidate,o=>o.slots[0].evidence.at(-1).ref=''),feed),/expected nonempty string/);
+});
 test('present current can be honestly corrected with the single supported delta',()=>{
   const candidate=mutated(feed,f=>Object.assign(f.applied_profile,{
     current_profile_id:currents[0].profile_id,corrected:true,disclosure:'corrected',

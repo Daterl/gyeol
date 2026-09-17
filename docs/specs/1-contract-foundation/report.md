@@ -1,6 +1,6 @@
 # 구현·검증 인계 — #1 / #7 / #8
 
-2026-09-17, feat/1-contract-foundation, Node v22.22.3. 로컬 구현 완료, 원격 이슈/커밋/push/merge는 수행하지 않았다. CLAUDE.md를 수정하지 않았다.
+2026-09-17, feat/1-contract-foundation, Node v22.22.3. 최초 구현 기록에 이어 초기 구현 커밋 `7ed8d4c` 이후의 P2 수정·재검증을 반영했다. 이 후속 worker는 커밋/push/merge/이슈 변경을 수행하지 않았고 CLAUDE.md를 수정하지 않았다.
 
 ## 결과
 
@@ -15,11 +15,11 @@
 
 | 실행 | 실제 결과 | 원문 |
 |---|---|---|
-| npm test | 50/50 pass, 0 fail | [test.txt](test.txt) |
+| npm test (P2 수정 후 재실행) | 60/60 pass, 0 fail; 최초 기록은 50/50 | [test.txt](test.txt) |
 | npm run eval | 2프로필 × E1/E2/E3/E6/E8 = 10 PASS; 각 broken fixture 10건 EXPECTED FAIL | [eval.txt](eval.txt) |
 | npm run check | JS/JSON 25파일 구문 확인, 의존성 0, 스키마 4개 예시와 fixtures 일치 | [check.txt](check.txt) |
-| PORT=43127 npm start + curl | HTTP 200, 15슬롯, position 1..15, target_only | [헤더](curl-mock.headers.txt), [응답](curl-mock.json) |
-| curl live | HTTP 501 LIVE_NOT_IMPLEMENTED | [응답](curl-live.txt) |
+| PORT=43127 npm start + curl (최초 구현 시 기록) | HTTP 200, 15슬롯, position 1..15, target_only | [헤더](curl-mock.headers.txt), [응답](curl-mock.json) |
+| curl live (최초 구현 시 기록) | HTTP 501 LIVE_NOT_IMPLEMENTED | [응답](curl-live.txt) |
 
 재현: `npm start` 후 `curl -i 'http://127.0.0.1:3000/api/feed?mock=1'`.
 검증 서버는 종료했다. 별도 linter/typechecker/build는 없으며 check를 그런 검사로 주장하지 않는다.
@@ -27,6 +27,14 @@
 네트워크 금지 테스트는 별도 Node 프로세스에서 fetch, HTTP/HTTPS, socket 연결, DNS를 모두 실패 함수로 바꾼 뒤 4종 mock을 읽었다. 시도 횟수 0이며 키가 필요 없다. OS 전체 네트워크 차단 실험은 아니다.
 
 3/20장 통과, 2/21장 거부, 중복·누락·동일 개수의 외부 ID 대체·거짓 invariants·문자열 숫자·잘못된 Claim/Evidence·프로필 타입·단일 타이틀·재배치 identity를 검사했다.
+
+## 초기 커밋 이후 P2 후속 검증
+
+- 외부 리뷰의 두 P2를 현재 작업 트리에서 독립 회귀 테스트로 재현했다. 구현 변경 전에 계약 테스트 57건 중 48 pass / 9 fail: 누락·undefined CurrentProfile × 정상 target-only·조작된 correction × validateFeed·E8의 8건, photo-only user 캡션 1건이 실패했다. 새 valid user_text 통제 테스트는 통과했다.
+- validateDisclosure의 선택적 입력 검사를 제거해 validateFeed와 E8 모두 실제 CurrentProfile을 항상 검증한다. absence는 명시적인 present:false 객체이며, 누락 입력을 API 호출자나 출력으로 추측하지 않는다.
+- user 캡션은 유효한 user_text evidence를 최소 1개 요구한다. 사진 evidence와 함께 제공하면 통과하며 빈 사용자 ref는 거부한다. 사용자 입력 ref의 실제 진위는 인증하지 않는다.
+- 스키마에 필수 current 입력과 position 기준 순서(배열 저장 순서는 무관)를 명시했다. 기존 eval 전체 export 검증 게이트는 유지했다.
+- 수정 후 npm test / npm run eval / npm run check를 모두 재실행하고 위 원문 파일을 갱신했다. eval/check 출력은 이전 기록과 동일하다. HTTP curl smoke는 이번 후속 작업에서 재실행하지 않았으며 npm test의 API 테스트 3건은 재실행했다.
 
 ## 초안 대비 계약 결정
 

@@ -30,6 +30,8 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 
 current_profile_id=null이면 corrected=false, disclosure=target_only, deltas=[]이어야 한다.
 검증기는 실제 입력 사진 ID와 CurrentProfile을 별도 인수로 받는다. invariants는 진실의 원천이 아니며 관측값과 추가 대조한다.
+`validateFeed(feed, inputPhotoIds, currentProfile)`와 E8 평가에는 실제 CurrentProfile 입력이 필수다. 인수/필드 생략과 undefined는 거부한다. 현재 프로필이 없으면 CurrentProfile 계약의 `present:false` 객체를 명시적으로 전달한다. 출력의 current_profile_id로 입력을 추측하거나 생략된 입력을 자동 보정하지 않는다.
+slots 배열의 저장 순서는 의미가 없으며 표시 순서는 position이 결정한다. 소비자는 position 오름차순으로 표시한다.
 사진 목록에서 caption_inputs.describable_facts를 복사한다. 비움 후보의 overlap 등은 F3의 재료이며 F2가 캡션 상태를 결정하지 않는다.
 
 delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0,resolved:number≥0,rule:"log_midpoint",note_key:"caption_len_gap",evidence:Evidence[1..]}`.
@@ -42,6 +44,8 @@ title은 공백만인 값·배열·개행을 허용하지 않는 단일 문자�
 export positions도 1..N을 한 번씩 가진다. 각 position의 photo_id는 전달받은 OrderedFeed와 일치해야 한다.
 omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. filled/user의 omit_reason은 null이다. omitted이면 text=null, filled/user이면 nonempty string이다.
 비움의 evidence도 보존하며 사용자가 쓴 문장의 evidence는 사용자 입력 출처로 연결한다.
+`caption_state="user"`는 유효한 `kind="user_text"` Evidence를 최소 1개 포함해야 한다. 사진 근거를 함께 넣을 수 있지만 사진 근거만으로 user 상태를 허용하지 않는다. ref/note의 형식을 검사하며 실제 사용자 입력의 진위 인증은 이 계약의 범위가 아니다.
+export slots도 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다.
 E6는 이 별도 export를 읽으며 feed에 title이 없다고 실패시키지 않는다.
 E4/E5/E7 자동 판정은 생략하며 수동 스팟체크로 대체한다 (실제 데모 검증 pending).
 
