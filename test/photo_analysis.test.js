@@ -55,18 +55,15 @@ test('heuristic never reports a subject, place, time or mood — only measured v
   }
 });
 
-test('model failure falls back to heuristic instead of throwing', async () => {
+test('selected model failure is explicit and never cached', async () => {
   resetAnalysisState();
   const seen = [];
-  const { analysis } = await analyzePhoto({
-    ...card, apiKey: 'test-key', onModelError: e => seen.push(e.message),
+  await assert.rejects(analyzePhoto({ ...card, apiKey: 'test-key', onModelError: e => seen.push(e.message),
     client: async () => { throw new Error('model HTTP 529: overloaded'); }
-  });
-  assert.equal(analysis.analysis_source, 'heuristic');
-  assert.equal(analysis.model, 'heuristic-svg-card@1');
+  }), { code: 'MODEL_FAILURE' });
   assert.equal(analysisCounters().modelFailures, 1);
+  assert.equal(analysisCounters().cacheSize, 0);
   assert.match(seen[0], /529/);
-  validatePhoto(analysis);
 });
 
 test('model observations are accepted but measured color overrides the model estimate', async () => {
@@ -76,7 +73,7 @@ test('model observations are accepted but measured color overrides the model est
     client: async () => ({
       model: 'claude-opus-5-test',
       observation: {
-        color: { hue_mean: 999, sat_mean: 9, bright_mean: 9, palette_hex: ['nonsense'] },
+        color: { hue_mean: 0, sat_mean: 0, bright_mean: 0, palette_hex: ['#000000'] },
         composition: 'full_frame', scale: 'closeup', subjects: ['머그컵'], has_face: false,
         text_in_image: 'SEOUL', describable_facts: ['흰 머그컵 하나가 나무 테이블 위에 있다'], quality_flags: []
       }
@@ -90,53 +87,41 @@ test('model observations are accepted but measured color overrides the model est
   validatePhoto(analysis);
 });
 
-// review-codex.md H2. This test used to assert.rejects here, which pinned the exact
-// opposite of the spec: a contract-violating response is a model failure, so it falls
-// back to the measured heuristic, and it must not be written to the cache.
-test('a contract-violating model response falls back to heuristic and is not cached', async () => {
-  for (const bad of [
-    { composition: 'sideways', scale: 'closeup', subjects: [], has_face: false, text_in_image: null, describable_facts: [], quality_flags: [] },
-    // Empty string passes the model's output schema (string) but not the contract.
-    { composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false, text_in_image: '', describable_facts: [], quality_flags: [] }
-  ]) {
+test('contract violations fail before correction and never enter cache', async () => {
+  const valid = { color: { hue_mean: 0, sat_mean: 0, bright_mean: 0, palette_hex: [] }, composition: 'full_frame',
+    scale: 'midshot', subjects: [], has_face: false, text_in_image: null, describable_facts: [], quality_flags: [] };
+  for (const patch of [{ composition: 'sideways' }, { text_in_image: '' }, { color: { hue_mean: 999 } },
+    { photo_id: 'ghost' }, { quality_flags: ['duplicate_of:ghost'] }, { subjects: undefined }]) {
     resetAnalysisState();
-    const seen = [];
-    const client = async () => ({ model: 'x', observation: bad });
-    const first = await analyzePhoto({ ...card, apiKey: 'test-key', client, onModelError: e => seen.push(e.message) });
-    assert.equal(first.analysis.analysis_source, 'heuristic', 'must not 500 on a bad response');
-    assert.equal(analysisCounters().modelFailures, 1, 'a rejected response is a model failure');
-    assert.equal(seen.length, 1);
-    validatePhoto(first.analysis);
-
-    // The bad observation must not be frozen in: a later request for the same bytes
-    // returns the measured heuristic instead of re-throwing the same error.
-    const again = await analyzePhoto(card);
-    assert.equal(again.analysis.analysis_source, 'heuristic');
-    assert.deepEqual(again.analysis.color.palette_hex, ['#e8dfd2']);
-    validatePhoto(again.analysis);
+    let calls = 0;
+    const client = async () => ({ model: 'test-model', observation: ++calls === 1 ? { ...valid, ...patch } : valid });
+    await assert.rejects(analyzePhoto({ ...card, apiKey: 'key', client }), { code: 'MODEL_CONTRACT' });
+    assert.equal(analysisCounters().cacheSize, 0);
+    const recovered = await analyzePhoto({ ...card, apiKey: 'key', client });
+    assert.equal(calls, 2);
+    assert.equal(recovered.fromCache, false);
+    assert.equal(recovered.analysis.analysis_source, 'vision_model');
   }
 });
 
-// review-codex.md M2 — same shape as the foundation review's H1/H2: a field was taken
-// on trust instead of being resolved against the real input.
-test('an observation cannot relabel which photo was analyzed', async () => {
+test('key/model namespaces separate heuristic and model cache; callers cannot poison cached facts', async () => {
   resetAnalysisState();
-  const { analysis } = await analyzePhoto({
-    ...card, photoId: 'real_photo', inputIndex: 0, fileRef: 'real.svg', apiKey: 'test-key',
-    client: async () => ({
-      model: 'x',
-      observation: {
-        color: { hue_mean: 0, sat_mean: 0, bright_mean: 0, palette_hex: [] },
-        composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false,
-        text_in_image: null, describable_facts: ['다른 사진에서 복사한 사실'], quality_flags: [],
-        schema_version: '9.9', photo_id: 'ghost', file_ref: 'other.jpg', input_index: 99
-      }
-    })
-  });
-  assert.equal(analysis.photo_id, 'real_photo');
-  assert.equal(analysis.file_ref, 'real.svg');
-  assert.equal(analysis.input_index, 0);
-  assert.equal(analysis.schema_version, '1.0');
+  const heuristic = await analyzePhoto(card);
+  assert.equal(heuristic.execution.reason, 'missing_api_key');
+  const client = async () => ({ model: 'm', observation: { color: { hue_mean: 1, sat_mean: 0, bright_mean: 0, palette_hex: [] },
+    composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false, text_in_image: null,
+    describable_facts: ['관측된 사실'], quality_flags: [] } });
+  const first = await analyzePhoto({ ...card, apiKey: 'k', model: 'a', client });
+  assert.equal(first.fromCache, false);
+  first.analysis.describable_facts.push('오염');
+  first.analysis.color.palette_hex.push('bad');
+  const cached = await analyzePhoto({ ...card, apiKey: 'k', model: 'a', client });
+  assert.equal(cached.fromCache, true);
+  assert.deepEqual(cached.analysis.describable_facts, ['관측된 사실']);
+  validatePhoto(cached.analysis);
+  assert.equal((await analyzePhoto({ ...card, apiKey: 'k', model: 'b', client })).fromCache, false);
+  assert.equal((await analyzePhoto({ ...card, apiKey: 'other-key', model: 'a', client })).fromCache, false);
+  assert.equal((await analyzePhoto(card)).analysis.analysis_source, 'heuristic');
 });
 
 test('same bytes twice: zero extra model calls, identity re-stamped, duplicate reported', async () => {
@@ -286,6 +271,8 @@ test('POST one photo returns one PhotoAnalysis', async () => {
   validatePhoto(response.body);
   assert.equal(response.body.photo_id, 'ph_01');
   assert.equal(response.headers['Cache-Control'], 'no-store');
+  assert.equal(response.headers['X-Gyeol-Analysis-Source'], 'heuristic');
+  assert.equal(response.headers['X-Gyeol-Analysis-Reason'], 'missing_api_key');
 });
 
 test('there is no many-photos-per-request path', async () => {

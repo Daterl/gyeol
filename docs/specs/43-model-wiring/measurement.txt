@@ -1,0 +1,9 @@
+.env not found. Continuing without it.
+{
+  "status": "PENDING",
+  "reason": "missing_api_key",
+  "source": "heuristic",
+  "single_photo_latency_ms": "PENDING",
+  "fifteen_photo_total_ms": "PENDING",
+  "cost": "PENDING"
+}

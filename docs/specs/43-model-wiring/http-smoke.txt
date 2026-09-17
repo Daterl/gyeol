@@ -1,0 +1,7 @@
+{
+  "status": 200,
+  "source_header": "heuristic",
+  "reason_header": "missing_api_key",
+  "analysis_source": "heuristic",
+  "photo_id": "smoke"
+}

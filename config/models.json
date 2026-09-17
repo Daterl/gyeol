@@ -1,0 +1,7 @@
+{
+  "vision_model": "claude-opus-5",
+  "documentation_checked_at": "2026-09-17",
+  "source": "https://platform.claude.com/docs/en/api/models/list",
+  "account_access": "PENDING: verified via Models API at call time",
+  "live_quality_latency_cost": "PENDING"
+}

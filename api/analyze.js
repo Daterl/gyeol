@@ -56,9 +56,12 @@ export default async function handler(req, res) {
   if (bytes.length > MAX_IMAGE_BYTES) return fail(413, 'IMAGE_TOO_LARGE', `Image exceeds ${MAX_IMAGE_BYTES} bytes.`);
 
   try {
-    const { analysis } = await analyzePhoto({ bytes, photoId, inputIndex, fileRef, mediaType });
+    const { analysis, execution } = await analyzePhoto({ bytes, photoId, inputIndex, fileRef, mediaType });
+    res.setHeader('X-Gyeol-Analysis-Source', execution.source);
+    res.setHeader('X-Gyeol-Analysis-Reason', execution.reason);
     return send(200, analysis);
   } catch (error) {
+    if (error.code?.startsWith('MODEL_')) return fail(error.code === 'MODEL_TIMEOUT' ? 504 : 502, error.code, error.message);
     if (error instanceof AnalysisUnavailableError) return fail(422, 'ANALYSIS_UNAVAILABLE', 'Neither the model nor the pixels could be read; no values were invented.');
     if (error.code === 'UNSUPPORTED_MEDIA_TYPE') return fail(415, 'UNSUPPORTED_MEDIA_TYPE', `Supported: ${SUPPORTED_MEDIA_TYPES.join(', ')}`);
     if (error.code === 'IMAGE_TOO_LARGE') return fail(413, 'IMAGE_TOO_LARGE', `Image exceeds ${MAX_IMAGE_BYTES} bytes.`);
