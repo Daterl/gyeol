@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/25-editor-state
+
+
+ Test Files  4 passed (4)
+      Tests  24 passed (24)
+   Start at  19:06:07
+   Duration  145ms (transform 57%, tests 26%, import 14%, worker 3%)
