@@ -14,3 +14,7 @@
 리뷰 수정: 기존 게시물 21장 직접 submitPhotos 호출 시 사전 차단 누락 재현(수정 전 NETWORK 실패/수정 후 INVALID_SELECTION·fetch 0회 PASS). 업로드 이전/이후 identity 검증은 서로 다른 단계라 유지, URL+기존사진 충돌은 분석 전에 확인한다. mock 모드는 제품 요구이며 배너로 모델 미사용을 명시한다.
 
 배포 환경 확인은 PR Preview 이후 추가한다. 실제 모델 품질은 이 이슈의 증거에 포함하지 않는다.
+
+Preview 5873496: Vercel SUCCESS, https://gyeol-77gish687-jangwons-projects-c001fb62.vercel.app/?mock=1 직접 열기·텍스트 입력·기존 게시물 영역 펼치기 PASS. 인증된 확장 브라우저는 file URL 업로드 권한이 없고, 네이티브 Chrome 프로필은 Preview 로그인 화면이므로 배포된 실제 파일 업로드는 PENDING. 보호 설정을 변경하지 않았다. #27에서 이 검증을 이어가며 #14는 인수 대기로 유지한다.
+
+최종 Sonnet 5 동일 코드 diff 재검토: Node184/UI30/eval/typecheck 실행 PASS, blocking 0. mock 공개 경로 지적은 요구된 무모델 데모 경로이며 명시적 배너가 있어 수용한다. 두 단계 identity 검증은 분석 전 형태·분석 후 실제 사진 근거를 각각 검사하므로 유지한다.
