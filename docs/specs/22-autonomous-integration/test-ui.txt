@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/unify-development
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  18:03:52
+   Duration  422ms (transform 47%, tests 33%, import 16%, worker 4%)
