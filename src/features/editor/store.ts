@@ -1,14 +1,21 @@
 import { createStore } from 'zustand/vanilla';
-import type { F3Export, FeedResponse } from '@/types/contracts';
+import type {
+  F3Export,
+  FeedResponse,
+  GenerateRequest,
+} from '@/types/contracts';
 import { validateEditedExport } from '../../../lib/contracts.js';
-import { validateFeedResponse } from '../../../lib/interaction.js';
+import {
+  validateFeedResponse,
+  validateGenerateResponse,
+} from '../../../lib/interaction.js';
 import { ApiError, generateOutput } from '../../lib/api';
 
 export type SelectedPhoto = { file: File; photo_id: string; url: string };
 type RequestState =
   | { status: 'idle' | 'ready' }
   | { operation: 'feed' | 'all' | 'slot'; photo_id?: string; status: 'loading' }
-  | { error: ApiError; status: 'error' };
+  | { error: ApiError; operation: 'feed' | 'all' | 'slot'; status: 'error' };
 type EditorState = {
   draft: F3Export | null;
   order: string[];
@@ -22,7 +29,7 @@ type EditorActions = {
   editCaption: (id: string, text: string) => void;
   editTitle: (title: string) => void;
   exportDraft: () => F3Export;
-  generate: (id?: string) => Promise<void>;
+  generate: (id?: string, run?: typeof generateOutput) => Promise<void>;
   loadFeed: (
     task: (signal: AbortSignal) => Promise<FeedResponse>,
   ) => Promise<void>;
@@ -64,9 +71,12 @@ export function createEditorStore() {
     };
     const fail = (error: unknown, controller: AbortController) => {
       if (active !== controller) return;
+      const request = get().request;
+      if (request.status !== 'loading') return;
       active = null;
       set({
         request: {
+          operation: request.operation,
           error:
             error instanceof ApiError
               ? error
@@ -138,7 +148,7 @@ export function createEditorStore() {
         );
         return structuredClone(draft);
       },
-      generate: async (id) => {
+      generate: async (id, run = generateOutput) => {
         const { original, originalOutput, draft: before } = get();
         if (!original || (id && !before)) return;
         const controller = begin({
@@ -147,15 +157,14 @@ export function createEditorStore() {
           status: 'loading',
         });
         try {
-          const result = await generateOutput(
-            {
-              ...original,
-              schema_version: '1.0',
-              ...(id ? { mode: 'slot', photo_id: id } : { mode: 'all' }),
-            },
-            controller.signal,
-          );
+          const input: GenerateRequest = {
+            ...original,
+            schema_version: '1.0',
+            ...(id ? { mode: 'slot', photo_id: id } : { mode: 'all' }),
+          };
+          const result = await run(input, controller.signal);
           if (active !== controller) return;
+          validateGenerateResponse(result, input);
           const { draft: current, order } = get();
           if ('output' in result) {
             const output = structuredClone(result.output);
