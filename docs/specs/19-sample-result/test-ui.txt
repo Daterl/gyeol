@@ -8,5 +8,5 @@
 
  Test Files  9 passed (9)
       Tests  29 passed (29)
-   Start at  20:14:37
-   Duration  406ms (transform 57%, import 32%, tests 9%, worker 2%)
+   Start at  20:16:53
+   Duration  406ms (transform 55%, import 34%, tests 10%, worker 1%)
