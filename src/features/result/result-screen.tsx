@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 import { Button } from '@/components/ui/button';
 import deltaCopy from '@/copy/deltas.ko.json';
@@ -19,17 +19,21 @@ export function deltaSentence(delta: AppliedProfile['deltas'][number]) {
 export function ResultScreen({
   store,
   mock = false,
+  sampleImages,
 }: {
   store: EditorStore;
   mock?: boolean;
+  sampleImages?: Record<string, { src: string; alt: string }>;
 }) {
   const original = useStore(store, (state) => state.original);
   const order = useStore(store, (state) => state.order);
   const photos = useStore(store, (state) => state.photos);
+  const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const handles = useRef(new Map<string, HTMLButtonElement>());
   const [announcement, setAnnouncement] = useState('');
   useEffect(() => {
+    setAnnouncement('');
     if (original) heading.current?.focus();
   }, [original]);
   if (!original) return null;
@@ -49,13 +53,13 @@ export function ResultScreen({
   return (
     <section
       className="my-12 border-t border-line pt-10"
-      aria-labelledby="result-heading"
+      aria-labelledby={headingId}
     >
       <p className="mb-3 font-mono text-xs tracking-widest text-accent">
         사진 사이의 흐름
       </p>
       <h2
-        id="result-heading"
+        id={headingId}
         ref={heading}
         tabIndex={-1}
         className="text-3xl font-semibold tracking-tight"
@@ -67,20 +71,23 @@ export function ResultScreen({
       </p>
       <div className="my-6 border-l-4 border-accent bg-accent-soft px-4 py-3 text-sm leading-7">
         <p>
-          {photoOnly
-            ? '개인화 정보 없이 사진을 바탕으로 준비했어요. 계정 취향이나 문체를 추측하지 않았어요.'
-            : feed.applied_profile.disclosure === 'target_only'
-              ? '기존 계정과 비교한 보정은 없어요. 입력한 지향을 사용했어요.'
-              : '기존 계정과 입력한 지향을 함께 보고 조정했어요.'}
+          {sampleImages
+            ? 'AI로 만든 이미지와 사전 작성한 순서·문장 예시예요. 실제 계정이나 실시간 모델 분석 결과는 아니에요.'
+            : photoOnly
+              ? '개인화 정보 없이 사진을 바탕으로 준비했어요. 계정 취향이나 문체를 추측하지 않았어요.'
+              : feed.applied_profile.disclosure === 'target_only'
+                ? '기존 계정과 비교한 보정은 없어요. 입력한 지향을 사용했어요.'
+                : '기존 계정과 입력한 지향을 함께 보고 조정했어요.'}
         </p>
-        {context.photos.some(
-          (photo) => photo.analysis_source === 'heuristic',
-        ) && (
-          <p>
-            사진의 픽셀만 확인한 항목이 있어요. 처음에는 선택한 순서를
-            유지했으니 직접 옮겨 보세요.
-          </p>
-        )}
+        {!sampleImages &&
+          context.photos.some(
+            (photo) => photo.analysis_source === 'heuristic',
+          ) && (
+            <p>
+              사진의 픽셀만 확인한 항목이 있어요. 처음에는 선택한 순서를
+              유지했으니 직접 옮겨 보세요.
+            </p>
+          )}
         {feed.applied_profile.deltas.map((delta) => (
           <p key={delta.field}>{deltaSentence(delta)}</p>
         ))}
@@ -98,6 +105,9 @@ export function ResultScreen({
         {order.map((id, index) => {
           const slot = feed.slots.find((item) => item.photo_id === id);
           const photo = photos.find((item) => item.photo_id === id);
+          const image = photo
+            ? { src: photo.url, alt: photo.file.name }
+            : sampleImages?.[id];
           const analysis = context.photos.find((item) => item.photo_id === id);
           if (!slot) return null;
           return (
@@ -145,19 +155,19 @@ export function ResultScreen({
                   처음 제안 {slot.position}번
                 </span>
               </div>
-              {photo ? (
+              {image ? (
                 <a
-                  href={photo.url}
+                  href={image.src}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`${index + 1}번 ${photo.file.name} 원본 보기`}
+                  aria-label={`${index + 1}번 ${image.alt} 원본 보기`}
                   className="relative block aspect-[4/5] overflow-hidden rounded-md bg-line-soft"
                 >
                   <Image
-                    src={photo.url}
-                    alt={photo.file.name}
+                    src={image.src}
+                    alt={image.alt}
                     fill
-                    unoptimized
+                    unoptimized={Boolean(photo)}
                     sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw"
                     className="object-contain"
                   />

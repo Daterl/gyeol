@@ -93,6 +93,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   }
   return (
     <>
+      <SamplePreview />
       <form
         ref={form}
         onSubmit={(event) => {
@@ -271,9 +272,6 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         )}
       </form>
       <ResultScreen store={store} mock={mock} />
-      <div className="mt-12">
-        <SamplePreview />
-      </div>
     </>
   );
 }
