@@ -34,7 +34,10 @@ export function ResultScreen({
   const [announcement, setAnnouncement] = useState('');
   useEffect(() => {
     setAnnouncement('');
-    if (original) heading.current?.focus();
+    if (original) {
+      heading.current?.focus();
+      heading.current?.scrollIntoView({ block: 'start' });
+    }
   }, [original]);
   if (!original) return null;
   const { feed, context } = original;
@@ -52,7 +55,7 @@ export function ResultScreen({
   }
   return (
     <section
-      className="my-12 border-t border-line pt-10"
+      className="my-7 border-t border-line pt-6"
       aria-labelledby={headingId}
     >
       <p className="mb-3 font-mono text-xs tracking-widest text-accent">
@@ -62,14 +65,14 @@ export function ResultScreen({
         id={headingId}
         ref={heading}
         tabIndex={-1}
-        className="text-3xl font-semibold tracking-tight"
+        className="text-2xl font-semibold tracking-tight"
       >
         이 순서로 놓아봤어요.
       </h2>
       <p className="mt-3 text-muted-foreground">
         {order.length}장의 사진, 마음에 드는 흐름으로 고쳐 보세요.
       </p>
-      <div className="my-6 border-l-4 border-accent bg-accent-soft px-4 py-3 text-sm leading-7">
+      <div className="my-4 border-y border-line py-3 text-sm leading-6 text-muted-foreground">
         <p>
           {sampleImages
             ? 'AI로 만든 이미지와 사전 작성한 순서·문장 예시예요. 실제 계정이나 실시간 모델 분석 결과는 아니에요.'
@@ -92,7 +95,7 @@ export function ResultScreen({
           <p key={delta.field}>{deltaSentence(delta)}</p>
         ))}
       </div>
-      <p className="mb-5 text-sm text-muted-foreground">
+      <p className="mb-3 text-sm text-muted-foreground">
         {moved
           ? '순서를 직접 바꿨어요. 아래 근거는 처음 제안한 자리의 설명이며 다시 계산하지 않았어요.'
           : '번호 손잡이를 끌거나 앞·뒤로 버튼으로 옮길 수 있어요.'}
@@ -113,7 +116,7 @@ export function ResultScreen({
           return (
             <li
               key={id}
-              className="min-w-0 border-b border-line pb-6"
+              className="grid min-w-0 grid-cols-[104px_minmax(0,1fr)] gap-x-4 border-b border-line pb-6 max-[359px]:grid-cols-[88px_minmax(0,1fr)] sm:block"
               onDragOver={(event) => event.preventDefault()}
               onDrop={(event) => {
                 event.preventDefault();
@@ -122,7 +125,7 @@ export function ResultScreen({
                   move(dragged, index);
               }}
             >
-              <div className="mb-3 flex items-center justify-between gap-2">
+              <div className="col-span-2 mb-3 flex items-center justify-between gap-2">
                 <button
                   type="button"
                   draggable
@@ -161,7 +164,7 @@ export function ResultScreen({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${index + 1}번 ${image.alt} 원본 보기`}
-                  className="relative block aspect-[4/5] overflow-hidden rounded-md bg-line-soft"
+                  className="relative col-start-1 row-start-2 block aspect-[4/5] self-start overflow-hidden bg-line-soft"
                 >
                   <Image
                     src={image.src}
@@ -173,12 +176,17 @@ export function ResultScreen({
                   />
                 </a>
               ) : (
-                <div className="flex aspect-[4/5] items-center justify-center bg-line-soft p-6 text-sm">
+                <div className="col-start-1 row-start-2 flex aspect-[4/5] items-center justify-center self-start bg-line-soft p-3 text-sm">
                   {analysis?.file_ref ?? '사진 원본이 없어요.'}
                 </div>
               )}
-              <p className="mt-4 text-sm leading-7">{slot.rationale.value}</p>
-              <details className="mt-2 text-sm">
+              <div className="col-start-2 row-start-2 min-w-0">
+                <CaptionEditor store={store} id={id} mock={mock} />
+              </div>
+              <p className="col-span-2 mt-4 text-sm leading-7">
+                {slot.rationale.value}
+              </p>
+              <details className="col-span-2 mt-2 text-sm">
                 <summary className="min-h-11 cursor-pointer py-3 font-medium text-accent">
                   근거 보기
                 </summary>
@@ -191,7 +199,7 @@ export function ResultScreen({
                   ))}
                 </ul>
               </details>
-              <div className="mt-3 flex gap-2">
+              <div className="col-span-2 mt-3 flex gap-2">
                 <Button
                   type="button"
                   variant="outline"
@@ -213,7 +221,6 @@ export function ResultScreen({
                   뒤로
                 </Button>
               </div>
-              <CaptionEditor store={store} id={id} mock={mock} />
             </li>
           );
         })}

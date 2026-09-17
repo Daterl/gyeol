@@ -116,3 +116,31 @@ test('caption failure never offers a photo upload retry', async () => {
   expect(markup).not.toContain('>다시 시도하기</button>');
   expect(markup).toContain('>이 사진들로 시작하기</button>');
 });
+
+test('companion follows the actual editor lifecycle and cancellation', async () => {
+  const store = createEditorStore();
+  vi.spyOn(editorModule, 'createEditorStore').mockReturnValue(store);
+  const image = () =>
+    renderToStaticMarkup(createElement(PhotoInput, { mock: true }));
+  expect(image()).toContain('/images/gyeol-character/default.webp');
+  let finish!: (value: FeedResponse) => void;
+  const pending = store.getState().loadFeed(
+    () =>
+      new Promise<FeedResponse>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  expect(image()).toContain('/images/gyeol-character/working.webp');
+  store.getState().cancel();
+  finish(response());
+  await pending;
+  expect(image()).toContain('/images/gyeol-character/default.webp');
+  await store.getState().loadFeed(async () => response());
+  expect(image()).toContain('/images/gyeol-character/complete.webp');
+  await store.getState().generate(undefined, async () => {
+    throw new Error('caption failed');
+  });
+  expect(image()).toContain('/images/gyeol-character/recovery.webp');
+  store.getState().reset();
+  expect(image()).toContain('/images/gyeol-character/default.webp');
+});

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { tv } from 'tailwind-variants';
 import { useStore } from 'zustand';
+import { Companion } from '../../components/companion';
 import { Button } from '../../components/ui/button';
 import { createEditorStore, type SelectedPhoto } from '../editor/store';
 import { ResultScreen } from '../result/result-screen';
@@ -16,6 +17,7 @@ const field = tv({
 export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [store] = useState(createEditorStore);
   const photos = useStore(store, (state) => state.photos);
+  const original = useStore(store, (state) => state.original);
   const request = useStore(store, (state) => state.request);
   const [oldPhotos, setOldPhotos] = useState<SelectedPhoto[]>([]);
   const oldPhotosRef = useRef(oldPhotos);
@@ -26,6 +28,15 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
     targetUrl: '',
   });
   const [errors, setErrors] = useState<string[]>([]);
+  const identity = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    if (
+      request.status === 'error' &&
+      request.operation === 'feed' &&
+      identity.current
+    )
+      identity.current.open = true;
+  }, [request]);
   const form = useRef<HTMLFormElement>(null);
   const loading = request.status === 'loading';
   useEffect(
@@ -93,9 +104,36 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   }
   return (
     <>
+      <div className="flex items-center justify-between gap-5 py-7 sm:py-8">
+        <div>
+          <p className="mb-2 font-mono text-xs tracking-widest text-accent">
+            사진 여러 장, 하나의 흐름
+          </p>
+          <h1 className="text-[28px] font-bold leading-tight tracking-tight sm:text-[32px]">
+            오늘의 사진을 이어볼까요?
+          </h1>
+          <p className="mt-3 text-muted-foreground">
+            올릴 순서를 고르고, 필요한 말만 붙여요.
+          </p>
+        </div>
+        <Companion
+          state={
+            request.status === 'loading'
+              ? 'working'
+              : request.status === 'error'
+                ? 'recovery'
+                : original
+                  ? 'complete'
+                  : 'default'
+          }
+        />
+      </div>
       <SamplePreview />
       <form
         ref={form}
+        onInvalidCapture={() => {
+          if (identity.current) identity.current.open = true;
+        }}
         onSubmit={(event) => {
           event.preventDefault();
           setErrors([]);
@@ -105,7 +143,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
               submitPhotos(photos, oldPhotos, fields, signal, mock),
             );
         }}
-        className="space-y-8"
+        className="space-y-6"
       >
         {mock && (
           <p className="border-l-4 border-accent bg-accent-soft px-4 py-3 text-sm">
@@ -185,82 +223,83 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
               ? '요청을 마쳤어요.'
               : null}
         </p>
-        <fieldset
-          disabled={loading}
-          className="min-w-0 space-y-6"
-          aria-describedby="identity-help"
-        >
-          <legend className="text-xl font-semibold">
-            조금 더 나답게{' '}
-            <span className="ml-2 text-sm font-normal text-muted-foreground">
-              모두 선택
-            </span>
-          </legend>
-          <p id="identity-help" className="text-sm text-muted-foreground">
-            비워 두어도 시작할 수 있어요. 계정은 준비된 스냅샷만 사용하며 새로
-            수집하지 않아요.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            <label className="block font-medium">
-              내 인스타 URL
-              <input
-                type="url"
-                className={field()}
-                placeholder="https://www.instagram.com/계정/"
-                value={fields.currentUrl}
-                onChange={(event) =>
-                  setFields({ ...fields, currentUrl: event.target.value })
-                }
-              />
-              <span className="mt-2 block text-sm font-normal text-muted-foreground">
-                기존 게시물 사진을 넣으면 이 칸은 비워 주세요.
-              </span>
-            </label>
-            <label className="block font-medium">
-              레퍼런스 인스타 URL
-              <input
-                type="url"
-                className={field()}
-                placeholder="https://www.instagram.com/계정/"
-                value={fields.targetUrl}
-                onChange={(event) =>
-                  setFields({ ...fields, targetUrl: event.target.value })
-                }
-              />
-              <span className="mt-2 block text-sm font-normal text-muted-foreground">
-                아래 원하는 느낌과 둘 중 하나만 골라 주세요.
-              </span>
-            </label>
-          </div>
-          <label className="block font-medium">
-            원하는 느낌
-            <textarea
-              className={field()}
-              rows={2}
-              maxLength={2000}
-              placeholder="짧고 담백하게. 이모지는 쓰지 않을래요."
-              value={fields.targetText}
-              onChange={(event) =>
-                setFields({ ...fields, targetText: event.target.value })
-              }
-            />
-          </label>
-          <details className="border-t border-line pt-4">
-            <summary className="min-h-11 py-2 font-medium">
-              내 기존 게시물 사진으로 알려주기
-            </summary>
-            <p className="mb-4 text-sm text-muted-foreground">
-              올릴 사진과는 별도예요. 기존 사진만으로 문체를 알아내지는 않아요.
+        <details ref={identity} className="border-b border-line pb-5">
+          <summary className="min-h-11 py-2 font-medium">
+            조금 더 나답게 · 모두 선택
+          </summary>
+          <fieldset
+            disabled={loading}
+            className="min-w-0 space-y-6 pt-4"
+            aria-describedby="identity-help"
+          >
+            <legend className="sr-only">개인화 선택 입력</legend>
+            <p id="identity-help" className="text-sm text-muted-foreground">
+              비워 두어도 시작할 수 있어요. 계정은 준비된 스냅샷만 사용하며 새로
+              수집하지 않아요.
             </p>
-            <PhotoPicker
-              disabled={loading}
-              label="기존 게시물 사진"
-              photos={oldPhotos}
-              onAdd={(files) => add(files, true)}
-              onRemove={(id) => remove(id, true)}
-            />
-          </details>
-        </fieldset>
+            <div className="grid gap-6 md:grid-cols-2">
+              <label className="block font-medium">
+                내 인스타 URL
+                <input
+                  type="url"
+                  className={field()}
+                  placeholder="https://www.instagram.com/계정/"
+                  value={fields.currentUrl}
+                  onChange={(event) =>
+                    setFields({ ...fields, currentUrl: event.target.value })
+                  }
+                />
+                <span className="mt-2 block text-sm font-normal text-muted-foreground">
+                  기존 게시물 사진을 넣으면 이 칸은 비워 주세요.
+                </span>
+              </label>
+              <label className="block font-medium">
+                레퍼런스 인스타 URL
+                <input
+                  type="url"
+                  className={field()}
+                  placeholder="https://www.instagram.com/계정/"
+                  value={fields.targetUrl}
+                  onChange={(event) =>
+                    setFields({ ...fields, targetUrl: event.target.value })
+                  }
+                />
+                <span className="mt-2 block text-sm font-normal text-muted-foreground">
+                  아래 원하는 느낌과 둘 중 하나만 골라 주세요.
+                </span>
+              </label>
+            </div>
+            <label className="block font-medium">
+              원하는 느낌
+              <textarea
+                className={field()}
+                rows={2}
+                maxLength={2000}
+                placeholder="짧고 담백하게. 이모지는 쓰지 않을래요."
+                value={fields.targetText}
+                onChange={(event) =>
+                  setFields({ ...fields, targetText: event.target.value })
+                }
+              />
+            </label>
+            <details className="border-t border-line pt-4">
+              <summary className="min-h-11 py-2 font-medium">
+                내 기존 게시물 사진으로 알려주기
+              </summary>
+              <p className="mb-4 text-sm text-muted-foreground">
+                올릴 사진과는 별도예요. 기존 사진만으로 문체를 알아내지는
+                않아요.
+              </p>
+              <PhotoPicker
+                disabled={loading}
+                label="기존 게시물 사진"
+                photos={oldPhotos}
+                onAdd={(files) => add(files, true)}
+                onRemove={(id) => remove(id, true)}
+              />
+            </details>
+          </fieldset>
+        </details>
         {(photos.length > 0 || oldPhotos.length > 0) && (
           <button
             type="button"
