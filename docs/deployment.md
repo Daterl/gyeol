@@ -1,10 +1,10 @@
-# Vercel 배포 준비
+# Vercel 배포 운영
 
 - 담당: **diego.yoon** (`@jangwonyoon`), 입력 모델·A1 실측 협업: **enzo.cho** (`@onejaejae`).
 - 실행 노드: [#6](https://github.com/Daterl/gyeol/issues/6), Next.js 기반: [#23](https://github.com/Daterl/gyeol/issues/23).
 - 2026-09-17 확인: GitHub Daterl/gyeol과 조직 설정 접근 가능. Vercel GitHub App을 gyeol 한 저장소로 설치했고, Vercel의 Connected Git Repository에서 Daterl/gyeol 연결을 확인했다.
 - Vercel 팀은 `jangwon’s projects` (`jangwons-projects-c001fb62`, Hobby). GitHub 조직과 Vercel 팀은 별개다.
-- 생성된 [gyeol 프로젝트](https://vercel.com/jangwons-projects-c001fb62/gyeol)의 ID: `prj_PMp7eLUJ3ecRKdo5MNdkBP7uibhE`. PR #21 foundation이 main(32eff4f)에 병합돼 자동 배포가 실행됐으나 Next.js 의존성이 없어 실패했다. 정상 Production Deployment는 아직 없다.
+- 생성된 [gyeol 프로젝트](https://vercel.com/jangwons-projects-c001fb62/gyeol)의 ID: `prj_PMp7eLUJ3ecRKdo5MNdkBP7uibhE`. 초기 PR #21 배포는 Next.js 의존성 부재로 실패했지만 PR #32 병합 이후 Production이 Ready로 완료됐다. 공개 대표 주소는 https://project-7klb1.vercel.app/ 이다.
 - Framework Preset: **Next.js** 저장 완료. Node.js: **24.x** 기본값 확인. root는 저장소 루트, build/install/output override는 꺼져 있다. #23에서 package engines와 로컬 Node를 맞추고 빌드를 검증한다.
 
 ## 연결
@@ -19,7 +19,11 @@ codex mcp list
 
 GitHub Vercel App은 `Only select repositories → Daterl/gyeol`로 설치했다. Vercel에는 빈 프로젝트를 생성하고 원본 Git 저장소를 연결했다. MCP 접근 범위는 gyeol 한 개이며 전체 현재/향후 프로젝트 접근은 선택하지 않았다.
 
-Production Branch Tracking은 `main`으로 확인했다. 환경변수는 아직 없고 실제 빌드는 No Next.js version detected로 실패했다. #23에서 Next.js 앱·package 의존성을 넣은 뒤 빌드와 공개 URL을 검증한다.
+Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치를 develop으로 바꾼 뒤에도 Vercel Production 설정에서 main을 다시 확인했다. 환경변수는 아직 없으며 실제 모델 A1 실측은 pending이다.
+
+## 개발과 공개 배포 분리
+
+[ADR-0004](adr/0004-develop-and-production-branches.md)에 따라 작업 브랜치와 기능 PR의 기준은 **develop**이다. develop/작업 브랜치는 Preview에서 확인한다. 배포할 때만 **develop → main** 릴리스 PR을 사람이 merge commit으로 병합한다. main 반영이 Production 자동 배포를 일으키며, Preview 통과를 Production 인수로 기록하지 않는다. Vercel 보호 설정·환경변수·Production 추적 브랜치는 이번 전환에서 변경하지 않았다.
 
 ## 인수 증거
 
@@ -31,4 +35,8 @@ Production Branch Tracking은 `main`으로 확인했다. 환경변수는 아직 
 
 [PR #32](https://github.com/Daterl/gyeol/pull/32), 구현 SHA `28a3b88`의 자동 Preview가 Ready로 완료됐다. [배포 상세](https://vercel.com/jangwons-projects-c001fb62/gyeol/4KYTcSQvkeVBkVWhyHpwjcTpv4Mi), [Preview](https://gyeol-ggbve05t7-jangwons-projects-c001fb62.vercel.app/).
 
-로그인된 Chrome에서 첫 화면·샘플 버튼·15슬롯 응답을 확인했다. 익명 HTTP 접근은 Vercel 인증으로 리다이렉트되므로 공개 URL 인수로 세지 않는다. 보호 설정을 변경하지 않았다. main Production은 사람 리뷰·merge 이후 확인하며 A1 실측도 pending이다.
+로그인된 Chrome에서 첫 화면·샘플 버튼·15슬롯 응답을 확인했다. 익명 HTTP 접근은 Vercel 인증으로 리다이렉트되므로 공개 URL 인수로 세지 않는다. 보호 설정을 변경하지 않았다. 이 기록은 당시 Preview 범위다. 후속 Production 검증은 아래 기록을 따른다.
+
+## 공개 Production 확인 — #38
+
+제출용 링크: **https://project-7klb1.vercel.app/**. 익명 HTTP 200·리다이렉트 없음·샘플 15슬롯과 기존 production smoke 전체 통과를 [#38 검증 댓글](https://github.com/Daterl/gyeol/issues/38#issuecomment-5711078940)에 기록했다. 해당 검증은 main `9a69a16`의 Current/Ready 배포 기준이다. 개별 배포 URL은 SSO 보호를 받을 수 있으므로 제출에는 대표 도메인을 쓴다. 시크릿/다른 기기 화면 확인과 #6 A1 실측은 별도 미완료 항목이다.

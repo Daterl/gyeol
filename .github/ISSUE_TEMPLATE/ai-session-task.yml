@@ -32,7 +32,8 @@ body:
       label: 담당·범위
       value: |
         - 사람 담당 / 협업자:
-        - 기준 SHA / branch / AI 실행 담당:
+        - 기준 origin/develop SHA / 작업 branch / AI 실행 담당:
+        - PR base: develop (Production 릴리스 PR만 main)
         - Owned:
         - Shared 및 인계:
         - Forbidden:
