@@ -9,9 +9,9 @@ not ok 1 - key-present SVG is an explicit 415 from the production HTTP client, w
   failureType: 'testCodeFailure'
   error: |-
     Expected values to be strictly equal:
-    
+
     502 !== 415
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 415

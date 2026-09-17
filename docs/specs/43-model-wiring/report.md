@@ -104,7 +104,8 @@ npm ci --ignore-scripts 후 lint·typecheck PASS. package/lock 변경 없음.
 ✔ reject title "one\ntwo" (0.061458ms)
 ✔ reject title "one\rtwo" (0.025333ms)
 ✔ reject title 3 (0.020917ms)
-✔ reject title "one two" (0.020667ms)
+✔ reject title "one
+two" (0.020667ms)
 ✔ F3 export retains stable identity at every position, including after reorder (0.277208ms)
 ✔ E4/E5/E7 are intentionally not automated quality checks (0.14725ms)
 ✔ user caption rejects photo-only evidence (0.072791ms)
@@ -333,9 +334,9 @@ not ok 1 - key-present SVG is an explicit 415 from the production HTTP client, w
   failureType: 'testCodeFailure'
   error: |-
     Expected values to be strictly equal:
-    
+
     502 !== 415
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 415
