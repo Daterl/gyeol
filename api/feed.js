@@ -11,7 +11,9 @@ export async function mockResource(name = 'ordered_feed') {
   targets.forEach(p => validateProfile(p,'target'));
   currents.forEach(p => validateProfile(p,'current'));
   // Independent photo input, never feed.invariants or feed.slots as the oracle.
-  validateFeed(feed, photos.map(p => p.photo_id), currents.find(p => !p.present));
+  // Mock input convention: the first target in the fixture list is the applied one.
+  // The output's own target_profile_id is never used to pick its own oracle.
+  validateFeed(feed, photos.map(p => p.photo_id), currents.find(p => !p.present), targets[0], photos);
   return { ordered_feed: feed, photo_analysis: photos, target_profile: targets, current_profile: currents }[name];
 }
 

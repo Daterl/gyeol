@@ -5,7 +5,7 @@
 검증 구현은 `lib/contracts.js`, JSON 예시는 `fixtures/`에 있다.
 
 공통 Evidence = `{kind, ref, note}`. kind는 ig_post/uploaded_photo/user_text/aggregate/rule,
-ref와 note는 비어 있지 않은 문자열이다. Claim<T> = `{value:T, confidence:number[0,1], evidence:Evidence[1..]}`.
+ref와 note는 비어 있지 않은 문자열이다. `kind="uploaded_photo"` 의 ref는 실제 입력 사진 ID로 해소되어야 한다 (E10; 다른 kind의 참조 도메인은 이 계약 밖이다). Claim<T> = `{value:T, confidence:number[0,1], evidence:Evidence[1..]}`.
 필수 Claim의 키나 evidence를 지우면 거부한다. 프로필의 rule-only 근거는 금지한다.
 알 수 없는 프로필 판단은 해당 필드를 생략하고 completeness를 낮춘다.
 
@@ -14,7 +14,7 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 | 필드 | 타입·규칙 |
 |---|---|
 | feed_id / session_id | nonempty string |
-| applied_profile.target_profile_id | nonempty string |
+| applied_profile.target_profile_id | nonempty string, 실제 TargetProfile 입력의 profile_id와 일치 (E9) |
 | applied_profile.current_profile_id | nonempty string 또는 null, 실제 current 입력 ID와 일치 |
 | applied_profile.corrected | boolean, disclosure=corrected와 동치 |
 | applied_profile.disclosure | "corrected" 또는 "target_only" |
@@ -30,9 +30,9 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 
 current_profile_id=null이면 corrected=false, disclosure=target_only, deltas=[]이어야 한다.
 검증기는 실제 입력 사진 ID와 CurrentProfile을 별도 인수로 받는다. invariants는 진실의 원천이 아니며 관측값과 추가 대조한다.
-`validateFeed(feed, inputPhotoIds, currentProfile)`와 E8 평가에는 실제 CurrentProfile 입력이 필수다. 인수/필드 생략과 undefined는 거부한다. 현재 프로필이 없으면 CurrentProfile 계약의 `present:false` 객체를 명시적으로 전달한다. 출력의 current_profile_id로 입력을 추측하거나 생략된 입력을 자동 보정하지 않는다.
+`validateFeed(feed, inputPhotoIds, currentProfile, targetProfile, photoAnalyses)`와 E8 평가에는 실제 CurrentProfile 입력이 필수다. 같은 방식으로 실제 TargetProfile(E9)과 실제 PhotoAnalysis 목록(E11)도 필수 인수다. `validateExport(output, feed, inputPhotoIds)`는 export의 evidence 해소(E10)를 위해 실제 입력 ID를 받는다. 인수/필드 생략과 undefined는 거부한다. 현재 프로필이 없으면 CurrentProfile 계약의 `present:false` 객체를 명시적으로 전달한다. 출력의 current_profile_id로 입력을 추측하거나 생략된 입력을 자동 보정하지 않는다.
 slots 배열의 저장 순서는 의미가 없으며 표시 순서는 position이 결정한다. 소비자는 position 오름차순으로 표시한다.
-사진 목록에서 caption_inputs.describable_facts를 복사한다. 비움 후보의 overlap 등은 F3의 재료이며 F2가 캡션 상태를 결정하지 않는다.
+사진 목록에서 caption_inputs.describable_facts를 복사한다. 복사원은 **그 슬롯의 photo_id와 같은** PhotoAnalysis이며, 다른 사진의 사실을 섞으면 E11로 거부한다. 비움 후보의 overlap 등은 F3의 재료이며 F2가 캡션 상태를 결정하지 않는다.
 
 delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0,resolved:number≥0,rule:"log_midpoint",note_key:"caption_len_gap",evidence:Evidence[1..]}`.
 초안 대비 F3 export에 photo_id와 omit_reason을 추가했다 (아래). delta를 1종·최대 1개로 제한하고 absent 정합성과 입력 ID 대조를 명시했다.
@@ -48,6 +48,7 @@ omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷
 export slots도 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다.
 E6는 이 별도 export를 읽으며 feed에 title이 없다고 실패시키지 않는다.
 E4/E5/E7 자동 판정은 생략하며 수동 스팟체크로 대체한다 (실제 데모 검증 pending).
+즉 재료→캡션(E4)은 여전히 사람이 보고, 사진→재료(E11)는 자동으로 본다. 체인의 앞쪽 절반만 기계가 막는다는 뜻이다.
 
 생성 연결 계약 제안: 향후 POST /api/generate 요청은 `{feed:OrderedFeed}`, 응답은 `{output:F3Export}`이다.
 입력 feed의 순서와 photo_id를 유지하며 export validator는 원본 feed와 비교한다.

@@ -1,0 +1,9 @@
+{
+  "invariant": "E9",
+  "document": "feed",
+  "path": [
+    "applied_profile",
+    "target_profile_id"
+  ],
+  "value": "tgt_DOES_NOT_EXIST_ANYWHERE"
+}
