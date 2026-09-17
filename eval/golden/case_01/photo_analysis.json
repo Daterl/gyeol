@@ -1,0 +1,437 @@
+[
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_01",
+    "file_ref": "eval/golden/case_01/photos/ph_01.svg",
+    "input_index": 0,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#e8dfd2"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 1",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 1 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_02",
+    "file_ref": "eval/golden/case_01/photos/ph_02.svg",
+    "input_index": 1,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#8f9b86"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 2",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 2 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_03",
+    "file_ref": "eval/golden/case_01/photos/ph_03.svg",
+    "input_index": 2,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#d4a891"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 3",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 3 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_04",
+    "file_ref": "eval/golden/case_01/photos/ph_04.svg",
+    "input_index": 3,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#e8dfd2"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 4",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 4 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_05",
+    "file_ref": "eval/golden/case_01/photos/ph_05.svg",
+    "input_index": 4,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#8f9b86"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 5",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 5 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_06",
+    "file_ref": "eval/golden/case_01/photos/ph_06.svg",
+    "input_index": 5,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#d4a891"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 6",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 6 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_07",
+    "file_ref": "eval/golden/case_01/photos/ph_07.svg",
+    "input_index": 6,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#e8dfd2"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 7",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 7 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_08",
+    "file_ref": "eval/golden/case_01/photos/ph_08.svg",
+    "input_index": 7,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#8f9b86"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 8",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 8 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_09",
+    "file_ref": "eval/golden/case_01/photos/ph_09.svg",
+    "input_index": 8,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#d4a891"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 9",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 9 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_10",
+    "file_ref": "eval/golden/case_01/photos/ph_10.svg",
+    "input_index": 9,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#e8dfd2"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 10",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 10 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_11",
+    "file_ref": "eval/golden/case_01/photos/ph_11.svg",
+    "input_index": 10,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#8f9b86"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 11",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 11 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_12",
+    "file_ref": "eval/golden/case_01/photos/ph_12.svg",
+    "input_index": 11,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#d4a891"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 12",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 12 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_13",
+    "file_ref": "eval/golden/case_01/photos/ph_13.svg",
+    "input_index": 12,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#e8dfd2"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 13",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 13 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_14",
+    "file_ref": "eval/golden/case_01/photos/ph_14.svg",
+    "input_index": 13,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#8f9b86"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 14",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 14 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "photo_id": "ph_15",
+    "file_ref": "eval/golden/case_01/photos/ph_15.svg",
+    "input_index": 14,
+    "color": {
+      "hue_mean": 34,
+      "sat_mean": 0.3,
+      "bright_mean": 0.7,
+      "palette_hex": [
+        "#d4a891"
+      ]
+    },
+    "composition": "negative_space",
+    "scale": "fullshot",
+    "subjects": [
+      "합성 색상 카드"
+    ],
+    "has_face": false,
+    "text_in_image": "synthetic 15",
+    "describable_facts": [
+      "단색 카드",
+      "synthetic 15 표기"
+    ],
+    "quality_flags": [],
+    "analysis_source": "heuristic",
+    "model": "manual-synthetic-bootstrap",
+    "analyzed_at": "2026-09-17T00:00:00.000Z"
+  }
+]

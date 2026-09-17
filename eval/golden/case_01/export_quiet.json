@@ -1,0 +1,215 @@
+{
+  "title": "합성 카드 기록",
+  "slots": [
+    {
+      "position": 1,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_01",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_01",
+      "omit_reason": null
+    },
+    {
+      "position": 2,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_02",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_02",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 3,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_03",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_03",
+      "omit_reason": null
+    },
+    {
+      "position": 4,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_04",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_04",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 5,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_05",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_05",
+      "omit_reason": null
+    },
+    {
+      "position": 6,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_06",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_06",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 7,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_07",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_07",
+      "omit_reason": null
+    },
+    {
+      "position": 8,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_08",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_08",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 9,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_09",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_09",
+      "omit_reason": null
+    },
+    {
+      "position": 10,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_10",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_10",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 11,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_11",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_11",
+      "omit_reason": null
+    },
+    {
+      "position": 12,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_12",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_12",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 13,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_13",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_13",
+      "omit_reason": null
+    },
+    {
+      "position": 14,
+      "caption_state": "omitted",
+      "text": null,
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_14",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_14",
+      "omit_reason": "앞 카드와 겹치는 합성 예시라 비워 둡니다"
+    },
+    {
+      "position": 15,
+      "caption_state": "filled",
+      "text": "단색 카드",
+      "evidence": [
+        {
+          "kind": "uploaded_photo",
+          "ref": "ph_15",
+          "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+        }
+      ],
+      "photo_id": "ph_15",
+      "omit_reason": null
+    }
+  ]
+}

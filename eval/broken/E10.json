@@ -1,0 +1,13 @@
+{
+  "invariant": "E10",
+  "document": "feed",
+  "path": [
+    "slots",
+    0,
+    "rationale",
+    "evidence",
+    0,
+    "ref"
+  ],
+  "value": "ph_NOT_AN_INPUT"
+}

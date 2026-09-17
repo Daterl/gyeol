@@ -1,0 +1,14 @@
+{
+  "invariant": "E11",
+  "document": "feed",
+  "path": [
+    "slots",
+    0,
+    "caption_inputs",
+    "describable_facts"
+  ],
+  "value": [
+    "단색 카드",
+    "synthetic 9 표기"
+  ]
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "schema_version": "1.0",
+    "profile_id": "cur_synthetic",
+    "axis": "current",
+    "present": true,
+    "source": "cached",
+    "account_scope": "n/a",
+    "sample_size": 1,
+    "completeness": {
+      "visual": 0.2,
+      "language": 0.4,
+      "sequence": 0
+    },
+    "visual": {
+      "tone_words": {
+        "value": [
+          "조용하고 짧게"
+        ],
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_synthetic_quiet:input",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      }
+    },
+    "language": {
+      "caption_len": {
+        "value": {
+          "p50": 18,
+          "p90": 18,
+          "unit": "자"
+        },
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_synthetic_quiet:input",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "empty_caption_ratio": {
+        "value": 0.5,
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "tgt_synthetic_quiet:input",
+            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+          }
+        ]
+      },
+      "banned_words": [
+        "이처럼",
+        "또한",
+        "이를 통해",
+        "이러한",
+        "마침내"
+      ]
+    },
+    "sequence": {
+      "carousel_count": 0
+    },
+    "raw_freetext": null,
+    "created_at": "2026-09-17T00:00:00.000Z"
+  },
+  {
+    "schema_version": "1.0",
+    "profile_id": null,
+    "axis": "current",
+    "present": false,
+    "source": "none",
+    "account_scope": "n/a",
+    "sample_size": 0,
+    "completeness": {
+      "visual": 0,
+      "language": 0,
+      "sequence": 0
+    },
+    "visual": {},
+    "language": null,
+    "sequence": {},
+    "raw_freetext": null,
+    "created_at": "2026-09-17T00:00:00.000Z"
+  }
+]

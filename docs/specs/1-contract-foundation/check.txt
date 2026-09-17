@@ -1,0 +1,5 @@
+
+> gyeol@0.1.0 check
+> node scripts/check.js
+
+PASS: 25 JS/JSON files checked; zero dependencies; four schema examples match fixtures. JS syntax/JSON parsing only, no separate typechecker or linter.
