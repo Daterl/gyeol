@@ -1021,7 +1021,7 @@ PASS: 48 JS/JSON files checked; four schema examples match fixtures. Foundation 
 - PASS: order.js, schemas 4종, src, 배포 설정을 수정하지 않았다. 사진 분석이나 외부 모델 호출을 추가하지 않았다.
 - PENDING: HTTP는 목업 전용이며 후속 연결 담당자가 composeFeed를 호출해야 한다. 화면 상단의 “보정 없이 지향만 반영함” 표시는 화면 담당자 인계 항목이고 이번 작업에서 확인하지 않았다.
 - PENDING: 서로 다른 모델 2개의 동일 diff 리뷰·사람 계약 합의·merge·배포 검증. Draft 개설은 이 게이트의 완료가 아니다.
-- 보드: read:project 스코프 부족으로 시작 상태 변경을 건너뛰고 이슈 댓글을 남겼다.
+- 보드: 시작 때 read:project 부족으로 댓글만 남겼다. Draft 생성 후 재조회가 성공해 실제 칸 “검토·인수 대기”로 갱신했다.
 
 ## 인계 전 자체 검토 (sip)
 
@@ -1061,3 +1061,5 @@ CodeRabbit CLI 0.7.6, 2026-09-17T08:53:27.184632+00:00, `coderabbit review --age
 두 JSON 이슈 댓글: https://github.com/Daterl/gyeol/issues/13#issuecomment-5711665626 및 https://github.com/Daterl/gyeol/issues/13#issuecomment-5711665956.
 
 추가 개선 후보는 없다. 기존 후속 연결에서 composeFeed 호출과 target_only 고지 표시를 확인하고, 사람이 계약·교차 리뷰 게이트를 판단한다. 새 기능 종류는 늘리지 않는다.
+
+Draft PR: https://github.com/Daterl/gyeol/pull/44 (base dev, Draft 확인).
