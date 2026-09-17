@@ -3,22 +3,27 @@
 - 기준 SHA: `7d16ff8`
 - 브랜치: `feat/10-target-profile`
 - 실행 일시: 2026-09-17
-- **Verdict: PASS (명시한 로컬 검증 범위)** — merge·배포·실모델 검증은 포함하지 않는다.
+- **Verdict: 부분 PASS / DoD 5·8 PENDING** — merge·배포·실모델 검증은 포함하지 않는다.
+
+> **이 문서는 교차 리뷰 전 1차 보고다.** 리뷰(`review-codex.md`)와 그 수정·재검증은
+> **`fix-report.md`** 에 있다. 아래 숫자(테스트 74건, check 29파일)는 `origin/main` rebase **전** 값이며,
+> rebase 후 값은 `fix-report.md` 를 본다. 리뷰에서 뒤집힌 판정은 이 문서에도 반영했다.
 
 ## 1. DoD 대조
 
 | # | 완료 조건 | 판정 | 근거 (아래 절) |
 |---|---|:---:|---|
 | 1 | 같은 스키마의 TargetProfile 이 두 경로 모두에서 | PASS | 4절 `[1]`, 테스트 61 |
-| 2 | 자연어 visual 낮음 / ref language 채워짐 | PASS | 4절 `[2]`, 테스트 62 |
+| 2 | 자연어 visual 낮음 / ref language 채워짐 | PASS (수정 후) | 4절 `[2]`, 테스트 62. **부정 입력에서 비워야 할 것을 채우던 결함(리뷰 H1)은 `fix-report.md` 에서 수정**했다 |
 | 3 | 모든 Claim 의 evidence ≥ 1 (E1) | PASS | 4절 `[3]`, 테스트 63, `npm run eval` E1 |
 | 4 | rule 만으로 된 항목 0개 | PASS | 4절 `[4]`, 테스트 64 |
-| 5 | 지향 입력이 비면 사진 근거 계획, 미정의 present:false 없음 | **PASS (계약 pending)** | 4절 `[5]`, 테스트 70·71. **PhotoPlan 모양은 #24 합의 전 제안이다** |
+| 5 | 지향 입력이 비면 사진 근거 계획, 미정의 present:false 없음 | **PENDING** | 구현은 4절 `[5]`, 테스트 70·71 로 재현된다. 그러나 DoD 는 **"#24 에서 합의한" 사진 계획**을 요구하고 `#24` 는 OPEN·댓글 0 이며 `schemas/interaction.md` 가 없다. PhotoPlan 모양은 **합의 전 제안**이므로 PASS 로 셀 수 없다 (리뷰 B1) |
 | 6 | 골든 TargetProfile 2벌을 `eval/golden/case_01/` 에 | PASS | 3절, 테스트 74 |
 | 7 | ADR-0001 사진만 입력 경로 포함, 취향·습관이라 부르지 않음 | PASS | 4절 `[5]` 고지 문구, 테스트 71 |
-| 8 | 임의 URL 에 다른 계정 스냅샷 연결 금지, 대체 경로 안내 | PASS | 4절 `[8]`, 테스트 69 |
+| 8 | 임의 URL 에 다른 계정 스냅샷 연결 금지, 대체 경로 안내 | **부분 PASS / PENDING** | 기본 레지스트리의 URL 3종 거부·대안 안내는 PASS (4절 `[8]`, 테스트 69). **#24 가 정할 `source` 기본값 합의는 PENDING** 이고, 주입 레지스트리의 key/handle 불일치는 막지 않는다 (리뷰 M2, 수용 — `fix-report.md` 3절) |
 
 미실행을 PASS 로 쓰지 않았다. 아래 6절에 **아직 안 된 것**을 따로 적었다.
+교차 리뷰로 뒤집힌 항목(5·8)과 의미 결함(2)은 `fix-report.md` 에서 다시 판정했다.
 
 ## 2. `npm test`
 
@@ -185,7 +190,7 @@ JS syntax/JSON parsing only, no separate typechecker or linter.
 
 | 항목 | 상태 | 왜 |
 |---|---|---|
-| `PhotoPlan` 모양의 양측 합의 | **PENDING** | `#24` 가 열려 있다. `schemas/interaction.md` 가 아직 없어 합의된 이름·source 기본값이 없다. TargetProfile 스키마를 건드리지 않는 쪽으로 제안만 했다 |
+| `PhotoPlan` 모양의 양측 합의 (DoD 5·8) | **PENDING — merge 전 사람 합의 필요** | `#24` 가 열려 있다 (OPEN, 댓글 0). `schemas/interaction.md` 가 아직 없어 합의된 이름·source 기본값이 없다. TargetProfile 스키마를 건드리지 않는 쪽으로 제안만 했다 |
 | 모델 경로 배선 | **미착수 (의도)** | `prompts/input/target_extract.md` 는 계약 문서이고 코드는 결정적 규칙만 쓴다. `#6` A1 실측 전에 모델을 크리티컬 패스에 넣지 않는다 |
 | ref 스냅샷 계정 수 | 1개 (`29cm`) | 레지스트리 구조는 N개를 받지만 준비된 스냅샷이 1벌이다. 준비 안 된 핸들은 실패가 정답이다 |
 | `ending_style` 분류 정확도 | 사람 대조 안 함 | 29cm 30건 중 21건 `명사형` (72%). 근거에 마지막 문장 원문이 붙어 있어 되짚을 수 있지만 **사람이 전수 대조하지 않았다** |

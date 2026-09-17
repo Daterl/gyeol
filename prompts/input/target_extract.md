@@ -21,8 +21,13 @@
 
 ### 출력
 
-`schemas/target_profile.md` 의 `TargetProfile` **그대로**. 모델 출력은 예외 없이 `validateProfile(v,'target')` 을 통과해야 하며,
-통과하지 못하면 **결정적 규칙 경로로 떨어진다**(에러가 아니다). `#9` 의 `analysis_source: "heuristic"` 과 같은 방식이다.
+`schemas/target_profile.md` 의 `TargetProfile` **그대로**. 모델 출력은 예외 없이 `validateProfile(v,'target')` **과**
+`validateProfileEvidence(v, {snapshot})` 을 통과해야 하며, 통과하지 못하면 **결정적 규칙 경로로 떨어진다**(에러가 아니다).
+`#9` 의 `analysis_source: "heuristic"` 과 같은 방식이다.
+
+> **`validateProfile` 통과는 근거가 진짜라는 뜻이 아니다.** 그것은 evidence 의 *모양*(kind·ref·note 가 있고 비어 있지 않음)과
+> rule-only 가 아님만 본다. `ref` 가 실제 스냅샷 게시물·실제 입력 문장에 **닿는지**는 `validateProfileEvidence` 가 본다.
+> 둘은 서로를 대신하지 못한다 (교차 리뷰 H3).
 
 ### 모델이 하면 틀린 것
 

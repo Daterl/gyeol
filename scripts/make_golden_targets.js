@@ -15,6 +15,7 @@ const cases = {
 };
 const input = await read('input.json');
 const currentProfile = await read('current_profile.json');
+const photoAnalyses = await read('photo_analysis.json');
 
 for (const [name, profile] of Object.entries(cases)) {
   validateProfile(profile, 'target');
@@ -27,7 +28,8 @@ for (const [name, profile] of Object.entries(cases)) {
     language: profile.language,
     sequence: profile.sequence
   });
-  validateFeed(feed, input.photo_ids, currentProfile);
+  // PR #21 이후 validateFeed 는 지향 프로필(E9)·사진 분석(E11) 을 실제 입력으로 받는다.
+  validateFeed(feed, input.photo_ids, currentProfile, profile, photoAnalyses);
   await write(`ordered_${name}.json`, feed);
   console.log(`${name}: ${profile.profile_id} source=${profile.source} completeness=${JSON.stringify(profile.completeness)}`);
 }
