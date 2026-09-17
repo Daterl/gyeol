@@ -1,0 +1,33 @@
+✔ output prompts reference one shared style guard without copied banned lists (1.755042ms)
+✖ manual examples match photo facts and original slots without banned language (2.014334ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 296.764208
+
+✖ failing tests:
+
+test at test/output-prompts.test.js:20:1
+✖ manual examples match photo facts and original slots without banned language (2.014334ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(['photo_only','target_only','corrected'].includes(example.input_case))
+
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/16-output-prompts/test/output-prompts.test.js:22:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
