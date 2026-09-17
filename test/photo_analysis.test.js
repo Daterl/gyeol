@@ -63,7 +63,7 @@ test('model failure falls back to heuristic instead of throwing', async () => {
     client: async () => { throw new Error('model HTTP 529: overloaded'); }
   });
   assert.equal(analysis.analysis_source, 'heuristic');
-  assert.equal(analysis.model, 'heuristic-svg-fill@1');
+  assert.equal(analysis.model, 'heuristic-svg-card@1');
   assert.equal(analysisCounters().modelFailures, 1);
   assert.match(seen[0], /529/);
   validatePhoto(analysis);
@@ -90,12 +90,53 @@ test('model observations are accepted but measured color overrides the model est
   validatePhoto(analysis);
 });
 
-test('a model response that violates the contract is rejected, not trusted', async () => {
+// review-codex.md H2. This test used to assert.rejects here, which pinned the exact
+// opposite of the spec: a contract-violating response is a model failure, so it falls
+// back to the measured heuristic, and it must not be written to the cache.
+test('a contract-violating model response falls back to heuristic and is not cached', async () => {
+  for (const bad of [
+    { composition: 'sideways', scale: 'closeup', subjects: [], has_face: false, text_in_image: null, describable_facts: [], quality_flags: [] },
+    // Empty string passes the model's output schema (string) but not the contract.
+    { composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false, text_in_image: '', describable_facts: [], quality_flags: [] }
+  ]) {
+    resetAnalysisState();
+    const seen = [];
+    const client = async () => ({ model: 'x', observation: bad });
+    const first = await analyzePhoto({ ...card, apiKey: 'test-key', client, onModelError: e => seen.push(e.message) });
+    assert.equal(first.analysis.analysis_source, 'heuristic', 'must not 500 on a bad response');
+    assert.equal(analysisCounters().modelFailures, 1, 'a rejected response is a model failure');
+    assert.equal(seen.length, 1);
+    validatePhoto(first.analysis);
+
+    // The bad observation must not be frozen in: a later request for the same bytes
+    // returns the measured heuristic instead of re-throwing the same error.
+    const again = await analyzePhoto(card);
+    assert.equal(again.analysis.analysis_source, 'heuristic');
+    assert.deepEqual(again.analysis.color.palette_hex, ['#e8dfd2']);
+    validatePhoto(again.analysis);
+  }
+});
+
+// review-codex.md M2 — same shape as the foundation review's H1/H2: a field was taken
+// on trust instead of being resolved against the real input.
+test('an observation cannot relabel which photo was analyzed', async () => {
   resetAnalysisState();
-  await assert.rejects(analyzePhoto({
-    ...card, apiKey: 'test-key',
-    client: async () => ({ model: 'x', observation: { composition: 'sideways', scale: 'closeup', subjects: [], has_face: false, text_in_image: null, describable_facts: [], quality_flags: [] } })
-  }), /composition/);
+  const { analysis } = await analyzePhoto({
+    ...card, photoId: 'real_photo', inputIndex: 0, fileRef: 'real.svg', apiKey: 'test-key',
+    client: async () => ({
+      model: 'x',
+      observation: {
+        color: { hue_mean: 0, sat_mean: 0, bright_mean: 0, palette_hex: [] },
+        composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false,
+        text_in_image: null, describable_facts: ['다른 사진에서 복사한 사실'], quality_flags: [],
+        schema_version: '9.9', photo_id: 'ghost', file_ref: 'other.jpg', input_index: 99
+      }
+    })
+  });
+  assert.equal(analysis.photo_id, 'real_photo');
+  assert.equal(analysis.file_ref, 'real.svg');
+  assert.equal(analysis.input_index, 0);
+  assert.equal(analysis.schema_version, '1.0');
 });
 
 test('same bytes twice: zero extra model calls, identity re-stamped, duplicate reported', async () => {
@@ -141,6 +182,88 @@ test('jpeg DC reader returns a real block grid and rejects what it cannot read',
   assert.equal(readJpegBlocks(Buffer.concat([Buffer.from([0xFF, 0xD8]), Buffer.alloc(64)])), null);
   // Truncating a real JPEG must produce null, never a partial guess.
   assert.equal(readJpegBlocks(Buffer.concat([Buffer.from([0xFF, 0xD8, 0xFF, 0xC2]), Buffer.alloc(16)])), null);
+});
+
+// review-codex.md H1. The old test above decoded no real JPEG at all, so it could not
+// see that a baseline scan never consumed its AC coefficients and therefore read every
+// DC after the first from the wrong bit offset. Both checks below need no image library:
+// a solid image's colour is known by construction, and the two encodings of the
+// gradient are the same pixels, so they have to agree.
+test('baseline JPEG is measured, not mis-read: solid colours are exact', async () => {
+  for (const [file, bright, sat, hex] of [
+    ['solid_white_baseline.jpg', 1, 0, '#ffffff'],
+    ['solid_black_baseline.jpg', 0, 0, '#000000']
+  ]) {
+    const m = measurePixels(await read(`fixtures/jpeg/${file}`), 'image/jpeg');
+    assert.ok(m, `${file} must be measurable`);
+    assert.equal(m.color.bright_mean, bright, `${file} brightness`);
+    assert.equal(m.color.sat_mean, sat, `${file} saturation — a grey image has no colour`);
+    assert.deepEqual(m.color.palette_hex, [hex], `${file} palette`);
+  }
+});
+
+test('baseline and progressive encodings of the same pixels agree', async () => {
+  const base = measurePixels(await read('fixtures/jpeg/gradient_baseline.jpg'), 'image/jpeg');
+  const prog = measurePixels(await read('fixtures/jpeg/gradient_progressive.jpg'), 'image/jpeg');
+  assert.ok(base && prog, 'both encodings must decode');
+  assert.equal(base.width, prog.width);
+  assert.equal(base.height, prog.height);
+  for (const key of ['bright_mean', 'sat_mean']) {
+    assert.ok(Math.abs(base.color[key] - prog.color[key]) < 0.02,
+      `${key} drifted between encodings: ${base.color[key]} vs ${prog.color[key]}`);
+  }
+  // Before the fix the baseline read 0.714/0.118 where the progressive twin read
+  // 0.623/0.432 — the drift, not the absolute value, is what proves the bug.
+  assert.ok(base.color.sat_mean > 0.3, `baseline saturation collapsed: ${base.color.sat_mean}`);
+});
+
+// review-codex.md H3.
+test('SVG is measured only as the flat-colour card it claims to support', async () => {
+  const rejected = {
+    'zero-area rect counted as half the frame':
+      '<svg width="100" height="100"><rect width="100" height="100" fill="#ffffff"/><rect width="0" height="0" fill="#000000"/></svg>',
+    'unclosed document': '<svg width="100" height="100" fill="#ffffff"',
+    'rect does not cover the canvas': '<svg width="100" height="100"><rect width="10" height="10" fill="#000000"/></svg>',
+    'offset rect': '<svg width="100" height="100"><rect x="20" y="0" width="100" height="100" fill="#000000"/></svg>',
+    'invisible rect': '<svg width="100" height="100"><rect width="100" height="100" fill="#000000" opacity="0"/></svg>',
+    'no explicit canvas size': '<svg><rect width="100" height="100" fill="#000000"/></svg>',
+    'fill is not a plain colour': '<svg width="100" height="100"><rect width="100" height="100" fill="url(#g)"/></svg>'
+  };
+  for (const [why, svg] of Object.entries(rejected)) {
+    assert.equal(measurePixels(Buffer.from(svg), 'image/svg+xml'), null, `should be unmeasurable: ${why}`);
+    resetAnalysisState();
+    await assert.rejects(analyzePhoto({ ...card, bytes: Buffer.from(svg) }), AnalysisUnavailableError, why);
+  }
+});
+
+test('SVG text is reported only when a viewer could see it, and unescaped', async () => {
+  const cardSvg = body => Buffer.from(`<svg width="100" height="100"><rect width="100" height="100" fill="#ffffff"/>${body}</svg>`);
+  for (const hidden of ['<text display="none">서울 &amp; 부산</text>', '<text visibility="hidden">서울</text>', '<text opacity="0">서울</text>']) {
+    assert.equal(measurePixels(cardSvg(hidden), 'image/svg+xml').text_in_image, null, hidden);
+  }
+  // Visible text is in the bytes, so it is reported — as the characters, not the escape.
+  assert.equal(measurePixels(cardSvg('<text x="8" y="50">서울 &amp; 부산</text>'), 'image/svg+xml').text_in_image, '서울 & 부산');
+  assert.equal(measurePixels(cardSvg('<text x="8" y="50">   </text>'), 'image/svg+xml').text_in_image, null);
+});
+
+// review-codex.md H4.
+test('composition is a documented constant, not a reading of the colour histogram', async () => {
+  resetAnalysisState();
+  const compositions = new Set();
+  for (const [name, bytes] of [
+    // A checkerboard fills the whole frame and used to score negative_space because
+    // white and black each took 50% of the buckets.
+    ['checker', await read('fixtures/jpeg/gradient_baseline.jpg')],
+    ['solid', await read('fixtures/jpeg/solid_white_baseline.jpg')],
+    ['card', svg]
+  ]) {
+    const { analysis } = await analyzePhoto({ ...card, bytes, photoId: `ph_${name}` });
+    assert.equal(analysis.composition, 'full_frame', `${name}: heuristic must not claim negative space`);
+    compositions.add(analysis.composition);
+    // The colour share is still reported — as a colour share, which is what it is.
+    assert.ok(analysis.describable_facts.some(f => /^주요 색 #[0-9a-f]{6} \(점유 \d+%\)$/.test(f)), name);
+  }
+  assert.equal(compositions.size, 1, 'a constant must carry no information about the image');
 });
 
 // --- api/analyze.js: one photo per request -----------------------------------

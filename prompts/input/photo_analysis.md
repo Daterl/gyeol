@@ -43,7 +43,7 @@
 | `subjects` | 보이는 주요 사물의 짧은 명사. 확실하지 않으면 **빈 배열**. 감정 형용을 붙이지 않는다 |
 | `has_face` | 사람 얼굴이 실제로 보이면 `true`. 뒷모습·가려짐·너무 작아 판단 불가는 `false` |
 | `text_in_image` | 사진에 **인쇄·표기된 글자를 그대로**. 여러 개면 가장 큰 것 하나. 없으면 `null`. 읽어낸 것을 보완·번역·완성하지 않는다 |
-| `composition` | 큰 빈 면이 화면의 상당 부분을 차지하면 `negative_space`, 피사체가 화면을 채우면 `full_frame` |
+| `composition` | 큰 빈 면이 화면의 상당 부분을 차지하면 `negative_space`, 피사체가 화면을 채우면 `full_frame`. **네가 실제로 본 것만.** 휴리스틱 경로는 이 판단을 못 해서 고정값을 내므로, 이 필드가 뜻을 가지는 것은 네 응답일 때뿐이다 |
 | `scale` | `closeup`(한 사물이 화면을 채움) / `midshot`(피사체 전체 + 약간의 주변) / `fullshot`(장면 전체) |
 | `quality_flags` | 눈에 띄게 흔들렸으면 `blurry`, 눈에 띄게 어두우면 `dark`. 확실할 때만. 아니면 빈 배열 |
 | `color` | 화면 전체의 평균 색조 추정. `hue_mean` 0~360, `sat_mean`·`bright_mean` 0~1, `palette_hex` 는 `#rrggbb` 소문자 최대 3개 |
