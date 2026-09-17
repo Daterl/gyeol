@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/16-output-prompts
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  18:57:51
+   Duration  361ms (transform 47%, tests 33%, import 15%, worker 5%)

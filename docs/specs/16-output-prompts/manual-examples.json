@@ -1,0 +1,202 @@
+{
+  "provenance": "수동 작성 합성 예시; AI 생성 품질 검증 아님",
+  "cases": [
+    {
+      "name": "photo_only",
+      "mode": "all",
+      "language": null,
+      "disclosure": "target_only",
+      "output": {
+        "title": "사진 세 장",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "ph_01",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "단색 카드"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "ph_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과 설명이 겹쳐, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "단색 카드"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap=0.8"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "ph_03",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "단색 카드"
+              }
+            ]
+          }
+        ]
+      },
+      "input_case": "photo_only"
+    },
+    {
+      "name": "target_only",
+      "mode": "all",
+      "disclosure": "target_only",
+      "output": {
+        "title": "세 장의 기록",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "ph_01",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "단색 카드"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "ph_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과 설명이 겹쳐, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "단색 카드"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap=0.8"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "ph_03",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "단색 카드"
+              }
+            ]
+          }
+        ]
+      },
+      "input_case": "target_only"
+    },
+    {
+      "name": "corrected",
+      "mode": "all",
+      "disclosure": "corrected",
+      "resolved": 47,
+      "output": {
+        "title": "함께 놓은 사진",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "ph_01",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "단색 카드"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "ph_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과 설명이 겹쳐, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "단색 카드"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap=0.8"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "ph_03",
+            "caption_state": "filled",
+            "text": "단색 카드",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "단색 카드"
+              }
+            ]
+          }
+        ]
+      },
+      "input_case": "corrected"
+    },
+    {
+      "name": "fill_one",
+      "mode": "slot",
+      "photo_id": "ph_02",
+      "slot": {
+        "position": 2,
+        "photo_id": "ph_02",
+        "caption_state": "filled",
+        "text": "단색 카드",
+        "omit_reason": null,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "단색 카드"
+          }
+        ]
+      },
+      "input_case": "target_only"
+    }
+  ],
+  "input_fixture": "fixtures/interaction.sample.json"
+}
