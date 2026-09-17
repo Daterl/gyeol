@@ -1,0 +1,12 @@
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'gyeol@0.1.0',
+npm warn EBADENGINE   required: { node: '24.x' },
+npm warn EBADENGINE   current: { node: 'v22.22.3', npm: '10.9.8' }
+npm warn EBADENGINE }
+
+added 460 packages, and audited 461 packages in 16s
+
+130 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities

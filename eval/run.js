@@ -23,3 +23,6 @@ for(const name of ['quiet','detail']) {
 }
 console.log('E4/E5/E7: manual spot-check only; real demo review pending.');
 process.exitCode=failed?1:0;
+
+const { evaluateModelPath } = await import('./model-path.js');
+await evaluateModelPath();
