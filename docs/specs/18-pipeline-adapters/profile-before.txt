@@ -1,0 +1,55 @@
+✖ heuristic defaults are not promoted to observed composition, scale or opener habits (3.198541ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 301.954042
+
+✖ failing tests:
+
+test at test/profile-observation.test.js:10:1
+✖ heuristic defaults are not promoted to observed composition, scale or opener habits (3.198541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + {
+  +   confidence: 0.9,
+  +   evidence: [
+  +     {
+  +       kind: 'aggregate',
+  +       note: '사진 15장의 구도 비율',
+  +       ref: 'photo_analysis:n=15'
+  +     },
+  +     {
+  +       kind: 'uploaded_photo',
+  +       note: 'fullshot·negative_space',
+  +       ref: 'ph_01'
+  +     },
+  +     {
+  +       kind: 'uploaded_photo',
+  +       note: 'fullshot·negative_space',
+  +       ref: 'ph_02'
+  +     }
+  +   ],
+  +   value: {
+  +     full_frame: 0,
+  +     negative_space: 1
+  +   }
+  + }
+  - undefined
+
+      at TestContext.<anonymous> (file:///Users/diego/orca/workspaces/gyeol/18-pipeline-adapters/test/profile-observation.test.js:13:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { value: { full_frame: 0, negative_space: 1 }, confidence: 0.9, evidence: [ [Object], [Object], [Object] ] },
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
