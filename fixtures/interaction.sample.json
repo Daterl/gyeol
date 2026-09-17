@@ -1,0 +1,1390 @@
+{
+  "schema_version": "1.0",
+  "context": {
+    "photos": [
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_01",
+        "file_ref": "eval/golden/case_01/photos/ph_01.svg",
+        "input_index": 0,
+        "color": {
+          "hue_mean": 34,
+          "sat_mean": 0.3,
+          "bright_mean": 0.7,
+          "palette_hex": [
+            "#e8dfd2"
+          ]
+        },
+        "composition": "negative_space",
+        "scale": "fullshot",
+        "subjects": [
+          "합성 색상 카드"
+        ],
+        "has_face": false,
+        "text_in_image": "synthetic 1",
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 1 표기"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "manual-synthetic-bootstrap",
+        "analyzed_at": "2026-09-17T00:00:00.000Z"
+      },
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_02",
+        "file_ref": "eval/golden/case_01/photos/ph_02.svg",
+        "input_index": 1,
+        "color": {
+          "hue_mean": 34,
+          "sat_mean": 0.3,
+          "bright_mean": 0.7,
+          "palette_hex": [
+            "#8f9b86"
+          ]
+        },
+        "composition": "negative_space",
+        "scale": "fullshot",
+        "subjects": [
+          "합성 색상 카드"
+        ],
+        "has_face": false,
+        "text_in_image": "synthetic 2",
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 2 표기"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "manual-synthetic-bootstrap",
+        "analyzed_at": "2026-09-17T00:00:00.000Z"
+      },
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_03",
+        "file_ref": "eval/golden/case_01/photos/ph_03.svg",
+        "input_index": 2,
+        "color": {
+          "hue_mean": 34,
+          "sat_mean": 0.3,
+          "bright_mean": 0.7,
+          "palette_hex": [
+            "#d4a891"
+          ]
+        },
+        "composition": "negative_space",
+        "scale": "fullshot",
+        "subjects": [
+          "합성 색상 카드"
+        ],
+        "has_face": false,
+        "text_in_image": "synthetic 3",
+        "describable_facts": [
+          "단색 카드",
+          "synthetic 3 표기"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "manual-synthetic-bootstrap",
+        "analyzed_at": "2026-09-17T00:00:00.000Z"
+      }
+    ],
+    "current": {
+      "schema_version": "1.0",
+      "profile_id": null,
+      "axis": "current",
+      "present": false,
+      "source": "none",
+      "account_scope": "n/a",
+      "sample_size": 0,
+      "completeness": {
+        "visual": 0,
+        "language": 0,
+        "sequence": 0
+      },
+      "visual": {},
+      "language": null,
+      "sequence": {},
+      "raw_freetext": null,
+      "created_at": "2026-09-17T00:00:00.000Z"
+    },
+    "target": {
+      "schema_version": "1.0",
+      "profile_id": "tgt_synthetic_quiet",
+      "axis": "target",
+      "present": true,
+      "source": "freetext",
+      "account_scope": "n/a",
+      "sample_size": 1,
+      "completeness": {
+        "visual": 0.2,
+        "language": 0.4,
+        "sequence": 0
+      },
+      "visual": {
+        "tone_words": {
+          "value": [
+            "조용하고 짧게"
+          ],
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        }
+      },
+      "language": {
+        "caption_len": {
+          "value": {
+            "p50": 18,
+            "p90": 18,
+            "unit": "자"
+          },
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "empty_caption_ratio": {
+          "value": 0.5,
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "banned_words": [
+          "이처럼",
+          "또한",
+          "이를 통해",
+          "이러한",
+          "마침내"
+        ]
+      },
+      "sequence": {
+        "carousel_count": 0
+      },
+      "raw_freetext": "조용하고 짧게",
+      "created_at": "2026-09-17T00:00:00.000Z"
+    },
+    "current_photos": []
+  },
+  "feed": {
+    "schema_version": "1.0",
+    "feed_id": "fd_tgt_synthetic_quiet",
+    "session_id": "ss_synthetic",
+    "applied_profile": {
+      "target_profile_id": "tgt_synthetic_quiet",
+      "current_profile_id": null,
+      "corrected": false,
+      "disclosure": "target_only",
+      "deltas": [],
+      "visual": {
+        "tone_words": {
+          "value": [
+            "조용하고 짧게"
+          ],
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        }
+      },
+      "language": {
+        "caption_len": {
+          "value": {
+            "p50": 18,
+            "p90": 18,
+            "unit": "자"
+          },
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "empty_caption_ratio": {
+          "value": 0.5,
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "user_text",
+              "ref": "tgt_synthetic_quiet:input",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "banned_words": [
+          "이처럼",
+          "또한",
+          "이를 통해",
+          "이러한",
+          "마침내"
+        ]
+      },
+      "sequence": {
+        "carousel_count": 0
+      }
+    },
+    "slots": [
+      {
+        "position": 1,
+        "photo_id": "ph_01",
+        "narrative_role": "opener",
+        "rationale": {
+          "value": "합성 입력 순서를 사용한 목업 자리",
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "caption_inputs": {
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 1 표기"
+          ],
+          "adjacent_overlap": 0,
+          "is_visual_peak": true
+        }
+      },
+      {
+        "position": 2,
+        "photo_id": "ph_02",
+        "narrative_role": "sustain",
+        "rationale": {
+          "value": "합성 입력 순서를 사용한 목업 자리",
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "caption_inputs": {
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 2 표기"
+          ],
+          "adjacent_overlap": 0.8,
+          "is_visual_peak": false
+        }
+      },
+      {
+        "position": 3,
+        "photo_id": "ph_03",
+        "narrative_role": "sustain",
+        "rationale": {
+          "value": "합성 입력 순서를 사용한 목업 자리",
+          "confidence": 1,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+            }
+          ]
+        },
+        "caption_inputs": {
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 3 표기"
+          ],
+          "adjacent_overlap": 0,
+          "is_visual_peak": false
+        }
+      }
+    ],
+    "invariants": {
+      "input_count": 3,
+      "output_count": 3,
+      "unique_photo_ids": true
+    },
+    "generated_at": "2026-09-17T00:00:00.000Z"
+  },
+  "output": {
+    "title": "세 장의 기록",
+    "slots": [
+      {
+        "photo_id": "ph_01",
+        "position": 1,
+        "caption_state": "filled",
+        "text": "단색 카드",
+        "omit_reason": null,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_02",
+        "position": 2,
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "사진만으로 충분한 자리",
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_03",
+        "position": 3,
+        "caption_state": "user",
+        "text": "직접 쓴 문장",
+        "omit_reason": null,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "fixture:edit",
+            "note": "직접 쓴 문장"
+          }
+        ]
+      }
+    ]
+  },
+  "edited": {
+    "title": "세 장의 기록",
+    "slots": [
+      {
+        "photo_id": "ph_01",
+        "position": 3,
+        "caption_state": "filled",
+        "text": "단색 카드",
+        "omit_reason": null,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_02",
+        "position": 2,
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "사진만으로 충분한 자리",
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_03",
+        "position": 1,
+        "caption_state": "user",
+        "text": "직접 쓴 문장",
+        "omit_reason": null,
+        "evidence": [
+          {
+            "kind": "user_text",
+            "ref": "fixture:edit",
+            "note": "직접 쓴 문장"
+          }
+        ]
+      }
+    ]
+  },
+  "all_omitted": {
+    "title": "사진으로만",
+    "slots": [
+      {
+        "photo_id": "ph_01",
+        "position": 1,
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "사진을 그대로 두는 제안",
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_02",
+        "position": 2,
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "사진을 그대로 두는 제안",
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      },
+      {
+        "photo_id": "ph_03",
+        "position": 3,
+        "caption_state": "omitted",
+        "text": null,
+        "omit_reason": "사진을 그대로 두는 제안",
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_03",
+            "note": "합성 fixture의 해당 카드"
+          }
+        ]
+      }
+    ]
+  },
+  "photo_only": {
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "eval/golden/case_01/photos/ph_01.svg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#e8dfd2"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 1",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 1 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "eval/golden/case_01/photos/ph_02.svg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#8f9b86"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 2",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 2 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "eval/golden/case_01/photos/ph_03.svg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#d4a891"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 3",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 3 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-17T00:00:00.000Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "kind": "photo_plan",
+        "plan_id": "plan_photo_b4dac173",
+        "source": "photo_only",
+        "sample_size": 3,
+        "completeness": {
+          "visual": 0.8,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 34,
+              "sat_mean": 0.3,
+              "bright_mean": 0.7,
+              "palette_hex": [
+                "#e8dfd2",
+                "#8f9b86",
+                "#d4a891"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 0,
+              "negative_space": 1
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0,
+              "fullshot": 1
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "합성 색상 카드"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        },
+        "target_profile": null,
+        "created_at": "2026-09-17T00:00:00.000Z",
+        "disclaimer": "업로드한 사진 3장에서 관측된 값이며 사용자의 취향·과거 습관이 아니다"
+      },
+      "current_photos": []
+    },
+    "feed": {
+      "schema_version": "1.1",
+      "feed_id": "fd_tgt_synthetic_quiet",
+      "session_id": "ss_synthetic",
+      "applied_profile": {
+        "target_profile_id": null,
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 34,
+              "sat_mean": 0.3,
+              "bright_mean": 0.7,
+              "palette_hex": [
+                "#e8dfd2",
+                "#8f9b86",
+                "#d4a891"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 0,
+              "negative_space": 1
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0,
+              "fullshot": 1
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "합성 색상 카드"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "fullshot·negative_space"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "fullshot·negative_space"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        },
+        "photo_plan_id": "plan_photo_b4dac173"
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_01",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 1 표기"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": true
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_02",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 2 표기"
+            ],
+            "adjacent_overlap": 0.8,
+            "is_visual_peak": false
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_03",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 3 표기"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": false
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 3,
+        "output_count": 3,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-17T00:00:00.000Z"
+    }
+  },
+  "corrected": {
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "eval/golden/case_01/photos/ph_01.svg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#e8dfd2"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 1",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 1 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "eval/golden/case_01/photos/ph_02.svg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#8f9b86"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 2",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 2 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "eval/golden/case_01/photos/ph_03.svg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 34,
+            "sat_mean": 0.3,
+            "bright_mean": 0.7,
+            "palette_hex": [
+              "#d4a891"
+            ]
+          },
+          "composition": "negative_space",
+          "scale": "fullshot",
+          "subjects": [
+            "합성 색상 카드"
+          ],
+          "has_face": false,
+          "text_in_image": "synthetic 3",
+          "describable_facts": [
+            "단색 카드",
+            "synthetic 3 표기"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "manual-synthetic-bootstrap",
+          "analyzed_at": "2026-09-17T00:00:00.000Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": "cur_synthetic",
+        "axis": "current",
+        "present": true,
+        "source": "cached",
+        "account_scope": "n/a",
+        "sample_size": 1,
+        "completeness": {
+          "visual": 0.2,
+          "language": 0.4,
+          "sequence": 0
+        },
+        "visual": {
+          "tone_words": {
+            "value": [
+              "조용하고 짧게"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          }
+        },
+        "language": {
+          "caption_len": {
+            "value": {
+              "p50": 18,
+              "p90": 18,
+              "unit": "자"
+            },
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "empty_caption_ratio": {
+            "value": 0.5,
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        },
+        "raw_freetext": null,
+        "created_at": "2026-09-17T00:00:00.000Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "profile_id": "tgt_synthetic_quiet",
+        "axis": "target",
+        "present": true,
+        "source": "freetext",
+        "account_scope": "n/a",
+        "sample_size": 1,
+        "completeness": {
+          "visual": 0.2,
+          "language": 0.4,
+          "sequence": 0
+        },
+        "visual": {
+          "tone_words": {
+            "value": [
+              "조용하고 짧게"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          }
+        },
+        "language": {
+          "caption_len": {
+            "value": {
+              "p50": 18,
+              "p90": 18,
+              "unit": "자"
+            },
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "empty_caption_ratio": {
+            "value": 0.5,
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        },
+        "raw_freetext": "조용하고 짧게",
+        "created_at": "2026-09-17T00:00:00.000Z"
+      },
+      "current_photos": []
+    },
+    "feed": {
+      "schema_version": "1.0",
+      "feed_id": "fd_tgt_synthetic_quiet",
+      "session_id": "ss_synthetic",
+      "applied_profile": {
+        "target_profile_id": "tgt_synthetic_quiet",
+        "current_profile_id": "cur_synthetic",
+        "corrected": true,
+        "disclosure": "corrected",
+        "deltas": [
+          {
+            "field": "language.caption_len.p50",
+            "target": 18,
+            "current": 18,
+            "resolved": 18,
+            "rule": "log_midpoint",
+            "note_key": "caption_len_gap",
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              },
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          }
+        ],
+        "visual": {
+          "tone_words": {
+            "value": [
+              "조용하고 짧게"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          }
+        },
+        "language": {
+          "caption_len": {
+            "value": {
+              "p50": 18,
+              "p90": 18,
+              "unit": "자"
+            },
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "empty_caption_ratio": {
+            "value": 0.5,
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_synthetic_quiet:input",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_01",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 1 표기"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": true
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_02",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 2 표기"
+            ],
+            "adjacent_overlap": 0.8,
+            "is_visual_peak": false
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_03",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "합성 입력 순서를 사용한 목업 자리",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 3 표기"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": false
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 3,
+        "output_count": 3,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-17T00:00:00.000Z"
+    }
+  },
+  "identities": [
+    {
+      "target": {
+        "kind": "none"
+      },
+      "current": {
+        "kind": "none"
+      }
+    },
+    {
+      "target": {
+        "kind": "text",
+        "text": "짧게, 담백"
+      },
+      "current": {
+        "kind": "none"
+      }
+    },
+    {
+      "target": {
+        "kind": "reference",
+        "url": "https://www.instagram.com/29cm/"
+      },
+      "current": {
+        "kind": "none"
+      }
+    },
+    {
+      "target": {
+        "kind": "none"
+      },
+      "current": {
+        "kind": "posts",
+        "photos": [
+          {
+            "schema_version": "1.0",
+            "photo_id": "current_01",
+            "file_ref": "eval/golden/case_01/photos/ph_01.svg",
+            "input_index": 0,
+            "color": {
+              "hue_mean": 34,
+              "sat_mean": 0.3,
+              "bright_mean": 0.7,
+              "palette_hex": [
+                "#e8dfd2"
+              ]
+            },
+            "composition": "negative_space",
+            "scale": "fullshot",
+            "subjects": [
+              "합성 색상 카드"
+            ],
+            "has_face": false,
+            "text_in_image": "synthetic 1",
+            "describable_facts": [
+              "단색 카드",
+              "synthetic 1 표기"
+            ],
+            "quality_flags": [],
+            "analysis_source": "heuristic",
+            "model": "manual-synthetic-bootstrap",
+            "analyzed_at": "2026-09-17T00:00:00.000Z"
+          }
+        ],
+        "captions": [
+          "직접 남긴 기록"
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "error": {
+        "code": "REFERENCE_NOT_PREPARED",
+        "message": "준비된 계정이 아니에요. 원하는 느낌을 적거나 사진만으로 시작해 주세요.",
+        "retryable": false
+      }
+    },
+    {
+      "error": {
+        "code": "MODEL_TIMEOUT",
+        "message": "시간이 초과됐어요. 다시 시도해 주세요.",
+        "retryable": true
+      }
+    }
+  ]
+}

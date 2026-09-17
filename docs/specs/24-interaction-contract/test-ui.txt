@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/24-interaction-contract
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  18:32:32
+   Duration  401ms (transform 48%, tests 31%, import 16%, worker 6%)

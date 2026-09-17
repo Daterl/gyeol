@@ -37,6 +37,12 @@ slots 배열의 저장 순서는 의미가 없으며 표시 순서는 position�
 delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0,resolved:number≥0,rule:"log_midpoint",note_key:"caption_len_gap",evidence:Evidence[1..]}`.
 초안 대비 F3 export에 photo_id와 omit_reason을 추가했다 (아래). delta를 1종·최대 1개로 제한하고 absent 정합성과 입력 ID 대조를 명시했다.
 
+## PhotoPlan 확장 (OrderedFeed 1.1)
+
+사진만 경로는 기존 PhotoPlan 1.0을 `context.target`으로 전달한다. 이때 applied_profile은 `target_profile_id:null`, `photo_plan_id:plan.plan_id`, `language:null`, `corrected:false`, `disclosure:"target_only"`, `deltas:[]`이다. 가짜 TargetProfile을 만들지 않는다. 사진 ID·근거·PhotoPlan.sample_size를 실제 입력과 대조한다. 기존 TargetProfile을 쓰는 OrderedFeed 1.0과 아래 예시는 그대로 유효하다.
+
+기존 게시물을 업로드한 경우 current 사진은 선택 사진과 별도 ID로 제공하고 해당 프로필 근거만 그 ID를 참조한다. 자세한 요청/오류/내보내기 구분은 [연결 계약](interaction.md)과 fixtures/interaction.sample.json을 따른다.
+
 ## F3 export (별도 출력, OrderedFeed에 섞지 않음)
 
 `{title:string, slots:[{position:integer,photo_id:string,omit_reason:string|null,caption_state:"filled"|"omitted"|"user",text:string|null,evidence:Evidence[1..]}]}`.
@@ -45,7 +51,7 @@ export positions도 1..N을 한 번씩 가진다. 각 position의 photo_id는 �
 omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. filled/user의 omit_reason은 null이다. omitted이면 text=null, filled/user이면 nonempty string이다.
 비움의 evidence도 보존하며 사용자가 쓴 문장의 evidence는 사용자 입력 출처로 연결한다.
 `caption_state="user"`는 유효한 `kind="user_text"` Evidence를 최소 1개 포함해야 한다. 사진 근거를 함께 넣을 수 있지만 사진 근거만으로 user 상태를 허용하지 않는다. ref/note의 형식을 검사하며 실제 사용자 입력의 진위 인증은 이 계약의 범위가 아니다.
-export slots도 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다.
+서버 export slots는 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다. 사용자 draft는 validateEditedExport로 같은 사진 집합의 재정렬을 허용하며 원본 근거를 photo_id에 보존한다.
 E6는 이 별도 export를 읽으며 feed에 title이 없다고 실패시키지 않는다.
 E4/E5/E7 자동 판정은 생략하며 수동 스팟체크로 대체한다 (실제 데모 검증 pending).
 즉 재료→캡션(E4)은 여전히 사람이 보고, 사진→재료(E11)는 자동으로 본다. 체인의 앞쪽 절반만 기계가 막는다는 뜻이다.
