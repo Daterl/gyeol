@@ -21,9 +21,9 @@
 
 | | 1440px | 390px |
 |---|---|---|
-| 같은 콘텐츠의 이전 구성 비교 | ![](mockups/comparison-before-1440.png) | ![](mockups/comparison-before-390.png) |
-| 새 결과 | ![](mockups/refined-result-1440.png) | ![](mockups/refined-result-390.png) |
-| 새 입력 | ![](mockups/refined-input-1440.png) | ![](mockups/refined-input-390.png) |
+| 같은 콘텐츠의 이전 구성 비교 | ![](mockups/comparison-before-1440.jpg) | ![](mockups/comparison-before-390.jpg) |
+| 새 결과 | ![](mockups/refined-result-1440.jpg) | ![](mockups/refined-result-390.jpg) |
+| 새 입력 | ![](mockups/refined-input-1440.jpg) | ![](mockups/refined-input-390.jpg) |
 
 CUA에서 첫 사진 시작 위치 비교: 데스크톱758.77→541.77px(217px 감소), 모바일888.16→689.16px(199px 감소). 검토용 상단 바 포함, 서로 동일 콘텐츠/창 크기. [측정](mockups/refined-measurements.json). 320/390/1440 입력·결과 가로 넘침0, 이미지 전부 로드. 결과 버튼/summary/input 높이44px 이상. 320px 근거 Enter 펼침/포커스 유지/3px outline 확인. 입력 썸네일 원본 height 때문에 생긴 빈 여백은 캡처로 재현하고 height:auto 적용 후 재확인했다.
 
