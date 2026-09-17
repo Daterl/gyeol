@@ -125,11 +125,14 @@ const profile = buildCurrentProfile(input, now);
 ### 4-2. `sequence`
 
 - `carousel_count` = `child_count >= 2` 인 게시물 수. 업로드 경로는 캐러셀 구조를 알 수 없으므로 **0**.
-- `opener_tendency` — **아래 3개가 전부 참일 때만 낸다:**
-  1. `carousel_count >= 1`
-  2. 캐러셀 1번 사진의 `PhotoAnalysis` 가 **호출자로부터 실제로 들어왔고**(`input.openers`, 선택 인자),
+- `opener_tendency` — **아래 4개가 전부 참일 때만 낸다:**
+  1. **그 입력 스냅샷의 A2 판정이 `같다` 로 기록되어 있다** (`snapshot.provenance.carousel_order_check.verdict`).
+     `다르다`·`확인 불가`·기록 누락은 전부 같은 뜻이다 — **1번 사진이 진짜 1번인지 모른다.**
+     모르는 순서 위에 세운 성향은 근거가 아니므로 필드를 생략하고 순서를 근거로 쓰지 않는다
+  2. `carousel_count >= 1`
+  3. 캐러셀 1번 사진의 `PhotoAnalysis` 가 **호출자로부터 실제로 들어왔고**(`input.openers`, 선택 인자),
      그 `file_ref` 가 스냅샷의 `posts[].opener_image` 와 **일치한다** — 일치하지 않는 분석은 이 스냅샷의 근거가 아니므로 투표에서 뺀다
-  3. 분류 결과에 최빈값이 하나로 정해진다 (동률이면 안 낸다)
+  4. 분류 결과에 최빈값이 하나로 정해진다 (동률이면 안 낸다)
 
   분류: `has_face === true` → `인물`; 아니고 `scale === "closeup"` → `클로즈업`; 아니고 `scale === "fullshot"` → `풀샷`;
   `midshot` → **투표하지 않는다**(중간 스케일은 셋 중 어느 성향의 증거도 아니다).
@@ -155,7 +158,20 @@ const profile = buildCurrentProfile(input, now);
 여러 후보 중 최빈값을 고른 것(`ending_style`·`opener_tendency`·`subjects`)은 **최빈값의 점유 비율**이다.
 추론을 안 한 곳에 1 미만을 쓰면 겸손해 보일 뿐 뜻이 없고, 최빈값에 1 을 쓰면 소수 의견을 감춘다.
 
-### 4-4. `completeness`
+### 4-4. `evidence` 선택 — 근거는 그 판단을 실제로 지지한 관측만 가리킨다
+
+`evidence` 가 **있기만** 하면 되는 것이 아니다. 관측 목록의 앞에서 3개를 잘라 붙이면
+`클로즈업` 이라는 결론에 `midshot` 게시물만, `[고양이]` 라는 결론에 고양이가 없는 사진만 근거로 달린다.
+둘 다 `validateProfile` 을 통과하므로 **계약이 아니라 추출기가 막아야 한다.**
+
+| Claim 종류 | 근거로 고르는 관측 |
+|---|---|
+| 최빈값 Claim (`ending_style`·`opener_tendency`·`subjects`) | **고른 값으로 분류된 관측만.** 그중 앞에서 최대 3개 |
+| 집계 Claim (`caption_len`·`emoji_rate`·`empty_caption_ratio`·`linebreak_habit`·`palette`·`composition_mix`·`scale_mix`) | 계산에 실제로 들어간 관측 집합. 그중 앞에서 최대 3개를 인용하고, **`note` 에 그 집합의 크기를 적는다**(예: `캡션을 쓴 게시물 27건 전체의 …`) |
+
+최빈값 Claim 은 정의상 그 값으로 분류된 관측이 1건 이상이므로 근거가 비지 않는다.
+
+### 4-5. `completeness`
 
 `visual` = 채운 visual Claim 수 / 5 · `language` = 채운 language Claim 수 / 5 · `sequence` = `carousel_count>0 ? (opener_tendency ? 1 : 0.5) : 0`.
 분모 5 는 스키마가 정의한 선택 Claim 개수다(`banned_words` 는 Claim 이 아니므로 제외).
@@ -204,8 +220,11 @@ const profile = buildCurrentProfile(input, now);
 > 게시물 2건(`DdVKdyACaC1` 10장, `DdJWXXTHCMv` 20장) 전부 인덱스 단위로 일치, 불일치 0건.
 > 방법은 **앱 화면 눈 대조가 아니라 웹 게시물 DOM 순서 수집본과의 대조**다 — 이 차이를 `report.md` 에 그대로 적는다.
 
-따라서 `opener_tendency` 를 순서 근거로 쓰는 것이 **허용된다.** 다만 4-2 의 3조건은 그대로 유지한다 —
+따라서 **이 스냅샷에서는** `opener_tendency` 를 순서 근거로 쓰는 것이 허용된다. 다만 4-2 의 4조건은 그대로 유지한다 —
 A2 가 통과했다는 것은 "순서를 믿어도 된다"이지 "openers 를 분석하지 않고도 값을 내도 된다"가 아니다.
+
+**그리고 이 판정은 이 fixture 한 벌의 속성이지 코드의 속성이 아니다.** 다른 스냅샷은 자기 `provenance` 에
+자기 판정을 들고 와야 한다. 코드는 판정을 입력마다 읽고, `같다` 가 아니면 필드를 생략한다 (4-2 조건 1).
 
 ## 7. 이 이슈에서 안 하는 것
 

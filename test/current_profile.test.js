@@ -201,3 +201,72 @@ test('같은 사진이라도 캡션 관측 여부가 다르면 다른 프로필 
   assert.notEqual(withoutCaptions.profile_id, withCaptions.profile_id);
   assert.equal(buildCurrentProfile({ photos }, NOW).profile_id, withoutCaptions.profile_id);
 });
+
+// ── review-codex.md H1 회귀 ────────────────────────────────────────────────────
+// 고치기 전에는 네 경우 모두 opener_tendency 를 만들었다. 재현: docs/specs/11-current-profile/attack.mjs
+test('A2 판정이 "같다" 가 아닌 스냅샷에서는 opener_tendency 를 내지 않는다 (H1)', () => {
+  const analysed = [opener(carousels[0])];
+  for (const verdict of ['다르다', '확인 불가']) {
+    const tampered = structuredClone(snapshot);
+    tampered.provenance.carousel_order_check.verdict = verdict;
+    const profile = buildCurrentProfile({ snapshot: tampered, openers: analysed }, NOW);
+    validateProfile(profile, 'current');
+    assert.equal(profile.sequence.opener_tendency, undefined, `A2 "${verdict}" 인데 순서 근거로 성향을 냈다`);
+    assert.equal(profile.completeness.sequence, 0.5);
+  }
+  const missing = structuredClone(snapshot);
+  delete missing.provenance.carousel_order_check;
+  const profile = buildCurrentProfile({ snapshot: missing, openers: analysed }, NOW);
+  validateProfile(profile, 'current');
+  assert.equal(profile.sequence.opener_tendency, undefined, 'A2 기록이 아예 없으면 확인 불가와 같다');
+  // 기준선: "같다" 로 기록된 원본 스냅샷에서는 계속 나온다
+  assert.ok(buildCurrentProfile({ snapshot, openers: analysed }, NOW).sequence.opener_tendency);
+});
+
+// ── review-codex.md H2 회귀 ────────────────────────────────────────────────────
+// 고치기 전에는 결론과 무관하거나 반대인 관측이 근거로 달렸고 validateProfile 도 통과했다.
+test('opener_tendency 의 근거는 그 성향으로 분류된 캐러셀만 가리킨다 (H2)', () => {
+  // midshot 은 투표하지 않으므로 클로즈업 2건이 이긴다. 앞에서 3개를 자르면 midshot 만 근거가 된다.
+  const openers = carousels.slice(0, 3).map(post => opener(post, { scale: 'midshot' }))
+    .concat(carousels.slice(3, 5).map(post => opener(post, { scale: 'closeup' })));
+  const profile = buildCurrentProfile({ snapshot, openers }, NOW);
+  validateProfile(profile, 'current');
+  const tendency = profile.sequence.opener_tendency;
+  assert.equal(tendency.value, '클로즈업');
+  const supporting = new Set(carousels.slice(3, 5).map(post => `29cm.official:${post.shortcode}`));
+  for (const evidence of tendency.evidence) {
+    assert.ok(supporting.has(evidence.ref), `${evidence.ref} 는 클로즈업으로 분류되지 않았다`);
+  }
+});
+
+test('subjects 의 근거는 그 피사체가 실제로 찍힌 사진만 가리킨다 (H2)', () => {
+  const tampered = photos.slice(0, 5).map((photo, i) => ({ ...structuredClone(photo), subjects: i < 3 ? [`unique_${i}`] : ['고양이'] }));
+  const profile = buildCurrentProfile({ photos: tampered }, NOW);
+  validateProfile(profile, 'current');
+  const subjects = profile.visual.subjects;
+  assert.deepEqual(subjects.value, ['고양이']);
+  for (const evidence of subjects.evidence) {
+    const cited = tampered.find(photo => photo.photo_id === evidence.ref);
+    assert.ok(cited.subjects.some(name => subjects.value.includes(name)), `${evidence.ref} 에는 그 피사체가 없다`);
+  }
+});
+
+test('ending_style 의 근거는 그 끝맺음으로 분류된 캡션만 가리킨다 (H2)', () => {
+  const captions = ['좋아요', '가요', '사진', '기록', '풍경']; // 해요 2 : 명사형 3 — 명사형이 뒤쪽에 있다
+  const profile = buildCurrentProfile({ photos: photos.slice(0, 5), captions }, NOW);
+  validateProfile(profile, 'current');
+  const style = profile.language.ending_style;
+  assert.equal(style.value, '명사형');
+  const supporting = new Set(['ph_03', 'ph_04', 'ph_05']);
+  for (const evidence of style.evidence) {
+    assert.ok(supporting.has(evidence.ref), `${evidence.ref} 의 캡션은 명사형이 아니다`);
+  }
+});
+
+test('집계 Claim 의 근거 note 는 어떤 관측 집합에서 계산했는지 밝힌다 (H2)', () => {
+  const profile = buildCurrentProfile({ snapshot }, NOW);
+  assert.match(profile.language.empty_caption_ratio.evidence[0].note, new RegExp(`캡션 ${snapshot.posts.length}건 전체`));
+  assert.match(profile.language.caption_len.evidence[0].note, /게시물 \d+건 전체/);
+  const uploaded = buildCurrentProfile({ photos }, NOW);
+  assert.match(uploaded.visual.palette.evidence[0].note, new RegExp(`사진 ${photos.length}장 전체`));
+});
