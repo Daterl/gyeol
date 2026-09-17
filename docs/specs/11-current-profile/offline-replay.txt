@@ -1,0 +1,16 @@
+$ node /tmp/dod_demo.mjs   # 워크트리 루트에서 실행. fetch/net/http/https/dns 를 전부 막은 뒤 재생한다
+외부 호출 전부 차단(fetch/net/http/https/dns). 시도 횟수는 마지막 줄.
+
+[부재] validateProfile OK  present=false source=none id=null n=0 completeness={"visual":0,"language":0,"sequence":0} sha=ec6c152d78430d56
+       language=null visual={} sequence={}  (에러 없이 정상 종료)
+[스냅샷 재생] validateProfile OK  present=true source=cached id=cur_cached_29cm_official n=30 completeness={"visual":0,"language":1,"sequence":0.5} sha=9ba238a119c7d9eb
+       carousel_count=26 opener_tendency=(필드 없음)
+       language={"banned_words":["이처럼","또한","이를 통해","이러한","마침내"],"empty_caption_ratio":0,"caption_len":{"p50":289,"p90":888,"unit":"자"},"emoji_rate":5.5,"ending_style":"명사형","linebreak_habit":"문단"}
+       재생 2회 sha 동일: true
+[직접 업로드(캡션 없음)] validateProfile OK  present=true source=photo_upload id=cur_upload_ec8fa9eb n=15 completeness={"visual":0.8,"language":0,"sequence":0} sha=5b29bc0751b2562f
+       language=null  ← empty_caption_ratio 필드 자체가 없다
+[직접 업로드(캡션 있음)] validateProfile OK  present=true source=photo_upload id=cur_upload_9112688b n=15 completeness={"visual":0.8,"language":1,"sequence":0} sha=7d9ea8facca87c53
+       empty_caption_ratio=0.33 ending_style=해요(conf 1)
+
+'불명' 문자열 등장 횟수: 0
+외부 호출 시도 횟수: 0
