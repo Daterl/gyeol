@@ -1,0 +1,12 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/47-photo-boundaries
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  18:21:43
+   Duration  544ms (transform 44%, tests 34%, import 17%, worker 4%)

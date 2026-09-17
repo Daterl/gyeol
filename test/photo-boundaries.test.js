@@ -9,7 +9,7 @@ const input = { photoId: 'boundary', inputIndex: 0, fileRef: 'boundary.svg', med
 
 test('hidden SVG roots and invalid numeric entities fail without invented observations', async () => {
   for (const svg of [
-    ...['visibility="hidden"', 'style="display:none"', 'opacity="0"'].map(attr => card.replace('<svg ', `<svg ${attr} `)),
+    ...['visibility="hidden"', 'style="display:none"', 'opacity="0"', "visibility='hidden'", "opacity='0'", "style='display:none'"].map(attr => card.replace('<svg ', `<svg ${attr} `)),
     ...['&#1114112;', '&#xD800;', '&#0;'].map(entity => card.replace('sample', entity)),
   ]) {
     resetAnalysisState();
@@ -41,8 +41,11 @@ test('returned facts and measurement cannot mutate later cache hits', async () =
   const request = { ...input, bytes: Buffer.from(card) };
   const first = await analyzePhoto(request);
   const expected = structuredClone(first.analysis);
+  const expectedMeasurement = structuredClone(first.measurement);
   first.analysis.subjects.push('not observed');
   first.analysis.describable_facts.push('invented');
   first.measurement.color.palette_hex.push('#000000');
-  assert.deepEqual((await analyzePhoto(request)).analysis, expected);
+  const next = await analyzePhoto(request);
+  assert.deepEqual(next.analysis, expected);
+  assert.deepEqual(next.measurement, expectedMeasurement);
 });
