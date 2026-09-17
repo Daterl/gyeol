@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>결 GYEOL — 올릴 사진의 순서를 정해드립니다</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232e5e4e'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23f5f2ec' font-family='sans-serif'%3E%EA%B2%B0%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#f6f3ed; --ink:#1b1a18; --muted:#6d6862; --faint:#928c84;
+  --line:#e0d9ca; --line-2:#efe9dd; --card:#fffdf8;
+  --accent:#2e5e4e; --accent-soft:#e6efea; --accent-line:#bcd3c8;
+  --amber:#8a6a18; --amber-soft:#fbf2dd; --amber-line:#ecd9a8;
+  --r:14px; --shadow:0 1px 2px rgba(27,26,24,.05),0 8px 24px -18px rgba(27,26,24,.5);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+  font-size:15px;line-height:1.62;word-break:keep-all;overflow-wrap:anywhere;
+}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
+button:disabled{cursor:not-allowed}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+.skip{position:absolute;left:12px;top:-70px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:9px;z-index:99;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ── 상단 바 ─────────────────────────────── */
+.top{border-bottom:1px solid var(--line);background:rgba(246,243,237,.92);backdrop-filter:blur(8px);position:sticky;top:0;z-index:30}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:7px;font-weight:700;letter-spacing:-.01em}
+.brand b{font-size:19px}
+.brand span{font:10.5px ui-monospace,monospace;letter-spacing:.2em;color:var(--faint)}
+.top nav{margin-left:auto;display:flex;gap:8px}
+
+/* ── 버튼 ─────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);
+  background:var(--card);border-radius:10px;padding:9px 15px;font-size:14px;font-weight:600;
+  transition:background .14s,border-color .14s,transform .08s}
+.btn:hover{border-color:#c9c0ae;background:#fff}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#f6f3ed}
+.btn.primary:hover{background:#26503f}
+.btn.primary:disabled{background:#cfc9bd;border-color:#cfc9bd;color:#fdfcf8;transform:none}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:9px;font-weight:600}
+.btn.icon{padding:0;width:32px;height:32px;justify-content:center;border-radius:9px;font-size:13px}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* ── 진입 화면 ─────────────────────────── */
+.hero{padding:52px 0 26px;text-align:center}
+.hero h1{font-size:clamp(26px,5.2vw,40px);line-height:1.28;letter-spacing:-.025em;font-weight:800}
+.hero p{margin-top:12px;color:var(--muted);font-size:15.5px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px;margin-bottom:34px}
+@media (min-width:720px){.panel{padding:28px 30px}}
+.field{margin-top:22px}
+.field:first-child{margin-top:0}
+.lab{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.lab label,.lab .lg{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.tag{font:10.5px ui-monospace,monospace;letter-spacing:.09em;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--faint)}
+.tag.need{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+.hint{font-size:12.5px;color:var(--muted);line-height:1.5}
+.lab .hint{margin-left:auto}
+@media (max-width:560px){.lab .hint{margin-left:0;flex-basis:100%}}
+input[type=url],input[type=text],textarea{
+  width:100%;border:1px solid var(--line);border-radius:11px;background:#fffefb;
+  padding:11px 13px;font-size:14.5px;line-height:1.5}
+input:focus,textarea:focus{border-color:var(--accent-line)}
+textarea{resize:vertical;min-height:78px}
+.err{font-size:12.5px;color:#9a3412;margin-top:6px}
+
+/* 드롭존 */
+.drop{border:1.5px dashed var(--line);border-radius:16px;background:#fffefb;padding:30px 18px;text-align:center;transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop.mini{padding:18px 14px;border-radius:14px}
+.alt{margin-top:9px}
+.sugg{font-size:14.5px;line-height:1.62}
+.sugg b{font-weight:700;color:var(--accent)}
+.drop .big{font-size:15.5px;font-weight:700}
+.drop .sub{font-size:13px;color:var(--muted);margin-top:5px}
+.drop .acts{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:15px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:9px;margin-top:14px}
+.thumb{position:relative;aspect-ratio:4/5;border-radius:9px;overflow:hidden;border:1px solid var(--line-2)}
+.thumb .ph{position:absolute;inset:0}
+.thumb .x{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:7px;background:rgba(27,26,24,.62);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
+.thumb .x:hover{background:rgba(27,26,24,.85)}
+.count{font-size:12.5px;color:var(--muted);margin-top:10px}
+.gate{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid var(--line-2)}
+.gate .why{font-size:13px;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:9px;padding:7px 11px}
+
+/* ── 분석 중 ───────────────────────────── */
+.load{min-height:64vh;display:flex;align-items:center;justify-content:center;padding:40px 0}
+.load-in{width:100%;max-width:430px}
+.steps{margin-top:22px}
+.step{display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-2);color:var(--faint);font-size:14.5px}
+.step:last-child{border-bottom:0}
+.step .dot{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--line);flex:none;position:relative}
+.step[data-s="run"]{color:var(--ink);font-weight:600}
+.step[data-s="run"] .dot{border-color:var(--accent);border-top-color:transparent;animation:spin .7s linear infinite}
+.step[data-s="done"]{color:var(--ink)}
+.step[data-s="done"] .dot{border-color:var(--accent);background:var(--accent)}
+.step[data-s="done"] .dot::after{content:"";position:absolute;left:5.5px;top:2.5px;width:4px;height:8px;border:solid #fff;border-width:0 1.7px 1.7px 0;transform:rotate(43deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── 결과 화면 ─────────────────────────── */
+.res-head{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:26px 0 18px}
+.res-head h2{font-size:clamp(20px,3.4vw,26px);letter-spacing:-.025em;font-weight:800}
+.res-head .sum{font-size:13.5px;color:var(--muted)}
+.res-head nav{margin-left:auto;display:flex;gap:8px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:26px;padding-bottom:16px;align-items:start}
+@media (min-width:960px){.grid{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:34px}
+  .col-l{position:sticky;top:76px}}
+.col-l,.col-r{min-width:0}
+
+/* 캐러셀 */
+.stage{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:#e9e4d9;box-shadow:var(--shadow);border:1px solid var(--line)}
+.stage .ph{position:absolute;inset:0}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage .num{position:absolute;top:11px;right:11px;background:rgba(27,26,24,.62);color:#fff;border-radius:999px;
+  padding:3px 11px;font:11.5px/1.5 ui-monospace,monospace;letter-spacing:.06em}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;
+  background:rgba(255,253,248,.9);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px}
+.arrow:hover{background:#fff}
+.arrow[disabled]{opacity:.32}
+.arrow.prev{left:9px}.arrow.next{right:9px}
+.dots{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:11px}
+.dots button{width:7px;height:7px;border-radius:50%;background:#cfc7b6}
+.dots button[aria-current="true"]{background:var(--accent);width:18px;border-radius:99px}
+.cap-now{margin-top:13px;border:1px solid var(--line-2);border-radius:12px;background:var(--card);padding:12px 14px;font-size:14px;min-height:56px}
+.cap-now .k{font:10.5px ui-monospace,monospace;letter-spacing:.1em;color:var(--faint);display:block;margin-bottom:3px}
+.cap-now em{font-style:normal;color:var(--faint)}
+
+/* 우측 카드 */
+.card{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:17px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card>h3{font-size:13px;letter-spacing:-.005em;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.card>h3 .c{font:10.5px ui-monospace,monospace;letter-spacing:.14em;color:var(--faint);font-weight:400;text-transform:uppercase}
+.title-in{width:100%;font-size:19px;font-weight:700;letter-spacing:-.02em;border:1px solid transparent;background:#fffefb;
+  border-radius:10px;padding:9px 11px;line-height:1.4}
+.title-in:hover{border-color:var(--line-2)}
+.title-in:focus{border-color:var(--accent-line)}
+
+/* 근거 접기 */
+details.ev{margin-top:8px}
+details.ev>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  font:11px ui-monospace,monospace;letter-spacing:.06em;color:var(--faint);border:1px solid var(--line-2);
+  border-radius:7px;padding:3px 9px}
+details.ev>summary::-webkit-details-marker{display:none}
+details.ev>summary:hover{color:var(--muted);border-color:var(--line)}
+details.ev>summary::before{content:"근거 ▸"}
+details.ev[open]>summary::before{content:"근거 ▾"}
+details.ev>summary span{display:none}
+.ev-body{margin-top:7px;border-left:2px solid var(--accent-line);padding:2px 0 2px 11px;font-size:12.5px;color:var(--muted)}
+.ev-body .from{font:10.5px ui-monospace,monospace;letter-spacing:.09em;color:var(--accent);display:block;margin-bottom:2px}
+.ev-body .src{display:block;margin-top:4px;font-size:11.5px;color:var(--faint)}
+
+/* 순서 리스트 */
+.ord{margin-top:2px}
+.ord li{display:flex;gap:11px;align-items:flex-start;padding:10px;border:1px solid transparent;border-radius:12px;margin-bottom:3px}
+.ord li:hover{background:#fbf8f1}
+.ord li{touch-action:pan-y;cursor:grab}
+.ord li.drag{cursor:grabbing}
+.ord li.drag{opacity:.4}
+.ord li.over{border-color:var(--accent);background:var(--accent-soft)}
+.ord .slot{flex:none;width:21px;text-align:right;font:12px ui-monospace,monospace;color:var(--faint);padding-top:11px}
+.ord .mini{flex:none;width:42px;aspect-ratio:4/5;border-radius:7px;overflow:hidden;border:1px solid var(--line-2);position:relative;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.ord li.drag .mini{cursor:grabbing}
+.ord .mini .ph{position:absolute;inset:0}
+.ord .mini img{width:100%;height:100%;object-fit:cover;display:block}
+.ord .body{flex:1;min-width:0}
+.ord .name{font-size:13.5px;font-weight:600}
+.ord .moved{font:10px ui-monospace,monospace;color:var(--amber);letter-spacing:.06em}
+.ord .mv{flex:none;display:flex;flex-direction:column;gap:3px}
+.ord .mv button{width:26px;height:22px;border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;background:var(--card)}
+.ord .mv button:hover:not([disabled]){background:#fff;border-color:#c9c0ae}
+.ord .mv button[disabled]{opacity:.3}
+
+/* 캡션 슬롯 */
+.slot{border:1px solid var(--line-2);border-radius:13px;padding:12px;margin-bottom:9px;background:#fffefb}
+.slot.empty{background:repeating-linear-gradient(135deg,#fffdf8 0 10px,#faf7ee 10px 20px);border-style:dashed;border-color:var(--line)}
+.slot .hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.slot .n{font:11px ui-monospace,monospace;color:var(--faint);letter-spacing:.06em}
+.chip{font:10.5px ui-monospace,monospace;letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:1.5px 7px;color:var(--muted)}
+.chip.sug{background:var(--accent-soft);border-color:var(--accent-line);color:#22493d}
+.chip.emp{background:var(--amber-soft);border-color:var(--amber-line);color:var(--amber)}
+.chip.usr{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.slot .hd .r{margin-left:auto;display:flex;gap:6px}
+.slot textarea{min-height:46px;font-size:14px;border-color:var(--line-2)}
+.slot .emptytxt{font-size:13.5px;color:var(--muted)}
+
+/* 간극 카드 */
+.gap{border:1px solid var(--amber-line);background:var(--amber-soft);border-radius:13px;padding:13px;margin-bottom:10px}
+.gap p{font-size:13.5px;line-height:1.6}
+.gap p b{font-weight:700}
+.gap .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gap .acts .st{font:10.5px ui-monospace,monospace;color:var(--amber);letter-spacing:.06em;margin-left:auto}
+.nogap{font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:12px;background:#fffefb}
+
+/* 내보내기 / 요약 */
+.exp{display:flex;gap:9px;flex-wrap:wrap}
+.note{font-size:12.5px;color:var(--faint);margin-top:10px}
+.summary{border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:13px;padding:13px 15px}
+.summary b{font-size:15px;letter-spacing:-.01em}
+.summary p{font-size:13px;color:#3c5d51;margin-top:3px}
+.banner{border:1px solid var(--line);background:#fffefb;border-radius:13px;padding:12px 14px;margin-bottom:16px;font-size:13.5px;color:var(--muted)}
+.banner b{color:var(--ink)}
+
+/* 하단 고지 */
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0 44px}
+footer details>summary{list-style:none;cursor:pointer;font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+footer details>summary::-webkit-details-marker{display:none}
+footer details>summary::before{content:"▸"}
+footer details[open]>summary::before{content:"▾"}
+footer .fb{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.7;max-width:76ch}
+footer .fb h4{font-size:12.5px;margin:12px 0 3px;color:var(--ink)}
+footer .fb li{padding-left:13px;position:relative}
+footer .fb li::before{content:"·";position:absolute;left:3px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>결</b><span>GYEOL</span></div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+<!-- ══ 화면 1 · 진입 ══════════════════════ -->
+<section id="sc-input">
+  <div class="hero">
+    <h1>올릴 사진을 넣으면,<br>어떤 순서로 올릴지 정해드립니다</h1>
+    <p>순서 · 여는 한 줄 · 사진별 설명. 설명을 안 붙이는 것도 결과입니다.</p>
+  </div>
+
+  <div class="panel">
+    <div class="field">
+      <div class="lab"><span class="lg" id="lb-photos">넣을 사진</span><span class="tag need">필수</span>
+        <span class="hint">3~20장 · 권장 8~15장</span></div>
+      <div class="drop" id="drop" role="group" aria-labelledby="lb-photos">
+        <div class="big">사진을 여기에 끌어다 놓으세요</div>
+        <div class="sub">기기 밖으로 전송하지 않습니다. 화면에서만 읽습니다.</div>
+        <div class="acts">
+          <button class="btn" id="btn-pick" type="button">파일 고르기</button>
+          <button class="btn" id="btn-sample" type="button">샘플 사진 12장 넣기</button>
+        </div>
+        <input type="file" id="file" accept="image/*" multiple class="sr" tabindex="-1" aria-hidden="true">
+      </div>
+      <ul class="thumbs" id="thumbs" aria-label="넣은 사진"></ul>
+      <p class="count" id="count" aria-live="polite">아직 넣은 사진이 없습니다.</p>
+    </div>
+
+    <div class="field">
+      <div class="lab"><label for="my-url">내 인스타그램 URL</label><span class="tag need">필수</span>
+        <span class="hint">공개 계정만 읽을 수 있습니다</span></div>
+      <div id="my-url-box">
+        <input type="url" id="my-url" placeholder="https://www.instagram.com/내계정/" autocomplete="off" spellcheck="false">
+        <p class="hint" style="margin-top:6px">여기서 <b>원래 내 결</b>을 읽습니다. 아래 두 칸을 비워두면 이 결을 바탕으로 방향을 먼저 제안합니다.</p>
+        <p class="err" id="e-my" hidden></p>
+        <button class="btn sm alt" id="btn-private" type="button">비공개 계정인가요?</button>
+      </div>
+      <div id="my-feed-box" hidden>
+        <div class="drop mini" id="drop2" role="group" aria-labelledby="lb-feed">
+          <div class="big" id="lb-feed">내 기존 게시물 사진 올리기</div>
+          <div class="sub">비공개 계정은 URL로 읽을 수 없습니다. 이미 올렸던 사진을 직접 올리면 같은 역할을 합니다.</div>
+          <div class="acts">
+            <button class="btn" id="btn-pick2" type="button">파일 고르기</button>
+            <button class="btn" id="btn-sample2" type="button">샘플 기존 게시물 9장</button>
+            <button class="btn" id="btn-back" type="button">URL로 돌아가기</button>
+          </div>
+          <input type="file" id="file2" accept="image/*" multiple class="sr" tabindex="-1" aria-hidden="true">
+        </div>
+        <ul class="thumbs" id="thumbs2" aria-label="올린 기존 게시물"></ul>
+        <p class="count" id="count2" aria-live="polite">아직 올린 기존 게시물이 없습니다.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="lab"><label for="ref-url">레퍼런스 인스타그램 URL</label><span class="tag">선택</span>
+        <span class="hint">공개 계정만 읽을 수 있습니다</span></div>
+      <input type="url" id="ref-url" placeholder="https://www.instagram.com/따라가고싶은계정/" autocomplete="off" spellcheck="false">
+      <p class="err" id="e-ref" hidden></p>
+    </div>
+
+    <div class="field">
+      <div class="lab"><label for="prompt">원하는 느낌</label><span class="tag">선택</span></div>
+      <textarea id="prompt" placeholder="예: 차분하고 여백 많은 느낌으로. 설명은 최대한 줄이고 싶어요"></textarea>
+      <p class="hint" style="margin-top:6px">레퍼런스와 느낌, 둘 다 비워도 됩니다. 비우면 내 피드에서 읽어낸 결로 <b>방향을 먼저 제안</b>하고, 넣으면 그 제안을 덮어씁니다.</p>
+    </div>
+
+    <div class="gate">
+      <button class="btn primary" id="btn-go" type="button" disabled>결 잡기</button>
+      <p class="why" id="why" role="status">사진을 3장 이상 넣어주세요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 분석 중 ══════════════════════════ -->
+<section id="sc-load" hidden>
+  <div class="load"><div class="load-in">
+    <p class="mono">분석 중</p>
+    <h2 style="font-size:22px;letter-spacing:-.02em;margin-top:6px">결을 잡고 있습니다</h2>
+    <ol class="steps" id="steps" aria-live="polite">
+      <li class="step" data-s="wait"><span class="dot"></span><span>사진 읽는 중</span></li>
+      <li class="step" data-s="wait"><span class="dot"></span><span>결을 잡는 중</span></li>
+      <li class="step" data-s="wait"><span class="dot"></span><span>순서 맞추는 중</span></li>
+    </ol>
+  </div></div>
+</section>
+
+<!-- ══ 화면 2 · 결과 ═════════════════════ -->
+<section id="sc-result" hidden>
+  <div class="res-head">
+    <div>
+      <h2 id="r-title-echo">결과</h2>
+      <p class="sum" id="r-basis"></p>
+    </div>
+    <nav><button class="btn sm" id="btn-restart">다시 하기</button></nav>
+  </div>
+
+  <div class="grid">
+    <div class="col-l">
+      <div class="stage" id="stage">
+        <span class="num" id="r-num">1 / 1</span>
+        <button class="arrow prev" id="r-prev" type="button" aria-label="이전 장"><span aria-hidden="true">←</span></button>
+        <button class="arrow next" id="r-next" type="button" aria-label="다음 장"><span aria-hidden="true">→</span></button>
+      </div>
+      <div class="dots" id="r-dots" role="tablist" aria-label="장 넘기기"></div>
+      <div class="cap-now" id="r-capnow"><span class="k">이 장의 설명</span><em>—</em></div>
+    </div>
+
+    <div class="col-r">
+      <div class="banner" id="r-banner" hidden></div>
+      <div class="card" id="r-suggest" hidden></div>
+
+      <div class="card">
+        <h3><span class="c">Title</span> 여는 한 줄</h3>
+        <label class="sr" for="r-title">타이틀</label>
+        <input class="title-in" id="r-title" type="text">
+        <details class="ev"><summary><span>근거</span></summary><div class="ev-body" id="r-title-ev"></div></details>
+      </div>
+
+      <div class="card">
+        <h3><span class="c">Order</span> 순서</h3>
+        <p class="hint" style="margin-bottom:9px">끌어서 옮기거나, 오른쪽 <b>▲▼</b> 버튼으로 옮깁니다.</p>
+        <ol class="ord" id="r-order"></ol>
+        <p class="hint" id="r-ordnote" aria-live="polite"></p>
+      </div>
+
+      <div class="card">
+        <h3><span class="c">Caption</span> 사진별 설명</h3>
+        <div id="r-slots"></div>
+      </div>
+
+      <div class="card" id="card-gap">
+        <h3><span class="c">Gap</span> 지향과 원래 방식이 갈리는 지점</h3>
+        <div id="r-gaps"></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="c">Export</span> 내보내기</h3>
+        <div class="exp">
+          <button class="btn" id="btn-copy" type="button">캡션 전문 복사</button>
+          <button class="btn" id="btn-png" type="button">현재 장 PNG 저장</button>
+        </div>
+        <p class="note">실제 인스타그램에 자동으로 올리지 않습니다. 사진도 보정하지 않습니다.</p>
+        <p class="note" id="r-expmsg" role="status"></p>
+      </div>
+
+      <div class="summary" id="r-summary" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <details>
+      <summary>이 화면에서 무엇이 실제로 동작하고 무엇이 샘플인가</summary>
+      <div class="fb">
+        <h4>실제로 동작하는 것</h4>
+        <ul>
+          <li>사진 넣기 · 순서 재배치(끌기/버튼) · 타이틀과 캡션 편집 · 비움 전환 · 간극 선택 · 캡션 복사 · PNG 저장</li>
+          <li>입력한 <b>느낌 문장의 낱말</b>과 <b>레퍼런스 계정명</b>에 따라 순서 · 타이틀 · 캡션 톤이 실제로 달라집니다.</li>
+          <li>레퍼런스 URL과 느낌을 <b>둘 다 비우면</b> 내 피드에서 읽은 결로 방향을 제안하고, 하나라도 넣으면 그 제안이 덮어써지며 간극 카드가 생깁니다.</li>
+          <li>비공개 계정 경로로 기존 게시물 사진을 올리면, 그 사진들의 장수와 1번 장 구도가 보정축 값으로 실제로 쓰입니다.</li>
+          <li>넣은 사진은 브라우저 안에서만 읽습니다. 서버로 보내지 않고, 저장도 하지 않습니다.</li>
+        </ul>
+        <h4>샘플로 대신한 것</h4>
+        <ul>
+          <li>업로드한 기존 게시물의 캡션 습관(길이 · 말끝 · 비움 비율)은 읽을 수 없어 샘플 프로필에서 가져옵니다. 장수와 1번 장 구도만 실제 값입니다.</li>
+          <li>인스타그램 URL을 <b>실제로 수집하지 않습니다.</b> 형식만 검사하고, 계정명으로 미리 만들어 둔 샘플 프로필을 고릅니다. 실제 수집 경로는 Apify Instagram Scraper로 공개 계정 1건을 검증했습니다(2026-09-17, 게시물 100개, 약 75초, $0.27).</li>
+          <li>사진의 색 · 밝기 · 구도 · 피사체 값은 넣은 파일을 실제로 분석한 값이 아니라, 미리 정의한 샘플 속성입니다. 근거 문장에 쓰인 건수도 샘플 값입니다.</li>
+          <li>캡션 초안은 규칙 기반 문장이며 언어 모델을 호출하지 않습니다.</li>
+        </ul>
+        <h4>원칙상 하지 않는 것</h4>
+        <ul>
+          <li>사진 보정 · 생성, 좋아요/도달 예측, 해시태그 추천, 자동 게시, 로그인, 진행률 표시.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s);};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+var esc=function(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+
+/* ─── 샘플 사진 20종 (외부 이미지 없이 그라디언트로 생성) ─── */
+var BANK=[
+ {s:"창가",      c:["#f1ece1","#dcd4c3","#b5aa95"], b:.86,w:.40,a:.88,sc:"wide"},
+ {s:"커피",      c:["#e6d8c4","#c2a781","#8a6a47"], b:.62,w:.82,a:.45,sc:"close"},
+ {s:"골목",      c:["#d7d3cc","#a7a49e","#6f6d69"], b:.55,w:.30,a:.55,sc:"wide"},
+ {s:"바다",      c:["#dbe7ec","#a8c6d4","#6b93a8"], b:.74,w:.14,a:.92,sc:"wide"},
+ {s:"나무 그림자",c:["#e9e3d3","#c3bda6","#7f7a63"], b:.70,w:.48,a:.72,sc:"close"},
+ {s:"계단",      c:["#ded9d0","#b6afa2","#7c766a"], b:.60,w:.35,a:.60,sc:"wide"},
+ {s:"노을",      c:["#f3ddc4","#e0a878","#b56a4a"], b:.68,w:.95,a:.66,sc:"wide"},
+ {s:"책상",      c:["#eee7d9","#cfc4ad","#9a8f78"], b:.78,w:.52,a:.50,sc:"close"},
+ {s:"빗물",      c:["#dfe3e4","#b1b8bb","#767e82"], b:.58,w:.10,a:.62,sc:"close"},
+ {s:"화분",      c:["#e6e9da","#bdc7a6","#7d8a63"], b:.72,w:.38,a:.58,sc:"close"},
+ {s:"문",        c:["#e3dccd","#bfae93","#8b7454"], b:.64,w:.70,a:.44,sc:"wide"},
+ {s:"식탁",      c:["#f0e8da","#d6c7ad","#a9967a"], b:.80,w:.66,a:.48,sc:"close"},
+ {s:"언덕",      c:["#e2e9d9","#b3c39d","#748a5f"], b:.76,w:.36,a:.90,sc:"wide"},
+ {s:"지하철",    c:["#dcdde0","#a9abb2","#6e7077"], b:.54,w:.08,a:.50,sc:"wide"},
+ {s:"간판",      c:["#efe0d2","#d98f6a","#9c4a33"], b:.66,w:.90,a:.38,sc:"close"},
+ {s:"이불",      c:["#f2ece2","#ddd2c2","#b8a894"], b:.88,w:.58,a:.70,sc:"close"},
+ {s:"수영장",    c:["#dcecef","#95c8d2","#4f8e9e"], b:.78,w:.12,a:.84,sc:"wide"},
+ {s:"밤거리",    c:["#cfd2d8","#7d828d","#3c414b"], b:.28,w:.22,a:.46,sc:"wide"},
+ {s:"유리창",    c:["#eef1ef","#cad3d0","#9aa8a3"], b:.84,w:.24,a:.86,sc:"close"},
+ {s:"벽",        c:["#ece6da","#cfc7b7","#a79d8a"], b:.82,w:.46,a:.94,sc:"wide"}
+];
+
+/* ─── 결(무드) 4종 ─── */
+var MOODS={
+ calm:{name:"차분하고 여백 있는", words:["차분","여백","조용","담백","고요","미니멀","잔잔","심플","비움","정적"],
+       ratio:.25,len:"short",end:"명사형",first:"wide",firstAdj:"여백이 큰",
+       title:function(n,s){return "조용한 "+n+"장";}},
+ warm:{name:"따뜻하고 일상적인", words:["따뜻","포근","다정","일상","소소","햇살","아늑","온기","느긋","편안"],
+       ratio:.55,len:"mid",end:"~요",first:"close",firstAdj:"가장 따뜻한",
+       title:function(n,s){return "그날의 "+s;}},
+ bold:{name:"선명하고 대담한", words:["선명","강렬","대담","화려","쨍","비비드","임팩트","컬러","진한","또렷"],
+       ratio:.35,len:"short",end:"~다",first:"close",firstAdj:"색이 가장 강한",
+       title:function(n,s){return s+", 그리고 "+(n-1)+"장";}},
+ story:{name:"기록하듯 이어지는", words:["기록","여행","이야기","서사","흐름","하루","다큐","일기","여정","순서"],
+       ratio:.70,len:"long",end:"~다",first:"wide",firstAdj:"가장 넓게 트인",
+       title:function(n,s){return s+"에서 시작한 하루";}}
+};
+var MOODKEYS=["calm","warm","bold","story"];
+var REF_KNOWN={"minimal_seoul":"calm","hoy_daily":"warm","vivid_kr":"bold","walkandlog":"story","humansofny":"story"};
+
+/* ─── 샘플 CurrentProfile 3종 (내 계정명으로 고름) ─── */
+var CURS=[
+ {id:"A",n:12,none:9, ratio:.25,len:"short",end:"명사형",first:"close",mood:"calm"},
+ {id:"B",n:14,none:3, ratio:.79,len:"long", end:"~요",  first:"wide", mood:"warm"},
+ {id:"C",n:11,none:6, ratio:.45,len:"mid",  end:"~다",  first:"wide", mood:"story"}
+];
+
+/* ─── 캡션 문장 ─── */
+function ro(w){var c=w.charCodeAt(w.length-1);
+ if(c<0xAC00||c>0xD7A3) return "로";
+ var t=(c-0xAC00)%28; return (t===0||t===8)?"로":"으로";}
+function eul(w){var c=w.charCodeAt(w.length-1);
+ if(c<0xAC00||c>0xD7A3) return "을";
+ return ((c-0xAC00)%28)?"을":"를";}
+var CAPS={
+ calm:{"명사형":function(s){return s+"에 오래 머문 빛";},"~요":function(s){return s+"에 빛이 오래 머물렀어요";},"~다":function(s){return s+"에 빛이 오래 머물렀다";}},
+ warm:{"명사형":function(s){return s+" 앞에서 보낸 잠깐";},"~요":function(s){return s+" 앞에서 잠깐 서 있었어요";},"~다":function(s){return s+" 앞에서 잠깐 서 있었다";}},
+ bold:{"명사형":function(s){return s+", 오늘의 색";},"~요":function(s){return s+" 색이 마음에 들었어요";},"~다":function(s){return s+" 색이 마음에 들었다";}},
+ story:{"명사형":function(s){return s+eul(s)+" 지나던 길";},"~요":function(s){return s+eul(s)+" 지나 다음 장면으로 갔어요";},"~다":function(s){return s+eul(s)+" 지나 다음 장면으로 갔다";}}
+};
+var TAIL={"명사형":". 여기까지만 적는다","~요":" 사진만으로 충분한 날이었어요.","~다":" 사진만으로 충분한 날이었다."};
+var LENLABEL={short:"아주 짧게",mid:"한 줄",long:"두 문장"};
+var SCLABEL={close:"클로즈업",wide:"풀샷"};
+
+function hash(str){var h=0,i;for(i=0;i<str.length;i++){h=((h<<5)-h+str.charCodeAt(i))|0;}return Math.abs(h);}
+
+/* ═══ 상태 ═══ */
+var S={photos:[],feed:[],myUrl:"",refUrl:"",prompt:"",mode:"suggest",mood:null,moodFrom:"",
+       cur:null,curHandle:"",curFrom:"",
+       order:[],orig:{},reasons:{},title:"",titleEv:null,caps:{},gaps:[],cursor:0};
+
+/* ═══ 사진 그리기 (CSS / canvas 같은 사양) ═══ */
+function photoCss(p){
+ var a=p.colors[0],b=p.colors[1],c=p.colors[2];
+ var parts=["radial-gradient(130% 105% at 50% 44%, rgba(0,0,0,0) 52%, rgba(0,0,0,.17) 100%)"];
+ if(p.sc==="close"){ parts.push("radial-gradient(48% 34% at 33% 24%, "+a+"e0 0%, "+a+"00 74%)");
+       parts.push("radial-gradient(86% 62% at 52% 58%, "+c+"f2 0%, "+c+"00 66%)"); }
+ else{ parts.push("radial-gradient(60% 30% at 24% 18%, "+a+"d9 0%, "+a+"00 78%)");
+       parts.push("radial-gradient(78% 44% at 27% 76%, "+c+"d9 0%, "+c+"00 72%)");
+       parts.push("linear-gradient(0deg, "+b+"66 0 15%, "+b+"00 15.5%)"); }
+ parts.push("linear-gradient(165deg, "+a+" 0%, "+b+" 57%, "+c+" 100%)");
+ return parts.join(",");
+}
+function hex2rgb(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)];}
+function drawPhoto(ctx,p,W,H,done){
+ if(p.img&&p.img.complete&&p.img.naturalWidth){
+   var iw=p.img.naturalWidth,ih=p.img.naturalHeight,sc=Math.max(W/iw,H/ih);
+   var dw=iw*sc,dh=ih*sc; ctx.drawImage(p.img,(W-dw)/2,(H-dh)/2,dw,dh); done&&done(); return;
+ }
+ var g=ctx.createLinearGradient(W*0.22,0,W*0.78,H);
+ g.addColorStop(0,p.colors[0]);g.addColorStop(.57,p.colors[1]);g.addColorStop(1,p.colors[2]);
+ ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ var blob=function(hx,cx,cy,r,al){var q=hex2rgb(hx),rg=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+   rg.addColorStop(0,"rgba("+q.join(",")+","+al+")");rg.addColorStop(1,"rgba("+q.join(",")+",0)");
+   ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);};
+ if(p.sc==="close"){ blob(p.colors[0],W*.33,H*.24,W*.52,.88); blob(p.colors[2],W*.52,H*.58,W*.86,.95); }
+ else{ blob(p.colors[0],W*.24,H*.18,W*.62,.85); blob(p.colors[2],W*.27,H*.76,W*.8,.85);
+   var rb=hex2rgb(p.colors[1]);ctx.fillStyle="rgba("+rb.join(",")+",.4)";ctx.fillRect(0,H*.85,W,H*.15); }
+ var vg=ctx.createRadialGradient(W*.5,H*.44,W*.45,W*.5,H*.44,W*1.15);
+ vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,.17)");
+ ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+ done&&done();
+}
+function paint(el,p){
+ el.innerHTML="";
+ if(p.url){var im=document.createElement("img");im.src=p.url;im.alt="";el.appendChild(im);}
+ else{var d=document.createElement("span");d.className="ph";d.style.background=photoCss(p);el.appendChild(d);}
+}
+
+/* ═══ 화면 1 ═══ */
+var uid=0;
+function mkPhoto(b,src,name){return {id:"p"+(++uid),subject:b.s,colors:b.c,b:b.b,w:b.w,a:b.a,sc:b.sc,src:src,url:null,img:null,name:name};}
+function addSamples(tgt,n,max,off,render){
+ var start=tgt.length,i;
+ for(i=0;i<n&&tgt.length<max;i++) tgt.push(mkPhoto(BANK[(start+i+off)%BANK.length],"sample"));
+ render();
+}
+function addFiles(tgt,list,max,render){
+ var i,f,arr=Array.prototype.slice.call(list).filter(function(f){return /^image\//.test(f.type);});
+ for(i=0;i<arr.length&&tgt.length<max;i++){
+   f=arr[i];
+   var p=mkPhoto(BANK[hash(f.name+f.size)%BANK.length],"file",f.name);
+   tgt.push(p);
+   (function(p,f){
+     var r=new FileReader();
+     r.onload=function(e){p.url=e.target.result;var im=new Image();im.onload=function(){render();};im.src=p.url;p.img=im;render();};
+     r.readAsDataURL(f);
+   })(p,f);
+ }
+ render();
+}
+function renderThumbs(tgt,sel,noun,render){
+ var t=$(sel);t.innerHTML="";
+ tgt.forEach(function(p,i){
+   var li=document.createElement("li");li.className="thumb";
+   var box=document.createElement("span");box.style.position="absolute";box.style.inset="0";
+   paint(box,p);li.appendChild(box);
+   var x=document.createElement("button");x.type="button";x.className="x";x.innerHTML="<span aria-hidden='true'>×</span>";
+   x.setAttribute("aria-label",(i+1)+"번째 "+noun+" 빼기");
+   x.onclick=function(){tgt.splice(tgt.indexOf(p),1);render();};
+   li.appendChild(x);t.appendChild(li);
+ });
+}
+function renderInput(){
+ renderThumbs(S.photos,"#thumbs","사진",renderInput);
+ $("#count").textContent = S.photos.length? S.photos.length+"장을 넣었습니다."+(S.photos.length<3?" 3장부터 시작할 수 있습니다.":"")+(S.photos.length>=20?" 캐러셀 상한인 20장입니다.":"") : "아직 넣은 사진이 없습니다.";
+ gate();
+}
+function renderFeed(){
+ renderThumbs(S.feed,"#thumbs2","기존 게시물",renderFeed);
+ $("#count2").textContent = S.feed.length? S.feed.length+"장을 올렸습니다. 이걸로 원래 내 결을 읽습니다." : "아직 올린 기존 게시물이 없습니다.";
+ gate();
+}
+function igHandle(v){
+ v=(v||"").trim(); if(!v) return "";
+ var m=v.match(/^(?:https?:\/\/)?(?:www\.)?instagram\.com\/([A-Za-z0-9._]{1,30})\/?(?:\?.*)?$/i);
+ return m? m[1] : null;
+}
+function gate(){
+ var my=igHandle($("#my-url").value), ref=igHandle($("#ref-url").value), pr=$("#prompt").value.trim();
+ $("#e-my").hidden = my!==null; $("#e-my").textContent="인스타그램 URL 형식이 아닙니다. 예: https://www.instagram.com/계정명/";
+ $("#e-ref").hidden= ref!==null; $("#e-ref").textContent="인스타그램 URL 형식이 아닙니다. 예: https://www.instagram.com/계정명/";
+ var hasMine=(my||"")!=="" || S.feed.length>0;
+ var why="",ok=true;
+ if(S.photos.length<3){ok=false;why="사진을 3장 이상 넣어주세요. 지금 "+S.photos.length+"장입니다.";}
+ else if(my===null||ref===null){ok=false;why="인스타그램 URL 형식을 확인해주세요.";}
+ else if(!hasMine&&!ref&&!pr){ok=false;why="내 인스타그램 URL도, 내 기존 게시물 사진도 없습니다. 이때만은 레퍼런스 URL이나 원하는 느낌 중 하나가 필요합니다 — 읽을 피드도 지향도 없으면 판단할 근거가 아예 없습니다.";}
+ $("#btn-go").disabled=!ok;
+ $("#why").hidden=ok; if(!ok) $("#why").textContent=why;
+ return ok;
+}
+
+/* ═══ 결 결정 ═══ */
+function pickMood(){
+ var pr=S.prompt, best=null,bestHit=0;
+ MOODKEYS.forEach(function(k){
+   var hit=0; MOODS[k].words.forEach(function(w){ if(pr.indexOf(w)>=0) hit++; });
+   if(hit>bestHit){bestHit=hit;best=k;}
+ });
+ if(best){ S.moodFrom="prompt"; return best; }
+ var h=igHandle(S.refUrl);
+ if(h){
+   var key=h.toLowerCase().replace(/\./g,"_");
+   if(REF_KNOWN[key]){S.moodFrom="ref_known";return REF_KNOWN[key];}
+   S.moodFrom="ref_hash"; return MOODKEYS[hash(key)%4];
+ }
+ S.moodFrom="prompt_fallback"; return "calm";
+}
+function curName(){ return S.curFrom==="upload"? "직접 올린 기존 게시물" : "@"+S.curHandle+" 의 기존 게시물"; }
+function avgOf(arr,f){var s=0;arr.forEach(function(p){s+=f(p);});return s/arr.length;}
+function curFromFeed(){
+ var f=S.feed,base=CURS[hash("feed"+f.length+f[0].subject)%CURS.length];
+ return {id:"U",n:f.length,none:f.length-Math.round(f.length*base.ratio),ratio:base.ratio,
+         len:base.len,end:base.end,first:f[0].sc,mood:base.mood};
+}
+/* ponytail: 가중치는 눈대중 초기값. 실제 비전 분석이 붙으면 여기서 튜닝한다 */
+function suggestMood(){
+ var ph=S.photos,a=avgOf(ph,function(p){return p.a;}),b=avgOf(ph,function(p){return p.b;}),
+     w=avgOf(ph,function(p){return p.w;}),
+     close=ph.filter(function(p){return p.sc==="close";}).length,
+     mixed=Math.min(close,ph.length-close)/ph.length*2;
+ var sc={calm:a*.6+b*.4, warm:w*.7+b*.3, bold:(1-a)*.4+Math.abs(w-.5)*.9, story:mixed*.6+a*.4};
+ if(S.cur) sc[S.cur.mood]+=.12;
+ var best="calm"; MOODKEYS.forEach(function(k){ if(sc[k]>sc[best]) best=k; });
+ return best;
+}
+function targetSrcLabel(){
+ if(S.moodFrom==="suggest") return "제안 · "+curName()+"에서 읽음";
+ if(S.moodFrom==="prompt") return "지향 · 원하는 느낌 문장";
+ if(S.moodFrom==="prompt_fallback") return "지향 · 원하는 느낌 문장";
+ return "지향 · 레퍼런스 @"+igHandle(S.refUrl);
+}
+function targetSrcDetail(){
+ if(S.moodFrom==="suggest") return curName()+"에서 읽은 결("+MOODS[S.cur.mood].name+")과 이번 사진 "+S.photos.length+"장의 값에서 제안한 방향입니다. (샘플 속성)";
+ if(S.moodFrom==="prompt"||S.moodFrom==="prompt_fallback") return "입력 원문: “"+S.prompt.slice(0,120)+"”";
+ if(S.moodFrom==="ref_known") return "레퍼런스 계정 @"+igHandle(S.refUrl)+" (샘플 프로필로 미리 준비된 계정)";
+ return "레퍼런스 계정 @"+igHandle(S.refUrl)+" (수집하지 않고 계정명으로 샘플 프로필을 골랐습니다)";
+}
+
+/* ═══ 간극 ═══ */
+var LTIER={short:0,mid:1,long:2},LNAME=["short","mid","long"];
+function buildGaps(){
+ if(!S.cur) return [];
+ var m=MOODS[S.mood],c=S.cur,g=[];
+ g.push({f:"density",d:Math.abs(m.ratio-c.ratio),t:m.ratio,cv:c.ratio,sug:c.ratio,choice:"suggested",
+   text:"레퍼런스 결은 사진 "+Math.round(m.ratio*100)+"%에 설명을 붙이는데, 당신은 최근 "+c.n+"건 중 "+c.none+"건을 설명 없이 올렸습니다 — "+Math.round(c.ratio*100)+"% 쪽을 제안합니다.",
+   why:"캡션 없음 비율은 레퍼런스에서 잴 수 없는 값이라 원래 방식 쪽을 그대로 씁니다."});
+ var td=LTIER[m.len],cd=LTIER[c.len],md=Math.abs(td-cd)===2?"mid":m.len;
+ g.push({f:"len",d:Math.abs(td-cd)/2,t:m.len,cv:c.len,sug:md,choice:"suggested",
+   text:"레퍼런스 쪽 설명은 "+LENLABEL[m.len]+"인데, 당신은 원래 "+LENLABEL[c.len]+"입니다 — "+LENLABEL[md]+ro(LENLABEL[md])+" 제안합니다.",
+   why:"두 값이 두 칸 이상 벌어지면 가운데를, 한 칸이면 지향 쪽을 씁니다."});
+ g.push({f:"end",d:m.end===c.end?0:1,t:m.end,cv:c.end,sug:m.end,choice:"suggested",
+   text:"레퍼런스 쪽 문장은 "+m.end+ro(m.end)+" 끝나는데, 당신은 원래 "+c.end+"입니다 — "+m.end+ro(m.end)+" 제안합니다.",
+   why:"지향이 주축이라 7:3으로 지향 쪽에 기울였습니다. 기울기는 아직 튜닝 전 초기값입니다."});
+ g.push({f:"first",d:m.first===c.first?0:1,t:m.first,cv:c.first,sug:m.first,choice:"suggested",
+   text:"레퍼런스 결은 1번에 "+SCLABEL[m.first]+eul(SCLABEL[m.first])+" 두는데, 당신은 원래 1번이 "+SCLABEL[c.first]+"이었습니다 — "+SCLABEL[m.first]+ro(SCLABEL[m.first])+" 제안합니다.",
+   why:"1번 장 경향은 당신의 기존 캐러셀 "+c.n+"건의 첫 장에서 나온 값입니다."});
+ return g.filter(function(x){return x.d>0.2;}).sort(function(a,b){return b.d-a.d;}).slice(0,3);
+}
+function gapVal(f){
+ var i,x; for(i=0;i<S.gaps.length;i++){x=S.gaps[i]; if(x.f===f) return x.choice==="target"?x.t:(x.choice==="current"?x.cv:x.sug);}
+ return null;
+}
+function mine(){ return S.mode==="suggest"&&S.cur? S.cur : null; }
+function effRatio(){var v=gapVal("density");return v!==null?v:(mine()?mine().ratio:MOODS[S.mood].ratio);}
+function effLen(){var v=gapVal("len");return v!==null?v:(mine()?mine().len:MOODS[S.mood].len);}
+function effEnd(){var v=gapVal("end");return v!==null?v:(mine()?mine().end:MOODS[S.mood].end);}
+function effFirst(){var v=gapVal("first");return v===null?MOODS[S.mood].first:v;}
+
+/* ═══ 순서 ═══ */
+function scoreOf(p){
+ var m=S.mood;
+ if(m==="calm") return p.a*.6+p.b*.4;
+ if(m==="warm") return p.w*.7+p.b*.3;
+ if(m==="bold") return (1-p.a)*.35+p.b*.25+Math.abs(p.w-.5)*.8;
+ return p.b*.45+p.a*.55;
+}
+function buildOrder(){
+ var pool=S.photos.slice(), want=effFirst();
+ var cand=pool.filter(function(p){return p.sc===want;}); if(!cand.length) cand=pool.slice();
+ cand.sort(function(x,y){return scoreOf(y)-scoreOf(x);});
+ var first=cand[0]; pool=pool.filter(function(p){return p!==first;});
+ var last=null;
+ if(pool.length>1){ var byDark=pool.slice().sort(function(x,y){return x.b-y.b;}); last=byDark[0];
+   pool=pool.filter(function(p){return p!==last;}); }
+ var out=[first],prev=first;
+ while(pool.length){
+   var w2=prev.sc==="close"?"wide":"close";
+   var c2=pool.filter(function(p){return p.sc===w2;}); if(!c2.length) c2=pool.slice();
+   c2.sort(function(x,y){return scoreOf(y)-scoreOf(x);});
+   var pick=c2[0]; out.push(pick); pool=pool.filter(function(p){return p!==pick;}); prev=pick;
+ }
+ if(last) out.push(last);
+ return out;
+}
+function buildReasons(){
+ var m=MOODS[S.mood],r={},N=S.order.length,fromT=targetSrcLabel(),detT=targetSrcDetail();
+ var fromFirst=fromT,detFirst=detT;
+ var gf=null,i; for(i=0;i<S.gaps.length;i++) if(S.gaps[i].f==="first") gf=S.gaps[i];
+ if(gf&&gf.choice==="current"){fromFirst="보정 · "+curName();detFirst=curName()+" "+S.cur.n+"건 중 1번 장이 "+SCLABEL[S.cur.first]+"이었습니다. (샘플 데이터)";}
+ S.order.forEach(function(p,i){
+   var t,f=fromT,d=detT;
+   if(i===0){ t="1번: "+m.firstAdj+" 컷. "+m.name+" 결에서는 이런 장이 문을 엽니다."; f=fromFirst; d=detFirst; }
+   else if(i===N-1&&N>2){ t="마지막: 가장 어두운 컷으로 닫습니다."; }
+   else{ var prev=S.order[i-1];
+     t=(i+1)+"번: 앞 장이 "+SCLABEL[prev.sc]+"이라 "+SCLABEL[p.sc]+"으로 리듬을 바꿉니다."; }
+   r[p.id]={text:t,from:f,detail:d,attr:"이 사진의 값 — 밝기 "+Math.round(p.b*100)+" · 여백 "+Math.round(p.a*100)+" · 구도 "+SCLABEL[p.sc]+" · 피사체 "+p.subject+" (샘플 속성)"};
+ });
+ return r;
+}
+
+/* ═══ 캡션 ═══ */
+function genCap(p){
+ var len=effLen(),end=effEnd();
+ if(len==="short") return p.subject;
+ var base=CAPS[S.mood][end](p.subject);
+ return len==="long"? base+TAIL[end] : base;
+}
+function buildCaptions(){
+ var N=S.order.length,ratio=effRatio();
+ var count=Math.max(0,Math.min(N,Math.round(N*ratio)));
+ var ranked=S.order.map(function(p,i){return {i:i,p:p,s:(p.sc==="close"?1.4:0)+p.b*.6+(i===0?.5:0)};})
+   .sort(function(x,y){return y.s-x.s;});
+ var chosen=[],k;
+ for(k=0;k<ranked.length&&chosen.length<count;k++){
+   var idx=ranked[k].i,adj=false,j;
+   for(j=0;j<chosen.length;j++) if(Math.abs(chosen[j]-idx)===1) adj=true;
+   if(!adj) chosen.push(idx);
+ }
+ for(k=0;k<ranked.length&&chosen.length<count;k++) if(chosen.indexOf(ranked[k].i)<0) chosen.push(ranked[k].i);
+ var next={};
+ S.order.forEach(function(p,i){
+   var old=S.caps[p.id];
+   if(old&&old.pinned){ next[p.id]=old; return; }
+   if(chosen.indexOf(i)>=0) next[p.id]={mode:"suggested",text:genCap(p),pinned:false};
+   else next[p.id]={mode:"empty",text:"",pinned:false};
+ });
+ return next;
+}
+function emptyReason(p,i){
+ if(S.cur) return {label:"비움(권장)",
+   text:"여기는 비우는 걸 권합니다 — "+curName()+" "+S.cur.n+"건 중 "+S.cur.none+"건이 설명 없이 올라갔습니다.",
+   detail:"근거: "+curName()+" "+S.cur.n+"건의 캡션 유무 (샘플 데이터). 캡션 없음 비율은 레퍼런스에서 잴 수 없어 내 피드 값을 그대로 씁니다.",
+   from:"보정 · "+curName()};
+ return {label:"비움(선택)",
+   text:"비워도 됩니다 — 앞뒤 장에서 이미 같은 장면을 설명했습니다.",
+   detail:"비공개 계정이라 URL을 못 읽었고 기존 게시물 사진도 올리지 않아, “원래 이렇게 올리셨습니다”를 말할 근거가 없습니다. 그래서 권하지 않고 선택지로만 둡니다.",
+   from:"근거 없음 · 권하지 않음"};
+}
+
+/* ═══ 계산 ═══ */
+function compute(){
+ S.curHandle=igHandle(S.myUrl)||"";
+ S.curFrom = S.curHandle? "url" : (S.feed.length? "upload" : "");
+ S.cur = S.curFrom==="url"? CURS[hash(S.curHandle.toLowerCase())%CURS.length]
+       : S.curFrom==="upload"? curFromFeed() : null;
+ S.mode = (S.refUrl||S.prompt)? "gap" : "suggest";
+ if(S.mode==="gap"){ S.mood=pickMood(); }
+ else { S.moodFrom="suggest"; S.mood=suggestMood(); }
+ S.gaps = S.mode==="gap"? buildGaps() : [];
+ S.order=buildOrder();
+ S.orig={}; S.order.forEach(function(p,i){S.orig[p.id]=i;});
+ S.reasons=buildReasons();
+ S.caps={}; S.caps=buildCaptions();
+ var m=MOODS[S.mood];
+ S.title=m.title(S.order.length,S.order[0].subject);
+ S.titleEv={from:targetSrcLabel(),
+   detail:"1번 장의 피사체(“"+S.order[0].subject+"”)와 "+m.name+" 결에서 나왔습니다.",
+   src:targetSrcDetail()};
+ S.cursor=0;
+}
+function recompute(){
+ var g=null,i; for(i=0;i<S.gaps.length;i++) if(S.gaps[i].f==="first") g=S.gaps[i];
+ if(g){
+   var want=g.choice==="target"?g.t:(g.choice==="current"?g.cv:g.sug);
+   if(S.order[0].sc!==want){
+     var cand=S.order.filter(function(p){return p.sc===want;});
+     if(cand.length){ cand.sort(function(x,y){return scoreOf(y)-scoreOf(x);});
+       var p=cand[0]; S.order=[p].concat(S.order.filter(function(q){return q!==p;})); }
+   }
+ }
+ S.caps=buildCaptions();
+ if(S.cursor>=S.order.length) S.cursor=0;
+ renderResult();
+}
+
+/* ═══ 결과 렌더 ═══ */
+function evBlock(o){
+ return '<details class="ev"><summary><span>근거</span></summary><div class="ev-body">'+
+   '<span class="from">'+esc(o.from)+'</span>'+esc(o.detail)+
+   (o.src?'<span class="src">'+esc(o.src)+'</span>':'')+
+   (o.attr?'<span class="src">'+esc(o.attr)+'</span>':'')+'</div></details>';
+}
+function suggestHtml(){
+ var read=MOODS[S.cur.mood],aim=MOODS[S.mood],same=S.cur.mood===S.mood,ph=S.photos;
+ var pc=function(f){return Math.round(avgOf(ph,f)*100);};
+ var close=ph.filter(function(p){return p.sc==="close";}).length;
+ var line = same
+  ? "당신의 결은 <b>"+esc(read.name)+"</b> 쪽입니다. 이번 사진들도 그 결에 잘 맞아, 같은 방향으로 잡았습니다."
+  : "당신의 결은 <b>"+esc(read.name)+"</b> 쪽입니다. 이번 사진들은 <b>"+esc(aim.name)+"</b> 쪽에 가까워서, 이번엔 그 방향으로 가봤습니다.";
+ return '<h3><span class="c">Direction</span> 이번엔 이 방향</h3><p class="sugg">'+line+'</p>'+
+  evBlock({from:"제안 · "+curName()+"에서 읽음",
+   detail:curName()+" "+S.cur.n+"건 — 설명 없이 올린 게 "+S.cur.none+"건, 문장은 "+LENLABEL[S.cur.len]+", 말끝은 "+S.cur.end+", 1번 장은 "+SCLABEL[S.cur.first]+"이었습니다.",
+   src:"이번에 넣은 사진 "+ph.length+"장 — 평균 밝기 "+pc(function(p){return p.b;})+" · 여백 "+pc(function(p){return p.a;})+" · 따뜻함 "+pc(function(p){return p.w;})+" · 클로즈업 "+close+"장 / 풀샷 "+(ph.length-close)+"장",
+   attr:"두 값 모두 샘플 속성입니다. 레퍼런스 URL이나 원하는 느낌을 넣으면 이 제안을 덮어씁니다."});
+}
+function capCount(){var n=0;S.order.forEach(function(p){var c=S.caps[p.id];if(c&&c.text.trim())n++;});return n;}
+
+function renderStage(){
+ var p=S.order[S.cursor],st=$("#stage");
+ $$(".ph,img",st).forEach(function(e){e.remove();});
+ var holder=document.createElement("span");holder.className="ph";
+ if(p.url){var im=document.createElement("img");im.src=p.url;im.alt="";st.insertBefore(im,st.firstChild);}
+ else{holder.style.background=photoCss(p);st.insertBefore(holder,st.firstChild);}
+ $("#r-num").textContent=(S.cursor+1)+" / "+S.order.length;
+ $("#r-prev").disabled=S.cursor===0; $("#r-next").disabled=S.cursor===S.order.length-1;
+ var c=S.caps[p.id],tx=c&&c.text.trim();
+ $("#r-capnow").innerHTML='<span class="k">'+(S.cursor+1)+'번 장의 설명</span>'+(tx?esc(c.text):'<em>설명 없이 둡니다</em>');
+ var d=$("#r-dots");d.innerHTML="";
+ S.order.forEach(function(q,i){
+   var b=document.createElement("button");b.type="button";b.setAttribute("aria-label",(i+1)+"번 장 보기");
+   b.setAttribute("aria-current",i===S.cursor?"true":"false");
+   b.onclick=function(){S.cursor=i;renderStage();};
+   d.appendChild(b);
+ });
+}
+function renderOrder(){
+ var ol=$("#r-order");ol.innerHTML="";
+ S.order.forEach(function(p,i){
+   var li=document.createElement("li");li.dataset.i=i;
+   var moved=S.orig[p.id]!==i;
+   var r=S.reasons[p.id];
+   li.innerHTML='<span class="slot">'+(i+1)+'</span>'+
+     '<span class="mini" data-mini="1"></span>'+
+     '<span class="body"><span class="name">'+esc(p.subject)+' · '+SCLABEL[p.sc]+
+       (moved?' <span class="moved">원래 '+(S.orig[p.id]+1)+'번</span>':'')+'</span>'+
+       evBlock({from:r.from,detail:(moved?"원래 "+(S.orig[p.id]+1)+"번이었던 이유 — ":"")+r.text,src:r.detail,attr:r.attr})+
+     '</span>'+
+     '<span class="mv"><button type="button" class="up" aria-label="'+(i+1)+'번 '+esc(p.subject)+' 위로"'+(i===0?" disabled":"")+'>▲</button>'+
+     '<button type="button" class="dn" aria-label="'+(i+1)+'번 '+esc(p.subject)+' 아래로"'+(i===S.order.length-1?" disabled":"")+'>▼</button></span>';
+   paint($(".mini",li),p);
+   $(".up",li).onclick=function(){move(i,i-1);};
+   $(".dn",li).onclick=function(){move(i,i+1);};
+   bindDrag(li,li,i);
+   ol.appendChild(li);
+ });
+}
+function bindDrag(li,handle,i){
+ handle.addEventListener("pointerdown",function(e){
+   if(e.button) return;
+   if(e.target.closest&&e.target.closest("button,summary,textarea,input,a")) return;
+   e.preventDefault();
+   var target=-1;
+   li.classList.add("drag");
+   try{handle.setPointerCapture(e.pointerId);}catch(err){}
+   function mv(ev){
+     var el=document.elementFromPoint(ev.clientX,ev.clientY);
+     var tgt=el&&el.closest? el.closest("#r-order li") : null;
+     $$("#r-order li").forEach(function(x){x.classList.remove("over");});
+     if(tgt&&tgt!==li){ tgt.classList.add("over"); target=parseInt(tgt.dataset.i,10); } else target=-1;
+   }
+   function up(){
+     handle.removeEventListener("pointermove",mv);
+     handle.removeEventListener("pointerup",up);
+     handle.removeEventListener("pointercancel",up);
+     li.classList.remove("drag");
+     $$("#r-order li").forEach(function(x){x.classList.remove("over");});
+     if(target>=0&&target!==i) move(i,target);
+   }
+   handle.addEventListener("pointermove",mv);
+   handle.addEventListener("pointerup",up);
+   handle.addEventListener("pointercancel",up);
+ });
+}
+function move(from,to){
+ if(to<0||to>=S.order.length||from===to) return;
+ var p=S.order.splice(from,1)[0]; S.order.splice(to,0,p);
+ S.cursor=to; renderResult();
+ $("#r-ordnote").textContent=p.subject+" 사진을 "+(to+1)+"번 자리로 옮겼습니다. 원래 자리의 근거는 그대로 남습니다.";
+ var li=$$("#r-order li")[to]; if(li){var b=$(to>from?".dn":".up",li)||$(".up",li); if(b&&!b.disabled) b.focus();}
+}
+function renderSlots(){
+ var w=$("#r-slots");w.innerHTML="";
+ S.order.forEach(function(p,i){
+   var c=S.caps[p.id],div=document.createElement("div");
+   var isEmpty=!c.text.trim();
+   div.className="slot"+(isEmpty?" empty":"");
+   var chip=c.mode==="user"?'<span class="chip usr">사용자 작성</span>':(isEmpty?'':'<span class="chip sug">제안됨</span>');
+   var er=isEmpty?emptyReason(p,i):null;
+   div.innerHTML='<div class="hd"><span class="n">'+(i+1)+'번 · '+esc(p.subject)+'</span>'+
+     (isEmpty?'<span class="chip emp">'+er.label+'</span>':chip)+
+     '<span class="r"></span></div>'+
+     (isEmpty? '<p class="emptytxt">'+esc(er.text)+'</p>'+evBlock({from:er.from,detail:er.detail})
+             : '<label class="sr" for="cap-'+p.id+'">'+(i+1)+'번 설명</label><textarea id="cap-'+p.id+'">'+esc(c.text)+'</textarea>'+
+               evBlock({from:targetSrcLabel(),detail:"문장 길이 "+LENLABEL[effLen()]+" · 말끝 "+effEnd()+" 를 적용했습니다. 사진에 없는 사실은 넣지 않습니다.",src:targetSrcDetail()}));
+   var r=$(".r",div);
+   if(isEmpty){
+     var b=document.createElement("button");b.type="button";b.className="btn sm";b.textContent="그래도 채우기";
+     b.onclick=function(){S.caps[p.id]={mode:"suggested",text:genCap(p),pinned:true};renderResult();
+       var ta=$("#cap-"+p.id);if(ta)ta.focus();};
+     r.appendChild(b);
+   }else{
+     var b2=document.createElement("button");b2.type="button";b2.className="btn sm";b2.textContent="비우기";
+     b2.onclick=function(){S.caps[p.id]={mode:"empty",text:"",pinned:true};renderResult();};
+     r.appendChild(b2);
+     var ta=$("#cap-"+p.id,div);
+     ta.oninput=function(){S.caps[p.id]={mode:"user",text:ta.value,pinned:true};
+       $("#r-summary").innerHTML=summaryHtml(); if(S.order[S.cursor]===p) renderStage();};
+   }
+   w.appendChild(div);
+ });
+}
+function renderGaps(){
+ var w=$("#r-gaps");w.innerHTML="";
+ if(!S.cur){
+   w.innerHTML='<p class="nogap"><b>간극 카드가 0개입니다.</b><br>내 피드를 읽지 못해(비공개 계정이고 기존 게시물 사진도 올리지 않음) “원래 당신은 이렇습니다”를 비교할 대상이 없습니다. 지향만 반영했습니다.</p>';
+   return;
+ }
+ if(!S.gaps.length){ w.innerHTML='<p class="nogap">레퍼런스 결과 원래 방식이 크게 갈리는 지점이 없습니다. 조용히 지향 쪽으로 맞췄습니다.</p>'; return; }
+ S.gaps.forEach(function(g){
+   var d=document.createElement("div");d.className="gap";
+   var st=g.choice==="suggested"?"제안대로 둠":(g.choice==="target"?"지향대로":"원래대로");
+   d.innerHTML='<p>'+esc(g.text)+'</p>'+
+     evBlock({from:"합성 · 지향 + 보정",detail:g.why,src:"지향 근거 — "+targetSrcDetail()+" / 보정 근거 — @"+S.curHandle+" 최근 게시물 "+S.cur.n+"건 (샘플 데이터)"})+
+     '<div class="acts"><button type="button" class="btn sm t" aria-pressed="'+(g.choice==="target")+'">지향대로</button>'+
+     '<button type="button" class="btn sm c" aria-pressed="'+(g.choice==="current")+'">원래대로</button>'+
+     '<span class="st">'+st+'</span></div>';
+   $(".t",d).onclick=function(){g.choice=g.choice==="target"?"suggested":"target";recompute();};
+   $(".c",d).onclick=function(){g.choice=g.choice==="current"?"suggested":"current";recompute();};
+   w.appendChild(d);
+ });
+}
+function summaryHtml(){
+ var n=S.order.length,m=capCount();
+ return '<b>'+n+'장 중 '+m+'장에만 설명을 붙였습니다.</b><p>'+
+   (m===0?'전부 비운 상태도 유효한 결과입니다. 이대로 내보낼 수 있습니다.'
+        :'나머지 '+(n-m)+'장은 사진만으로 둡니다.')+'</p>';
+}
+function renderResult(){
+ renderStage();renderOrder();renderSlots();renderGaps();
+ $("#r-title").value=S.title;
+ $("#r-title-ev").innerHTML='<span class="from">'+esc(S.titleEv.from)+'</span>'+esc(S.titleEv.detail)+'<span class="src">'+esc(S.titleEv.src)+'</span>';
+ $("#r-summary").innerHTML=summaryHtml();
+ $("#r-title-echo").textContent=S.title;
+ var m=MOODS[S.mood],sg=$("#r-suggest"),b=$("#r-banner");
+ if(S.mode==="suggest"){
+   sg.hidden=false; sg.innerHTML=suggestHtml(); $("#card-gap").hidden=true; b.hidden=true;
+   $("#r-basis").textContent=S.order.length+"장 · 내 결 "+MOODS[S.cur.mood].name+" 쪽"+
+     (S.cur.mood===S.mood? " · 그대로 갑니다" : " · 이번엔 "+m.name+" 쪽으로 제안");
+ }else{
+   sg.hidden=true; $("#card-gap").hidden=false;
+   $("#r-basis").textContent=S.order.length+"장 · "+m.name+" 결"+(S.cur?" · "+curName()+"로 보정함":" · 보정 없음");
+   if(!S.cur){ b.hidden=false;
+     b.innerHTML='<b>내 피드 없이 지향만 반영했습니다.</b> 비공개 계정이라면 내 기존 게시물 사진을 올려주세요. 원래 올리던 방식에 맞춰 조정하고, 갈리는 지점을 간극 카드로 보여줍니다.';
+   } else b.hidden=true;
+ }
+}
+
+/* ═══ 내보내기 ═══ */
+function exportText(){
+ var out=[S.title,""];
+ S.order.forEach(function(p,i){ var c=S.caps[p.id];
+   if(c&&c.text.trim()) out.push((i+1)+". "+c.text.trim()); });
+ return out.join("\n").trim();
+}
+function copyText(t){
+ var ta=document.createElement("textarea");ta.value=t;ta.setAttribute("readonly","");
+ ta.style.position="fixed";ta.style.top="-1000px";document.body.appendChild(ta);
+ ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}
+ document.body.removeChild(ta);return ok;
+}
+
+/* ═══ 이벤트 ═══ */
+$("#btn-pick").onclick=function(){$("#file").click();};
+$("#file").onchange=function(e){addFiles(S.photos,e.target.files,20,renderInput);e.target.value="";};
+$("#btn-sample").onclick=function(){addSamples(S.photos,12,20,0,renderInput);};
+$("#btn-pick2").onclick=function(){$("#file2").click();};
+$("#file2").onchange=function(e){addFiles(S.feed,e.target.files,12,renderFeed);e.target.value="";};
+$("#btn-sample2").onclick=function(){addSamples(S.feed,9,12,7,renderFeed);};
+function setPrivate(on){
+ $("#my-url-box").hidden=on; $("#my-feed-box").hidden=!on;
+ if(on){ $("#my-url").value=""; $("#btn-pick2").focus(); gate(); }
+ else { S.feed=[]; renderFeed(); $("#my-url").focus(); }
+}
+$("#btn-private").onclick=function(){setPrivate(true);};
+$("#btn-back").onclick=function(){setPrivate(false);};
+[["#drop",S.photos,20,renderInput],["#drop2",S.feed,12,renderFeed]].forEach(function(cfg){
+ var dz=$(cfg[0]);
+ ["dragenter","dragover"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add("over");});});
+ ["dragleave","drop"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove("over");});});
+ dz.addEventListener("drop",function(e){ if(e.dataTransfer&&e.dataTransfer.files) addFiles(cfg[1],e.dataTransfer.files,cfg[2],cfg[3]); });
+});
+["#my-url","#ref-url","#prompt"].forEach(function(s){$(s).addEventListener("input",gate);});
+
+function show(id){ ["sc-input","sc-load","sc-result"].forEach(function(x){ $("#"+x).hidden = (x!==id); });
+}
+
+$("#btn-go").onclick=function(){
+ if(!gate()) return;
+ S.myUrl=$("#my-url").value.trim(); S.refUrl=$("#ref-url").value.trim(); S.prompt=$("#prompt").value.trim();
+ show("sc-load"); window.scrollTo(0,0);
+ var steps=$$("#steps .step"),i=0;
+ var fast=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ var gapMs=fast?160:720;
+ (function tick(){
+   if(i>0) steps[i-1].dataset.s="done";
+   if(i<steps.length){ steps[i].dataset.s="run"; i++; setTimeout(tick,gapMs); }
+   else { compute(); show("sc-result"); window.scrollTo(0,0); renderResult(); $("#r-title").focus(); }
+ })();
+};
+function restart(){ show("sc-input"); window.scrollTo(0,0);
+  $$("#steps .step").forEach(function(s){s.dataset.s="wait";});
+  $("#btn-go").focus(); }
+$("#btn-restart").onclick=restart;
+
+$("#r-prev").onclick=function(){ if(S.cursor>0){S.cursor--;renderStage();} };
+$("#r-next").onclick=function(){ if(S.cursor<S.order.length-1){S.cursor++;renderStage();} };
+$("#stage").addEventListener("keydown",function(e){
+  if(e.key==="ArrowLeft"&&S.cursor>0){S.cursor--;renderStage();$("#r-prev").focus();}
+  if(e.key==="ArrowRight"&&S.cursor<S.order.length-1){S.cursor++;renderStage();$("#r-next").focus();}
+});
+$("#r-title").addEventListener("input",function(e){S.title=e.target.value;$("#r-title-echo").textContent=S.title;});
+
+$("#btn-copy").onclick=function(){
+ var t=exportText();
+ if(!t){ $("#r-expmsg").textContent="복사할 내용이 없습니다. 타이틀과 설명이 모두 비어 있습니다."; return; }
+ var ok=copyText(t);
+ $("#r-expmsg").textContent = ok? "캡션 전문을 클립보드에 복사했습니다 ("+t.split("\n").filter(function(x){return x;}).length+"줄)."
+   : "복사가 막혔습니다. 브라우저에서 직접 선택해 복사해주세요.";
+};
+$("#btn-png").onclick=function(){
+ var p=S.order[S.cursor],W=1080,H=1350,cv=document.createElement("canvas");
+ cv.width=W;cv.height=H;var ctx=cv.getContext("2d");
+ drawPhoto(ctx,p,W,H);
+ var name="gyeol-"+(S.cursor+1)+"-"+p.subject+".png";
+ try{
+   cv.toBlob(function(bl){
+     if(!bl){$("#r-expmsg").textContent="PNG 저장이 막혔습니다.";return;}
+     var a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download=name;
+     document.body.appendChild(a);a.click();document.body.removeChild(a);
+     setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+     $("#r-expmsg").textContent=(S.cursor+1)+"번 장을 "+name+" 으로 저장했습니다. 사진은 보정하지 않고 그대로 씁니다.";
+   },"image/png");
+ }catch(e){ $("#r-expmsg").textContent="PNG 저장이 막혔습니다: "+e.message; }
+};
+
+renderInput();
+})();
+</script>
+</body>
+</html>

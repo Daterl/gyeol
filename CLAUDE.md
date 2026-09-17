@@ -2,6 +2,8 @@
 
 이 문서는 **사람과 AI 에이전트가 같이 읽는 작업 규약**이다. 이 레포에서 코드를 만지기 전에 읽는다.
 
+> **2026-09-17 사용자 확정 변경:** 프론트엔드는 Next.js App Router·React·TypeScript·Zustand·Tailwind CSS·shadcn/ui·tailwind-variants(`tv`)로 구현한다. 입력은 한 화면이며 아이덴티티 없이 사진만으로 시작할 수 있다. 기존 바닐라·2단계 입력 방침은 대체됐다. AI Session을 시작·인계할 때 [실행 그래프 운영](docs/ai-session-workflow.md)과 해당 이슈를 읽는다. 기술 결정은 [ADR-0002](docs/adr/0002-react-stack-and-ai-session-graph.md), 제품 동작은 [ADR-0001](docs/adr/0001-single-screen-photo-only-entry.md)이 우선한다. 신규 연결 계약 #24와 생성 서버 #26을 포함하며, 과거 L 개수 상한을 지키려고 경계 변경을 M으로 낮추지 않는다. 계약 합의와 merge는 사람의 명시적 증거로 판정한다.
+
 > **전제 하나: 시간이 3.5일이다.**
 > 오늘은 2026-09-17, 제출 마감은 **2026-09-21 00:00 KST**. 실질 개발 가능 시간은 **9/20 자정까지 약 3.5일**이고 사람은 2명이다.
 > 아래 파이프라인은 12단계지만 **모든 이슈에 12단계를 다 돌리면 아무것도 못 끝낸다.** 그래서 이 문서에서 가장 중요한 것은 파이프라인 설명이 아니라 **3절의 생략 표**다. 거기부터 읽어도 된다.
@@ -16,7 +18,7 @@
 |---|---|---|
 | 레이어 | 입력 이해 (백엔드 + AI) | 출력 생성 (프론트엔드 + AI) |
 | 소유 기능 | F1 두 축 프로필 · F2 순서 제안 | F3 타이틀 + 캡션 · 화면 전체 |
-| 소유 디렉토리 | 입력용 `api/`·`lib/`, `prompts/input/` `fixtures/` `scripts/` `config/` | `public/` `prompts/output/` `copy/`, **`api/generate.js` 및 출력 전용 `lib/` 예외** |
+| 소유 디렉토리 | 입력용 `src/app/api/`·`lib/`, `prompts/input/` `fixtures/` `scripts/` `config/` | `src/`(입력 API 제외) `prompts/output/`, 출력용 `src/app/api/generate/route.ts`·`lib/output-generation.js` |
 | 넘기는 것 | `OrderedFeed` JSON 하나 | 사용자가 확정한 결과물 |
 
 **경계선은 딱 하나, `OrderedFeed` 다.** 원재는 이 JSON 을 만들고 화면을 몰라도 되고, 디에고는 이 JSON 을 받고 그게 어디서 왔는지 몰라도 된다.
@@ -146,18 +148,18 @@ graph LR
 ### 4-1. 소유 디렉토리
 
 ```
-api/                 원재 리뷰    입력 서버 함수. api/generate.js는 디에고 예외
-lib/                 원재 리뷰    입력 이해 로직. 출력 생성 전용 모듈은 디에고 예외
+src/app/api/         입력 함수 enzo / generate 출력 함수 diego (#26)
+api/                 PR #21 기반. #23에서 HTTP 어댑터 인계 후 중복 경로 제거
+lib/                 원재 소유    입력 이해 로직. lib/output-generation.js는 디에고 (#26)
 prompts/input/       원재 소유    photo_analysis.md · target_extract.md · current_extract.md · order.md
 fixtures/            원재 소유    mock 데이터. 스키마가 바뀌면 여기를 먼저 고친다
 scripts/             원재 소유    CLI 파이프라인 실행기
 config/models.json   원재 리뷰    사용 가능한 모델 확인·선택. AI 로컬 초안 편집 가능
 
-api/generate.js      디에고 리뷰  #16 출력 생성 서버. 입력 이해 레이어를 호출하지 않는다
-lib/ 출력 전용 모듈   디에고 리뷰  파일 목록을 #16 plan에 명시. 공용 모듈은 공동 리뷰
-public/              디에고 소유  index.html · app.js · style. 화면 전체
+src/                 디에고 소유  React 화면·편집 상태·FE API client·문구 (입력 API 제외)
+public/              디에고 소유  정적 자산
 prompts/output/      디에고 소유  title.md · caption.md · omit_reason.md
-copy/                디에고 소유  한국어 문구. note_key → 문장 렌더링
+src/copy/            디에고 소유  한국어 문구. note_key → 문장 렌더링
 
 schemas/             ★ 공동       로컬 초안 편집 가능, 계약 확정은 양쪽 사람 승인 (4-2)
 prompts/shared/      ★ 공동       style_guard.md. 추가는 누구나, 삭제·완화는 양쪽 승인
@@ -169,7 +171,7 @@ docs/intent.md       ★ 공동       무엇을 만드는지의 원천. 뒤집�
 **규칙 3개**
 1. AI는 승인된 로컬 작업을 실행하되 파일별 실행 담당을 지킨다. 교차 영역과 공유 파일은 plan에 표시하고 해당 사람 소유자의 리뷰를 남긴다. **로컬 편집 승인은 계약 합의 완료가 아니다.**
 2. 한 PR 에 `prompts/input/` 과 `prompts/output/` 이 **같이 들어가면 양쪽 사람 리뷰가 필요하다.** 다른 PR도 해당 리뷰·테스트·합의 게이트를 충족한 뒤 상대 사람이 merge한다.
-3. 프롬프트는 **파일**이지 코드 안의 문자열이 아니다. 서버가 실행 시점에 읽는다. 디에고는 프롬프트와 #16의 출력 생성 서버를 함께 책임지고, 입력 서버는 원재가 리뷰한다.
+3. 프롬프트는 **파일**이지 코드 안의 문자열이 아니다. 서버가 실행 시점에 읽는다. 디에고는 #16 프롬프트와 #26의 출력 생성 서버를 함께 책임지고, 입력 서버는 원재가 리뷰한다.
 
 ### 4-2. 공유 계약 스키마 — 어디 있고 어떻게 바꾸는가
 
@@ -315,25 +317,26 @@ Evidence = { "kind": "ig_post"|"uploaded_photo"|"user_text"|"aggregate"|"rule",
 
 ## 7. 기술 스택 — 3.5일 안에 2인이 배포까지 가는 최소 구성
 
-**선정 기준 하나: 빌드 설정에 쓰는 1시간은 기능에 쓰는 1시간을 뺏는다.** 그래서 전부 "설정 0" 쪽으로 골랐다.
+프론트엔드는 사용자 확정 스택을 따른다. #23에서 필요한 빌드·검증만 구성하고 기존 서버 기반을 재사용한다.
 
 | 층 | 선택 | 왜 (한 줄) |
 |---|---|---|
-| **프론트엔드** | **빌드 없는 단일 HTML + 바닐라 JS** (`public/index.html`, `public/app.js`) | `pivot/deliverables/prototype.html` 이 이미 그 형태로 동작한다 — 프레임워크 도입은 순수 마이그레이션 비용이고 3.5일에 되갚을 시간이 없다 |
-| **서버** | **Vercel Serverless Functions** (`api/*.js`, Node 22) | 정적 HTML 을 그대로 서빙하면서 **같은 레포에서** API 키를 서버에 숨길 수 있는 최소 구성. 별도 서버 프로세스·포트·Dockerfile 이 없다 |
+| **프론트엔드** | **Next.js App Router + React + TypeScript strict** (`src/`) | 사용자 확정 스택. 기존 HTML의 시각·흐름을 재사용한다 (#23) |
+| **상태·스타일** | **Zustand · Tailwind CSS · shadcn/ui · tailwind-variants(tv)** | 공유 편집 상태와 UI 변형을 관리한다. 구현 시 최신 stable·peer 호환을 확인한다 |
+| **서버** | **Next.js Route Handlers** (`src/app/api/**/route.ts`, Node runtime) | 기존 lib/·계약·검증을 재사용하고 API 키를 서버에 둔다. HTTP 경로는 유지한다 |
 | **배포** | **Vercel. `main` push = 자동 배포** | 배포 파이프라인을 따로 만들 시간이 없다. merge 가 곧 배포여야 11단계(배포 환경 검증)가 실제로 돈다 |
 | **AI** | **Anthropic API, 계정에서 사용 가능함을 확인한 모델** (`config/models.json`) | 실호출 전에 공식 제공 정보·계정 접근을 확인하고 모델 ID·확인 시각·응답 증거를 기록한다. 미확인 모델 ID를 하드코딩하지 않는다. foundation은 호출 0회다 |
 | **데이터 저장** | **없음.** 세션 메모리 + `fixtures/` 정적 JSON | 로그인이 없으므로(6-3 a) 저장된 데이터의 주인을 식별할 수 없다. DB 를 붙이면 붙이는 시간만 든다 |
-| **테스트** | **Node 내장 `node --test`** | 설치 0. Jest/Vitest 는 설정 파일부터 만들어야 한다 |
-| **패키지** | **npm.** 런타임 의존성은 `@anthropic-ai/sdk` 하나로 시작 | 의존성을 늘릴 때마다 상대에게 알려야 하는 비용(4-1절)이 붙는다 |
+| **정적 검사** | **Biome lint·format·import + TypeScript strict** | 신규 src·FE 설정에 적용하며 기존 서버 검증을 유지한다 |
+| **테스트** | **기존 Node test/eval + FE Vitest + 핵심 경로 Playwright** | 기존 서버 검증을 보존하고 React 상태·브라우저 검증은 #23·#27에서 연결한다 |
+| **패키지** | **npm.** #23의 FE 스택과 서버 SDK | lockfile·Node·peer 호환을 함께 확인하고 공유 파일은 인계한다 |
 | **인스타 수집** | **Apify `apify/instagram-scraper`. 단 크리티컬 패스 밖** | 실측 근거가 있다 — 공개 계정 1건, 게시물 100개, 약 75초, 실비 $0.27 `[12b 1절]`. **75초와 실비 때문에 무대에서는 사전 수집 스냅샷을 재생한다**(자세한 근거는 `docs/intent.md` 4절) |
 
 **의도적으로 안 쓰는 것**
 
 | 안 쓰는 것 | 이유 |
 |---|---|
-| React / Vue / Svelte | 프로토타입이 바닐라다. 옮기는 시간에 결과 화면을 다듬는 게 표를 번다 |
-| TypeScript | 타입 이득이 3.5일 안에 빌드 설정·타입 에러 대응 비용을 못 넘는다. 계약은 `schemas/` 문서와 불변식(6-2)으로 지킨다 |
+| Vue / Svelte 및 추가 UI 프레임워크 | React로 확정했다 |
 | 별도 백엔드 프레임워크(Express/Nest) | 서버리스 함수 3~4개면 끝난다. 라우터를 만들 이유가 없다 |
 | DB (Postgres/Supabase/Redis) | 저장할 주인이 없다 |
 | CI (GitHub Actions) | 설정 비용 > 이득 (5-3절) |

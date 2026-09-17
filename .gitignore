@@ -23,6 +23,7 @@ venv/
 
 # 빌드 / 배포
 .vercel/
+.next/
 dist/
 build/
 .cache/
@@ -38,6 +39,7 @@ storage/
 apify_storage/
 uploads/
 tmp/
+.tmp/
 *.log
 
 # OS / 에디터
@@ -46,3 +48,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# TypeScript
+*.tsbuildinfo

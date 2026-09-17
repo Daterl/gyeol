@@ -1,0 +1,64 @@
+name: AI Session Task
+description: 한 세션·한 PR로 검증하고 인계할 실행 노드
+title: "[AI Session] "
+labels: [ai-session]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: 목표·원천
+      value: |
+        - 문제와 현재 증거:
+        - 목표와 intent D1~D6 연결:
+        - ADR / 계약 / HTML / 관련 PR:
+        - 비목표:
+    validations:
+      required: true
+  - type: textarea
+    id: graph
+    attributes:
+      label: 그래프·입출력
+      value: |
+        - 상위 umbrella:
+        - Blocked by (실행 선행):
+        - 입력·인수 증거:
+        - 출력·후속 노드:
+        - 외부 검증 게이트:
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: 담당·범위
+      value: |
+        - 사람 담당 / 협업자:
+        - 기준 SHA / branch / AI 실행 담당:
+        - Owned:
+        - Shared 및 인계:
+        - Forbidden:
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 실행·검증·완료 조건
+      description: 명령의 예상 결과와 사용자 경로를 적는다. 미실행은 PENDING으로 기록한다.
+      value: |
+        - [ ] 관측 가능한 입력 → 결과:
+        - [ ] 실패/경계 동작:
+        - [ ] 검증 명령·증거:
+        - [ ] 필요한 합의·리뷰·배포 확인:
+    validations:
+      required: true
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Verdict·인계
+      value: |
+        - Verdict: PENDING
+        - 결과 SHA / PR:
+        - 검증 결과·증거:
+        - 남은 게이트·해제 조건:
+        - 다음 행동·담당:
+    validations:
+      required: true

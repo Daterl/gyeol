@@ -22,6 +22,4 @@ for(const name of ['target_profile','current_profile','photo_analysis','ordered_
   const fixture=JSON.parse(await readFile(`fixtures/${name}.sample.json`,'utf8'));
   assert.deepEqual(example,fixture,`${name} documentation and sample drift`);
 }
-const pkg=JSON.parse(await readFile('package.json','utf8'));
-if(Object.keys(pkg.dependencies??{}).length || Object.keys(pkg.devDependencies??{}).length) throw new Error('Foundation must have zero dependencies');
-console.log(`PASS: ${count} JS/JSON files checked; zero dependencies; four schema examples match fixtures. JS syntax/JSON parsing only, no separate typechecker or linter.`);
+console.log(`PASS: ${count} JS/JSON files checked; four schema examples match fixtures. Foundation JS syntax/JSON parsing; TypeScript is checked separately by npm run typecheck.`);

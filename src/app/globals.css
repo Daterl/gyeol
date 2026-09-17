@@ -1,0 +1,73 @@
+@import "tailwindcss" source('../');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-paper: #f6f3ed;
+  --color-ink: #1b1a18;
+  --color-muted-foreground: #6d6862;
+  --color-muted: #efe9dd;
+  --color-card: #fffdf8;
+  --color-line: #e0d9ca;
+  --color-line-soft: #efe9dd;
+  --color-accent: #2e5e4e;
+  --color-accent-hover: #26503f;
+  --color-accent-soft: #e6efea;
+  --color-accent-line: #bcd3c8;
+  --color-amber: #8a6a18;
+  --color-amber-soft: #fbf2dd;
+  --color-amber-line: #ecd9a8;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+    "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --shadow-paper:
+    0 1px 2px rgb(27 26 24 / 5%), 0 8px 24px -18px rgb(27 26 24 / 50%);
+}
+
+@layer base {
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.62;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  button:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+}
+
+/* shadcn semantic tokens mapped to the GYEOL paper/green palette. */
+@theme inline {
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-card);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-accent);
+  --color-primary-foreground: var(--color-paper);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--color-ink);
+  --color-accent-foreground: var(--color-paper);
+  --color-destructive: #a63e35;
+  --color-border: var(--color-line);
+  --color-input: var(--color-line);
+  --color-ring: var(--color-accent);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+}
+
+:root {
+  --secondary: #e6efea;
+  --foreground: #1b1a18;
+}
