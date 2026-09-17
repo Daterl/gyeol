@@ -1,0 +1,62 @@
+[
+  {
+    "state": "default",
+    "source": "default.png",
+    "source_bytes": 1364732,
+    "runtime": "default.webp",
+    "runtime_bytes": 30094,
+    "width": 512,
+    "height": 512,
+    "visible_alpha_bounds": [
+      66,
+      52,
+      461,
+      462
+    ]
+  },
+  {
+    "state": "working",
+    "source": "working.png",
+    "source_bytes": 1177511,
+    "runtime": "working.webp",
+    "runtime_bytes": 26788,
+    "width": 512,
+    "height": 512,
+    "visible_alpha_bounds": [
+      100,
+      48,
+      427,
+      466
+    ]
+  },
+  {
+    "state": "complete",
+    "source": "complete.png",
+    "source_bytes": 1178307,
+    "runtime": "complete.webp",
+    "runtime_bytes": 27066,
+    "width": 512,
+    "height": 512,
+    "visible_alpha_bounds": [
+      128,
+      46,
+      411,
+      470
+    ]
+  },
+  {
+    "state": "recovery",
+    "source": "recovery.png",
+    "source_bytes": 1294556,
+    "runtime": "recovery.webp",
+    "runtime_bytes": 30744,
+    "width": 512,
+    "height": 512,
+    "visible_alpha_bounds": [
+      68,
+      50,
+      475,
+      464
+    ]
+  }
+]
