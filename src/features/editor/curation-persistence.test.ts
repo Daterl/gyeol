@@ -197,6 +197,7 @@ test('optional display fields validate before restore and public confirmation re
   valid.confirmed.profile = {
     source_url: curation?.profile.source_url,
     username: 'public_example',
+    collected_at: curation?.profile.collected_at,
     display_name: 'Public Name',
   };
   expect(() => validateCurationState(valid, photoIds, original)).not.toThrow();
@@ -221,6 +222,12 @@ test('optional display fields validate before restore and public confirmation re
     },
     (value: typeof valid) => {
       value.confirmed.profile.snapshot_id = 'signed-internal-reference';
+    },
+    (value: typeof valid) => {
+      delete value.confirmed.profile.collected_at;
+    },
+    (value: typeof valid) => {
+      value.confirmed.profile.collected_at = 'whenever';
     },
     (value: typeof valid) => {
       value.confirmed.evidence = ['internal'];

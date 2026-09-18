@@ -9,7 +9,14 @@ export type ConfirmedCuration = {
   crops: Record<string, CropCenter>;
   excluded: string[];
   profileSharing: boolean;
-  profile?: { source_url: string; username: string; display_name?: string };
+  // collected_at binds the confirmation to the snapshot evidence it was made from,
+  // so G6 never reads a collection time from later editor state.
+  profile?: {
+    source_url: string;
+    username: string;
+    collected_at: string;
+    display_name?: string;
+  };
 };
 export type CurationEdits = {
   curation: CurationResponse['curation'] | null;
@@ -158,6 +165,7 @@ export function createCurationEditorStore(
                     new URL(state.curation.profile.source_url).pathname
                       .split('/')
                       .filter(Boolean)[0],
+                  collected_at: state.curation.profile.collected_at,
                   ...(state.curation.profile.display?.display_name
                     ? {
                         display_name:
