@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
+import sharp from 'sharp';
 import { validatePhoto } from '../lib/contracts.js';
 import { readJpegBlocks } from '../lib/jpeg_dc.js';
 import {
@@ -85,6 +86,41 @@ test('model observations are accepted but measured color overrides the model est
   assert.deepEqual(analysis.color.palette_hex, ['#e8dfd2'], 'measured pixels must win over the model guess');
   assert.equal(analysis.color.hue_mean, 35.5);
   validatePhoto(analysis);
+});
+
+test('model receives a 512px thumbnail instead of the original large raster', async () => {
+  resetAnalysisState();
+  const bytes=await sharp({create:{width:1200,height:900,channels:3,background:'#6b7280'}}).jpeg({quality:90}).toBuffer();
+  let sent;
+  const observation={
+    color:{hue_mean:0,sat_mean:0,bright_mean:0,palette_hex:['#000000']},
+    composition:'full_frame',scale:'midshot',subjects:['회색 카드'],has_face:false,
+    text_in_image:null,describable_facts:['회색 카드가 보인다'],quality_flags:[]
+  };
+  const result=await analyzePhoto({...card,bytes,mediaType:'image/jpeg',apiKey:'key',client:async input=>{
+    sent=input;
+    return {model:'test-model',observation};
+  }});
+  const metadata=await sharp(sent.bytes).metadata();
+  assert.equal(sent.mediaType,'image/jpeg');
+  assert.equal(Math.max(metadata.width,metadata.height),512);
+  assert.equal(result.measurement.width,1200,'measurement remains tied to the original upload');
+  assert.deepEqual(result.analysis.describable_facts,observation.describable_facts);
+});
+
+test('discarded model color may be invalid only when measured JPEG color replaces it', async () => {
+  const invalid={
+    color:{hue_mean:0,sat_mean:0,bright_mean:0,palette_hex:['not-a-hex']},
+    composition:'full_frame',scale:'midshot',subjects:[],has_face:false,
+    text_in_image:null,describable_facts:[],quality_flags:[]
+  };
+  const client=async()=>({model:'test-model',observation:invalid});
+  resetAnalysisState();
+  const jpeg=await analyzePhoto({...card,bytes:await read('fixtures/jpeg/solid_white_baseline.jpg'),mediaType:'image/jpeg',apiKey:'key',client});
+  assert.deepEqual(jpeg.analysis.color.palette_hex,['#ffffff']);
+
+  resetAnalysisState();
+  await assert.rejects(analyzePhoto({...card,apiKey:'key',client}),{code:'MODEL_CONTRACT'});
 });
 
 test('contract violations fail before correction and never enter cache', async () => {
@@ -324,6 +360,17 @@ test('the heuristic path makes zero outbound attempts with the network disabled'
   const result = spawnSync(process.execPath, ['--input-type=module', '-e', script], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /outbound attempts: 0/);
+});
+
+test('the folder runner records a model failure and continues with the next photo', () => {
+  const preload=`data:text/javascript,${encodeURIComponent("globalThis.fetch=async()=>new Response('{}',{status:500})")}`;
+  const result=spawnSync(process.execPath,['--import',preload,'scripts/run_pipeline.js','fixtures/jpeg','2'],{
+    cwd:new URL('..',import.meta.url),encoding:'utf8',env:{...process.env,ANTHROPIC_API_KEY:'fake'}
+  });
+  assert.equal(result.status,1);
+  assert.deepEqual(JSON.parse(result.stdout),[],'the runner must finish and emit valid JSON');
+  assert.match(result.stderr,/ph_01: Model HTTP 500/);
+  assert.match(result.stderr,/ph_02: Model HTTP 500/);
 });
 
 // The structured-output API rejects these array keywords outright (maxItems, uniqueItems)
