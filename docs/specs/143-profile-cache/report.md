@@ -1,6 +1,6 @@
 # #143 public profile cache implementation report
 
-Parent: [#68](https://github.com/Daterl/gyeol/issues/68). Contract: [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md), with ingestion privacy/error boundaries from [ADR-0006](../../adr/0006-apify-public-instagram.md). Implementation commit: `081ab4b5636023a7f45f0d39a130de79303ca3d3` on `onejaejae/issue-143-profile-cache`, targeting `develop`.
+PR: [#152](https://github.com/Daterl/gyeol/pull/152), targeting `develop`. Parent: [#68](https://github.com/Daterl/gyeol/issues/68). Contract: [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md), with ingestion privacy/error boundaries from [ADR-0006](../../adr/0006-apify-public-instagram.md). Implementation commit: `081ab4b5636023a7f45f0d39a130de79303ca3d3` on `onejaejae/issue-143-profile-cache`.
 
 ## Delivered
 
