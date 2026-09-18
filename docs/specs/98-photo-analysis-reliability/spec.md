@@ -5,13 +5,13 @@
 ## 변경
 
 - 512px를 넘는 정지 JPEG/PNG/WebP는 이미 설치된 `sharp`로 비율을 유지한 512px JPEG를 만들어 모델에 전달한다. 원본 바이트는 해시·캐시 키와 픽셀 측정에 계속 사용한다.
-- JPEG DC 측정값이 있으면 최종 결과에서 버려질 모델 `color`의 값 검증을 건너뛰고 측정값을 검증한다. 다른 관측 필드와 최종 PhotoAnalysis 검증은 유지한다. 측정 JPEG가 없으면 잘못된 모델 색상은 계속 `MODEL_CONTRACT`다.
+- JPEG/PNG/WebP 픽셀 측정값이 있으면 최종 결과에서 버려질 모델 `color` 대신 측정값을 검증한다. 다른 관측 필드와 최종 PhotoAnalysis 검증은 유지한다. 측정값이 없으면 잘못된 모델 색상은 계속 `MODEL_CONTRACT`다.
 - 폴더 실행기는 한 사진의 `ModelError`를 실패 항목으로 기록하고 다음 사진을 계속 처리한다. 예상하지 못한 프로그래밍 오류는 그대로 중단한다.
 
 ## 결정적 인수 증거
 
 - 1200×900 JPEG가 모델 주입점에서 긴 변 512px JPEG이고, 반환 측정값의 원본 크기는 1200×900임을 검사한다.
-- `palette_hex: ['not-a-hex']` 모델 응답은 측정 가능한 JPEG에서 `#ffffff` 측정값으로 성공하고, 같은 응답은 SVG에서 `MODEL_CONTRACT`로 실패한다.
+- `palette_hex: ['not-a-hex']` 모델 응답은 측정 가능한 JPEG/PNG/WebP에서 `#ffffff` 측정값으로 성공하고, 측정할 수 없는 PNG에서는 `MODEL_CONTRACT`로 실패한다.
 - 네트워크 및 유료 모델 호출은 0회다.
 
 ## 남은 실측

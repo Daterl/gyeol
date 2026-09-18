@@ -108,19 +108,26 @@ test('model receives a 512px thumbnail instead of the original large raster', as
   assert.deepEqual(result.analysis.describable_facts,observation.describable_facts);
 });
 
-test('discarded model color may be invalid only when measured JPEG color replaces it', async () => {
+test('discarded model color may be invalid only when trusted pixel color replaces it', async () => {
   const invalid={
     color:{hue_mean:0,sat_mean:0,bright_mean:0,palette_hex:['not-a-hex']},
     composition:'full_frame',scale:'midshot',subjects:[],has_face:false,
     text_in_image:null,describable_facts:[],quality_flags:[]
   };
   const client=async()=>({model:'test-model',observation:invalid});
-  resetAnalysisState();
-  const jpeg=await analyzePhoto({...card,bytes:await read('fixtures/jpeg/solid_white_baseline.jpg'),mediaType:'image/jpeg',apiKey:'key',client});
-  assert.deepEqual(jpeg.analysis.color.palette_hex,['#ffffff']);
+  const images=[
+    ['image/jpeg',await read('fixtures/jpeg/solid_white_baseline.jpg')],
+    ['image/png',await sharp({create:{width:32,height:32,channels:3,background:'#ffffff'}}).png().toBuffer()],
+    ['image/webp',await sharp({create:{width:32,height:32,channels:3,background:'#ffffff'}}).webp().toBuffer()]
+  ];
+  for (const [mediaType,bytes] of images) {
+    resetAnalysisState();
+    const result=await analyzePhoto({...card,bytes,mediaType,apiKey:'key',client});
+    assert.deepEqual(result.analysis.color.palette_hex,['#ffffff'],mediaType);
+  }
 
   resetAnalysisState();
-  await assert.rejects(analyzePhoto({...card,apiKey:'key',client}),{code:'MODEL_CONTRACT'});
+  await assert.rejects(analyzePhoto({...card,bytes:opaquePng,mediaType:'image/png',apiKey:'key',client}),{code:'MODEL_CONTRACT'});
 });
 
 test('contract violations fail before correction and never enter cache', async () => {
