@@ -393,3 +393,38 @@ test('a generation response cannot claim an omission count it did not measure',a
   }
   assert.throws(()=>validateGenerateResponse({...honest,omission:{...honest.omission,extra:1}},req),/omission.extra/);
 });
+
+// #96 회귀: 출력 모델은 슬롯 전체가 아니라 캡션 생성에 실제로 쓰이는 필드만 본다.
+// rationale.value 는 '앞자리 사진과 측정 색 거리 0.314 로…' 같은 내부 순서 규칙 문장이고,
+// 그것이 입력에 실려 있던 동안 모델이 그 어휘를 타이틀 소재로 썼다 (실모델 15회 중 2회 관측).
+// 슬롯을 다시 통째로 넘기면 이 테스트가 깨진다.
+test('output model never sees slot rationale or narrative_role, in either mode',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'짧게 담백하게'},currentPosts(['기록','']))); 
+  const rationale=built.feed.slots[0].rationale;
+  assert.ok(rationale?.value,'feed still carries the rationale users expand');
+  for(const mode of ['all','slot']) {
+    const seen=[];
+    const provider=mode==='all'?filledOutput(built.feed):{slot:filledOutput(built.feed).output.slots.find(s=>s.photo_id===built.feed.slots[0].photo_id)};
+    const requested={schema_version:'1.0',mode,feed:structuredClone(built.feed),context:structuredClone(built.context),
+      ...(mode==='slot'?{photo_id:built.feed.slots[0].photo_id}:{})};
+    await generateOutput(requested,{apiKey:'fake-key',fetchImpl:transport(provider,seen)}).catch(()=>{});
+    const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
+    for(const slot of sent.slots) {
+      assert.deepEqual(Object.keys(slot).sort(),['caption_inputs','photo_id','position'],`${mode}: slot fields are whitelisted`);
+    }
+    const wire=JSON.stringify(sent);
+    assert.doesNotMatch(wire,/rationale|narrative_role/,`${mode}: internal ordering fields must not reach the model`);
+    assert.ok(!wire.includes(rationale.value),`${mode}: the ordering rule sentence must not reach the model`);
+    // 원본 feed 는 그대로 남는다 — 계약 검증도 사용자 화면도 rationale 을 계속 읽는다.
+    assert.deepEqual(requested.feed.slots[0].rationale,rationale,`${mode}: request feed is not mutated`);
+  }
+});
+
+// #96 이중 방어: 내부 규칙 어휘 금지 규정이 실제 system 지시문에 들어간다.
+test('style guard forbids internal ordering vocabulary as title or caption material',async()=>{
+  const seen=[];
+  await generateOutput(input('all'),{apiKey:'fake-key',fetchImpl:transport(output(),seen)});
+  const system=JSON.parse(seen[1].options.body).system;
+  for(const banned of ['색 거리','지향 방향','앞자리','rationale','R1']) assert.ok(system.includes(banned),`style guard names ${banned}`);
+  assert.match(system,/내부 규칙의 이름·용어·측정 수치를 제목이나 문장의 소재로 쓰지 않는다/);
+});

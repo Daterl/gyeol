@@ -1,0 +1,2586 @@
+{
+  "feed": "/private/tmp/claude-501/-Users-chowonjae-Desktop-projects-wanted/2f60c926-4fdc-41d3-9a19-0d80a29caf92/scratchpad/i96/feed.json",
+  "times": 15,
+  "generated": 15,
+  "failed": 0,
+  "leakedRounds": 2,
+  "rounds": [
+    {
+      "round": 1,
+      "ok": true,
+      "ms": 12834,
+      "title": "사진을 잇는 순서",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수가 있고, 뒤로는 건물과 GS25 간판이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "얼굴 정면, 팔 뻗은 자세, 스웨트셔츠 자수, 배경 건물과 간판"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "분홍색 패턴 옷에 베이지색 원숭이 인형을 안고, 등에는 갈색 가방을 메고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "분홍색 패턴 긴팔, 원숭이 인형, 갈색 가방, 베이지 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니를 쓰고 머리 위로 팔을 들어 올렸으며, 뒤에 석재 담장과 초록 잎이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 머리 위 팔, 비니, 석재 담장, 나무"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "네 칸으로 나뉜 사진에서 비니와 회색 니트, 노트북 옆 손동작들을 보여준다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자, 비니, 회색 니트, 노트북, 하리보 젤리"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 같은 구성의 옆모습, 비니, 팔 자세, 배경"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰 상의를 입고 일회용 컵을 들며 스마트폰을 내려다본다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "옆모습 앉은 자세, 갈색 가죽 재킷, 일회용 컵, 스마트폰, 토트백"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "갈색 재킷과 흰 티셔츠, 어두운 바지를 입고 벤치에 가방과 음료를 놓았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "갈색 가죽 재킷, 흰 반팔, 어두운 바지, 토트백, 플라스틱 컵"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단 위에 앉아 남색 스웨트셔츠와 청바지를 입고, 크림색 가방을 무릎에 놓았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "벽돌 화단에 앉은 자세, 남색 스웨트셔츠, 청바지, 크림색 가방, 초록 식물"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 일회용 컵을 들며 스마트폰을 손에 들었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 가죽 재킷, 흰 반팔, 일회용 컵, 스마트폰, 토트백 끈"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 회색 티셔츠를 입고 양손으로 청록색 아우터를 들고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "고개 숙인 자세, 비니, 회색 티셔츠, 청록색 아우터, 겨자색 가방"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니를 쓰고 청록색 재킷과 회색 바지를 입었으며, 베이지색 백팩을 메고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "옆모습, 줄무늬 비니, 청록색 재킷, 회색 바지, 베이지 백팩"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "ok": true,
+      "ms": 14963,
+      "title": "색감 변주로 이어가는 룩북",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수가 새겨져 있고, 안에 줄무늬 상의를 겹쳐 입었다. 정면을 바라보며 한쪽 팔을 옆으로 뻗은 자세로, 배경에 건물과 GS25 간판이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 얼굴, 남색 반집업, HAAG 자수, 줄무늬 상의, 팔 포즈, 건물과 GS25 간판"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "분홍색 패턴 긴팔 옷을 입고 베이지색 원숭이 인형을 안았다. 어깨에는 갈색 인형 모양 가방을 메었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "분홍색 패턴 긴팔, 베이지색 원숭이 인형, 갈색 인형 모양 가방"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 회색·남색 투톤 상의, 올리브색 가방으로 미니멀한 톤을 맞췄다. 청록색 옷을 팔에 걸쳐 포인트를 더했다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "줄무늬 비니, 회색·남색 상의, 올리브색 가방, 청록색 옷"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 비니와 회색 니트에 남색 상의를 입은 모습을 2×2 격자로 담았다. 스마트폰을 보거나 하리보 젤리를 들며 자연스러운 표정을 나타냈다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2×2 격자, 줄무늬 비니, 회색 니트, 남색 상의, 스마트폰, 하리보 젤리"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 구성 및 의상"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰색 상의, 짙은 색 바지로 가을 무드를 표현했다. 흰색 일회용 컵을 들고 스마트폰을 보는 자연스러운 순간을 담았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 흰색 상의, 짙은 색 바지, 흰색 컵, 스마트폰"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "같은 갈색 재킷과 흰색 티셔츠 조합으로, 벤치에 앉아 스마트폰을 보는 모습이다. 겹쳐진 작은 사진에서 가죽 재킷의 디테일이 드러난다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "갈색 재킷, 흰색 티셔츠, 벤치, 스마트폰, 작은 사진 삽입"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 하프집업 스웨트셔츠와 밝은 청바지로 돌아와, 벽돌 화단에 앉아 스마트폰을 보고 있다. 크림색 천 가방을 무릎에 놓았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 하프집업 스웨트셔츠, HAAG 글자, 밝은 청바지, 크림색 천 가방, 스마트폰"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 다시 걸친 후, 흰색 컵을 들고 서 있는 모습이다. 옆에 덧붙인 사진에서 카펜터 디테일 바지가 강조된다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 가죽 재킷, 흰 컵, 흰색 반팔 티셔츠, 카펜터 디테일 바지"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 래글런 티셔츠, 청록색 아우터로 여름과 가을 스타일을 섞었다. 겨자색 스웨이드 가방이 색감을 더해준다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "줄무늬 비니, 래글런 티셔츠, 청록색 아우터, 겨자색 가방"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "청록색 재킷과 회색 바지, 베이지색 백팩으로 마무리했다. 흰색 파우치와 자주색 원형 파우치를 백팩에 달아 소품으로 포인트를 줬다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "청록색 재킷, 회색 바지, 베이지색 백팩, 흰색·자주색 파우치"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "ok": true,
+      "ms": 13609,
+      "title": "색감 변화로 이어가는 룩북",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠와 줄무늬 상의를 겹쳐 입고 건물과 오토바이가 보이는 거리에 섰다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 인물 샷, 스웨트셔츠 HAAG 자수, 줄무늬 겹겹이, 거리 배경"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "분홍 패턴 긴팔 옷을 입고 원숭이 모양 인형을 안았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "인형 소품, 패턴 상의, 베이지 톤 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니를 쓰고 한 팔을 머리 위로 올렸다. 올리브색 가방과 청록색 아우터를 어깨에 걸었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "비니, 들어올린 팔 자세, 가방 소품, 담장과 나무 배경"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 비니와 회색 니트를 입고 책상 앞에서 네 가지 다른 손짓을 보였다. 하나는 턱을 받치고, 하나는 손을 얼굴 옆에, 하나는 젤리 봉지를 들고, 하나는 젤리를 가리켰다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자 구성, 네 가지 손짓 포즈, 노트북과 창 배경"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 슬롯과 배경, 의상, 포즈가 겹쳐 사진만 두겠습니다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일 장소 및 의상"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "인접 슬롯 설명 중복"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰색 상의에 일회용 컵을 들고 앉았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 재킷, 컵 소품, 실내 밝은 배경"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "같은 갈색 재킷과 토트백을 들고 나무 벤치에 앉아 스마트폰을 내려다봤다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "벤치, 컵과 가방 소품, 야외 그림자"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 'HAAG' 스웨트셔츠와 청바지를 입고 벽돌 화단에 앉아 휴대전화를 보았다. 크림색 천 가방을 무릎에 올렸다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "화단 소재, 스웨트셔츠 복귀, 크림색 가방, 식물과 꽃 배경"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 흰 컵을 들었다. 하늘색 무늬 폰 케이스와 갈색 토트백을 들었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "재킷 다시 입음, 컵과 가방 소품, 보도블록 배경"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 몸판 회색 긴팔 티셔츠, 겨자색 스웨이드 가방을 들었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "비니 재등장, 색상 다양한 소품, 담장 배경"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 청록색 재킷, 베이지 백팩을 메고 실내 통로에 섰다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "비니와 백팩 소품, 실내 배경, 반사 디테일"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "ok": true,
+      "ms": 23117,
+      "title": "옷과 소품으로 표현하는 계절의 무드",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "도시 거리에서 남색 반집업 스웨트셔츠와 가로 줄무늬 상의를 겹쳐 입었다. 'HAAG' 자수와 열린 지퍼가 캐주얼함을 더한다. 한쪽 팔을 뻗은 자세와 정면의 시선이 편안한 분위기를 만든다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "사람, 남색 반집업 스웨트셔츠, 'HAAG' 자수, 가로 줄무늬 상의, 한쪽 팔, 정면 시선"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "짧은 단발과 앞머리가 포인트다. 흰색 바탕에 작은 분홍색 패턴이 있는 긴팔 옷을 입었고, 베이지색 원숭이 인형을 안고 있다. 등에는 갈색 인형 모양 가방을 메고 있어 장난스러운 분위기를 연출한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "짧은 단발, 앞머리, 흰색 바탕 분홍색 패턴 긴팔, 베이지색 원숭이 인형, 갈색 인형 모양 가방"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "옆모습으로 한쪽 팔을 머리 위로 들어 올렸다. 회색 바탕에 파란색과 연두색 줄무늬가 있는 비니, 회색 소매와 남색 몸판의 상의를 입었다. 올리브색 가방과 청록색 옷을 어울려 입었고, 뒤로는 울타리와 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 팔을 머리 위로, 회색 바탕 파란색 연두색 줄무늬 비니, 회색 소매 남색 몸판 상의, 올리브색 가방, 청록색 옷, 울타리와 나무 배경"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "2x2 격자로 같은 사람의 네 순간을 담았다. 회색 니트와 회색 바탕에 파란색, 노란빛 초록 줄무늬가 있는 비니를 쓰고, 어두운 남색 상의를 입었다. 턱을 받치거나 손을 얼굴 옆으로 드는 등 자연스러운 포즈와 함께 HARIBO 젤리를 들어 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자, 회색 니트, 파란색 노란빛 초록 줄무늬 비니, 어두운 남색 상의, 턱을 받치는 포즈, HARIBO Goldbears"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞의 3번 사진과 관측된 요소가 대부분 겹쳐, 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 배경과 의류 구성"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "인접 사진과의 겹침 신호 높음"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "카페에서 찍은 순간이다. 갈색 가죽 재킷과 흰색 상의, 짙은 색 바지를 입고 한 손에 흰색 일회용 컵을 들었다. 다른 손에는 스마트폰을 들고 아래를 보고 있다. 갈색 토트백이 옆에 놓여 있고, 뒤로 초록 잎이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 흰색 상의, 짙은 색 바지, 흰색 일회용 컵, 스마트폰, 갈색 토트백, 초록 잎"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 반팔 티셔츠와 짙은 색 바지를 입고, 갈색 가죽 재킷을 걸쳤다. 한 손에 스마트폰, 다른 손에 플라스틱 컵을 들었고 갈색 토트백을 메고 있다. 붉은 갈색 나무 벤치에 앉아 있으며, 강한 햇빛이 선명한 그림자를 만들었다. 오른쪽 위에 가죽 재킷과 토트백을 든 모습의 작은 사진이 겹쳐져 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 반팔 티셔츠, 짙은 색 바지, 갈색 가죽 재킷, 스마트폰, 플라스틱 컵, 갈색 토트백, 붉은 갈색 나무 벤치, 강한 햇빛과 그림자, 겹쳐진 작은 사진"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단에 앉아 있다. 남색 하프집업 스웨트셔츠에 'HAAG' 글자가 크게 들어가 있고, 안에 가로 줄무늬 상의가 보인다. 밝은 청색 청바지를 입었고, 무릎 위에 크림색 천 가방을 놨다. 배경에 초록 잎과 붉은 꽃이 있는 식물이 있다. 오른쪽 아래에 같은 의류를 입고 서 있는 작은 사진이 겹쳐져 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "벽돌 화단, 남색 하프집업 스웨트셔츠, 'HAAG' 글자, 가로 줄무늬 상의, 밝은 청색 청바지, 크림색 천 가방, 초록 잎과 붉은 꽃, 겹쳐진 작은 사진"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 안에 흰 반팔 티셔츠, 어두운 남색 또는 검은색 긴 바지를 입었다. 한 손에 흰 일회용 컵을 들고 빨대를 입에 물었고, 다른 손에는 하늘색과 흰색 무늬가 있는 스마트폰 케이스를 든 스마트폰을 들었다. 갈색 토트백을 메고 있으며, 왼쪽 아래에 바지 측면 주머니와 뒷모습을 보여주는 작은 사진이 덧붙여져 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 가죽 재킷, 흰 반팔 티셔츠, 어두운 긴 바지, 흰 일회용 컵, 하늘색 흰색 무늬 스마트폰 케이스, 갈색 토트백, 바지 측면 주머니와 뒷모습 작은 사진"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "회색 바탕에 파란색과 노란색 줄무늬가 있는 니트 비니를 썼다. 몸판이 남회색이고 소매가 회색인 긴팔 티셔츠를 입었고, 양손으로 청록색 아우터를 들고 있다. 겨자색 스웨이드 재질의 가방을 어깨에 걸었고, 밝은 회색 무늬 바지를 입었다. 뒤로는 회색 블록 담장과 초록색 잎이 무성한 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "회색 바탕 파란색 노란색 줄무늬 비니, 남회색 몸판 회색 소매 긴팔, 청록색 아우터, 겨자색 스웨이드 가방, 밝은 회색 무늬 바지, 회색 블록 담장, 초록색 잎 나무"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "화면 왼쪽에 서서 몸을 옆으로 돌리고 고개를 카메라 쪽으로 돌렸다. 회색·파란색·연두색 줄무늬 비니를 쓰고, 청록색 재킷과 회색 바지를 입었다. 베이지색 백팩을 한쪽 어깨로 메고 있고, 백팩 끈에 자주색 원형 파우치와 흰색 파우치가 달려 있으며 흰색 파우치에는 주황색 방울 장식이 붙어 있다. 뒤로는 검은 벽돌 벽과 유리면, 금속 기둥이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "회색 파란색 연두색 줄무늬 비니, 청록색 재킷, 회색 바지, 베이지색 백팩, 자주색 원형 파우치, 흰색 파우치, 주황색 방울 장식, 검은 벽돌 벽, 유리면, 금속 기둥"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "ok": true,
+      "ms": 13651,
+      "title": "사진을 잇는 순서",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수를 입고 팔을 뻗고 있다. 뒤로 GS25 간판과 건물, 오토바이가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 얼굴, 남색 반집업, HAAG 자수, 스웨트셔츠 가슴, 배경 GS25 간판, 건물, 오토바이"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "분홍 패턴 긴팔을 입고 베이지 원숭이 인형을 안고 있다. 등에는 갈색 가방, 배경은 그라데이션이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "분홍 패턴 긴팔, 원숭이 인형, 갈색 가방, 배경 그라데이션"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "파란 줄무늬 비니를 쓰고 팔을 머리 위로 들었다. 회색 상의, 올리브 가방, 뒤로 울타리와 초록 나무가 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "파란 줄무늬 비니, 팔 들기, 회색 상의, 올리브 가방, 울타리, 나무"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 사람이 네 칸에 등장한다. 비니와 회색 니트, 노트북, 왼쪽 위에서 턱 받치고 오른쪽 아래에서 주황색 곰 젤리를 든다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자, 비니, 회색 니트, 노트북, 턱 받치기, 곰 젤리, 창문"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "3번 사진과 같은 장소, 의상, 소품이 반복되어 설명을 건너뜁니다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "옆모습, 팔 들기, 비니, 상의, 가방, 울타리, 나무"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 입고 한 손에 흰 컵을 들고 스마트폰을 보고 있다. 뒤로 유리창과 초록 잎이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 흰 컵, 스마트폰, 토트백, 유리창, 초록 잎"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 티셔츠에 갈색 재킷을 입고 스마트폰을 들고 있다. 나무 벤치, 플라스틱 컵, 토트백, 초록 관목이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 티셔츠, 갈색 재킷, 스마트폰, 토트백, 나무 벤치, 플라스틱 컵, 라떼 글씨"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 'HAAG' 스웨트셔츠를 입고 벽돌 화단에 앉아 있다. 밝은 청바지, 크림색 가방, 뒤로 붉은 꽃과 초록 식물이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "앉은 자세, 남색 스웨트셔츠, HAAG, 청바지, 크림색 가방, 붉은 꽃, 초록 식물"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 재킷을 열어 입고 흰 티셔츠, 스마트폰을 들고 있다. 흰 컵, 갈색 토트백, 바닥은 회색 보도블록이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷, 흰 티셔츠, 스마트폰, 흰 컵, 갈색 토트백, 보도블록"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "파란 줄무늬 비니, 회색 긴팔, 청록 아우터를 들고 있다. 겨자색 가방, 밝은 바지, 뒤로 회색 담장과 초록 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "비니, 회색 긴팔, 청록 아우터, 겨자색 가방, 담장, 나무"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니, 청록 재킷, 회색 바지를 입고 베이지 백팩을 메고 있다. 자주색 파우치, 흰색 파우치, 뒤로 검은 벽돌과 유리면이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "옆모습, 비니, 청록 재킷, 베이지 백팩, 파우치들, 벽돌 벽, 유리면"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "ok": true,
+      "ms": 18023,
+      "title": "색감의 대비로 만드는 운동화와 재킷의 스타일링",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수를 매치하고 한쪽 팔을 길게 뻗은 모습. 배경에 GS25 간판과 건물 외벽이 도시의 일상을 담는다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "사람, 팔 동작, 스웨트셔츠 디자인, 배경 건물과 간판"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "짧은 단발머리에 분홍 패턴 긴팔을 입고 베이지 원숭이 인형을 안았다. 등에는 같은 톤의 인형 모양 가방을 메었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "헤어스타일, 옷 패턴, 안고 있는 인형, 메고 있는 가방"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 회색·남색 투톤 상의, 올리브색 가방으로 맞춘 거리 패션. 햇빛이 만드는 그림자가 옷의 색을 더 살린다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "비니 색상과 줄무늬, 상의 투톤 조합, 가방 색상, 햇빛의 그림자 효과"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 인물의 네 가지 자세를 2x2 격자로 담았다. 줄무늬 비니와 회색 니트, 하리보 젤리까지 색의 통일감이 흐른다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "4칸 격자 구성, 비니와 니트의 일관된 색, 들고 있는 젤리"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 배경, 복장, 소품이 겹쳐 설명을 반복할 신호가 높아, 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 배경과 복장 요소"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷 안에 흰 상의를 겹쳐 입고 일회용 컵을 들었다. '차분한 가을 무드의 브라운&네이비 컬러 매치'라는 자막처럼 따뜻한 톤이 주도한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 재킷, 흰 상의, 들고 있는 컵, 화면에 표시된 컬러 매치 설명, 배경의 유리창"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "같은 갈색 재킷과 토트백, 네이비 바지로 연속된 스타일. 벤치 위 컵의 'Latte' 손글씨와 겹쳐 삽입된 뒷모습이 룩을 완성한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "갈색 재킷과 토트백, 컵의 손글씨, 겹쳐 삽입된 뒷모습 사진, 햇빛의 그림자"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 'HAAG' 스웨트셔츠와 청바지, 크림색 가방으로 '가을의 매력, 레이어드'를 표현했다. 붉은 꽃과 초록 잎 식물이 색감을 돋운다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 스웨트셔츠의 'HAAG' 글자, 청바지, 크림색 가방, 배경 식물의 색, 화면의 문구와 보라색 하트"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 재킷을 열어 입은 가운데 흰 티셔츠를 드러냈다. 손에 든 하늘·흰색 케이스 스마트폰과 토트백이 톤을 유지하며, 주머니 디테일이 포인트다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷의 열린 형태, 흰 티셔츠, 스마트폰 케이스 색상, 토트백, 덧붙여진 주머니 디테일 사진"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니에 청록색 아우터, 겨자색 스웨이드 가방을 매치했다. 화면에 '올가을 유행템 래글런 티셔츠'와 '비니+아우터+팬츠의 오묘한 컬러 플레이'라는 설명이 함께한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "줄무늬 비니, 청록색 아우터, 겨자색 가방, 화면의 두 자막 텍스트"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "청록색 재킷과 회색 바지에 줄무늬 비니를 조합하고 베이지 백팩을 메었다. 자주색과 흰색 파우치가 매달린 끈이 강조점이 된다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "청록색 재킷, 줄무늬 비니, 회색 바지, 베이지 백팩, 파우치의 색상과 위치"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 7,
+      "ok": true,
+      "ms": 18601,
+      "title": "색깔 변화를 따라 풀어낸 층 입기",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "정면으로 카메라를 보고 한쪽 팔을 내려뻗고 있다. 남색 반집업 스웨트셔츠에 베이지 대문자 'HAAG' 자수가 박혀 있고, 안에 가로 줄무늬 밝은 상의를 겹쳐 입었다. 배경에 도시 건물과 'GS25' 간판, 오토바이들이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 자세, HAAG 스웨트셔츠, 도시 배경"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "짧은 단발머리에 흰색 바탕 분홍 패턴 긴팔을 입고, 팔에 베이지 원숭이 인형을 안고 있다. 등에 갈색 인형 모양 가방을 메고 있고, 배경은 베이지에서 회색으로 이어지는 그라데이션이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발머리, 원숭이 인형, 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "옆을 보며 서서 한쪽 팔을 머리 위로 올리고 있다. 회색 바탕 파란색·연두색 줄무늬 비니를 쓰고, 회색 소매 남색 몸판 상의를 입었다. 뒤로 검은 금속 울타리와 회색 담장, 초록 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 줄무늬 비니, 울타리와 담장"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "2x2 격자로 배치된 네 장의 사진에 같은 사람이 등장한다. 줄무늬 비니와 회색 니트, 어두운 남색 상의를 입고 노트북 책상 앞에 앉았다. 왼쪽 아래 칸에서 HARIBO 젤리 봉지를 들고, 오른쪽 아래에서 주황 곰 모양 젤리를 가리킨다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "격자 구성, 비니와 니트, 젤리 소품"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 사실 겹침이 높아, 이 자리는 사진만 두어도 좋아요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 장소·의상·자세"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "옆모습으로 앉아 갈색 가죽 재킷과 흰 상의를 입고 있다. 한 손에 흰 일회용 컵을 들고 빨대를 입에 물고 있으며, 다른 손에는 스마트폰을 들고 있다. 오른쪽 아래에 갈색 토트백이 놓여 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "옆모습, 갈색 재킷과 컵, 토트백"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 반팔 티셔츠와 짙은 색 바지를 입고, 팔에 갈색 가죽 재킷을 걸쳐 한 손에 스마트폰을 들고 아래를 내려다보고 있다. 나무 벤치 위에 갈색 토트백이 놓여 있고, 'Latte' 표시가 있는 플라스틱 컵이 옆에 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "스마트폰 들기, 라테 컵, 벤치와 토트백"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단에 앉아 스마트폰을 내려다보고 있다. 남색 하프집업 스웨트셔츠에 'HAAG' 글자가 밝게 빛나고, 안에 가로 줄무늬 상의를 입었다. 밝은 청색 청바지를 입고 무릎 위에 크림색 천 가방을 놓았으며, 배경에 초록 잎과 붉은 꽃이 있는 식물이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "벽돌 화단, HAAG 스웨트셔츠, 크림색 가방"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 사실 겹침이 높아, 이 자리는 사진만 두어도 좋아요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷, 스마트폰, 토트백 등 반복 소품"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.888"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "고개를 숙이고 서서 줄무늬 비니를 쓰고 있다. 남회색 몸판 회색 소매 긴팔 티셔츠를 입고, 양손으로 청록색 아우터를 들고 있다. 어깨에 겨자색 스웨이드 가방을 걸고 밝은 회색 바지를 입었으며, 뒤로 회색 담장과 초록 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "고개 숙인 자세, 비니와 아우터, 겨자색 가방"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "화면 왼쪽에 서서 몸을 옆으로 돌리고 카메라를 향해 돌아보고 있다. 줄무늬 비니와 청록색 재킷, 회색 바지를 입고, 베이지 백팩을 한쪽 어깨로 메었다. 백팩 끈에 자주색 원형 파우치와 흰색 파우치가 달려 있으며, 배경에 검은 벽돌 벽과 유리면이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "옆으로 돌린 자세, 줄무늬 비니, 백팩과 파우치"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 8,
+      "ok": true,
+      "ms": 15976,
+      "title": "색 톤으로 이은 열 한 장의 착장",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "정면을 보며 서 있고 한쪽 팔을 옆으로 뻗었다. 남색 반집업 스웨트셔츠에 베이지 'HAAG' 자수가 있고, 안에 줄무늬 상의를 겹쳤다. 배경에 건물과 GS25 간판, 오토바이, 초록 나뭇잎과 크레인이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 포즈, 남색 반집업 스웨트셔츠, 베이지 HAAG 자수, 줄무늬 안감, 배경의 건물과 간판"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "단발머리에 흰 바탕 분홍 패턴 긴팔을 입고 베이지 원숭이 인형을 안았다. 등에 갈색 인형 모양 가방을 베이지 끈으로 메고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발, 흰 바탕 분홍 패턴, 원숭이 인형, 갈색 인형 가방"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "옆을 보며 선 자세에 한쪽 팔을 머리 위로 들었다. 회색·파란색·연두색 줄무늬 비니와 회색 소매 남색 상의, 올리브 가방을 메고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 팔 들어올림, 줄무늬 비니, 회색 소매 남색 상의, 올리브 가방"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 비니와 회색 니트, 어두운 남색 상의를 입고 노트북 앞에서 네 가지 포즈를 취했다. 아래 칸에서 하리보 젤리 봉지를 들고 곰 모양 젤리를 보였다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자 네 칸, 같은 비니와 니트, 노트북, 하리보 젤리"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 구도와 입은 옷이 거의 같아, 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 비니, 상의, 가방, 옆모습 구도"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰 상의, 짙은 색 바지를 입고 흰 일회용 컵을 들었다. 옆모습으로 앉아 스마트폰을 내려다보고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 흰 상의, 짙은 바지, 일회용 컵, 옆모습 앉은 자세"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 반팔 티와 짙은 색 바지를 입고 갈색 재킷을 걸쳤다. 벤치 위에 갈색 토트백을 두고 스마트폰을 내려다보고 있으며, 왼쪽 컵에 'Latte'라 적혀 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 반팔, 짙은 바지, 갈색 재킷, 토트백, 라떼 컵, 벤치"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수가 있고 줄무늬 안감, 밝은 청바지를 입었다. 벽돌 화단에 앉아 크림색 천 가방을 무릎에 두고 스마트폰을 보고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 반집업, HAAG 자수, 줄무늬 안감, 청바지, 크림색 가방, 앉은 자세"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 흰 반팔을 보였다. 어두운 바지와 카펜터 주머니 디테일, 스마트폰과 토트백을 들었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 가죽 재킷, 흰 반팔, 어두운 바지, 카펜터 포켓, 토트백"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 회색·남회색 라글런 티셔츠, 청록 아우터를 들고 밝은 회색 바지를 입었다. 겨자색 스웨이드 가방을 메고 고개를 숙이고 선 자세다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "줄무늬 비니, 라글런 티셔츠, 청록 아우터, 밝은 회색 바지, 겨자색 가방"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 청록 재킷, 회색 바지, 베이지 백팩을 메고 있다. 백팩에 자주색과 흰색 파우치가 달려 있고, 유리 반사가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "줄무늬 비니, 청록 재킷, 회색 바지, 베이지 백팩, 파우치"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 9,
+      "ok": true,
+      "ms": 15531,
+      "title": "밝기와 채도로 연결한 11장",
+      "hits": [
+        {
+          "where": "title",
+          "label": "밝기",
+          "text": "밝기와 채도로 연결한 11장"
+        },
+        {
+          "where": "title",
+          "label": "채도",
+          "text": "밝기와 채도로 연결한 11장"
+        },
+        {
+          "where": "slot5.omit_reason",
+          "label": "측정 색",
+          "text": "앞 사진과 측정 색이 같아 설명이 겹칠 수 있어, 사진만 두는 편을 제안해요."
+        },
+        {
+          "where": "slot5.omit_reason",
+          "label": "측정",
+          "text": "앞 사진과 측정 색이 같아 설명이 겹칠 수 있어, 사진만 두는 편을 제안해요."
+        }
+      ],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "정면을 보고 있는 인물이 남색 반집업 스웨트셔츠를 입었고, 가슴의 베이지색 'HAAG' 자수와 안쪽 줄무늬 상의가 보인다. 배경에 건물과 GS25 간판, 오토바이들이 있고 하늘이 맑다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 얼굴, 남색 반집업, HAAG 자수, 배경 건물과 간판"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "단발머리에 분홍색 패턴 긴팔 옷을 입고 베이지색 원숭이 인형을 안고 있다. 등에는 갈색 인형 가방을 메었고, 배경은 베이지에서 회색으로 이어지는 그라데이션이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발머리, 분홍색 패턴 옷, 베이지 원숭이 인형, 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "옆을 보고 선 인물이 파란색과 연두색 줄무늬 비니를 쓰고, 회색과 남색 상의에 올리브색 가방을 메었다. 청록색 옷을 걸치고 있고 배경에 울타리와 나무가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 줄무늬 비니, 올리브색 가방, 울타리 배경"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 인물이 2x2 격자 네 칸에 각각 나타나고, 회색 니트와 남색 상의, 줄무늬 비니를 입었다. 책상 위의 노트북과 HARIBO 젤리를 들고 있으며, 창 너머로 건물이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자 구성, 노트북과 젤리, 창과 건물"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 측정 색이 같아 설명이 겹칠 수 있어, 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 촬영 장소와 옷차림"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "옆모습으로 앉은 인물이 갈색 가죽 재킷과 흰색 상의를 입고 흰색 컵을 들고 있다. 다른 손에는 스마트폰을 들었고, 갈색 토트백이 옆에 놓여 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 재킷, 흰색 컵, 스마트폰, 갈색 토트백"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "인물이 흰 티셔츠와 짙은 색 바지를 입고 스마트폰을 보고 있으며, 갈색 재킷이 걸쳐져 있다. 나무 벤치 위에 갈색 토트백과 '라떼' 라벨이 붙은 음료가 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 티셔츠, 스마트폰, 갈색 재킷과 가방, 라떼 컵"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단에 앉은 인물이 'HAAG' 로고 남색 스웨트셔츠와 청바지를 입었다. 무릎 위에 크림색 천 가방이 있고, 배경에 초록 잎과 붉은 꽃이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "벽돌 화단, HAAG 스웨트셔츠, 크림색 가방, 붉은 꽃"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "인물이 갈색 재킷을 입고 흰 컵의 빨대를 물고 있으며, 흰 반팔 티셔츠와 남색 바지를 입었다. 왼손에 스마트폰을 들고 어깨에 갈색 토트백 끈이 걸려 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷, 흰 컵, 스마트폰, 갈색 토트백"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "고개를 숙인 인물이 줄무늬 비니와 회색 긴팔 티셔츠를 입고, 청록색 아우터를 들고 있다. 겨자색 가방을 어깨에 메었고, 배경에 담장과 나무가 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "줄무늬 비니, 회색 티셔츠, 겨자색 가방, 담장 배경"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "화면 왼쪽에 선 인물이 줄무늬 비니와 청록색 재킷, 회색 바지를 입었다. 베이지색 백팩을 메었고 끈에 자주색과 흰색 파우치가 달려 있으며, 배경에 벽돌 벽과 유리면이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "줄무늬 비니, 청록색 재킷, 베이지 백팩, 벽돌 벽"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 10,
+      "ok": true,
+      "ms": 17994,
+      "title": "색감을 가르는 열 장의 순서",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "정면을 보며 남색 반집업 스웨트셔츠 가슴의 베이지색 'HAAG' 자수, 그 아래 줄무늬 옷을 겹쳐 입었다. 한쪽 팔은 화면 왼쪽 아래로 뻗어 있고, 배경에 GS25 간판과 오토바이들이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "정면 얼굴, 남색 스웨트셔츠, HAAG 자수, 줄무늬 옷, 팔 자세, 배경 간판과 오토바이"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "짧은 단발과 앞머리, 흰색 바탕에 분홍색 패턴이 있는 긴팔 옷을 입고 베이지색 원숭이 인형을 안았다. 등에는 갈색 인형 모양 가방을 메고 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발머리, 흰색 분홍색 패턴 옷, 원숭이 인형, 갈색 인형 가방"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "옆모습으로 한쪽 팔을 머리 위로 들었다. 줄무늬 비니와 회색·남색 투톤 상의, 올리브색 가방, 청록색 아우터를 걸쳤다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "옆모습, 팔을 들어올린 자세, 줄무늬 비니, 투톤 상의, 올리브색 가방, 청록색 아우터"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "2x2 격자 사진. 같은 사람이 회색 바탕에 파란색·노란빛 초록 줄무늬 비니를 쓰고 회색 니트 안에 남색 상의를 입었다. 책상 위 노트북, 턱 받치는 자세, HARIBO 젤리, 오토바이나 플라스틱 컵 같은 소품들을 담았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자, 같은 인물, 줄무늬 비니, 회색 니트, 노트북, HARIBO 젤리, 플라스틱 컵"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 구성이 거의 같아 사진만 두겠습니다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "같은 인물, 같은 의상, 같은 배경"
+            },
+            {
+              "kind": "aggregate",
+              "ref": "ig_snapshot_29cm_2026-09-17",
+              "note": "인접 사진 간 사실 교집합 비율"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "옆모습으로 앉아 갈색 가죽 재킷, 흰색 상의, 짙은색 바지를 입고 일회용 컵을 들었다. 다른 손에는 스마트폰을 들고 목에 흰색 줄이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "옆모습 앉은 자세, 갈색 가죽 재킷, 흰색 상의, 짙은색 바지, 일회용 컵, 스마트폰"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 반팔 티셔츠, 짙은색 바지, 갈색 가죽 재킷을 입고 스마트폰을 내려다봤다. 나무 벤치 위에 갈색 토트백, 컵 뚜껑에 'Latte'라고 손글씨로 적혀 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 반팔, 짙은색 바지, 갈색 재킷, 스마트폰, 나무 벤치, 갈색 토트백, Latte 컵"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단에 앉아 남색 하프집업 스웨트셔츠 가슴에 'HAAG' 글자, 안에 줄무늬 옷, 밝은 청색 청바지를 입었다. 무릎 위에 크림색 천 가방을 놓고 초록 잎, 붉은 꽃이 있는 배경이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "벽돌 화단, 남색 하프집업, HAAG 글자, 줄무늬 옷, 청바지, 크림색 가방, 식물 배경"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "코 아래 입만 보이게 서서 흰 일회용 컵을 빨대로 마시고 있다. 갈색 가죽 재킷, 흰 반팔, 남색 바지, 갈색 토트백 끈이 팔에 걸려 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "입 부분만 보이는 각도, 일회용 컵, 갈색 가죽 재킷, 흰 반팔, 남색 바지, 갈색 토트백"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "고개를 숙이고 줄무늬 비니, 회색·남색 투톤 상의, 겨자색 스웨이드 가방, 청록색 아우터를 들고 밝은 회색 무늬 바지를 입었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "숙인 고개, 줄무늬 비니, 투톤 상의, 겨자색 가방, 청록색 아우터, 회색 바지"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "화면 왼쪽에서 옆으로 돌아 카메라를 보고 있다. 줄무늬 비니, 청록색 재킷, 회색 바지, 베이지색 백팩을 메고 자주색·흰색 파우치가 달려 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "옆 자세, 줄무늬 비니, 청록색 재킷, 회색 바지, 베이지색 백팩, 파우치 장식"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 11,
+      "ok": true,
+      "ms": 18114,
+      "title": "색감의 호흡을 맞춘 열 한 장",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 'HAAG' 자수가 들어간 레이어드 룩. 정면을 바라보며 한쪽 팔을 펼친 포즈와 맑은 하늘 배경이 편안한 분위기를 만든다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "사람의 정면 포즈, 스웨트셔츠 자수, 레이어드 상의, 건축물과 녹지가 섞인 배경"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "단발머리에 분홍색 패턴 긴팔 옷을 입고 베이지색 원숭이 인형을 안았다. 등에 메인 가방, 그라데이션 배경이 주제를 부드럽게 돋보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발머리, 분홍 패턴 의류, 원숭이 인형과 백, 베이지-회색 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 투톤 상의, 올리브색 가방을 메고 옆모습으로 서 있다. 팔에 걸친 청록색 옷과 햇빛 그림자가 계절감을 더한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "비니, 투톤 상의, 올리브색 가방, 옆 프로필 포즈, 석재 담장과 그림자"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "2x2 격자로 나눈 네 장면. 같은 옷을 입은 채 책상 앞에서 포즈를 취하고, 마지막 칸에서 주황색 젤리를 들어 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "2x2 격자 구성, 같은 인물의 반복, 노트북과 HARIBO, 블라인드 창의 밝은 배경"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 슬롯 ph_01과 같은 배경과 포즈가 반복되어, 사진만 두기를 제안합니다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 동일한 비니, 투톤 상의, 올리브색 가방, 석재 담장 배경"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰색 상의, 어두운 바지를 입고 앉아 음료를 마신다. 오른쪽 텍스트가 '차분한 가을 무드의 브라운&네이비 컬러 매치'를 명시한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 흰색 상의, 일회용 컵, 토트백, 오른쪽에 명시된 텍스트"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "나무 벤치 위 갈색 토트백과 'Latte' 라벨 컵. 손에 스마트폰을 들고 내려다보는 모습, 오른쪽 덧붙인 사진에서 재킷을 걸친 뒷모습과 가방을 들은 형태를 보여준다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "나무 벤치, Latte 컵, 갈색 토트백, 삽입된 덧붙인 사진, 보도블록과 건물 배경"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단 위 남색 'HAAG' 스웨트셔츠와 밝은 청바지, 크림색 천 가방을 들었다. 오른쪽 덧붙인 사진과 텍스트 '가을의 매력, 레이어드', '출근 보부상에게 좋은 보스턴 백'이 코디의 주제를 정의한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 HAAG 스웨트셔츠, 청바지, 크림색 천 가방, 벽돌 화단, 오른쪽 덧붙인 사진과 텍스트 오버레이"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷 안 흰 반팔 티와 남색 바지, 갈색 토트백을 메었다. 왼쪽 아래 덧붙인 사진에 '카펜터 디테일이 포인트' 텍스트가 바지의 포인트를 강조한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷, 흰 반팔, 남색 바지, 토트백, 왼쪽 덧붙인 사진, 카펜터 텍스트"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 투톤 긴팔, 겨자색 스웨이드 가방, 회색 무늬 바지. 왼쪽과 오른쪽 텍스트가 '래글런 티셔츠'와 '비니+아우터+팬츠의 오묘한 컬러 플레이'를 설명한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "비니, 투톤 긴팔, 겨자색 가방, 회색 바지, 왼쪽과 오른쪽 텍스트 오버레이"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 청록색 재킷, 회색 바지, 베이지색 백팩을 메었다. 백팩 끈에 자주색·흰색 파우치가 달려 있고, 어두운 건축물 배경과 유리면 반사가 도시적 분위기를 만든다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "비니, 청록색 재킷, 회색 바지, 베이지색 백팩, 파우치 부착, 어두운 벽돌과 유리 배경"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 12,
+      "ok": true,
+      "ms": 13709,
+      "title": "옷과 소품의 톤 맞춤",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 가로 줄무늬 상의를 겹쳐 입고, 한쪽 팔을 내밀었다. 배경에 건물과 GS25 간판, 오토바이들이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "사람의 옷차림과 배경 구성"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "분홍색 패턴 긴팔 옷을 입고 베이지색 원숭이 인형을 안았다. 등에는 갈색 인형 가방을 메고 있고, 뒤는 회색 그라데이션 배경이다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "옷과 소품의 색감, 인형 액세서리"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "줄무늬 비니를 쓰고 회색 상의에 남색 몸판을 겹쳤다. 올리브색 가방을 메고 청록색 옷을 팔에 걸쳤으며, 뒤에는 울타리와 나무가 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "상하의와 가방, 아우터의 색 조합"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "2×2 격자 사진으로 같은 사람이 네 칸에 등장한다. 회색 니트와 남색 상의를 입고, 책상 위 노트북과 하리보 젤리를 들었다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "상의 색감과 소품, 구성"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 배경, 상하의 톤이 겹치는 구성이다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "ph_01과 유사한 옷차림과 배경"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰색 상의, 짙은 색 바지를 입었다. 흰색 컵을 들고 있으며, 오른쪽 아래에 갈색 토트백이 놓여 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "상하의와 가방의 톤 매칭"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 티셔츠에 갈색 재킷을 걸쳤다. 갈색 토트백을 메고 벤치에 앉아 스마트폰을 내려다봤으며, 컵에 라떼라고 적혀 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "상의와 가방의 갈색 톤, 소품 조합"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 하프집업 스웨트셔츠에 'HAAG' 글자와 줄무늬 상의가 보인다. 청바지를 입고 크림색 가방을 무릎에 놨으며, 뒤에 초록 식물이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "상하의와 가방의 톤, 레이어드 구성"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 흰 티셔츠와 어두운 바지를 입었다. 흰 컵을 들고 스마트폰을 보고 있으며, 카펜터 디테일이 포인트다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "상하의와 재킷, 가방의 톤"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "줄무늬 비니, 남회색 티셔츠, 청록색 아우터를 입었다. 겨자색 가방을 어깨에 메고 밝은 회색 바지를 입었으며, 뒤에 담장과 나무가 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "상의, 아우터, 가방의 색 플레이"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니와 청록색 재킷, 회색 바지를 입었다. 베이지색 백팩을 메고 있으며 자주색·흰색 파우치가 달려 있고, 뒤에 유리면과 벽이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "상하의와 가방, 파우치의 색감"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 13,
+      "ok": true,
+      "ms": 15240,
+      "title": "색감 변화를 담은 11장의 의류 스타일링",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 반집업 스웨트셔츠에 베이지 자수로 포인트를 준 룩이다. 지퍼를 열어 안의 줄무늬 상의가 보이도록 겹겹이 입었다. 정면의 얼굴과 팔의 동작으로 여유로운 분위기를 담았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "사람, 스웨트셔츠, 자수, 겹쳐 입은 상의, 팔 동작"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "밝은 톤의 옷과 베이지 소품으로 부드러운 톤을 완성한 룩이다. 원숭이 인형과 등의 가방은 장난스러운 포인트가 된다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "밝은 톤 옷, 베이지 인형, 가방, 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "파랑과 초록 줄무늬 비니로 시작한 레이어드 룩이다. 회색 소매의 상의를 겹겹이 입고 어깨의 올리브색 가방으로 통일감을 뺀다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "비니, 줄무늬 패턴, 레이어드 상의, 올리브색 가방"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 비니와 회색 니트로 통일한 네 가지 포즈다. 손 위치와 소품으로 표정을 달리했다. 하리보 젤리와 노트북은 일상의 순간을 자연스럽게 담는다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "네 칸 격자, 같은 비니와 니트, 다른 손 포즈, 젤리와 노트북"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 옷과 배경의 구성이 겹친다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "비니, 회색 상의, 올리브색 가방, 어두운 배경"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "3번 ph_01과의 시각적 반복"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷으로 따뜻한 톤을 더한 룩이다. 흰 음료를 든 손과 아래를 보는 시선이 일상적인 순간을 담는다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷, 음료, 스마트폰, 차분한 톤"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "갈색 재킷을 벗어 팔에 걸친 변화다. 흰 음료와 목재 벤치의 색감이 조화로우며 삽입 사진으로 다른 각도를 보여 준다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "갈색 재킷 팔걸이, 음료, 목재 벤치, 삽입 사진"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 스웨트셔츠로 돌아온 유턴 지점이다. 'HAAG' 자수와 밝은 청바지의 대비가 명확하고 크림색 가방은 계절감을 더한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 스웨트셔츠, 자수, 청바지, 크림색 가방, 삽입 사진"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 재킷을 다시 입은 마무리다. 코 아래만 보이는 앵글과 음료, 스마트폰으로 일상의 순간을 포착했다. 주머니 디테일이 포인트다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 재킷, 음료, 스마트폰, 주머니 디테일, 삽입 사진"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "파랑 줄무늬 비니와 청록색 아우터로 색감을 다시 올린 룩이다. 겨자색 가방과 밝은 톤의 바지로 가을 시즌감을 담았다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "파랑 줄무늬 비니, 청록색 아우터, 겨자색 가방, 밝은 톤 바지"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "청록색 재킷과 줄무늬 비니로 감싼 어두운 톤의 마감이다. 베이지 백팩과 부포치들이 포근한 포인트를 더한다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "청록색 재킷, 줄무늬 비니, 베이지 백팩, 부포치"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 14,
+      "ok": true,
+      "ms": 14488,
+      "title": "밝기와 채도로 이어가는 옷차림",
+      "hits": [
+        {
+          "where": "title",
+          "label": "밝기",
+          "text": "밝기와 채도로 이어가는 옷차림"
+        },
+        {
+          "where": "title",
+          "label": "채도",
+          "text": "밝기와 채도로 이어가는 옷차림"
+        }
+      ],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "남색 스웨트셔츠에 'HAAG' 자수가 있고 안에 줄무늬 상의를 겹쳐 입었다. 한쪽 팔을 아래로 뻗고 있으며 배경에 건물과 GS25 간판, 오토바이들이 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "남색 스웨트셔츠 · 'HAAG' 자수 · 줄무늬 겹겹이 · 팔 동작 · 건물 배경 · GS25 간판 · 오토바이"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "단발머리에 분홍색 패턴 긴팔을 입고 베이지색 원숭이 인형을 안고 있다. 등에는 갈색 인형 모양 가방을 메고 있으며 배경은 그라데이션 처리되어 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "단발머리 · 분홍색 패턴 긴팔 · 원숭이 인형 · 갈색 인형 가방 · 그라데이션 배경"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "줄무늬 비니 · 회색·남색 상의 · 팔 들기 동작 · 올리브색 가방"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.773"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "같은 인물 · 줄무늬 비니 · 회색 니트 · 노트북 · 하리보 젤리 · 블라인드 창"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "줄무늬 비니 · 회색·남색 상의 · 팔 들기 동작 · 올리브색 가방"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.797"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰색 상의를 입고 앉아 있으며 한 손에 일회용 컵을 들고 다른 손으로 스마트폰을 보고 있다. 옆에 갈색 토트백이 놓여 있고 뒤로 유리창과 초록 잎사귀가 보인다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "갈색 가죽 재킷 · 흰색 상의 · 일회용 컵 · 스마트폰 · 갈색 토트백 · 유리창 · 초록 잎"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "흰 반팔 티셔츠 · 갈색 가죽 재킷 · 스마트폰 · 갈색 토트백 · 플라스틱 컵 · 나무 벤치"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.906"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "남색 스웨트셔츠에 'HAAG' 글자와 줄무늬 상의가 겹쳐져 있으며 밝은 청바지를 입고 벽돌 화단에 앉아 있다. 무릎 위에 크림색 가방을 놓고 스마트폰을 보고 있으며 뒤로 초록 잎과 붉은 꽃이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "남색 스웨트셔츠 · 'HAAG' 글자 · 줄무늬 상의 · 청바지 · 크림색 가방 · 스마트폰 · 식물"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "갈색 가죽 재킷 · 흰 반팔 · 일회용 컵 · 스마트폰 · 갈색 토트백"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.888"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "줄무늬 비니 · 회색 상의 · 청록색 아우터 · 겨자색 가방 · 명도 높은 바지"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "adjacent_overlap 0.942"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "줄무늬 비니에 청록색 재킷과 회색 바지를 입고 있다. 베이지색 백팩을 한쪽 어깨로 메고 있으며 백팩 끈에 자주색·흰색 파우치가 달려 있다. 배경에 벽돌 벽과 유리면, 개찰구 구조물이 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "줄무늬 비니 · 청록색 재킷 · 회색 바지 · 베이지색 백팩 · 자주색·흰색 파우치 · 벽돌 벽 · 유리면"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": 15,
+      "ok": true,
+      "ms": 18804,
+      "title": "사진을 잇는 순서",
+      "hits": [],
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_10",
+          "caption_state": "filled",
+          "text": "밝은 거리 위 건물과 GS25 간판이 배경에 보인다. 남색 반집업 스웨트셔츠에 'HAAG' 자수가 있고, 안에 가로 줄무늬 상의를 겹쳐 입었다. 검은 긴머리와 작은 귀걸이, 팔을 화면 왼쪽으로 뻗은 자세.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_10",
+              "note": "밝기 0.455 · 채도 0.317 · 주요 색 #111017"
+            }
+          ]
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_11",
+          "caption_state": "filled",
+          "text": "단발머리에 흰 바탕 분홍 패턴 옷을 입고, 베이지 원숭이 인형을 안고 있다. 등에는 갈색 인형 모양 가방을 메고 있다. 배경은 베이지에서 회색으로 이어지는 그라데이션.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_11",
+              "note": "밝기 0.742 · 채도 0.161 · 주요 색 #f2dfcc"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_01",
+          "caption_state": "filled",
+          "text": "회색·파란색·연두색 줄무늬 비니를 쓰고, 회색 소매와 남색 몸판 상의를 입었다. 한 손으로 스마트폰을 들고 옆을 보며 서 있다. 어깨에 올리브색 가방, 팔에 청록색 옷을 걸쳤다. 뒤로 검은 울타리와 초록 나무.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_01",
+              "note": "밝기 0.375 · 채도 0.288 · 주요 색 #16150f"
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_04",
+          "caption_state": "filled",
+          "text": "같은 사람이 2x2 격자 네 칸에 등장한다. 회색 바탕 파란색·노란 초록 줄무늬 비니, 회색 니트와 남색 상의. 앞 책상에 노트북과 검은 키보드, 창 너머로 밝은 빛과 건물 외형.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_04",
+              "note": "밝기 0.661 · 채도 0.198 · 주요 색 #ccdfe3"
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_02",
+          "caption_state": "omitted",
+          "text": null,
+          "omit_reason": "앞 사진과 배경·의류·구도가 같아 설명이 겹친다.",
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_02",
+              "note": "밝기 0.375 · 채도 0.288 · 주요 색 #16150f"
+            },
+            {
+              "kind": "rule",
+              "ref": "gyeol.omit.overlap",
+              "note": "인접 사진과 사실 교집합 높음"
+            }
+          ]
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_06",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷과 흰 상의, 짙은 색 바지. 한 손으로 흰 컵을 들고 빨대를 물고 있으며, 다른 손에 스마트폰을 들었다. 갈색 토트백이 아래 놓여 있고, 뒤 유리창 너머로 초록 잎.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_06",
+              "note": "밝기 0.51 · 채도 0.198 · 주요 색 #bdc4bc"
+            }
+          ]
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_08",
+          "caption_state": "filled",
+          "text": "흰 반팔 티셔츠와 짙은 색 바지, 갈색 가죽 재킷을 걸쳤다. 한 손에 스마트폰, 다른 손에 'Latte' 손글씨가 있는 컵을 들고 있다. 갈색 토트백이 붉은 나무 벤치 위에 놓여 있다. 오른쪽 위에 같은 옷을 입은 사람의 작은 사진이 겹쳐져 있다.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_08",
+              "note": "밝기 0.43 · 채도 0.256 · 주요 색 #151413"
+            }
+          ]
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_09",
+          "caption_state": "filled",
+          "text": "벽돌 화단 위에 앉아 있고, 손에 든 휴대전화를 내려다본다. 남색 하프집업 스웨트셔츠 가슴에 'HAAG' 글자, 안에 줄무늬 상의, 밝은 청색 청바지. 무릎 위 크림색 천 가방. 배경에 초록 잎과 붉은 꽃.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_09",
+              "note": "밝기 0.368 · 채도 0.31 · 주요 색 #161711"
+            }
+          ]
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_07",
+          "caption_state": "filled",
+          "text": "갈색 가죽 재킷을 열어 입고 흰 반팔 티셔츠를 입었다. 오른손으로 흰 컵을 들고 빨대를 물고 있으며, 왼손에 하늘색·흰 무늬 케이스 스마트폰을 들었다. 어두운 바지, 갈색 토트백 끈이 왼팔에 걸려 있다. 왼쪽 아래에 바지 측면과 뒷모습 작은 사진.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_07",
+              "note": "밝기 0.494 · 채도 0.178 · 주요 색 #161417"
+            }
+          ]
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_05",
+          "caption_state": "filled",
+          "text": "회색·파란색·노란색 줄무늬 비니, 몸판 남회색·소매 회색 긴팔 티셔츠. 양손으로 청록색 아우터를 들고 있고, 오른쪽 어깨에 겨자색 스웨이드 가방을 걸었다. 밝은 회색 무늬 바지. 뒤로 회색 블록 담장과 초록 나무.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_05",
+              "note": "밝기 0.467 · 채도 0.251 · 주요 색 #121313"
+            }
+          ]
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_03",
+          "caption_state": "filled",
+          "text": "화면 왼쪽에 서서 옆으로 몸을 돌리고 고개를 카메라 쪽으로 돌렸다. 회색·파란색·연두색 줄무늬 비니, 청록색 재킷, 회색 바지. 베이지색 백팩을 한쪽 어깨로 메고, 끈에 자주색 원형 파우치와 주황색 방울이 달린 흰 파우치가 달려 있다. 오른쪽 배경에 검은 벽돌과 유리.",
+          "omit_reason": null,
+          "evidence": [
+            {
+              "kind": "uploaded_photo",
+              "ref": "ph_03",
+              "note": "밝기 0.317 · 채도 0.254 · 주요 색 #121919"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
