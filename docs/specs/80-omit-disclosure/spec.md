@@ -1,5 +1,7 @@
 # spec — 비움 공개(omission disclosure) (#80)
 
+> Historical specification: forced omission behavior is superseded by [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md) and [#147 implementation](../147-user-caption-choice/report.md). Retained below as the original decision record.
+
 ## 1. 한 줄
 
 `POST /api/generate` 의 **mode=all 응답에 `omission` 필드를 하나 더 둔다.** 이 필드는 그 응답의 `output.slots` 를 실제로 세서 만든다.

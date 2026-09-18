@@ -17,8 +17,8 @@ const analyze=(body,receiptSecret=SECRET)=>handleAnalyze(new Request('http://loc
   method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)
 }),{receiptSecret});
 
-test('zero observations means explicit zero suggestions on photo-only and target paths; 3/20 slots conserved',async()=>{
-  for(const count of [3,20]) for(const target of [{kind:'none'},{kind:'text',text:'짧게, 조용하게'}]) {
+test('zero observations means explicit zero suggestions on photo-only and target paths; 3/15 slots conserved',async()=>{
+  for(const count of [3,15]) for(const target of [{kind:'none'},{kind:'text',text:'짧게, 조용하게'}]) {
     const value=input(count,target),before=structuredClone(value);
     const response=await post(value);assert.equal(response.status,200);
     const result=await response.json();validateFeedResponse(result);

@@ -16,8 +16,8 @@ vi.mock('zustand', () => ({
   ) => selector(store.getState()),
 }));
 
-test('3/15/20 photo-only result slots retain ID, source position and evidence after reorder', async () => {
-  for (const count of [3, 15, 20]) {
+test('3/15 photo-only result slots retain ID, source position and evidence after reorder', async () => {
+  for (const count of [3, 15]) {
     const photos = Array.from({ length: count }, (_, i) => ({
       ...fixture.context.photos[0],
       photo_id: `qa_${i}`,

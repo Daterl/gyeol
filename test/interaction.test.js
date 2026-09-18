@@ -23,7 +23,9 @@ test('contract fixtures cover identities, photo-only, corrected, three states an
 test('request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities',()=>{
   const order={schema_version:'1.0',session_id:'session_test',photos:fixture.context.photos,identity:fixture.identities[0]};
   validateOrderRequest(order);
-  for(const photos of [order.photos.slice(0,2),Array(21).fill(order.photos[0]),[order.photos[0],order.photos[0],order.photos[2]]]) assert.throws(()=>validateOrderRequest({...order,photos}));
+  const photos=count=>Array.from({length:count},(_,input_index)=>({...order.photos[0],photo_id:`selected_${input_index}`,input_index}));
+  validateOrderRequest({...order,photos:photos(15)});
+  for(const invalid of [order.photos.slice(0,2),photos(16),[order.photos[0],order.photos[0],order.photos[2]]]) assert.throws(()=>validateOrderRequest({...order,photos:invalid}));
   assert.throws(()=>validateIdentity({target:{kind:'reference',url:'javascript:alert(1)'},current:{kind:'none'}}));
   assert.throws(()=>validateIdentity({target:{kind:'text',text:'  '},current:{kind:'none'}}));
   for(const patch of [{schema_version:'2.0'},{mode:'unknown'},{photo_id:'foreign'}]) assert.throws(()=>validateGenerateRequest({...generate(),...patch}));

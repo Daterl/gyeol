@@ -16,6 +16,7 @@ export type IdentityFields = {
   targetText: string;
   targetUrl: string;
 };
+export const MAX_SELECTED_PHOTOS = 15;
 export function addFiles(existing: File[], incoming: File[]) {
   const files = [...existing];
   const errors: string[] = [];
@@ -26,11 +27,16 @@ export function addFiles(existing: File[], incoming: File[]) {
       errors.push(`${file.name}: 한 장에 3MB까지 가능해요.`);
     else if (file.name.length > 512)
       errors.push('파일 이름이 너무 길어요. 이름을 줄여 주세요.');
-    else if (files.length === 20) {
-      errors.push('사진은 최대 20장까지 추가할 수 있어요.');
-      break;
-    } else if (!files.includes(file)) files.push(file);
+    else if (!files.includes(file)) files.push(file);
   }
+  if (files.length > MAX_SELECTED_PHOTOS)
+    return {
+      errors: [
+        ...errors,
+        `사진은 최대 ${MAX_SELECTED_PHOTOS}장까지 추가할 수 있어요. 초과한 선택은 추가하지 않았어요.`,
+      ],
+      files: existing,
+    };
   return { errors, files };
 }
 export function identityInput(
@@ -131,7 +137,9 @@ async function upload(
 ) {
   signal.throwIfAborted();
   const done: (PhotoAnalysis | null)[] = new Array(photos.length).fill(null);
-  const failed: (string | null)[] = new Array(photos.length).fill(null);
+  const failed: ({ fileName: string; photoId: string } | null)[] = new Array(
+    photos.length,
+  ).fill(null);
   let cursor = 0;
   let cancelled: unknown = null;
   const worker = async () => {
@@ -153,7 +161,11 @@ async function upload(
           (error instanceof ApiError && error.code === 'CANCELLED')
         )
           cancelled ??= error;
-        else failed[index] = photos[index].file.name;
+        else
+          failed[index] = {
+            fileName: photos[index].file.name,
+            photoId: photos[index].photo_id,
+          };
       }
     }
   };
@@ -177,12 +189,12 @@ export async function submitPhotos(
   signal: AbortSignal,
   mock = false,
 ) {
-  if (photos.length < 3 || photos.length > 20)
-    throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~20장 골라 주세요.');
-  if (oldPhotos.length > 20)
+  if (photos.length < 3 || photos.length > MAX_SELECTED_PHOTOS)
+    throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~15장 골라 주세요.');
+  if (oldPhotos.length > MAX_SELECTED_PHOTOS)
     throw new ApiError(
       'INVALID_SELECTION',
-      '기존 게시물 사진은 20장까지 골라 주세요.',
+      '기존 게시물 사진은 15장까지 골라 주세요.',
     );
   // Validate identity conflicts before any file leaves the browser; full posts identity is checked after analysis.
   if (fields.currentUrl.trim() && oldPhotos.length)
@@ -193,17 +205,22 @@ export async function submitPhotos(
   identityInput(fields, []);
   const sessionId = crypto.randomUUID();
   const selected = await upload(photos, sessionId, 'selected', signal, mock);
+  if (selected.failed.length)
+    throw new ApiError(
+      'ANALYSIS_FAILED',
+      `사진 ${selected.failed.length}장을 읽지 못했어요(${selected.failed.map(({ fileName, photoId }) => `${fileName} · ${photoId}`).join(', ')}). 다시 시도하거나 해당 사진을 제외해 주세요.`,
+    );
   // 3장 미만이면 /api/feed 가 받지 않는다. 빈 자리를 지어내지 않고 무엇이 빠졌는지 말한다.
   if (selected.analyses.length < 3)
     throw new ApiError(
       'ANALYSIS_FAILED',
-      `사진 ${selected.failed.length}장을 읽지 못했어요(${selected.failed.join(', ')}). 남은 사진이 3장보다 적어요.`,
+      `사진 ${selected.failed.length}장을 읽지 못했어요. 남은 사진이 3장보다 적어요.`,
     );
   const previous = await upload(oldPhotos, sessionId, 'current', signal, mock);
   if (oldPhotos.length && !previous.analyses.length)
     throw new ApiError(
       'ANALYSIS_FAILED',
-      `기존 게시물 사진을 읽지 못했어요(${previous.failed.join(', ')}). 사진을 비우거나 다시 시도해 주세요.`,
+      `기존 게시물 사진을 읽지 못했어요(${previous.failed.map(({ fileName }) => fileName).join(', ')}). 사진을 비우거나 다시 시도해 주세요.`,
     );
   return orderPhotos(
     {

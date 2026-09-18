@@ -8,8 +8,8 @@ const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.
 const input=(count=3)=>({schema_version:'1.0',session_id:'pipeline-test',photos:Array.from({length:count},(_,index)=>({...structuredClone(fixture.context.photos[index%3]),photo_id:'photo_'+index,input_index:index})),identity:{target:{kind:'none'},current:{kind:'none'}}});
 const request=(path,body)=>new Request('http://localhost'+path,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
 
-test('3/20 actual input IDs survive photo-only and heuristic target/current paths without invented spatial observations',async()=>{
-  for(const count of [3,20]) {
+test('3/15 actual input IDs survive photo-only and heuristic target/current paths without invented spatial observations',async()=>{
+  for(const count of [3,15]) {
     // fixtures/interaction.sample.json 3장은 밝기·채도·색상각이 서로 같다(팔레트만 다르다). 측정값이 사진을
     // 가르지 못하므로 #127 이후에도 입력 순서를 유지하고, 문장이 그 이유를 말한다.
     const value=input(count);const result=await buildFeed(value);validateFeedResponse(result);

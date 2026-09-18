@@ -1,5 +1,7 @@
 # spec — #131 `stabilizeOmission` 게이트
 
+> Historical specification: forced omission behavior is superseded by [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md) and [#147 implementation](../147-user-caption-choice/report.md). Retained below as the original decision record.
+
 ## 규명된 원인 (실측값, 추측 아님)
 
 `.work131/probe/gates.mjs` 로 `buildFeed` 산출물을 그대로 찍은 값이다.

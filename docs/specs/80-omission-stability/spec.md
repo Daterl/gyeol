@@ -1,5 +1,7 @@
 # 비움 안정화 명세
 
+> Historical specification: forced omission behavior is superseded by [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md) and [#147 implementation](../147-user-caption-choice/report.md). Retained below as the original decision record.
+
 담당 enzo.cho, 출력 협업 diego.yoon. #80은 #26의 출력 생성 경계와 #16의 비움 근거 계약을 재사용한다.
 
 ## 동작
