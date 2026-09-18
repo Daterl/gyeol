@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/profile-cache/cleanup",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
