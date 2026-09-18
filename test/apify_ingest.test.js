@@ -230,7 +230,47 @@ test('the real profile pages decide public, private and undecidable without any 
   // A page that does not state it for this account is never read as public.
   assert.equal(privacyFromHtml(markers.missing.html, markers.missing.handle), null);
   assert.equal(privacyFromHtml(markers.public.html, markers.private.handle), null);
+  assert.equal(privacyFromHtml(markers.public_dotted.html, markers.public_dotted.handle), 'public');
   for (const html of ['', null, '"username":"hauny_bee"', '"is_private":true']) assert.equal(privacyFromHtml(html, 'hauny_bee'), null);
+});
+
+// A flag that belongs to some other account on the page must never decide this one (PR #84 re-review, HIGH).
+const otherAccountPublic = '"is_private":false},"xig_logged_out_dynamic_dialog_info":{"shared_entity_id":"1","user":{"pk":"1","username":"other"}}';
+const unboundCounterexamples = {
+  // The review's counterexample: the target's own flag carries a JSON-legal space so a bare marker scan
+  // misses it, leaving another account's flag as the only one on the page.
+  spaced_target_and_other: '{"profile":{"username":"hauny_bee","is_private": true},"recommended":{"username":"other","is_private":false}}',
+  // The target's flag is gone entirely and a stranger's public flag remains.
+  target_marker_gone: '{"recommended":{"username":"other","is_private":false}}',
+  // A well-formed profile structure that simply is not this account's.
+  other_account_bound: otherAccountPublic,
+  // This account is named on the page, but nothing states the flag as its own.
+  named_but_unbound: '{"username":"hauny_bee"}' + otherAccountPublic,
+};
+
+test("another account's public flag is never read as this account's, so no paid run starts", async () => {
+  for (const [name, html] of Object.entries(unboundCounterexamples)) {
+    assert.equal(privacyFromHtml(html, 'hauny_bee'), null, name);
+    const calls = [];
+    const client = createInstagramIngest({ token: 'server-secret-token', secret, fetchImpl: async u => {
+      calls.push(String(u));
+      return String(u).startsWith('https://www.instagram.com/') ? new Response(html) : Response.json({ data: { id: 'run1' } });
+    } });
+    await assert.rejects(client.start({ url: 'https://www.instagram.com/hauny_bee/' }),
+      e => e.code === 'ACCOUNT_UNCONFIRMED' && e.details.stage === 'precheck' && e.details.account === 'hauny_bee', name);
+    // The profile page was read once and the provider was never called.
+    assert.deepEqual(calls, ['https://www.instagram.com/hauny_bee/'], name);
+  }
+});
+
+test("the account's own flag decides it even when a stranger's contradicting flag shares the page", () => {
+  // Real private page + a forged public structure for someone else: still private, still blocked.
+  assert.equal(privacyFromHtml(markers.private.html + otherAccountPublic, markers.private.handle), 'private');
+  assert.equal(privacyFromHtml(otherAccountPublic + markers.private.html, markers.private.handle), 'private');
+  // A real public page keeps starting, and the stranger's structure does not make it undecidable.
+  assert.equal(privacyFromHtml(markers.public.html + otherAccountPublic, markers.public.handle), 'public');
+  // Two flags claiming the same account contradict each other, so the account stays undecided.
+  assert.equal(privacyFromHtml(markers.private.html + markers.private.html, markers.private.handle), null);
 });
 
 test('a private account is refused before the provider is paid, and is told what to do instead', async () => {
