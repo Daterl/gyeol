@@ -75,7 +75,7 @@ Preview 환경·Blob 원자성·실제 제공자·브라우저 통합 검증은 
 
 ### 하위 모듈 호환성
 
-기존 `buildFeed`, `handleLegacyFeed`, `validateOrderRequest` 및 `OrderRequest`는 3~20장과 선택 `identity` 경로의 회귀·로컬 사용을 위해 유지한다. 프로덕션 POST는 이 경로를 호출하지 않는다. `GET /api/feed?mock=1`은 15장 합성 샘플 전용이며 사용자 결과나 공개 프로필 연결 증거로 사용하지 않는다.
+기존 `buildFeed`, `handleLegacyFeed`, `validateOrderRequest` 및 `OrderRequest`는 3~15장과 선택 `identity` 경로의 회귀·로컬 사용을 위해 유지한다. 프로덕션 POST는 이 경로를 호출하지 않는다. `GET /api/feed?mock=1`은 15장 합성 샘플 전용이며 사용자 결과나 공개 프로필 연결 증거로 사용하지 않는다.
 
 실행 가능한 결정적 경계 fixture는 [curation.sample.json](../fixtures/curation.sample.json), 검사는 [curation.test.js](../test/curation.test.js)다. 제공자·저장소·실모델·사람 검증 완료의 증거는 아니다.
 
