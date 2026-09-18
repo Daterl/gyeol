@@ -1,10 +1,10 @@
-# #144 implementation plan
+# #144 backend completion plan
 
-Keep `buildFeed`, the identity validator, compose/order, and the legacy HTTP helper as compatibility surfaces. Replace the production `handleFeed` boundary with a strict request containing only a server-resolved profile snapshot ID, 3–15 photos, and an optional prompt. The Next route already imports that handler.
+Scope: preserve existing curation/order and PR154 changes; finish browser connection and G4 → generate → G5 handoff without modifying UI or invoking paid providers.
 
-1. Add regression tests for missing/unverified/expired snapshots, forbidden client snapshots, 2/16 versus 3/15 photos, and ID preservation before changing the production handler.
-2. Resolve the snapshot through #143's trusted server interface, build existing current/reference or freetext profiles, and reuse compose/order. Preserve the profile and prompt provenance separately; never describe public visibility as ownership verification.
-3. Return all photo IDs with `included: true`; retain exclusion suggestions as suggestions only. Keep existing feed/context compatible with the caption API.
-4. Add a deterministic offline G5 fixture, document the HTTP and resolver boundaries, run targeted and repository checks, and hand off independent review to the coordinator (this worker may not spawn agents).
-
-No edits to generation, voice, cache/ingest, or UI ownership. No paid calls, deployment, or claims of human acceptance.
+1. Merge latest origin/develop; inspect ADR-0008/0005 and existing cache/generation contracts.
+2. Send exact browser contract to coordinator before implementation: anonymous signed HttpOnly cookie, session-bound CSRF, exact configured HTTPS origin, durable global limits and retained bearer automation.
+3. Implement server helpers and profile bootstrap route; isolate durable quota records from profile cleanup with bounded reused keys and bounded CAS attempts.
+4. Cover adversarial authorization/origin/cookie/CSRF and concurrent/ambiguous storage outcomes with provider-not-called assertions.
+5. Add checked-in 3/15 × blank/written prompt fake-provider fixture spanning feed → generation → G5, preserving seed/omitted, IDs and provenance.
+6. Run focused and full checks, build/bundle scan and local smoke; update schema/report, commit with Lore trailers and push existing Draft PR153. Coordinator owns UI integration, independent review and live Preview gates.

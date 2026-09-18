@@ -1,0 +1,653 @@
+{
+  "description": "Offline G4 → generate → G5 contract fixture. Synthetic safe facts and fixed fake-provider responses; not live provider or quality evidence. Base profile resolution: curation.sample.json; base photo measurements: test/order.real20.json.",
+  "now": "2026-09-18T10:00:00.000Z",
+  "facts_by_photo_id": {
+    "ph_01": [
+      "사진 속 기록 1"
+    ],
+    "ph_02": [
+      "사진 속 기록 2"
+    ],
+    "ph_03": [
+      "사진 속 기록 3"
+    ],
+    "ph_04": [
+      "사진 속 기록 4"
+    ],
+    "ph_05": [
+      "사진 속 기록 5"
+    ],
+    "ph_06": [
+      "사진 속 기록 6"
+    ],
+    "ph_07": [
+      "사진 속 기록 7"
+    ],
+    "ph_08": [
+      "사진 속 기록 8"
+    ],
+    "ph_09": [
+      "사진 속 기록 9"
+    ],
+    "ph_10": [
+      "사진 속 기록 10"
+    ],
+    "ph_11": [
+      "사진 속 기록 11"
+    ],
+    "ph_12": [
+      "사진 속 기록 12"
+    ],
+    "ph_13": [
+      "사진 속 기록 13"
+    ],
+    "ph_14": [
+      "사진 속 기록 14"
+    ],
+    "ph_15": [
+      "사진 속 기록 15"
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "3-blank",
+      "count": 3,
+      "prompt": "",
+      "expected_photo_ids": [
+        "ph_01",
+        "ph_02",
+        "ph_03"
+      ],
+      "expected_target_source": "ig_reference",
+      "provider_response": {
+        "output": {
+          "title": "사진으로 남긴 기록",
+          "slots": [
+            {
+              "photo_id": "ph_03",
+              "position": 1,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 3\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_03",
+                  "note": "사진 속 기록 3"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_01",
+              "position": 2,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 1\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_01",
+                  "note": "사진 속 기록 1"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_02",
+              "position": 3,
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "사진만 남겨 두어도 좋아요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_02",
+                  "note": "사진 속 기록 2"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "3-written",
+      "count": 3,
+      "prompt": "모든 사진에 문장을 써 줘, 짧게, 조용하게",
+      "expected_photo_ids": [
+        "ph_01",
+        "ph_02",
+        "ph_03"
+      ],
+      "expected_target_source": "freetext",
+      "provider_response": {
+        "output": {
+          "title": "사진으로 남긴 기록",
+          "slots": [
+            {
+              "photo_id": "ph_03",
+              "position": 1,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 3\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_03",
+                  "note": "사진 속 기록 3"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_01",
+              "position": 2,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 1\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_01",
+                  "note": "사진 속 기록 1"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_02",
+              "position": 3,
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "사진만 남겨 두어도 좋아요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_02",
+                  "note": "사진 속 기록 2"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "15-blank",
+      "count": 15,
+      "prompt": "",
+      "expected_photo_ids": [
+        "ph_01",
+        "ph_02",
+        "ph_03",
+        "ph_04",
+        "ph_05",
+        "ph_06",
+        "ph_07",
+        "ph_08",
+        "ph_09",
+        "ph_10",
+        "ph_11",
+        "ph_12",
+        "ph_13",
+        "ph_14",
+        "ph_15"
+      ],
+      "expected_target_source": "ig_reference",
+      "provider_response": {
+        "output": {
+          "title": "사진으로 남긴 기록",
+          "slots": [
+            {
+              "photo_id": "ph_11",
+              "position": 1,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 11\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_11",
+                  "note": "사진 속 기록 11"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_02",
+              "position": 2,
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "사진만 남겨 두어도 좋아요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_02",
+                  "note": "사진 속 기록 2"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_09",
+              "position": 3,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 9\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_09",
+                  "note": "사진 속 기록 9"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_01",
+              "position": 4,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 1\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_01",
+                  "note": "사진 속 기록 1"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_03",
+              "position": 5,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 3\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_03",
+                  "note": "사진 속 기록 3"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_06",
+              "position": 6,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 6\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_06",
+                  "note": "사진 속 기록 6"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_13",
+              "position": 7,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 13\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_13",
+                  "note": "사진 속 기록 13"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_14",
+              "position": 8,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 14\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_14",
+                  "note": "사진 속 기록 14"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_04",
+              "position": 9,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 4\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_04",
+                  "note": "사진 속 기록 4"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_07",
+              "position": 10,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 7\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_07",
+                  "note": "사진 속 기록 7"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_08",
+              "position": 11,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 8\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_08",
+                  "note": "사진 속 기록 8"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_15",
+              "position": 12,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 15\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_15",
+                  "note": "사진 속 기록 15"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_12",
+              "position": 13,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 12\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_12",
+                  "note": "사진 속 기록 12"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_10",
+              "position": 14,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 10\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_10",
+                  "note": "사진 속 기록 10"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_05",
+              "position": 15,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 5\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_05",
+                  "note": "사진 속 기록 5"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "15-written",
+      "count": 15,
+      "prompt": "모든 사진에 문장을 써 줘, 짧게, 조용하게",
+      "expected_photo_ids": [
+        "ph_01",
+        "ph_02",
+        "ph_03",
+        "ph_04",
+        "ph_05",
+        "ph_06",
+        "ph_07",
+        "ph_08",
+        "ph_09",
+        "ph_10",
+        "ph_11",
+        "ph_12",
+        "ph_13",
+        "ph_14",
+        "ph_15"
+      ],
+      "expected_target_source": "freetext",
+      "provider_response": {
+        "output": {
+          "title": "사진으로 남긴 기록",
+          "slots": [
+            {
+              "photo_id": "ph_11",
+              "position": 1,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 11\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_11",
+                  "note": "사진 속 기록 11"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_02",
+              "position": 2,
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "사진만 남겨 두어도 좋아요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_02",
+                  "note": "사진 속 기록 2"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_09",
+              "position": 3,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 9\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_09",
+                  "note": "사진 속 기록 9"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_01",
+              "position": 4,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 1\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_01",
+                  "note": "사진 속 기록 1"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_03",
+              "position": 5,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 3\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_03",
+                  "note": "사진 속 기록 3"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_06",
+              "position": 6,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 6\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_06",
+                  "note": "사진 속 기록 6"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_13",
+              "position": 7,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 13\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_13",
+                  "note": "사진 속 기록 13"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_14",
+              "position": 8,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 14\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_14",
+                  "note": "사진 속 기록 14"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_04",
+              "position": 9,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 4\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_04",
+                  "note": "사진 속 기록 4"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_07",
+              "position": 10,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 7\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_07",
+                  "note": "사진 속 기록 7"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_08",
+              "position": 11,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 8\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_08",
+                  "note": "사진 속 기록 8"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_15",
+              "position": 12,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 15\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_15",
+                  "note": "사진 속 기록 15"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_12",
+              "position": 13,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 12\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_12",
+                  "note": "사진 속 기록 12"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_10",
+              "position": 14,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 10\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_10",
+                  "note": "사진 속 기록 10"
+                }
+              ]
+            },
+            {
+              "photo_id": "ph_05",
+              "position": 15,
+              "caption_state": "seed",
+              "text": "쓸 거리: 사진 속 기록 5\n이 중 기억에 남은 건?",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "ph_05",
+                  "note": "사진 속 기록 5"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

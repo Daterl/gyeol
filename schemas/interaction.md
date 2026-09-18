@@ -21,14 +21,20 @@
 
 ## 공개 프로필 연결 — POST /api/profile
 
-서버 운영용 연결 경로이며 기존 ingest와 같은 `Authorization: Bearer <APIFY_INGEST_ACCESS_KEY>`를 요구한다. 운영 키를 브라우저 번들이나 공개 설정에 넣지 않는다. 사용자용 자격 증명 전달/UI 연결은 별도 통합이다.
+브라우저는 먼저 `POST /api/profile/session`에 JSON `{}`와 `credentials: same-origin`을 보낸다. 서버는 `{csrfToken,expires_at}`(epoch milliseconds)과 30분 `__Host-gyeol-profile` 쿠키(`HttpOnly; Secure; SameSite=Strict; Path=/`)를 발급한다. 이후 `/api/profile` 요청마다 같은 쿠키와 `X-Gyeol-CSRF: <csrfToken>`을 보낸다. 두 경로 모두 요청 URL과 `Origin`이 서버의 정확한 HTTPS `GYEOL_APP_ORIGIN`과 같고 `Sec-Fetch-Site: same-origin`이어야 한다. 와일드카드·Host 유추·HTTP fallback은 없다. CSRF 토큰은 메모리에 유지하고 401이면 한 번 bootstrap한 뒤 사용자 요청을 재시도한다.
+
+세션은 **익명 브라우저 연속성**이며 로그인·계정 소유권 증명이 아니다. 비브라우저는 Origin을 흉내낼 수 있으므로 전역 durable 예산을 함께 적용한다. 운영 자동화는 기존 `Authorization: Bearer <APIFY_INGEST_ACCESS_KEY>`를 유지하되 `Origin`/`Sec-Fetch-Site` 헤더를 보내지 않는다. 잘못된 bearer를 쿠키로 우회하지 않는다. 운영 키·서명 비밀은 브라우저 번들·JSON·공개 설정에 넣지 않는다.
 
 - 연결: `{schema_version:"1.0",action:"connect",profile_url,confirmLive:true,refresh?:boolean}`. 수집을 시작할 수 있으므로 `confirmLive:true`를 명시해야 한다. `refresh` 기본값은 false이며, 24시간 제한과 reservation은 #143 캐시가 적용한다. 이 요청의 동의는 프로필 소유권 확인이나 공유 PII 선택이 아니다.
 - 상태: `{schema_version:"1.0",action:"status",profile_url}`. 저장한 진행 상태를 조회하고 실행 중인 제공자 작업의 결과를 확인한다. 새로운 작업을 시작하지 않는다. 서버의 provider receipt를 요청으로 받지 않는다.
 - 성공: `{status,refresh_required,expires_at?,snapshotId?,error_code?}`. pending은 202, 그 외 확인된 상태는 200이다. `expires_at`은 #143 연결 결과와 동일한 epoch milliseconds다. `snapshotId`는 public일 때만 반환되며 큐레이션 요청의 `profile_snapshot_id`로 전달한다. private/unconfirmed/timeout/not_found/expired 등은 서로 구분하고 공개 성공으로 바꾸지 않는다.
-- 405 METHOD_NOT_ALLOWED, 401 UNAUTHORIZED, 400 INVALID_REQUEST, 413 REQUEST_TOO_LARGE, 503 PROFILE_CONNECTION_UNAVAILABLE, 502 PROFILE_CONNECTION_FAILED. 본문은 8192 bytes 이하, 응답은 no-store다. 스냅샷·provider receipt·비밀 키·저장소 경로·원본 오류 상세는 응답에 넣지 않는다.
+- 405 METHOD_NOT_ALLOWED, 401 UNAUTHORIZED, 403 FORBIDDEN, 429 RATE_LIMITED (`Retry-After` seconds), 400 INVALID_REQUEST, 413 REQUEST_TOO_LARGE, 503 PROFILE_CONNECTION_UNAVAILABLE, 502 PROFILE_CONNECTION_FAILED. 본문은 8192 bytes 이하, 응답은 no-store다. 스냅샷·provider receipt·비밀 키·저장소 경로·원본 오류 상세는 응답에 넣지 않는다.
 
-배포 전 서버 설정은 `APIFY_INGEST_ACCESS_KEY`, `PROFILE_CACHE_SECRET`, `BLOB_READ_WRITE_TOKEN`이다. 실제 수집에는 `APIFY_TOKEN`과 `APIFY_INGEST_RECEIPT_SECRET`도 필요하다. 보호된 연결 route의 자격 증명·Blob 권한·실제 제공자 동작 검증과 요청 제한 운영은 별도 배포 게이트이며, 이 변경에서 유료 호출이나 배포는 실행하지 않았다.
+배포 전 서버 설정은 `APIFY_INGEST_ACCESS_KEY`, `PROFILE_CACHE_SECRET`, `BLOB_READ_WRITE_TOKEN`이며, 브라우저 경로는 독립된 32자 이상 `GYEOL_BROWSER_SESSION_SECRET`과 정확한 Preview HTTPS origin인 `GYEOL_APP_ORIGIN`이 추가로 필요하다. 실제 수집에는 `APIFY_TOKEN`과 `APIFY_INGEST_RECEIPT_SECRET`도 필요하다. 누락·저장소 불확실성은 503으로 닫고 제공자를 호출하지 않는다.
+
+`lib/profile-request-limit.js`는 Blob의 조건부 생성/ETag 갱신으로 UTC 고정 1시간 창마다 bootstrap 120회, connect 20회, status 600회의 전역 상한을 적용한다. connect/status는 추가로 세션 해시 256개 버킷마다 각각 3회/60회 상한을 적용한다. 버킷 충돌은 더 엄격하게 제한할 수 있다. 세션 변경·IP 위조도 전역 상한을 늘리지 못한다. 부분 소모는 환불하지 않으며 CAS 재시도는 최대 8회다. 최대 515개 키를 `profile-request-limit/v1/`에서 재사용하고 새 창의 첫 요청이 CAS로 이전 count를 교체한다. 프로필 캐시 정리와 prefix가 분리되며 세션별 무한 객체나 PII를 저장하지 않는다. 고정 창 경계의 연속 요청은 두 창 예산을 소비할 수 있다.
+
+Preview 환경·Blob 원자성·실제 제공자·브라우저 통합 검증은 별도 게이트다. 배포·유료 호출은 실행하지 않았다.
 
 ## 큐레이션 — POST /api/feed
 
@@ -109,3 +115,7 @@
 | 500 | INTERNAL_ERROR | 사용자 재시도, 상세 내부 오류는 노출하지 않음 |
 
 Abort/초기화는 클라이언트 취소이며 서버 성공/실패 완료를 기다려 화면을 잠그지 않는다. raw provider 본문·키·헤더는 사용자 오류나 저장 증거에 넣지 않는다.
+
+## G4 → generate → G5 재현 fixture
+
+`fixtures/curation-handoff.sample.json`과 `test/curation-handoff.test.js`가 3/15장 × 빈/작성 프롬프트 네 경우를 고정 fake-provider로 검증한다. G5는 `{feed,context,curation,output,omission}`을 소비하며 생성 요청에는 `{schema_version:"1.0",mode:"all",feed,context}`만 보낸다. `curation`의 공개 프로필 출처·시각·소유권 미확인과 prompt 근거는 모델 생성 전후에 보존하고, 모든 슬롯은 `photo_id`로 결합한다. omitted는 캡션 상태이며 사진 제외를 뜻하지 않는다. 전체 캡션 요청도 유효한 seed/omitted 응답을 강제 변환하지 않는다. fixture는 합성 관측 사실을 사용한 회귀 계약이며 사진 분석·AI 품질·실제 제공자 검증 근거가 아니다.

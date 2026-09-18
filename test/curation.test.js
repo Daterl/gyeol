@@ -162,8 +162,8 @@ async function connectedCache() {
   const cache=createProfileCache({storage,ingest,secret,now:()=>time});
   const accessKey='fixture-only-access-key-32-characters';
   const connectRequest=action=>new Request('http://localhost/api/profile',{method:'POST',headers:{'content-type':'application/json',authorization:`Bearer ${accessKey}`},body:JSON.stringify({schema_version:'1.0',action,profile_url:record.source_url,...(action==='connect'?{confirmLive:true}:{})})});
-  assert.equal((await handleProfileConnection(connectRequest('connect'),{accessKey,cache})).status,202);
-  const inspected=await handleProfileConnection(connectRequest('status'),{accessKey,cache});
+  assert.equal((await handleProfileConnection(connectRequest('connect'),{accessKey,limiter:{take:async()=>{}},cache})).status,202);
+  const inspected=await handleProfileConnection(connectRequest('status'),{accessKey,limiter:{take:async()=>{}},cache});
   assert.equal(inspected.status,200);
   const connection=await inspected.json();
   assert.equal(connection.status,'public');
