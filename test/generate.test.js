@@ -43,7 +43,10 @@ test('all generation preserves each contract path and loads actual shared/output
     assert.ok(body.system.includes(guard));assert.match(body.system,/정확히.*한/);
     assert.equal(body.output_config.format.type,'json_schema');
     const sent=JSON.parse(body.messages[0].content[0].text);
-    assert.equal(sent.slots.length,3);assert.deepEqual(sent.applied_profile,source.feed.applied_profile);
+    assert.equal(sent.slots.length,3);
+    assert.deepEqual(Object.keys(sent.applied_profile).sort(),['disclosure','language']);
+    assert.equal(sent.applied_profile.disclosure,source.feed.applied_profile.disclosure);
+    assert.ok(!JSON.stringify(sent.applied_profile).includes('evidence'));
     assert.equal(body.messages[0].content[0].type,'text');
   }
 });
@@ -61,11 +64,60 @@ test('target-only current profiles stay traceable in the feed but produce byte-i
     assert.equal(built.feed.applied_profile.current_profile_id,currentIds.at(-1));
     bodies.push(seen[1].options.body);
     const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
-    assert.equal(sent.applied_profile.current_profile_id,null);
+    assert.equal(Object.hasOwn(sent.applied_profile,'current_profile_id'),false);
   }
   assert.equal(currentIds[0],null);
   assert.ok(currentIds[1]);assert.ok(currentIds[2]);assert.notEqual(currentIds[1],currentIds[2]);
   assert.equal(bodies[0],bodies[1]);assert.equal(bodies[1],bodies[2]);
+});
+
+test('model request whitelists photo facts and applied language values in all and slot modes',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'짧고 담백하게'},currentPosts(['기록',''])));
+  const rationale=structuredClone(built.feed.slots[0].rationale);
+  for(const mode of ['all','slot']) {
+    const seen=[];
+    const provider=mode==='all'?filledOutput(built.feed):{slot:filledOutput(built.feed).output.slots[0]};
+    const requested={schema_version:'1.0',mode,feed:structuredClone(built.feed),context:structuredClone(built.context),
+      ...(mode==='slot'?{photo_id:built.feed.slots[0].photo_id}:{})};
+    await generateOutput(requested,{apiKey:'fake-key',fetchImpl:transport(provider,seen)});
+    const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
+    assert.deepEqual(Object.keys(sent.applied_profile).sort(),['disclosure','language']);
+    assert.ok(!JSON.stringify(sent.applied_profile).match(/target_profile_id|current_profile_id|deltas|visual|sequence|confidence|evidence/));
+    for(const slot of sent.slots) {
+      assert.deepEqual(Object.keys(slot).sort(),['caption_inputs','photo_id','position']);
+      assert.deepEqual(Object.keys(slot.caption_inputs),['describable_facts']);
+    }
+    assert.ok(!JSON.stringify(sent).match(/rationale|narrative_role|adjacent_overlap|is_visual_peak|omit_suggestion/));
+    assert.deepEqual(requested.feed.slots[0].rationale,rationale);
+  }
+});
+
+test('internal ordering details fail closed in every public model field for all and slot modes',async()=>{
+  const allCases=[];
+  const title=filledOutput();title.output.title='밝기와 채도로 연결한 세 장';allCases.push(['title',title]);
+  const text=filledOutput();text.output.slots[0].text='밝기 0.712인 단색 카드';allCases.push(['text',text]);
+  const reason=output();reason.output.slots[0].omit_reason='앞자리 사진과 측정 색 거리로 이 자리에 뒀다';allCases.push(['omit_reason',reason]);
+  const note=filledOutput();note.output.slots[0].evidence[0].note='is_visual_peak=true라 선택했다';allCases.push(['evidence.note',note]);
+  for(const [field,response] of allCases) {
+    await assert.rejects(generateOutput(input('all'),options(response)),{code:'MODEL_CONTRACT'},`all ${field}`);
+  }
+
+  const slotCases=[];
+  const slotText=structuredClone(fixture.output.slots[0]);slotText.text='caption_inputs를 사용했다';slotCases.push(['text',slotText]);
+  const slotReason=structuredClone(fixture.all_omitted.slots[0]);slotReason.omit_reason='점수가 가장 높아 1번에 뒀다';slotCases.push(['omit_reason',slotReason]);
+  const slotNote=structuredClone(fixture.output.slots[0]);slotNote.evidence[0].note='adjacent_overlap=0.8';slotCases.push(['evidence.note',slotNote]);
+  for(const [field,response] of slotCases) {
+    await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'},`slot ${field}`);
+  }
+});
+
+test('ordinary brightness or saturation wording remains valid when the photo facts contain it',async()=>{
+  const req=input();
+  const fact='채도가 낮은 단색 카드';
+  req.feed.slots[0].caption_inputs.describable_facts=[fact];
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
+  const provider=filledOutput(req.feed);provider.output.title='채도가 낮은 카드들';
+  assert.deepEqual(slotsOnly(await generateOutput(req,options(provider))),provider);
 });
 
 test('single slot sends only its photo and rejects other photo, position, user state or foreign evidence',async()=>{
