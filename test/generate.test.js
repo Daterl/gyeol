@@ -123,7 +123,12 @@ test('negated or non-caption coverage wording stays unset through generation',as
   const cases=[
     '말수가 적지는 않게 써 줘','전부 써 주지는 마','한 장도 비우지 않는 건 싫어요',
     '싫은 건 모든 사진에 문장을 쓰는 거예요','사진마다 써 줘, 하지만 사진마다 쓰지 마',
-    '사진마다 색감을 다르게 해 줘','몇 장만 색감이 진하게 해 줘','말수는 적게, 하지만 사진마다 색감은 풍부하게'
+    '사진마다 색감을 다르게 해 줘','몇 장만 색감이 진하게 해 줘','말수는 적게, 하지만 사진마다 색감은 풍부하게',
+    '한 장도 비우지 말라는 건 원하지 않아요','원하지 않는 건 모든 사진에 문장을 쓰는 거예요',
+    '제가 싫은 건 사진마다 문장을 쓰는 거예요','내가 싫은 건 전부 쓰는 거야',
+    '하지 말아야 할 건 모든 사진에 문장을 쓰는 거예요','원하지 않는 건 말수가 적은 기록이에요',
+    '말수가 적당했으면','말수가 적절했으면','말수가 적혀 있는 사진','말수가 적어도 세 문장은 필요해요',
+    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬'
   ];
   for(const text of cases) {
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
@@ -131,6 +136,18 @@ test('negated or non-caption coverage wording stays unset through generation',as
     const provider=filledOutput(built.feed);
     assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider,text);
   }
+});
+
+test('an unrelated contrast clause preserves the earlier explicit coverage request',async()=>{
+  const sparse=await buildFeed(orderInput({kind:'text',text:'몇 장에만 문장을 써 줘, 하지만 사진 순서는 그대로'}));
+  assert.equal(sparse.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(sparse),options(filledOutput(sparse.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  const all=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘, 하지만 색감은 차분하게'}));
+  assert.equal(all.context.target.language.caption_coverage.value,'all');
+  const provider=filledOutput(all.feed);
+  assert.deepEqual(await generateOutput(generatedInput(all),options(provider)),provider);
 });
 
 test('client cannot forge matching context and applied coverage from unrelated freetext',async()=>{
