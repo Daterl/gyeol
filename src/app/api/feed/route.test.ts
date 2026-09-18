@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import expectedFeed from '../../../../fixtures/ordered_feed.sample.json';
-import { GET, HEAD, OPTIONS } from './route';
+import { GET, HEAD, OPTIONS, POST } from './route';
 
 describe('Next.js foundation HTTP adapter', () => {
   it('preserves the raw feed, no-store and all resources without a network call', async () => {
@@ -48,6 +48,33 @@ describe('Next.js foundation HTTP adapter', () => {
     expect(response.status).toBe(status);
     expect(await response.json()).toMatchObject({ error: { code } });
     expect(response.headers.get('cache-control')).toBe('no-store');
+  });
+
+  it('rejects the legacy optional-profile POST before any network access', async () => {
+    const fetchSpy = vi
+      .spyOn(globalThis, 'fetch')
+      .mockRejectedValue(new Error('No network'));
+    try {
+      const response = await POST(
+        new Request('http://localhost/api/feed', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            schema_version: '1.0',
+            session_id: 'legacy',
+            photos: [],
+            identity: { target: { kind: 'none' }, current: { kind: 'none' } },
+          }),
+        }),
+      );
+      expect(response.status).toBe(400);
+      expect(await response.json()).toMatchObject({
+        error: { code: 'INVALID_REQUEST' },
+      });
+      expect(fetchSpy).not.toHaveBeenCalled();
+    } finally {
+      fetchSpy.mockRestore();
+    }
   });
 
   it('preserves method rejection and omits the HTTP HEAD body', async () => {

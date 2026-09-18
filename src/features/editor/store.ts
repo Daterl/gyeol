@@ -72,6 +72,10 @@ const arrange = (output: F3Export, order: string[]): F3Export => ({
 // Instantiate inside the editor Client Component, never as a server/module singleton.
 export function createEditorStore(
   persistence: DraftStorage | null = createBrowserDraftStorage(),
+  extension?: {
+    save: () => Pick<DraftMetadata, 'curationState'>;
+    restore: (metadata: DraftMetadata) => void;
+  },
 ) {
   let active: AbortController | null = null;
   let persistenceQueue = Promise.resolve();
@@ -122,6 +126,7 @@ export function createEditorStore(
       set({ ...initialState });
     };
     const metadata = (state: EditorState): DraftMetadata => ({
+      ...extension?.save(),
       draft: state.draft,
       order: state.order,
       original: state.original,
@@ -139,7 +144,11 @@ export function createEditorStore(
       clearDraft: async () => {
         persistedPhotoKey = '';
         resetState();
-        if (persistence) await enqueuePersistence(persistence.clear);
+        if (persistence)
+          await enqueuePersistence(async () => {
+            await persistence.clear();
+            persistedPhotoKey = '';
+          });
       },
       editCaption: (id, text) => {
         const draft = get().draft;
@@ -330,9 +339,12 @@ export function createEditorStore(
         if (!persistence) return;
         const state = get();
         if (state.photos.length < 3) {
-          if (!persistedPhotoKey) return;
-          persistedPhotoKey = '';
-          return enqueuePersistence(persistence.clear);
+          // Decide after earlier saves finish, including the first binary save.
+          return enqueuePersistence(async () => {
+            if (!persistedPhotoKey) return;
+            await persistence.clear();
+            persistedPhotoKey = '';
+          });
         }
         const value = metadata(state);
         const photoKey = JSON.stringify(value.photoIds);
@@ -359,7 +371,6 @@ export function createEditorStore(
         const epoch = ++restoreEpoch;
         const restored = await persistence.load();
         if (!restored || epoch !== restoreEpoch) return false;
-        resetState(false);
         const photos: SelectedPhoto[] = [];
         try {
           for (const photoId of restored.photoIds) {
@@ -379,6 +390,7 @@ export function createEditorStore(
           await persistence.clear();
           return false;
         }
+        resetState(false);
         set({
           draft: restored.draft,
           order: restored.order,
@@ -389,6 +401,7 @@ export function createEditorStore(
           prompt: restored.prompt,
           request: { status: restored.original ? 'ready' : 'idle' },
         });
+        extension?.restore(restored);
         persistedPhotoKey = JSON.stringify(restored.photoIds);
         return true;
       },

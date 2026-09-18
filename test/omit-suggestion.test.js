@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {buildFeed,handleFeed,handleAnalyze} from '../lib/pipeline.js';
+import {buildFeed,handleLegacyFeed as handleFeed,handleAnalyze} from '../lib/pipeline.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {resetAnalysisState} from '../lib/photo_analysis.js';
 import {withOmitSuggestions} from '../lib/omit-suggestion.js';

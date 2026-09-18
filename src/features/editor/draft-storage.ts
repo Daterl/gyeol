@@ -4,6 +4,8 @@ import {
   MAX_UPLOAD_BYTES,
   validateFeedResponse,
 } from '../../../lib/interaction.js';
+import { validateCurationState } from './curation-persistence';
+import type { CurationEdits } from './curation-store';
 
 const DATABASE_NAME = 'gyeol-editor';
 const DATABASE_VERSION = 1;
@@ -17,6 +19,7 @@ export type DraftProfileReference = {
 };
 
 export type DraftMetadata = {
+  curationState?: CurationEdits;
   draft: F3Export | null;
   order: string[];
   original: FeedResponse | null;
@@ -105,6 +108,12 @@ function validateMetadata(value: unknown): asserts value is StoredMetadata {
   )
     throw new Error('Invalid draft metadata');
   validateProfileReference(profileReference);
+  if (value.curationState !== undefined)
+    validateCurationState(
+      value.curationState,
+      photoIds as string[],
+      original as FeedResponse | null,
+    );
   if (original !== null) {
     validateFeedResponse(original);
     const validatedOriginal = original as FeedResponse;
@@ -169,6 +178,9 @@ const storedMetadata = (
   metadata: DraftMetadata,
   revision: string,
 ): StoredMetadata => ({
+  ...(metadata.curationState
+    ? { curationState: structuredClone(metadata.curationState) }
+    : {}),
   draft: structuredClone(metadata.draft),
   order: [...metadata.order],
   original: structuredClone(metadata.original),
@@ -216,30 +228,41 @@ export function createDraftStorage(
       }),
     load: () =>
       run(async () => {
+        // I/O failures are retryable; only proven invalid data is discarded.
+        const raw = local.getItem(LOCAL_KEY);
+        if (raw === null) return null;
+        let metadata: StoredMetadata;
         try {
-          const raw = local.getItem(LOCAL_KEY);
-          if (raw === null) return null;
-          const metadata: unknown = JSON.parse(raw);
-          validateMetadata(metadata);
-          const storedImages = await binary.load(metadata.revision);
-          validateImages(storedImages, metadata);
-          if (lock) await Promise.allSettled([binary.prune(metadata.revision)]);
-          return {
-            draft: structuredClone(metadata.draft),
-            images: new Map(
-              storedImages.images.map(({ blob, photoId }) => [photoId, blob]),
-            ),
-            order: [...metadata.order],
-            original: structuredClone(metadata.original),
-            originalOutput: structuredClone(metadata.originalOutput),
-            photoIds: [...metadata.photoIds],
-            profileReference: structuredClone(metadata.profileReference),
-            prompt: metadata.prompt,
-          };
+          const parsed: unknown = JSON.parse(raw);
+          validateMetadata(parsed);
+          metadata = parsed;
         } catch {
           await discard();
           return null;
         }
+        const storedImages = await binary.load(metadata.revision);
+        try {
+          validateImages(storedImages, metadata);
+        } catch {
+          await discard();
+          return null;
+        }
+        if (lock) await Promise.allSettled([binary.prune(metadata.revision)]);
+        return {
+          ...(metadata.curationState
+            ? { curationState: structuredClone(metadata.curationState) }
+            : {}),
+          draft: structuredClone(metadata.draft),
+          images: new Map(
+            storedImages.images.map(({ blob, photoId }) => [photoId, blob]),
+          ),
+          order: [...metadata.order],
+          original: structuredClone(metadata.original),
+          originalOutput: structuredClone(metadata.originalOutput),
+          photoIds: [...metadata.photoIds],
+          profileReference: structuredClone(metadata.profileReference),
+          prompt: metadata.prompt,
+        };
       }),
     save: (metadata, images) =>
       run(async () => {

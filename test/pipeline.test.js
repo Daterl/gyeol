@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import sharp from 'sharp';
-import {buildFeed,handleAnalyze,handleFeed} from '../lib/pipeline.js';
+import {buildFeed,handleAnalyze,handleLegacyFeed as handleFeed} from '../lib/pipeline.js';
 import {validateFeedResponse,validateErrorResponse} from '../lib/interaction.js';
 const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json',import.meta.url),'utf8'));
 const input=(count=3)=>({schema_version:'1.0',session_id:'pipeline-test',photos:Array.from({length:count},(_,index)=>({...structuredClone(fixture.context.photos[index%3]),photo_id:'photo_'+index,input_index:index})),identity:{target:{kind:'none'},current:{kind:'none'}}});
@@ -230,4 +230,22 @@ test('#69 P2 flipping an unobserved photo’s composition constant changes nothi
   flipped.photos[2].composition='negative_space';
   const run=async body=>ordered((await (await handleFeed(request('/api/feed',body))).json()).feed);
   assert.deepEqual(await run(flipped),await run(base),'관측하지 않은 구도 값이 순서를 바꿨다');
+});
+
+// #144 integration of #145: content observations explain the preserved slot but
+// must not change a tied measurement order or pretend they were ordering scores.
+test('tied measurements preserve input order while each slot cites own and adjacent observations',async()=>{
+  const body=input();
+  body.photos=body.photos.map((photo,index)=>({...photo,analysis_source:'vision_model',model:'offline-fixture',describable_facts:[['가방이 보인다','신발이 놓여 있다','개가 앉아 있다'][index]]}));
+  const {feed}=await buildFeed(body);
+  assert.deepEqual(feed.slots.map(s=>s.photo_id),body.photos.map(p=>p.photo_id));
+  for(const [index,slot] of feed.slots.entries()) {
+    assert.match(slot.rationale.value,/그대로/);
+    assert.ok(slot.rationale.evidence.some(e=>e.ref==='order.no_measured_difference'));
+    for(const photo of [body.photos[index],body.photos[index===0?1:index-1]]) {
+      assert.ok(slot.rationale.value.includes(photo.describable_facts[0]));
+      assert.ok(slot.rationale.evidence.some(e=>e.kind==='uploaded_photo' && e.ref===photo.photo_id && e.note===photo.describable_facts[0]));
+    }
+    assert.match(slot.rationale.value,/순서를 정한 근거는 아니/);
+  }
 });

@@ -171,6 +171,62 @@ export type OrderRequest = {
   schema_version: '1.0';
   session_id: string;
 };
+export type ProfileConnectionRequest = {
+  profile_url: string;
+  schema_version: '1.0';
+} & (
+  | { action: 'connect'; confirmLive: true; refresh?: boolean }
+  | { action: 'status' }
+);
+export type ProfileConnectionResponse = {
+  error_code?: string;
+  expires_at?: number;
+  refresh_required: boolean;
+} & (
+  | { snapshotId: string; status: 'public' }
+  | {
+      status:
+        | 'missing'
+        | 'pending'
+        | 'private'
+        | 'not_found'
+        | 'timeout'
+        | 'cost_limit'
+        | 'unconfirmed'
+        | 'provider_error'
+        | 'expired';
+    }
+);
+// Production ADR-0008 request; OrderRequest remains a legacy module contract.
+export type CurationRequest = {
+  photos: PhotoAnalysis[];
+  profile_snapshot_id: string;
+  profile_url: string;
+  prompt?: string;
+  schema_version: '1.0';
+  session_id: string;
+};
+export type CurationResponse = FeedResponse & {
+  curation: {
+    profile: {
+      collected_at: string;
+      evidence_refs: Record<string, string>;
+      expires_at: string;
+      ownership_verified: false;
+      snapshot_id: string;
+      source_url: string;
+    };
+    profile_snapshot_id: string;
+    prompt: { evidence: Evidence[]; text: string | null };
+    schema_version: '1.0';
+    slots: {
+      exclusion_candidate: OmitSuggestion;
+      included: true;
+      photo_id: string;
+      position: number;
+    }[];
+  };
+};
 export type GenerateRequest = FeedResponse & { schema_version: '1.0' } & (
     | { mode: 'all' }
     | { mode: 'slot'; photo_id: string }
