@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 import test from 'node:test';
 import {
   createShareService,
@@ -381,4 +381,195 @@ test('post-CAS deletion failure still reports committed publish and revoke, then
   await service.cleanup();
   assert.equal((await store.list(`shares/${staged.pending.shareId}/versions/`)).length, 0);
   assert.equal((await store.list(`temp/${staged.pending.shareId}/`)).length, 0);
+});
+
+
+const restart = ({ store, now }) => createShareService({
+  store, now, secret: 'share-test-secret-that-is-at-least-32-bytes',
+});
+const uploadFirst = staged => ({
+  receipt: staged.pending.receipt,
+  uploadToken: staged.session.uploadToken,
+  photoId: 'photo_1', contentType: 'image/webp', body: webp('a'),
+});
+const publishStaged = (service, staged, extra = {}) => service.publish({
+  receipt: staged.pending.receipt,
+  uploadToken: staged.session.uploadToken,
+  managementKey: staged.pending.managementKey,
+  curation: curation(staged.expected.map(photo => photo.id)),
+  ...extra,
+});
+async function pendingUpdate(f) {
+  const first = await stage(f.service, ['a', 'b', 'c']);
+  const published = await publishStaged(f.service, first);
+  const auth = { ...first.pending, ifMatch: published.etag };
+  const update = await f.service.startUpdate({ ...auth, photos: photos(['a', 'b', 'c']) });
+  const staged = await stage(f.service, ['a', 'b', 'c'], update);
+  return { first, auth, staged };
+}
+function pausePut(store, matches) {
+  const put = store.put.bind(store);
+  let entered;
+  let release;
+  const ready = new Promise(resolve => { entered = resolve; });
+  const wait = new Promise(resolve => { release = resolve; });
+  let once = true;
+  store.put = async (path, ...args) => {
+    if (once && matches(path)) {
+      once = false;
+      entered();
+      await wait;
+    }
+    return put(path, ...args);
+  };
+  return { ready, release };
+}
+
+test('canonical receipts reject suffixes, empty segments, padding and noncanonical signed encodings', async () => {
+  const f = fixture();
+  const staged = await stage(f.service, ['a', 'b', 'c']);
+  const receipt = staged.pending.receipt;
+  const [body, signature] = receipt.split('.');
+  const sign = body => `${body}.${createHmac('sha256', 'share-test-secret-that-is-at-least-32-bytes').update(body).digest('base64url')}`;
+  for (const invalid of [
+    `${receipt}.`, `${receipt}..unsigned-A`, `${receipt}..unsigned-B`,
+    `${receipt}.extra`, `.${signature}`, `${body}.`, `${receipt}=`,
+    sign(`${body}=`), sign(`${body}\n`), sign(`${body}!`),
+  ]) {
+    await throwsCode(restart(f).openUploadSession(invalid), 'INVALID_RECEIPT');
+    await throwsCode(f.service.uploadPhoto({ ...uploadFirst(staged), receipt: invalid }), 'INVALID_RECEIPT');
+    await throwsCode(publishStaged(f.service, staged, { receipt: invalid }), 'INVALID_RECEIPT');
+  }
+  const sessions = await Promise.all(Array.from({ length: 10 }, () => restart(f).openUploadSession(receipt)));
+  for (const session of sessions) assert.deepEqual(session, staged.session);
+  assert.equal((await f.store.list('share-receipts/')).length, 1);
+});
+
+test('concurrent first receipt openings share one durable marker across service instances', async () => {
+  const f = fixture();
+  const pending = await f.service.startShare({ photos: photos(['a', 'b', 'c']) });
+  const sessions = await Promise.all(Array.from({ length: 10 }, () => restart(f).openUploadSession(pending.receipt)));
+  for (const session of sessions) assert.deepEqual(session, sessions[0]);
+  assert.deepEqual(await restart(f).openUploadSession(pending.receipt), sessions[0]);
+  assert.equal((await f.store.list('share-receipts/')).length, 1);
+});
+
+test('revocation rejects both original and pending update receipts and existing upload tokens after restart', async () => {
+  const f = fixture();
+  const { first, auth, staged } = await pendingUpdate(f);
+  await f.service.revoke(auth);
+  for (const attempt of [first, staged]) {
+    await throwsCode(restart(f).openUploadSession(attempt.pending.receipt), 'GONE');
+    await throwsCode(restart(f).uploadPhoto(uploadFirst(attempt)), 'GONE');
+  }
+  assert.equal((await f.store.list(`temp/${auth.shareId}/`)).length, 0);
+  await throwsCode(f.service.readImage(auth.shareId, 'photo_1'), 'GONE');
+});
+
+for (const change of ['revoke', 'rotateKey', 'publish']) {
+  test(`in-flight upload rechecks ${change} and removes only its temporary object`, async () => {
+    const f = fixture();
+    const { auth, staged } = await pendingUpdate(f);
+    const gate = pausePut(f.store, path => path.startsWith('temp/'));
+    const uploading = restart(f).uploadPhoto(uploadFirst(staged));
+    await gate.ready;
+    if (change === 'publish') await publishStaged(f.service, staged, { managementKey: auth.managementKey, ifMatch: auth.ifMatch });
+    else await f.service[change](auth);
+    gate.release();
+    await throwsCode(uploading, change === 'revoke' ? 'GONE' : change === 'rotateKey' ? 'UNAUTHORIZED' : 'CONFLICT');
+    assert.equal(await f.store.get(`${staged.session.prefix}photo_1.webp`), null);
+    if (change === 'revoke') {
+      assert.equal((await f.store.list(`temp/${auth.shareId}/`)).length, 0);
+      await throwsCode(f.service.readShare(auth.shareId), 'GONE');
+    } else {
+      assert.deepEqual((await f.service.readImage(auth.shareId, 'photo_1')).body, webp('a'));
+    }
+  });
+}
+
+test('session issuance rechecks tombstone after a concurrent marker write', async () => {
+  const f = fixture();
+  const { auth } = await pendingUpdate(f);
+  f.advance(1);
+  const update = await f.service.startUpdate({ ...auth, photos: photos(['a', 'b', 'c']) });
+  const gate = pausePut(f.store, path => path.startsWith('share-receipts/'));
+  const opening = restart(f).openUploadSession(update.receipt);
+  await gate.ready;
+  await f.service.revoke(auth);
+  gate.release();
+  await throwsCode(opening, 'GONE');
+});
+
+test('manifest key and next version bind update receipts without blocking prepublish uploads', async () => {
+  const f = fixture();
+  const { auth, staged } = await pendingUpdate(f);
+  await f.service.rotateKey(auth);
+  await throwsCode(restart(f).openUploadSession(staged.pending.receipt), 'UNAUTHORIZED');
+  await throwsCode(restart(f).uploadPhoto(uploadFirst(staged)), 'UNAUTHORIZED');
+  const other = fixture();
+  const pending = await pendingUpdate(other);
+  await publishStaged(other.service, pending.staged, { managementKey: pending.auth.managementKey, ifMatch: pending.auth.ifMatch });
+  for (const attempt of [pending.first, pending.staged]) {
+    await throwsCode(restart(other).openUploadSession(attempt.pending.receipt), 'CONFLICT');
+    await throwsCode(restart(other).uploadPhoto(uploadFirst(attempt)), 'CONFLICT');
+  }
+  assert.deepEqual((await other.service.readImage(pending.auth.shareId, 'photo_1')).body, webp('a'));
+});
+
+test('receipt body rejects signed nonzero base64url pad bits', async () => {
+  const f = fixture();
+  const pending = await f.service.startShare({ photos: photos(['a', 'b', 'c']) });
+  let decoded = Buffer.from(pending.receipt.split('.')[0], 'base64url').toString();
+  while (Buffer.byteLength(decoded) % 3 === 0) decoded += ' ';
+  const body = Buffer.from(decoded).toString('base64url');
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  const alias = body.slice(0, -1) + alphabet[alphabet.indexOf(body.at(-1)) + 1];
+  assert.deepEqual(Buffer.from(alias, 'base64url'), Buffer.from(body, 'base64url'));
+  const signature = createHmac('sha256', 'share-test-secret-that-is-at-least-32-bytes').update(alias).digest('base64url');
+  await throwsCode(f.service.openUploadSession(`${alias}.${signature}`), 'INVALID_RECEIPT');
+  assert.equal((await f.store.list('share-receipts/')).length, 0);
+});
+
+test('late losing upload cannot delete a distinct CAS winner or another active share', async () => {
+  const f = fixture();
+  const { auth, staged } = await pendingUpdate(f);
+  const other = await stage(f.service, ['other a', 'other b', 'other c']);
+  await publishStaged(f.service, other);
+  const update = await f.service.startUpdate({ ...auth, photos: photos(['winner a', 'winner b', 'winner c']) });
+  const winner = await stage(f.service, ['winner a', 'winner b', 'winner c'], update);
+  const gate = pausePut(f.store, path => path.startsWith(staged.session.prefix));
+  const uploading = restart(f).uploadPhoto(uploadFirst(staged));
+  await gate.ready;
+  await publishStaged(f.service, winner, { managementKey: auth.managementKey, ifMatch: auth.ifMatch });
+  gate.release();
+  await throwsCode(uploading, 'CONFLICT');
+  assert.equal(await f.store.get(`${staged.session.prefix}photo_1.webp`), null);
+  assert.deepEqual((await f.service.readImage(auth.shareId, 'photo_1')).body, webp('winner a'));
+  assert.deepEqual((await f.service.readImage(other.pending.shareId, 'photo_1')).body, webp('other a'));
+});
+
+test('failed post-write deletion rejects the upload and tombstone cleanup retries', async () => {
+  const f = fixture();
+  const { auth, staged } = await pendingUpdate(f);
+  const gate = pausePut(f.store, path => path.startsWith(staged.session.prefix));
+  const uploading = restart(f).uploadPhoto(uploadFirst(staged));
+  await gate.ready;
+  await f.service.revoke(auth);
+  const originalDelete = f.store.delete.bind(f.store);
+  f.store.delete = async () => { throw new Error('injected cleanup outage'); };
+  gate.release();
+  await throwsCode(uploading, 'GONE');
+  assert.equal((await f.store.list(staged.session.prefix)).length, 1);
+  await throwsCode(f.service.readImage(auth.shareId, 'photo_1'), 'GONE');
+  f.store.delete = originalDelete;
+  await restart(f).cleanup();
+  assert.equal((await f.store.list(staged.session.prefix)).length, 0);
+});
+
+test('update receipt cannot open or upload if its required manifest is absent', async () => {
+  const f = fixture();
+  const { auth, staged } = await pendingUpdate(f);
+  await f.store.delete(`shares/${auth.shareId}/manifest.json`);
+  await throwsCode(restart(f).openUploadSession(staged.pending.receipt), 'CONFLICT');
+  await throwsCode(restart(f).uploadPhoto(uploadFirst(staged)), 'CONFLICT');
 });
