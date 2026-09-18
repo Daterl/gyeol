@@ -201,6 +201,10 @@ test('optional display fields validate before restore and public confirmation re
     display_name: 'Public Name',
   };
   expect(() => validateCurationState(valid, photoIds, original)).not.toThrow();
+  // Drafts confirmed before the collection time was bound must still restore.
+  const legacy = structuredClone(valid);
+  delete legacy.confirmed.profile.collected_at;
+  expect(() => validateCurationState(legacy, photoIds, original)).not.toThrow();
   for (const mutate of [
     (value: typeof valid) => {
       value.curation.profile.display.display_name = { bad: 'React child' };
@@ -224,10 +228,10 @@ test('optional display fields validate before restore and public confirmation re
       value.confirmed.profile.snapshot_id = 'signed-internal-reference';
     },
     (value: typeof valid) => {
-      delete value.confirmed.profile.collected_at;
+      value.confirmed.profile.collected_at = 'whenever';
     },
     (value: typeof valid) => {
-      value.confirmed.profile.collected_at = 'whenever';
+      value.confirmed.profile.collected_at = '2026-09-18';
     },
     (value: typeof valid) => {
       value.confirmed.evidence = ['internal'];

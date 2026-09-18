@@ -11,7 +11,10 @@ import {
   createShareService,
   MemoryBlobStore,
 } from '../../../lib/share-storage.js';
-import { createCurationEditorStore } from '../editor/curation-store';
+import {
+  type ConfirmedCuration,
+  createCurationEditorStore,
+} from '../editor/curation-store';
 import { curationFixture } from '../editor/curation-test-fixture';
 import {
   createShareClient,
@@ -123,6 +126,34 @@ test('profile sharing off omits the profile; on maps only confirmed evidence', a
   expect(on.photos[0].caption).toBe('첫 문장');
   expect(on.photos[1].caption).toBeUndefined();
   expect(on.photos[2].caption).toBe('셋째 문장');
+});
+
+test('a confirmation with no bound collection time is refused, not backfilled', async () => {
+  const { fetcher, uploadPhoto } = server();
+  const calls: string[] = [];
+  const client = createShareClient({
+    fetcher: (input, init) => {
+      calls.push(String(input));
+      return fetcher(input, init);
+    },
+    uploadPhoto,
+  });
+  const store = await confirmedStore();
+  const confirmed = store.getState().confirmCuration();
+  const legacy = structuredClone(confirmed) as ConfirmedCuration;
+  delete legacy.profile?.collected_at;
+
+  await expect(
+    client.publish({ confirmed: legacy, photos: sharePhotos() }),
+  ).rejects.toMatchObject({ code: 'INVALID_INPUT' });
+  expect(calls).toEqual([]);
+
+  // Sharing off never needed the profile, so the same draft still publishes.
+  const shared = await client.publish({
+    confirmed: { ...legacy, profileSharing: false },
+    photos: sharePhotos(),
+  });
+  expect(shared.version).toBe(1);
 });
 
 test('the collection time follows the confirmation, not later editor state', async () => {

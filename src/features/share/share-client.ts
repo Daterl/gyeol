@@ -1,9 +1,20 @@
+import { isCollectedAtInstant } from '../editor/curation-persistence';
 import type { ConfirmedCuration } from '../editor/curation-store';
 import {
   type PublicShare,
   type PublicShareProfile,
   parsePublicShare,
 } from './public-share';
+
+export class ShareApiError extends Error {
+  constructor(
+    public code: string,
+    public status = 0,
+  ) {
+    super(code);
+    this.name = 'ShareApiError';
+  }
+}
 
 export type ShareCurationPhoto = {
   caption?: string;
@@ -23,9 +34,11 @@ export type ShareCuration =
  *
  * The collection time is taken only from the profile evidence frozen into this
  * confirmation, never from the live editor state, so a later reconnection can
- * not backdate or advance an already confirmed share. No avatar is verified
- * anywhere in the pipeline, so it stays null, and sharing off drops the whole
- * profile rather than emitting empty fields.
+ * not backdate or advance an already confirmed share. A confirmation made before
+ * that evidence was bound carries no collection time, so it is refused here and
+ * has to be confirmed again. No avatar is verified anywhere in the pipeline, so
+ * it stays null, and sharing off drops the whole profile rather than emitting
+ * empty fields.
  */
 export function toShareCuration(confirmed: ConfirmedCuration): ShareCuration {
   const photos = confirmed.output.slots.map((slot) => {
@@ -42,6 +55,8 @@ export function toShareCuration(confirmed: ConfirmedCuration): ShareCuration {
     return { includeProfile: false, photos };
   const { collected_at, display_name, source_url, username } =
     confirmed.profile;
+  if (!isCollectedAtInstant(collected_at))
+    throw new ShareApiError('INVALID_INPUT');
   return {
     includeProfile: true,
     photos,
@@ -53,16 +68,6 @@ export function toShareCuration(confirmed: ConfirmedCuration): ShareCuration {
       username,
     },
   };
-}
-
-export class ShareApiError extends Error {
-  constructor(
-    public code: string,
-    public status = 0,
-  ) {
-    super(code);
-    this.name = 'ShareApiError';
-  }
 }
 
 export type SharePhoto = { body: Uint8Array; id: string };

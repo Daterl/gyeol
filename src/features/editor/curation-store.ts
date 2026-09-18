@@ -10,11 +10,13 @@ export type ConfirmedCuration = {
   excluded: string[];
   profileSharing: boolean;
   // collected_at binds the confirmation to the snapshot evidence it was made from,
-  // so G6 never reads a collection time from later editor state.
+  // so G6 never reads a collection time from later editor state. It is optional only
+  // because drafts confirmed before this field existed still restore; sharing such a
+  // confirmation is refused until it is confirmed again.
   profile?: {
     source_url: string;
     username: string;
-    collected_at: string;
+    collected_at?: string;
     display_name?: string;
   };
 };

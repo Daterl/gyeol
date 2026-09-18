@@ -25,6 +25,13 @@ const sourceUrl = (value: unknown) => {
 };
 const isoTime = (value: unknown) =>
   typeof value === 'string' && !Number.isNaN(Date.parse(value));
+/** A shared collection time must be a full instant, not a bare date. */
+export const isCollectedAtInstant = (value: unknown): value is string =>
+  typeof value === 'string' &&
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/.test(
+    value,
+  ) &&
+  !Number.isNaN(Date.parse(value));
 const onlyKeys = (value: Record<string, unknown>, keys: string[]) =>
   Object.keys(value).every((key) => keys.includes(key));
 const displayName = (value: unknown) =>
@@ -188,7 +195,8 @@ export function validateCurationState(
         'collected_at',
         'display_name',
       ]) ||
-      !isoTime(confirmed.profile.collected_at) ||
+      (confirmed.profile.collected_at !== undefined &&
+        !isCollectedAtInstant(confirmed.profile.collected_at)) ||
       (confirmed.profile.username !== undefined &&
         !usernameMatches(
           confirmed.profile.username,
