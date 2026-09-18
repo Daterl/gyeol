@@ -259,3 +259,153 @@ Checked 40 files in 40ms. No fixes applied.
 - **탐지 목록은 `lib/order.js` 어휘 기준이다.** order.js 가 새 문구를 만들면 목록도 같이
   늘려야 한다. probe.mjs 가 그 목록의 단일 출처다.
 - `schemas/` 무변경. `src/` 무변경. `lib/order.js` 무변경.
+
+---
+
+# 개정 2 보고 — 프롬프트가 아니라 검증으로 막았다 (PR #108 CHANGES_REQUESTED 반영)
+
+2026-09-18. 리뷰어: jangwonyoon (사람). 리뷰 상태 `CHANGES_REQUESTED`.
+
+## 0. 리뷰 지적을 그대로 인정한다
+
+리뷰어의 네 가지 지적은 전부 맞았고, 그중 하나는 **내 측정이 틀렸다는 것**이었다.
+
+앞의 45회 측정은 `title` · `slots[].text` · `slots[].omit_reason` 만 검사면으로 잡고
+**`evidence[].note` 를 빼놓았다.** note 는 사용자가 근거를 펼쳐 읽는 문장이다.
+같은 하네스에 note 를 넣고 다시 재자, 실모델 10회 중 **5회**에서 유출이 나왔다:
+
+```
+ 9회 17244ms  거부 MODEL_CONTRACT
+      ⛔ [내부 필드명]    slot1.evidence[1].note: 슬롯의 is_visual_peak가 true이므로 캡션을 작성했다
+      ⛔ [내부 필드명]    slot2.evidence[1].note: adjacent_overlap 0.786으로 설명 중복 가능성이 높다
+      ⛔ [소수 3자리 수치] slot2.evidence[1].note: adjacent_overlap 0.786으로 설명 중복 가능성이 높다
+      ⛔ [내부 필드명]    slot8.evidence[1].note: adjacent_overlap 0.946으로 상의와 하의, 가방 색감이 매우 유사하다
+      ...
+ 8회 13072ms  거부 MODEL_CONTRACT   (같은 형태 5건)
+ 7회 ...      거부 MODEL_CONTRACT   ⛔ adjacent_overlap 0.909로 앞 슬롯과의 겹침
+성공 5/10 · 거부 5회 (금지 표현 있음 5 · 없음 0) · 사용자 결과에 남은 유출 0회
+```
+
+즉 리뷰어가 말한 "프롬프트 지시를 한 번 어긴 응답"은 드문 사고가 아니라 **절반**이었다.
+검증이 없던 동안 이 다섯 회차는 그대로 사용자 결과가 됐다.
+
+## 1. 무엇을 고쳤나 — 리뷰 4항목 대응
+
+| 리뷰 항목 | 대응 | 파일 |
+|---|---|---|
+| 1. title/text/omit_reason/노출 evidence.note 에서 내부 표현 실패 폐쇄 거부 | `rejectInternalLeak` 추가. 최종 observation 을 검사하고 걸리면 `MODEL_CONTRACT` | `lib/output-generation.js` |
+| 2. 정상 사진 표현은 해당 `describable_facts` 에 있을 때만 허용 | 금지 표현마다 "그 슬롯의 사실에 실제로 있는가"를 본다. 타이틀·비움 고지는 피드 전체 사실이 허용 범위 | 같음 |
+| 3. 각 출력 필드에 금지 표현을 넣은 provider 응답이 `MODEL_CONTRACT` 로 거부되는 회귀 | 회귀 2건 추가 (금지 표현 9종 × 출력 필드 4종 × mode 2종 + HTTP 502 경계 + 과잉 거부 방지) | `test/generate.test.js` |
+| 4. 최신 develop 에 rebase, #84·#89·#95 복원 기능·테스트 유지 | `origin/develop`(bbe9d78) 위로 rebase. 충돌 2건 수동 해소 — 양쪽 다 살렸다 | — |
+
+추가로 **입력을 더 줄였다** (리뷰 지적의 근본 원인). 아래 3절.
+
+## 2. 왜 프롬프트가 아니라 검증인가
+
+프롬프트는 확률이다. `style_guard.md` 에 금지어를 적어 두면 위반 빈도는 내려가지만,
+**한 번의 위반이 한 명의 사용자 결과**다. 검증은 그 한 번을 막는다.
+
+- 프롬프트 = 모델이 대체로 지키는 규칙
+- 검증 = 어긴 응답이 사용자에게 도달하지 못하는 보장
+
+둘 다 둔다. 프롬프트는 거부율을 낮추고, 검증은 경계를 닫는다.
+`style_guard.md` 에 "이 규정은 지시가 아니라 계약이다 — … 응답 전체가 거부된다"를 명시해
+프롬프트와 검증이 같은 목록을 말하게 했다.
+
+## 3. 입력을 더 줄였다 — 넘기지 않은 값은 샐 수 없다
+
+검증만 붙였을 때 **거부율 10회 중 5회**였다. 사용자에게 절반이 502 를 받는다는 뜻이고,
+그건 계약을 닫았을 뿐 제품이 되지 않은 상태다. 원인은 모델이 아니라 우리 쪽에 있었다.
+
+- `prompts/output/omit_reason.md` 가 `caption_inputs.adjacent_overlap` 과 `is_visual_peak` 를
+  **이름으로 불렀다** → 모델이 그 이름을 근거로 인용하는 것이 자연스러웠다
+- payload 가 `"adjacent_overlap": 0.786` 을 **값으로 실어 주었다** → 옮겨 적을 수치가 있었다
+- `applied_profile.visual.palette.value` = `{hue_mean, sat_mean, bright_mean}` 이 실려 갔다
+  → 리뷰가 지적한 `밝기 0.712` 의 실제 출처다. `prompts/output/` 참조는 **0건**이었다
+
+고친 것:
+
+| 넘기던 것 | 바뀐 것 |
+|---|---|
+| `applied_profile` 전체 | `{disclosure, corrected, deltas, language, *_id}` — `visual`·`sequence` 제거 |
+| `language` 의 Claim 통째 | Claim 의 `value` 만 (`confidence` 0.7 도 옮겨 적을 수 있는 수치였다) |
+| `adjacent_overlap: 0.786` | `앞_사진과_겹침: '높음'\|'낮음'` (임계는 서버 `OMIT_OVERLAP_MIN` 그대로) |
+| `is_visual_peak: false` | `피드_안에서_색이_가장_진함: false` |
+
+원본 `feed` 는 아무것도 잃지 않는다. 사용자가 펼쳐 보는 근거와 계약 검증은 계속 원본을 읽는다.
+
+## 4. 증명 — 각 출력 필드별 주입 거부
+
+금지 표현 9종(`밝기 0.712로 이은 세 장`, `adjacent_overlap 0.8인 자리`,
+`is_visual_peak=false라 그대로 뒀어요`, `측정 색 거리 0.214로 앞자리와 이었다`,
+`서사 규칙 R1 로 고른 첫 자리`, `sustain 자리의 기록`, `채도가 가장 진한 자리`,
+`보너스 포함 총점이 가장 높아`, `narrative_role 이 closer 인 사진`)을
+provider 응답의 각 출력 필드에 심어 주입한다.
+
+| 출력 필드 | mode | 결과 |
+|---|---|---|
+| `output.title` | all | 9/9 `MODEL_CONTRACT` |
+| `slot.text` | all · slot | 9/9 · 9/9 |
+| `slot.omit_reason` | all · slot | 9/9 · 9/9 |
+| `slot.evidence[].note` | all · slot | 9/9 · 9/9 |
+| HTTP 경계 | all | 502 `MODEL_CONTRACT`, 응답 본문에 `0.712` 없음 |
+
+대조군: 같은 응답에서 금지 표현만 빼면 통과한다 (거부 원인이 이 검증이라는 것을 고정).
+
+**과잉 거부 방지 (리뷰 2항)**: `밝기 0.5 라고 적힌 조절 다이얼`을 ph_01 의
+`describable_facts` 에 넣으면 — ph_01 의 캡션으로는 통과, 타이틀로도 통과,
+**ph_02 의 캡션으로 쓰면 거부**된다. 그 사진의 사실이 아니기 때문이다.
+
+## 5. 되돌림 검사 (변이)
+
+검증·축소를 하나씩 되돌리면 그 회귀가 실제로 깨진다.
+
+| 되돌린 것 | 결과 |
+|---|---|
+| `rejectInternalLeak(observation,input)` 호출 제거 | `253 → 251 pass, 2 fail` (주입 거부 + 과잉 거부 방지) |
+| `appliedForOutput(...)` → 원본 `applied_profile` | `253 → 251 pass, 2 fail` |
+| `selected.map(forOutput)` → `selected` | `253 → 252 pass, 1 fail` |
+
+## 6. 실모델 재측정 (10회, 축소 후)
+
+`claude-haiku-4-5`, 같은 고정 feed(`feed.json`, 선택 11장 · 기존 4장), 검사면에 note 포함.
+
+```
+성공 10/10 · 거부 0회 (금지 표현 있음 0 · 없음 0) · 사용자 결과에 남은 유출 0회
+p50 16.1s · 근거 note 142건 전부 통과 · 비움 슬롯 회차별 2~5개 (비움 기능 살아 있다)
+```
+
+| 단계 | 성공 | 거부 | 사용자 결과에 남은 유출 |
+|---|---|---|---|
+| 개정 1 (프롬프트만, note 검사 빠진 측정) | 15/15 | 0 | 0 — **측정이 note 를 안 봤다** |
+| 개정 1 + note 까지 검사 | 5/10 | 5 (전부 실제 유출) | 0 |
+| 개정 2 (검증 + 입력 축소) | **10/10** | **0** | **0** |
+
+거부 5건은 전부 `rejected_hits ≥ 1`, 즉 **과잉 거부 0건**이었다.
+원문은 `after-validation.json` 의 각 회차 `provider_output` 에 남는다.
+
+## 7. 알려진 천장 — 정직하게 적는다
+
+- **휴리스틱 분석 경로의 `describable_facts` 자체가 측정값이다.** vision 없이 분석하면
+  `"평균 밝기 0.346 (다소 어두움)"` 같은 문장이 사실로 기록된다. 그 문장이 사실이므로
+  출력에 쓰여도 이 검증은 통과시킨다(리뷰 2항의 요구 그대로다). 그 문면을 고치는 일은
+  출력 경계가 아니라 분석기의 사실 표기 문제이며 이 PR 범위 밖이다.
+- **`lib/order.js` 의 `rationale` 은 그대로 둔다.** 근거는 사용자가 펼쳐 볼 자리에 있어야 한다.
+  바뀐 것은 모델에게 복사해 보내는 부분집합뿐이다.
+- 금지 목록은 `lib/order.js` 의 현재 어휘를 기준으로 한 유한 목록이다. order 규칙 어휘가
+  늘면 목록도 같이 늘려야 한다. 목록이 놓친 표현은 통과한다.
+
+## 8. 다섯 검증 명령 (2026-09-18, rebase 후)
+
+```
+$ npm test          → # tests 253 · # pass 253 · # fail 0
+$ npm run eval      → 예기치 않은 FAIL 0건 (EXPECTED FAIL 18건은 고의 파손 케이스)
+$ npm run check     → PASS: 75 JS/JSON files checked; four schema examples match fixtures
+$ npm run lint      → Checked 41 files. No fixes applied.
+$ npm run typecheck → ✓ Types generated successfully
+$ npm run test:ui   → Test Files 10 passed · Tests 31 passed
+```
+
+rebase 결과: `git diff origin/develop -- test/` 에 **삭제 줄 0건**. #84·#89·#95 복원 테스트와
+#99 테스트를 모두 유지했고, 충돌 2건(`lib/output-generation.js` · `test/generate.test.js`)은
+양쪽 변경을 모두 살려 해소했다.

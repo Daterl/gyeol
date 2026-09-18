@@ -91,7 +91,9 @@ async function build(folder, outPath) {
 
 const scanRound = output => [
   ...scan('title', output.title),
-  ...output.slots.flatMap(s => [...scan(`slot${s.position}.text`, s.text), ...scan(`slot${s.position}.omit_reason`, s.omit_reason)])
+  // 검증이 닫는 면과 같은 면을 본다: 근거 note 도 사용자가 펼쳐 읽는 문장이다 (PR #108 리뷰).
+  ...output.slots.flatMap(s => [...scan(`slot${s.position}.text`, s.text), ...scan(`slot${s.position}.omit_reason`, s.omit_reason),
+    ...s.evidence.flatMap((e, i) => scan(`slot${s.position}.evidence[${i}].note`, e.note))])
 ];
 
 // 이미 저장된 회차를 모델 호출 없이 현재 금지 목록으로 다시 채점한다.
@@ -116,23 +118,39 @@ async function run(feedPath, times, outPath) {
   for (let i = 1; i <= times; i++) {
     const started = Date.now();
     let record;
+    // 거부된 회차의 원인을 사람이 판별할 수 있어야 한다 — 실제 유출인지 과잉 거부인지는
+    // provider 원문을 봐야 갈린다. 그래서 응답 원문을 떠 둔다 (PR #108 리뷰).
+    const raw = [];
+    const spy = async (url, options) => {
+      const response = await globalThis.fetch(url, options);
+      if (!url.includes('/models/')) raw.push(await response.clone().text());
+      return response;
+    };
     try {
-      const { output } = await generateOutput(structuredClone(input));
+      const { output } = await generateOutput(structuredClone(input), { fetchImpl: spy });
       record = { round: i, ok: true, ms: Date.now() - started, title: output.title, hits: scanRound(output), slots: output.slots };
     } catch (error) {
-      record = { round: i, ok: false, ms: Date.now() - started, error: `${error.code ?? error.name}: ${error.message}` };
+      const provider = (() => { try { return JSON.parse(JSON.parse(raw.at(-1)).content[0].text); } catch { return null; } })();
+      record = { round: i, ok: false, ms: Date.now() - started, error: `${error.code ?? error.name}: ${error.message}`,
+        rejected_hits: provider?.output ? scanRound(provider.output) : null, provider_output: provider?.output ?? null };
     }
     rounds.push(record);
     process.stderr.write(record.ok
       ? `${String(i).padStart(2)}회 ${record.ms}ms  히트 ${record.hits.length}건  title="${record.title}"\n`
         + record.hits.map(h => `      ⚠ [${h.label}] ${h.where}: ${h.text}\n`).join('')
-      : `${String(i).padStart(2)}회 ${record.ms}ms  실패 ${record.error}\n`);
+      : `${String(i).padStart(2)}회 ${record.ms}ms  거부 ${record.error}\n`
+        + (record.rejected_hits ?? []).map(h => `      ⛔ [${h.label}] ${h.where}: ${h.text}\n`).join('')
+        + (record.rejected_hits?.length === 0 ? `      ? 금지 표현 히트 0건 — 유출이 아닌 다른 계약 실패이거나 과잉 거부다\n` : ''));
   }
   const leaked = rounds.filter(r => r.ok && r.hits.length);
   const failed = rounds.filter(r => !r.ok);
-  const summary = { feed: feedPath, times, generated: rounds.length - failed.length, failed: failed.length, leakedRounds: leaked.length, rounds };
+  const rejectedWithLeak = failed.filter(r => r.rejected_hits?.length).length;
+  const summary = { feed: feedPath, times, generated: rounds.length - failed.length, failed: failed.length,
+    leakedRounds: leaked.length, rejectedWithLeak, rejectedWithoutLeak: failed.length - rejectedWithLeak, rounds };
   await writeFile(outPath, JSON.stringify(summary, null, 2));
-  process.stderr.write(`\n성공 ${summary.generated}/${times} · 실패 ${failed.length} · 유출 관측 ${leaked.length}회\n결과: ${outPath}\n`);
+  process.stderr.write(`\n성공 ${summary.generated}/${times} · 거부 ${failed.length}회`
+    + ` (금지 표현 있음 ${summary.rejectedWithLeak} · 없음 ${summary.rejectedWithoutLeak})`
+    + ` · 사용자 결과에 남은 유출 ${leaked.length}회\n결과: ${outPath}\n`);
   process.exitCode = 0;
 }
 

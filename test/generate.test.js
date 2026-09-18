@@ -43,7 +43,15 @@ test('all generation preserves each contract path and loads actual shared/output
     assert.ok(body.system.includes(guard));assert.match(body.system,/정확히.*한/);
     assert.equal(body.output_config.format.type,'json_schema');
     const sent=JSON.parse(body.messages[0].content[0].text);
-    assert.equal(sent.slots.length,3);assert.deepEqual(sent.applied_profile,source.feed.applied_profile);
+    assert.equal(sent.slots.length,3);
+    // #96: applied_profile 도 화이트리스트다. visual.palette 의 bright_mean·sat_mean 은
+    // 출력 프롬프트가 참조하지 않으면서 '밝기 0.712' 의 출처였다 — 아예 넘기지 않는다.
+    for(const field of ['disclosure','corrected','deltas']) assert.deepEqual(sent.applied_profile[field],source.feed.applied_profile[field],field);
+    // language 는 Claim 껍데기를 벗긴 값만 간다 — 프롬프트가 읽는 것은 값이다.
+    if(source.feed.applied_profile.language===null) assert.equal(sent.applied_profile.language,null);
+    else assert.deepEqual(sent.applied_profile.language.caption_coverage,source.feed.applied_profile.language.caption_coverage?.value);
+    for(const field of ['visual','sequence']) assert.equal(Object.hasOwn(sent.applied_profile,field),false,field);
+    assert.doesNotMatch(JSON.stringify(sent.applied_profile),/bright_mean|sat_mean|hue_mean/);
     assert.equal(body.messages[0].content[0].type,'text');
   }
 });
@@ -414,6 +422,18 @@ test('output model never sees slot rationale or narrative_role, in either mode',
     }
     const wire=JSON.stringify(sent);
     assert.doesNotMatch(wire,/rationale|narrative_role/,`${mode}: internal ordering fields must not reach the model`);
+    // PR #108 리뷰: 수치도 이름도 넘기지 않는다. 모델은 겹침의 세기만 본다.
+    for(const slot of sent.slots) assert.deepEqual(Object.keys(slot.caption_inputs).sort(),
+      ['describable_facts','앞_사진과_겹침','피드_안에서_색이_가장_진함'].sort(),`${mode}: caption_inputs are whitelisted`);
+    assert.doesNotMatch(wire,/adjacent_overlap|is_visual_peak/,`${mode}: internal measurement names must not reach the model`);
+    // 슬롯에 실린 소수 수치는 그 사진의 사실에 있는 것뿐이다 — 측정값은 넘어가지 않는다.
+    for(const slot of sent.slots) {
+      const facts=slot.caption_inputs.describable_facts.join(' ');
+      for(const [hit] of JSON.stringify(slot).matchAll(/\d+\.\d+/g))
+        assert.ok(facts.includes(hit),`${mode}: raw measurement ${hit} reached the model`);
+    }
+    // Claim 의 confidence 도 모델이 옮겨 적을 수 있는 수치다. value 만 넘긴다.
+    assert.doesNotMatch(JSON.stringify(sent.applied_profile),/"confidence"|"evidence"/,`${mode}: claim provenance stays server-side`);
     assert.ok(!wire.includes(rationale.value),`${mode}: the ordering rule sentence must not reach the model`);
     // 원본 feed 는 그대로 남는다 — 계약 검증도 사용자 화면도 rationale 을 계속 읽는다.
     assert.deepEqual(requested.feed.slots[0].rationale,rationale,`${mode}: request feed is not mutated`);
@@ -427,4 +447,76 @@ test('style guard forbids internal ordering vocabulary as title or caption mater
   const system=JSON.parse(seen[1].options.body).system;
   for(const banned of ['색 거리','지향 방향','앞자리','rationale','R1']) assert.ok(system.includes(banned),`style guard names ${banned}`);
   assert.match(system,/내부 규칙의 이름·용어·측정 수치를 제목이나 문장의 소재로 쓰지 않는다/);
+});
+
+// #96 리뷰(PR #108) 회귀: 프롬프트는 확률이고 검증은 보장이다.
+// style_guard 를 어긴 provider 응답을 각 출력 필드에 주입해, 그것이 사용자 결과가 되지 못하고
+// MODEL_CONTRACT 로 닫히는지 본다. rejectInternalLeak 호출을 지우면 이 테스트가 깨진다.
+test('an internal field name or measurement in any user-facing field is rejected as MODEL_CONTRACT',async()=>{
+  const leaks=['밝기 0.712로 이은 세 장','adjacent_overlap 0.8인 자리','is_visual_peak=false라 그대로 뒀어요',
+    '측정 색 거리 0.214로 앞자리와 이었다','서사 규칙 R1 로 고른 첫 자리','sustain 자리의 기록',
+    '채도가 가장 진한 자리','보너스 포함 총점이 가장 높아','narrative_role 이 closer 인 사진'];
+  // 대조: 같은 응답에서 금지 표현만 빼면 통과한다 — 거부 원인이 이 검증이라는 것을 고정한다.
+  assert.equal((await generateOutput(input(),options(filledOutput()))).output.slots.length,3);
+  assert.equal((await generateOutput(input(),options(output()))).output.slots.length,3);
+
+  const poison=[
+    ['output.title',(v,leak)=>{v.output.title=leak;}],
+    ['slot.text',(v,leak)=>{v.output.slots[1].text=leak;}],
+    ['slot.evidence.note',(v,leak)=>{v.output.slots[0].evidence[0].note=leak;}]
+  ];
+  for(const leak of leaks) {
+    for(const [where,inject] of poison) {
+      const value=filledOutput();inject(value,leak);
+      await assert.rejects(()=>generateOutput(input(),options(value)),
+        error=>error.code==='MODEL_CONTRACT',`all/${where}: ${leak}`);
+    }
+    // omit_reason 은 omitted 응답에만 있다.
+    const omitted=output();omitted.output.slots[2].omit_reason=leak;
+    await assert.rejects(()=>generateOutput(input(),options(omitted)),
+      error=>error.code==='MODEL_CONTRACT',`all/slot.omit_reason: ${leak}`);
+
+    // mode=slot 도 같은 경계다.
+    for(const patch of [s=>{s.text=leak;},s=>{s.evidence[0].note=leak;}]) {
+      const single={slot:structuredClone(fixture.all_omitted.slots[0])};
+      single.slot.caption_state='filled';single.slot.text='단색 카드';single.slot.omit_reason=null;
+      patch(single.slot);
+      await assert.rejects(()=>generateOutput(input('slot'),options(single)),
+        error=>error.code==='MODEL_CONTRACT',`slot mode: ${leak}`);
+    }
+    const singleOmit={slot:structuredClone(fixture.all_omitted.slots[0])};
+    singleOmit.slot.omit_reason=leak;
+    await assert.rejects(()=>generateOutput(input('slot'),options(singleOmit)),
+      error=>error.code==='MODEL_CONTRACT',`slot mode/omit_reason: ${leak}`);
+  }
+
+  // HTTP 경계에서도 502 MODEL_CONTRACT 이며 내부 표현을 응답에 되싣지 않는다.
+  const leaked=filledOutput();leaked.output.title='밝기 0.712로 이은 세 장';
+  const response=await handleGenerate(request(input()),options(leaked));
+  assert.equal(response.status,502);
+  const body=await response.json();validateErrorResponse(body);
+  assert.equal(body.error.code,'MODEL_CONTRACT');
+  assert.ok(!JSON.stringify(body).includes('0.712'));
+});
+
+// 과잉 거부 방지(리뷰 2항): 같은 표현이 그 사진의 describable_facts 에 실제로 있으면
+// 사진에서 온 사실이므로 통과해야 한다. 다른 사진의 문장에 쓰면 그 사진의 사실이 아니다.
+test('a forbidden-looking expression passes only when it is an actual fact of that photo',async()=>{
+  const source=structuredClone(fixture);
+  const fact='밝기 0.5 라고 적힌 조절 다이얼';
+  source.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts.push(fact);
+  source.feed.slots.find(slot=>slot.photo_id==='ph_01').caption_inputs.describable_facts.push(fact);
+  const requested={schema_version:'1.0',mode:'all',feed:source.feed,context:source.context};
+
+  const own=filledOutput(source.feed);
+  own.output.slots.find(slot=>slot.photo_id==='ph_01').text=fact;
+  assert.equal((await generateOutput(requested,options(own))).output.slots.find(slot=>slot.photo_id==='ph_01').text,fact);
+
+  // 타이틀은 피드 전체를 말하므로 어느 슬롯의 사실이든 허용 범위다.
+  const titled=filledOutput(source.feed);titled.output.title=fact;
+  assert.equal((await generateOutput(requested,options(titled))).output.title,fact);
+
+  const borrowed=filledOutput(source.feed);
+  borrowed.output.slots.find(slot=>slot.photo_id==='ph_02').text=fact;
+  await assert.rejects(()=>generateOutput(requested,options(borrowed)),error=>error.code==='MODEL_CONTRACT');
 });
