@@ -3,7 +3,12 @@ import {
   UPLOAD_MEDIA_TYPES,
   validateIdentity,
 } from '../../../lib/interaction.js';
-import { ApiError, analyzePhoto, orderPhotos } from '../../lib/api';
+import {
+  ApiError,
+  analyzePhoto,
+  curatePhotos,
+  orderPhotos,
+} from '../../lib/api';
 import type {
   Identity,
   PhotoAnalysis,
@@ -228,6 +233,45 @@ export async function submitPhotos(
       session_id: sessionId,
       photos: selected.analyses,
       identity: identityInput(fields, previous.analyses),
+    },
+    signal,
+  );
+}
+
+export async function submitCuration(
+  photos: SelectedPhoto[],
+  profile: { url: string; snapshotId: string; expires_at: number },
+  prompt: string,
+  signal: AbortSignal,
+  mock = false,
+) {
+  if (!profile.snapshotId || profile.expires_at <= Date.now())
+    throw new ApiError(
+      'PROFILE_SNAPSHOT_EXPIRED',
+      '프로필 연결이 만료됐어요. 공개 프로필을 다시 연결해 주세요.',
+    );
+  if (photos.length < 3 || photos.length > MAX_SELECTED_PHOTOS)
+    throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~15장 골라 주세요.');
+  if (prompt.length > 2000)
+    throw new ApiError(
+      'INVALID_REQUEST',
+      '원하는 느낌은 2000자 이내로 적어 주세요.',
+    );
+  const sessionId = crypto.randomUUID();
+  const selected = await upload(photos, sessionId, 'selected', signal, mock);
+  if (selected.failed.length)
+    throw new ApiError(
+      'ANALYSIS_FAILED',
+      `사진 ${selected.failed.length}장을 읽지 못했어요(${selected.failed.map(({ fileName, photoId }) => `${fileName} · ${photoId}`).join(', ')}). 다시 시도하거나 해당 사진을 제외해 주세요.`,
+    );
+  return curatePhotos(
+    {
+      schema_version: '1.0',
+      session_id: sessionId,
+      photos: selected.analyses,
+      profile_url: profile.url,
+      profile_snapshot_id: profile.snapshotId,
+      prompt: prompt.trim(),
     },
     signal,
   );
