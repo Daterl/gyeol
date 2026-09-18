@@ -1,9 +1,0 @@
-{"type":"review_context","reviewType":"uncommitted","currentBranch":"feat/88-omit-suggestion","baseBranch":"develop","workingDirectory":"/Users/chowonjae/Desktop/projects/wanted/.work/gyeol-88"}
-{"type":"status","phase":"connecting","status":"connecting_to_review_service"}
-{"type":"status","phase":"analyzing","status":"setting_up","message":"Daterl/gyeol is not connected to a CodeRabbit organization you can access, so this review will use the free CLI allowance.\n\nIf you expected an org plan here, check your signed-in account with coderabbit auth status, or install CodeRabbit for Daterl/gyeol at https://app.coderabbit.ai"}
-{"type":"status","phase":"setup","status":"setting_up"}
-{"type":"status","phase":"analyzing","status":"summarizing"}
-{"type":"status","phase":"analyzing","status":"reviewing"}
-{"type":"heartbeat","status":"reviewing"}
-{"type":"heartbeat","status":"reviewing"}
-{"type":"complete","status":"review_completed","findings":0,"reviewedFiles":["lib/contracts.js","lib/omit-suggestion.js","lib/order.js","lib/pipeline.js","scripts/verify-omit-suggestion.js","test/omit-suggestion.test.js"]}
