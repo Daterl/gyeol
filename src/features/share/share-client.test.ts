@@ -1,0 +1,293 @@
+import { createHash } from 'node:crypto';
+import { expect, test } from 'vitest';
+import type { F3Export } from '@/types/contracts';
+import fixture from '../../../fixtures/interaction.sample.json';
+import {
+  handleManage,
+  handleShare,
+  handleShareUpload,
+} from '../../../lib/share-api.js';
+import {
+  createShareService,
+  MemoryBlobStore,
+} from '../../../lib/share-storage.js';
+import {
+  type ConfirmedCuration,
+  createCurationEditorStore,
+} from '../editor/curation-store';
+import { curationFixture } from '../editor/curation-test-fixture';
+import {
+  createShareClient,
+  type PhotoUploader,
+  ShareApiError,
+  type SharePhoto,
+  toShareCuration,
+} from './share-client';
+
+const webp = (label: string) => {
+  const bytes = Buffer.alloc(12 + label.length);
+  bytes.write('RIFF');
+  bytes.write('WEBP', 8);
+  bytes.write(label, 12);
+  return new Uint8Array(bytes);
+};
+const photoIds = fixture.feed.slots.map((slot) => slot.photo_id);
+const sharePhotos = (label = 'a'): SharePhoto[] =>
+  photoIds.map((id) => ({ id, body: webp(`${label}-${id}`) }));
+
+async function confirmedStore(collectedAt?: string) {
+  const store = createCurationEditorStore(null);
+  await store.getState().loadCuration(async () => {
+    const value = curationFixture();
+    if (collectedAt) value.curation.profile.collected_at = collectedAt;
+    return value;
+  });
+  await store.getState().generate(undefined, async () => ({
+    output: structuredClone(fixture.all_omitted) as F3Export,
+  }));
+  store.getState().editCaption(photoIds[0], '첫 문장');
+  store.getState().editCaption(photoIds[2], '셋째 문장');
+  store.getState().setProfileSharing(true);
+  return store;
+}
+
+function server() {
+  let random = 0;
+  const now = () => 1_800_000_000_000;
+  // The G6 core is untyped JS; the test pins only the members it drives.
+  const create = createShareService as (options: unknown) => {
+    openUploadSession: (
+      receipt: string,
+      options?: unknown,
+    ) => Promise<{ uploadToken: string }>;
+    startShare: (input: unknown) => Promise<{
+      managementKey: string;
+      receipt: string;
+      shareId: string;
+    }>;
+    uploadPhoto: (input: unknown) => Promise<unknown>;
+  };
+  const service = create({
+    store: new MemoryBlobStore({ now }),
+    secret: 'share-client-test-secret-at-least-32-bytes',
+    now,
+    randomBytes(size: number) {
+      random += 1;
+      return Buffer.alloc(size, random);
+    },
+  });
+  const fetcher = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = new URL(String(input), 'https://share.test');
+    const request = new Request(url, init);
+    if (url.pathname === '/api/share-upload')
+      return handleShareUpload(request, { service });
+    const manage = url.pathname.match(/^\/api\/manage\/([^/]+)$/);
+    if (manage) return handleManage(request, { service, shareId: manage[1] });
+    const share = url.pathname.match(/^\/api\/share\/([^/]+)$/);
+    if (share) return handleShare(request, { service, shareId: share[1] });
+    return new Response(null, { status: 404 });
+  };
+  const uploadPhoto: PhotoUploader = async ({ photo, receipt, session }) => {
+    await service.uploadPhoto({
+      receipt,
+      uploadToken: session.uploadToken,
+      photoId: photo.id,
+      contentType: 'image/webp',
+      body: photo.body,
+    });
+  };
+  return {
+    client: createShareClient({ fetcher, uploadPhoto }),
+    fetcher,
+    service,
+    uploadPhoto,
+  };
+}
+
+test('profile sharing off omits the profile; on maps only confirmed evidence', async () => {
+  const store = await confirmedStore();
+  store.getState().setProfileSharing(false);
+  const off = toShareCuration(store.getState().confirmCuration());
+  expect(off.includeProfile).toBe(false);
+  expect('profile' in off).toBe(false);
+
+  store.getState().setProfileSharing(true);
+  store.getState().setCrop(photoIds[0], { x: 20, y: 80 });
+  const on = toShareCuration(store.getState().confirmCuration());
+  expect(on.includeProfile).toBe(true);
+  expect(on.includeProfile && on.profile).toEqual({
+    avatarUrl: null,
+    collectedAt: '2026-09-18T10:00:00Z',
+    displayName: null,
+    source: 'https://www.instagram.com/public_example/',
+    username: 'public_example',
+  });
+  expect(on.photos[0].focalPoint).toEqual({ x: 0.2, y: 0.8 });
+  expect(on.photos[0].caption).toBe('첫 문장');
+  expect(on.photos[1].caption).toBeUndefined();
+  expect(on.photos[2].caption).toBe('셋째 문장');
+});
+
+test('a confirmation with no bound collection time is refused, not backfilled', async () => {
+  const { fetcher, uploadPhoto } = server();
+  const calls: string[] = [];
+  const client = createShareClient({
+    fetcher: (input, init) => {
+      calls.push(String(input));
+      return fetcher(input, init);
+    },
+    uploadPhoto,
+  });
+  const store = await confirmedStore();
+  const confirmed = store.getState().confirmCuration();
+  const legacy = structuredClone(confirmed) as ConfirmedCuration;
+  delete legacy.profile?.collected_at;
+
+  await expect(
+    client.publish({ confirmed: legacy, photos: sharePhotos() }),
+  ).rejects.toMatchObject({ code: 'INVALID_INPUT' });
+  expect(calls).toEqual([]);
+
+  // Sharing off never needed the profile, so the same draft still publishes.
+  const shared = await client.publish({
+    confirmed: { ...legacy, profileSharing: false },
+    photos: sharePhotos(),
+  });
+  expect(shared.version).toBe(1);
+});
+
+test('the collection time follows the confirmation, not later editor state', async () => {
+  const store = await confirmedStore();
+  const first = store.getState().confirmCuration();
+  await store.getState().loadCuration(async () => {
+    const value = curationFixture();
+    value.curation.profile.collected_at = '2026-09-19T10:00:00Z';
+    return value;
+  });
+  await store.getState().generate(undefined, async () => ({
+    output: structuredClone(fixture.all_omitted) as F3Export,
+  }));
+  store.getState().setProfileSharing(true);
+  const second = store.getState().confirmCuration();
+  const at = (value: typeof first) => {
+    const curation = toShareCuration(value);
+    return curation.includeProfile ? curation.profile.collectedAt : null;
+  };
+  expect(at(first)).toBe('2026-09-18T10:00:00Z');
+  expect(at(second)).toBe('2026-09-19T10:00:00Z');
+});
+
+test('publish, reconfirm, rotate and revoke drive the real share contract', async () => {
+  const { client } = server();
+  const store = await confirmedStore();
+  const photos = sharePhotos();
+  const published = await client.publish({
+    confirmed: store.getState().confirmCuration(),
+    photos,
+  });
+  expect(published.version).toBe(1);
+
+  const read = await client.read(published.shareId);
+  expect(read.etag).toBe(published.etag);
+  expect(read.share.curation.includeProfile).toBe(true);
+  expect(
+    read.share.curation.includeProfile && read.share.curation.profile,
+  ).toMatchObject({
+    avatarUrl: null,
+    collectedAt: '2026-09-18T10:00:00Z',
+    username: 'public_example',
+  });
+
+  store.getState().editCaption(photoIds[0], '재확정한 문장');
+  const next = sharePhotos('b');
+  const reconfirmed = await client.reconfirm({
+    confirmed: store.getState().confirmCuration(),
+    etag: published.etag,
+    managementKey: published.managementKey,
+    photos: next,
+    shareId: published.shareId,
+  });
+  expect(reconfirmed.version).toBe(2);
+  const updated = await client.read(published.shareId);
+  expect(updated.share.version).toBe(2);
+  expect(updated.share.curation.photos[0].caption).toBe('재확정한 문장');
+
+  await expect(
+    client.reconfirm({
+      confirmed: store.getState().confirmCuration(),
+      etag: published.etag,
+      managementKey: published.managementKey,
+      photos: sharePhotos('c'),
+      shareId: published.shareId,
+    }),
+  ).rejects.toMatchObject({ code: 'CONFLICT' });
+  expect((await client.read(published.shareId)).share.version).toBe(2);
+
+  const rotated = await client.rotateKey({
+    etag: updated.etag as string,
+    managementKey: published.managementKey,
+    shareId: published.shareId,
+  });
+  await expect(
+    client.revoke({
+      etag: rotated.etag,
+      managementKey: published.managementKey,
+      shareId: published.shareId,
+    }),
+  ).rejects.toMatchObject({ code: 'UNAUTHORIZED' });
+
+  await client.revoke({
+    etag: rotated.etag,
+    managementKey: rotated.managementKey,
+    shareId: published.shareId,
+  });
+  await expect(client.read(published.shareId)).rejects.toBeInstanceOf(
+    ShareApiError,
+  );
+});
+
+test('a photo set that differs from the confirmation never reaches the server', async () => {
+  const { fetcher, uploadPhoto } = server();
+  const calls: string[] = [];
+  const client = createShareClient({
+    fetcher: (input, init) => {
+      calls.push(String(input));
+      return fetcher(input, init);
+    },
+    uploadPhoto,
+  });
+  const store = await confirmedStore();
+  const confirmed = store.getState().confirmCuration();
+  for (const photos of [
+    sharePhotos().slice(0, 2),
+    [...sharePhotos()].reverse(),
+  ])
+    await expect(client.publish({ confirmed, photos })).rejects.toMatchObject({
+      code: 'INVALID_INPUT',
+    });
+  expect(calls).toEqual([]);
+});
+
+test('uploaded bytes are bound to the receipt hash the client computed', async () => {
+  const { service } = server();
+  const photos = sharePhotos();
+  const started = await service.startShare({
+    photos: photos.map((photo) => ({
+      id: photo.id,
+      sha256: createHash('sha256').update(photo.body).digest('hex'),
+    })),
+    caller: 'test',
+  });
+  const session = await service.openUploadSession(started.receipt, {
+    caller: 'test',
+  });
+  await expect(
+    service.uploadPhoto({
+      receipt: started.receipt,
+      uploadToken: session.uploadToken,
+      photoId: photos[0].id,
+      contentType: 'image/webp',
+      body: webp('tampered'),
+    }),
+  ).rejects.toMatchObject({ code: 'HASH_MISMATCH' });
+});

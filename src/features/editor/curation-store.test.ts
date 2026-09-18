@@ -55,9 +55,10 @@ test('confirmation is detached, deeply frozen and omits profile by default; reco
   expect(next.profile).toEqual({
     source_url: 'https://www.instagram.com/public_example/',
     username: 'public_example',
+    collected_at: '2026-09-18T10:00:00Z',
   });
   expect(JSON.stringify(next)).not.toMatch(
-    /evidence_refs|snapshot_id|expires_at|collected_at/,
+    /evidence_refs|snapshot_id|expires_at/,
   );
   expect(next.output.slots).toHaveLength(fixture.feed.slots.length);
   expect(snapshot).not.toBe(next);
@@ -144,6 +145,7 @@ test('profile display is opt-in and confirmation selects only public identity fi
   expect(store.getState().confirmCuration().profile).toEqual({
     source_url: 'https://www.instagram.com/public_example/',
     username: 'public_example',
+    collected_at: '2026-09-18T10:00:00Z',
     display_name: '공개 이름',
   });
   expect(JSON.stringify(store.getState().confirmed)).not.toMatch(
