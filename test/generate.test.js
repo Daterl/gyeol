@@ -48,6 +48,26 @@ test('all generation preserves each contract path and loads actual shared/output
   }
 });
 
+test('target-only current profiles stay traceable in the feed but produce byte-identical model requests',async()=>{
+  const target={kind:'text',text:'차분하고 짧게 기록해 줘'};
+  const currents=[{kind:'none'},currentPosts(['가요']),currentPosts(['가'.repeat(950)])];
+  const bodies=[];const currentIds=[];
+  for(const current of currents) {
+    const built=await buildFeed(orderInput(target,current));
+    currentIds.push(built.feed.applied_profile.current_profile_id);
+    assert.equal(built.feed.applied_profile.disclosure,'target_only');
+    const seen=[];
+    await generateOutput(generatedInput(built),{apiKey:'fake-key',fetchImpl:transport(filledOutput(built.feed),seen)});
+    assert.equal(built.feed.applied_profile.current_profile_id,currentIds.at(-1));
+    bodies.push(seen[1].options.body);
+    const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
+    assert.equal(sent.applied_profile.current_profile_id,null);
+  }
+  assert.equal(currentIds[0],null);
+  assert.ok(currentIds[1]);assert.ok(currentIds[2]);assert.notEqual(currentIds[1],currentIds[2]);
+  assert.equal(bodies[0],bodies[1]);assert.equal(bodies[1],bodies[2]);
+});
+
 test('single slot sends only its photo and rejects other photo, position, user state or foreign evidence',async()=>{
   const valid={slot:structuredClone(fixture.output.slots[0])};const seen=[];
   assert.deepEqual(await generateOutput(input('slot'),{apiKey:'fake-key',fetchImpl:transport(valid,seen)}),valid);

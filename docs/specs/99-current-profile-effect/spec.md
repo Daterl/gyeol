@@ -12,12 +12,14 @@
 
 따라서 이번 범위에서는 현재 프로필로 차이를 강제하지 않는다. `current_profile_id`는 입력 추적용으로 보존하고, 적용 프로필은 지향을 그대로 사용하며 `disclosure: "target_only"`, `corrected: false`, `deltas: []`를 반환한다. 결과 화면은 현재 스타일을 순서와 문장에 반영하지 않았다고 직접 알린다.
 
+모델 요청에서는 `target_only`인 적용 프로필의 `current_profile_id`를 `null`로 보낸다. 이 ID는 추적 메타데이터일 뿐 생성 입력이 아니므로, 현재 프로필의 유무나 내용만 다른 요청이 모델에 서로 다른 입력으로 보이면 안 된다. 반환 feed의 ID는 그대로 보존한다.
+
 `target_only`인 출력 생성도 CurrentProfile의 `empty_caption_ratio`를 비움 안정화 근거로 읽지 않는다. 명시적인 지향의 비움 의도와 지향 레퍼런스에서 관측한 비율은 기존대로 사용할 수 있다.
 
 ## 회귀 기준
 
 - 같은 사진과 같은 지향에서 current가 부재·2자·950자여도 position 정렬 photo_id 배열이 같다.
+- 세 경우의 모델 HTTP 요청 본문이 바이트 단위로 같고, 반환 feed의 present current ID는 보존된다.
 - 세 결과 모두 `target_only`, `corrected: false`, `deltas: []`다.
 - 현재 프로필의 빈 캡션 비율만으로 모델이 채운 문장을 서버가 비움으로 바꾸지 않는다.
 - 서로 다른 지향 2벌은 기존처럼 서로 다른 순서를 낸다.
-

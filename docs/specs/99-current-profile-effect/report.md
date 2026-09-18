@@ -12,6 +12,8 @@ none  target_only ph_11 ph_02 ph_19 ph_01 ph_09 ph_04 ph_14 ph_06 ph_03 ph_16 ph
 
 동일 배열은 개인화 성공 증거가 아니라 의도적인 제한이다. 검증되지 않은 현재 스타일 차이를 만들지 않고 화면에서 지향만 사용했음을 공개한다. #20의 결과 2벌은 현재 프로필 2벌이 아니라 **지향 2벌**로 수집한다.
 
-무료 검증: Node 248/248, UI 31/31, eval/check/lint/typecheck/build PASS.
+세 경우의 모델 요청 본문도 바이트 단위로 동일하다. 반환 feed에는 2자·950자 CurrentProfile의 서로 다른 ID가 남지만, `target_only` 모델 요청의 `current_profile_id`는 모두 `null`이다.
+
+무료 검증: Node 249/249, UI 31/31, eval/check/lint/typecheck/build PASS.
 
 유료 모델·Apify 호출은 하지 않았다.
