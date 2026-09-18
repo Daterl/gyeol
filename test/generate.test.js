@@ -373,7 +373,9 @@ test('real feed context blocks stabilization without affirmative omission eviden
   ];
   const photoOnlyPhotos=fixture.context.photos.map((photo,index)=>({...structuredClone(photo),color:colors[index],describable_facts:['같은 사실']}));
   const photoOnly=await buildFeed(orderInput({kind:'none'},{kind:'none'},photoOnlyPhotos));
-  assert.deepEqual(photoOnly.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,1,1]);
+  // #127: 사진만 올린 경로도 orderFeed 를 타므로 adjacent_overlap 은 사실 겹침이 아니라 측정 색 겹침이다
+  // (지향 경로와 같은 정의). 위 세 색은 서로 멀기 때문에 1 이 아니다.
+  assert.deepEqual(photoOnly.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,0.45,0.45]);
   assert.equal(photoOnly.feed.applied_profile.language,null);
 
   const explicitAll=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘'},currentPosts(['','기록'])));

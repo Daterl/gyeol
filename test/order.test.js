@@ -5,7 +5,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { orderFeed } from '../lib/order.js';
+import { hasOrderingBasis, orderFeed, TIE_BAND } from '../lib/order.js';
 import { planFromPhotos } from '../lib/target_profile.js';
 import { validateFeed, validatePhoto } from '../lib/contracts.js';
 import { evaluate } from '../eval/invariants.js';
@@ -235,8 +235,9 @@ test('a bonus that flipped the opener is named as the reason, not hidden behind 
 });
 
 // H1 (review-codex.md). 이슈의 "사진만 입력" DoD 는 이 함수의 인수 계약이 아니다.
-// orderFeed 는 targetProfile 없이는 거부한다 — 없는 지향 프로필을 지어내는 것이 E9 가 막는 바로 그 위조이기 때문이다.
-// 이 테스트는 그 경계를 고정해서, 프로필을 주입한 테스트를 "사진만 입력 PASS" 로 다시 읽지 못하게 한다.
+// orderFeed 는 지향축 자리가 비어 있으면 거부한다 — 없는 지향 프로필을 지어내는 것이 E9 가 막는 바로 그
+// 위조이기 때문이다. #127 이후 그 자리에 PhotoPlan 이 오는 것은 허용되지만(사진 자체가 근거다), 아무것도
+// 없는 것은 여전히 거부한다. 이 테스트가 그 경계를 고정한다.
 test('photo-only input is rejected here; the photo-only DoD belongs to the wiring layer', () => {
   assert.throws(() => orderFeed({ photoAnalyses: photos20 }), /targetProfile: expected object/);
   assert.throws(() => orderFeed({ photoAnalyses: photos20, targetProfile: null, currentProfile: absentCurrent }), /targetProfile: expected object/);
@@ -245,6 +246,31 @@ test('photo-only input is rejected here; the photo-only DoD belongs to the wirin
     const input = photos20.slice(0, count);
     assert.deepEqual([...orderOf(run(input))].sort(), input.map(p => p.photo_id).sort());
   }
+  // #127: PhotoPlan 은 받는다. 지향 방향·타이브레이크·보너스는 쓰지 않고 사진 측정값만으로 순서를 낸다.
+  const input = photos20.slice(0, 15);
+  const feed = orderFeed({ photoAnalyses: input, targetProfile: planFromPhotos(input), currentProfile: absentCurrent, now: '2026-09-18T00:00:00.000Z' });
+  assert.equal(feed.schema_version, '1.1');
+  assert.equal(feed.applied_profile.target_profile_id, null);
+  assert.equal(feed.applied_profile.language, null);
+  assert.notDeepEqual(orderOf(feed), input.map(p => p.photo_id));
+  assert.match(byPosition(feed)[0].rationale.value, /지향을 넣지 않아/);
+});
+
+// #127 순서를 바꿀 근거가 있는지 판정하는 게이트. 밴드 안은 "가르지 못한 것"이고 경계는 가른 것으로 센다.
+test('#127 the ordering gate answers from measured spread alone, and the band edge counts as decided', () => {
+  const flat = n => Array.from({ length: n }, (_, index) => ({ ...structuredClone(photos20[0]), photo_id: `ph_f${index}`, input_index: index }));
+  const same = flat(3);
+  assert.equal(hasOrderingBasis(same), false);
+  for (const key of ['bright_mean', 'sat_mean']) {
+    const edge = flat(3);
+    edge[1].color[key] = edge[0].color[key] + TIE_BAND;
+    assert.equal(hasOrderingBasis(edge), true, `${key} 경계가 가르지 못한 것으로 셌다`);
+    const inside = flat(3);
+    inside[1].color[key] = edge[0].color[key] + TIE_BAND / 2;
+    assert.equal(hasOrderingBasis(inside), false, `${key} 밴드 안이 가른 것으로 셌다`);
+  }
+  assert.equal(hasOrderingBasis(photos20.slice(0, 15)), true);
+  assert.throws(() => hasOrderingBasis([]), /at least one PhotoAnalysis/);
 });
 
 test('rejects inputs the contract cannot accept instead of guessing', () => {
