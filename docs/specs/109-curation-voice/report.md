@@ -219,4 +219,6 @@ Generating route types...
 ## 코드 리뷰
 
 CodeRabbit CLI 0.7.6을 실행했다. 최초 기존 파일 5개 검토는 지적 0건이며 새 파일을 stage한 뒤 8개 구현·검증 파일을 다시 제출했다.
-현재 수신한 minor 1건은 검증 스크립트의 JSON 문자열 비교가 객체 키 순서에 의존한다는 지적이다. 실제 코드를 확인하고 isDeepStrictEqual로 바꾼 뒤 실사진 15장 검증과 구문 검사를 재실행해 통과했다. 원문은 review-coderabbit-final.txt다.
+최종 8개 파일 검토 완료: minor 1건, 그 외 지적 0건이다. minor 1건은 검증 스크립트의 JSON 문자열 비교가 객체 키 순서에 의존한다는 지적이다. 실제 코드를 확인하고 isDeepStrictEqual로 바꾼 뒤 실사진 15장 검증과 구문 검사를 재실행해 통과했다. 원문은 review-coderabbit-final.txt다.
+
+Draft PR: https://github.com/Daterl/gyeol/pull/113 (`develop`, Draft). 보드 상태: 검토·인수 대기.
