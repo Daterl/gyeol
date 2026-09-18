@@ -18,36 +18,21 @@ const length = (profile, p50) => {
 const pair = (t, c) => ({ targetProfile: length(detail, t), currentProfile: length(present, c) });
 const run = options => composeFeed({ photoAnalyses: photos, now: '2026-09-17T00:00:00.000Z', ...options });
 
-test('120/18 yields one evidenced delta, 47 chars and honest correction', () => {
-  const input = pair(120, 18);
-  const before = structuredClone(input);
-  const result = run(input).applied_profile;
-  assert.equal(result.corrected, true);
-  assert.equal(result.disclosure, 'corrected');
-  assert.equal(result.deltas.length, 1);
-  const delta = result.deltas[0];
-  assert.deepEqual([delta.target, delta.current, delta.resolved, delta.rule], [120, 18, 47, 'log_midpoint']);
-  assert.equal(delta.note_key, 'caption_len_gap');
-  assert.equal(result.language.caption_len.value.p50, 47);
-  assert.deepEqual(delta.evidence.slice(0, -1), [...input.targetProfile.language.caption_len.evidence, ...input.currentProfile.language.caption_len.evidence]);
-  assert.deepEqual(result.visual, input.targetProfile.visual);
-  assert.deepEqual(result.sequence, input.targetProfile.sequence);
-  assert.deepEqual(input, before);
-  result.language.caption_len.evidence[0].note = 'mutation';
-  assert.deepEqual(input, before);
-  assert.notEqual(delta.evidence[0].note, 'mutation');
-  assert.equal(Object.hasOwn(delta, 'text'), false);
+test('present current profiles are traced without claiming an unsupported correction', () => {
+  for (const currentLength of [2, 18, 120, 950]) {
+    const input = pair(120, currentLength);
+    const before = structuredClone(input);
+    const result = run(input).applied_profile;
+    assert.equal(result.current_profile_id, input.currentProfile.profile_id);
+    assert.equal(result.corrected, false);
+    assert.equal(result.disclosure, 'target_only');
+    assert.deepEqual(result.deltas, []);
+    assert.equal(result.language.caption_len.value.p50, 120);
+    assert.deepEqual(result.visual, input.targetProfile.visual);
+    assert.deepEqual(result.sequence, input.targetProfile.sequence);
+    assert.deepEqual(input, before);
+  }
 });
-
-for (const [t, c, expected] of [[0, 120, 10], [120, 0, 10], [18, 120, 47], [0, 0, 0], [1, 2, 1], [120, 120, 120]]) {
-  test(`boundary ${t}/${c}: ${expected}`, () => {
-    const result = run(pair(t, c)).applied_profile;
-    assert.equal(result.language.caption_len.value.p50, expected);
-    assert.ok(result.language.caption_len.value.p90 >= expected);
-    assert.equal(result.deltas.length, expected === t ? 0 : 1);
-    assert.equal(result.disclosure, expected === t ? 'target_only' : 'corrected');
-  });
-}
 
 test('absent current completes pipeline and E8 with no delta', () => {
   const feed = run({ targetProfile: quiet, currentProfile: absent });
@@ -58,22 +43,24 @@ test('absent current completes pipeline and E8 with no delta', () => {
   assert.equal(results.E8.pass, true);
 });
 
-test('missing caption measurement is not a fabricated gap', () => {
-  for (const axis of ['targetProfile', 'currentProfile']) {
-    const input = pair(120, 18);
-    delete input[axis].language.caption_len;
-    const result = run(input).applied_profile;
-    assert.equal(result.disclosure, 'target_only');
-    assert.deepEqual(result.deltas, []);
-  }
-});
-
 test('invalid or unevidenced profiles are rejected', () => {
   for (const value of [-1, 1.5, NaN, Infinity]) assert.throws(() => composeProfile(pair(value, 18)));
   const input = pair(120, 18);
   input.currentProfile.language.caption_len.evidence = [];
   assert.throws(() => composeProfile(input));
   assert.throws(() => composeProfile({ targetProfile: quiet }));
+});
+
+test('same target and photos stay identical when only the current profile changes', () => {
+  const profiles = [absent, length(present, 2), length(present, 950)];
+  const feeds = profiles.map(currentProfile => run({targetProfile:quiet,currentProfile}));
+  const orders = feeds.map(feed => [...feed.slots].sort((a,b)=>a.position-b.position).map(slot=>slot.photo_id));
+  assert.deepEqual(orders[0],orders[1]);
+  assert.deepEqual(orders[1],orders[2]);
+  for (const feed of feeds) {
+    assert.equal(feed.applied_profile.disclosure,'target_only');
+    assert.deepEqual(feed.applied_profile.deltas,[]);
+  }
 });
 
 test('same measured photos and different targets change position-sorted photo IDs', () => {

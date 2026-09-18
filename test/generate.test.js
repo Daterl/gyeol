@@ -238,7 +238,11 @@ test('real feed context blocks stabilization without affirmative omission eviden
   const smallRatio=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록','기록','기록','기록'])));
   assert.equal(smallRatio.context.current.language.empty_caption_ratio.value,0.2);
 
-  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['less than one expected omission',smallRatio]]) {
+  const ignoredCurrent=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록'])));
+  assert.equal(ignoredCurrent.context.current.language.empty_caption_ratio.value,0.5);
+  assert.equal(ignoredCurrent.feed.applied_profile.disclosure,'target_only');
+
+  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['less than one expected omission',smallRatio],['target-only ignores current omission ratio',ignoredCurrent]]) {
     const provider=filledOutput(built.feed);
     assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider,label);
   }

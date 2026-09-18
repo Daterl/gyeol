@@ -68,7 +68,7 @@ test('correction copy exposes exact resolved number and distinguishes target-onl
       }) as FeedResponse,
   );
   const markup = renderToStaticMarkup(createElement(ResultScreen, { store }));
-  expect(markup).toContain('기존 계정과 비교한 보정은 없어요');
+  expect(markup).toContain('현재 스타일은 순서와 문장에 반영하지 않았어요');
   expect(markup).not.toContain('개인화 정보 없이');
   expect(markup).not.toMatch(/이처럼|또한|이를 통해|이러한|마침내/);
 });

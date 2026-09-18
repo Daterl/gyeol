@@ -18,16 +18,18 @@ test('3/20 actual input IDs survive photo-only and heuristic target/current path
   const value=input();value.identity.target={kind:'text',text:'자세하게, 기록하듯'};
   value.identity.current={kind:'posts',photos:[{...value.photos[0],photo_id:'old_photo',input_index:0}],captions:['짧은 기록']};
   const result=await buildFeed(value);validateFeedResponse(result);
-  assert.equal(result.feed.applied_profile.corrected,true);assert.equal(result.context.current.visual.scale_mix,undefined);
-  assert.ok(result.feed.applied_profile.deltas[0].evidence.some(e=>e.ref==='old_photo'));
+  assert.equal(result.feed.applied_profile.corrected,false);assert.equal(result.feed.applied_profile.disclosure,'target_only');
+  assert.deepEqual(result.feed.applied_profile.deltas,[]);assert.equal(result.context.current.visual.scale_mix,undefined);
+  assert.equal(result.feed.applied_profile.current_profile_id,result.context.current.profile_id);
 });
 
-test('model observations use composed ordering and preserve current-post evidence references',async()=>{
+test('model observations keep target ordering while current stays target-only',async()=>{
   const value=input();value.photos=value.photos.map(p=>({...p,analysis_source:'vision_model'}));
   value.identity.target={kind:'text',text:'자세하게, 기록하듯'};
   value.identity.current={kind:'posts',photos:[{...value.photos[0],photo_id:'old_photo',input_index:0}],captions:['짧은 기록']};
   const result=await buildFeed(value);validateFeedResponse(result);
-  assert.equal(result.feed.applied_profile.corrected,true);
+  assert.equal(result.feed.applied_profile.corrected,false);
+  assert.equal(result.feed.applied_profile.disclosure,'target_only');
   assert.ok(result.feed.slots.every(s=>!s.rationale.value.includes('선택한 순서를 그대로')));
 });
 
