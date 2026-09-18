@@ -122,3 +122,46 @@ test('#69 photo-only input still keeps the input order, and the branch is the on
   assert.ok(feed.slots.every(s=>s.rationale.value.includes('그대로')));
   assert.ok(feed.slots.every(s=>s.rationale.evidence.some(e=>e.ref==='order.input_order')));
 });
+
+// #69 교차 리뷰 P2. 혼합 배치(모델 관측 + 휴리스틱)에서 미관측 구도 상수가 순위를 갈랐고 근거 문장에는
+// 나타나지 않았다. 아래 3장은 그 리뷰가 재현에 쓴 합성 계약 입력 그대로다 — real20 앞 3장을 복제하고
+// ID·source·model·composition·밝기/채도만 바꿨다. dense 점수는 0.4*(1-flat)+0.4*sat+0.2*bright 이므로
+// 관측된 두 값만으로는 observed(0.28) > unknown(0.18) 인데, 수정 전에는 unknown 의 상수 full_frame 이
+// 붙인 0.4 가 순서를 뒤집어 unknown 이 1번이었다.
+const mixed=target=>({schema_version:'1.0',session_id:'issue-69-p2',
+  photos:[
+    {photo_id:'dark',analysis_source:'vision_model',model:'claude-opus-5',composition:'negative_space',bright:0.1,sat:0.1},
+    {photo_id:'observed',analysis_source:'vision_model',model:'claude-opus-5',composition:'negative_space',bright:0.8,sat:0.3},
+    {photo_id:'unknown',analysis_source:'heuristic',model:'heuristic-jpeg-dc@1',composition:'full_frame',bright:0.5,sat:0.2}
+  ].map((spec,index)=>{
+    const photo=structuredClone(real20[index]);
+    photo.photo_id=spec.photo_id;photo.input_index=index;
+    photo.analysis_source=spec.analysis_source;photo.model=spec.model;photo.composition=spec.composition;
+    photo.color.bright_mean=spec.bright;photo.color.sat_mean=spec.sat;
+    return photo;
+  }),
+  identity:{target,current:{kind:'none'}}});
+
+test('#69 P2 an unobserved composition constant must not decide the order in a mixed batch',async()=>{
+  const body=mixed({kind:'text',text:'자세하게, 기록하듯'});
+  const response=await handleFeed(request('/api/feed',body));
+  assert.equal(response.status,200);
+  const {feed}=await response.json();
+  // 근거로 제시된 값(밝기·채도)만의 가중합 1위가 실제 1번이어야 한다. 수정 전에는 unknown 이었다.
+  assert.equal(ordered(feed)[0],'observed','미관측 구도 상수가 첫 자리를 결정했다');
+  // 그 상수는 문장에도 나타나면 안 된다 — 배치에 휴리스틱이 섞이면 관측된 사진의 구도도 비교 대상이 없다.
+  for(const slot of feed.slots) {
+    assert.ok(!slot.rationale.value.includes('넓게 깔'),`slot ${slot.position} 문장이 비교 불가능한 구도를 말한다`);
+    for(const e of slot.rationale.evidence) assert.ok(!(e.note??'').includes('넓게 깔'),`slot ${slot.position} 근거가 비교 불가능한 구도를 말한다`);
+  }
+});
+
+test('#69 P2 flipping an unobserved photo’s composition constant changes nothing',async()=>{
+  const target={kind:'text',text:'자세하게, 기록하듯'};
+  const base=mixed(target);
+  const flipped=mixed(target);
+  // 휴리스틱 사진의 composition 만 뒤집는다. 관측된 적 없는 값이므로 결과에 영향을 주면 안 된다.
+  flipped.photos[2].composition='negative_space';
+  const run=async body=>ordered((await (await handleFeed(request('/api/feed',body))).json()).feed);
+  assert.deepEqual(await run(flipped),await run(base),'관측하지 않은 구도 값이 순서를 바꿨다');
+});
