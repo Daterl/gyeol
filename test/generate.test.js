@@ -680,13 +680,13 @@ const indexedSlot = (req, index=0) => ({
   ...seedOutput(req.feed).output.slots[0], fact_index:index, evidence:[]
 });
 
-test('#123 indexed all/slot responses compose evidence and repair paraphrased hints',async()=>{
+test('#123 indexed all/slot responses compose evidence and preserve grounded hints',async()=>{
   for(const mode of ['all','slot']) {
     const req=input(mode);
     const response=mode==='all'?seedOutput(req.feed):{slot:indexedSlot(req)};
     const slots=mode==='all'?response.output.slots:[response.slot];
     for(const slot of slots) {
-      slot.fact_index=0;slot.evidence=[];slot.text=hint('모델이 줄여 쓴 소재');
+      slot.fact_index=0;slot.evidence=[];
     }
     const actual=await generateOutput(req,options(response));
     for(const slot of mode==='all'?actual.output.slots:[actual.slot]) {
@@ -755,7 +755,7 @@ test('#123 provider schema requires a fact index but public all/slot responses n
     const provider=mode==='all'?seedOutput(req.feed):{slot:indexedSlot(req)};
     for(const slot of mode==='all'?provider.output.slots:[provider.slot]) {
       const facts=req.feed.slots.find(s=>s.photo_id===slot.photo_id).caption_inputs.describable_facts;
-      slot.fact_index=facts.length-1;slot.evidence=[];slot.text=hint('다르게 요약한 소재');
+      slot.fact_index=facts.length-1;slot.evidence=[];slot.text=hint(facts.at(-1));
     }
     const seen=[];
     const response=await handleGenerate(request(req),{apiKey:'fake-key',fetchImpl:transport(provider,seen)});
@@ -780,7 +780,7 @@ test('#123 mocked 3/15-photo HTTP generation preserves identities and canonical 
     const req=generatedInput(built);
     const provider=seedOutput(built.feed);
     for(const slot of provider.output.slots) {
-      slot.fact_index=0;slot.evidence=[];slot.text=hint('요약한 소재');
+      slot.fact_index=0;slot.evidence=[];
     }
     const response=await handleGenerate(request(req),options(provider));
     assert.equal(response.status,200);
@@ -792,5 +792,20 @@ test('#123 mocked 3/15-photo HTTP generation preserves identities and canonical 
       assert.deepEqual(slot.evidence[0],{kind:'uploaded_photo',ref:slot.photo_id,
         note:built.feed.slots[index].caption_inputs.describable_facts[0]});
     }
+  }
+});
+
+
+test('#123 selecting evidence never replaces a hint with a long observation',async()=>{
+  const req=input('slot');
+  const facts=['그 사람은 하늘색 단추 달린 카디건과 흰 상의, 회색 통이 넓은 바지를 입고 있다','흰 화분에 초록 잎이 보인다'];
+  req.feed.slots[0].caption_inputs.describable_facts=facts;
+  req.context.photos.find(p=>p.photo_id==='ph_01').describable_facts=facts;
+  const slot={...indexedSlot(req),text:hint('하늘색 단추 달린 카디건')};
+  const actual=await generateOutput(req,options({slot}));
+  assert.equal(actual.slot.text,slot.text);
+  assert.equal(actual.slot.evidence[0].note,facts[0]);
+  for(const patch of [{text:hint('하늘빛 카디건')},{fact_index:1}]) {
+    await assert.rejects(generateOutput(req,options({slot:{...slot,...patch}})),{code:'MODEL_CONTRACT'});
   }
 });
