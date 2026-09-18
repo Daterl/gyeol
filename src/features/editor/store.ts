@@ -234,12 +234,23 @@ export function createEditorStore() {
           validateFeedResponse(response);
           const ids = response.context.photos.map((photo) => photo.photo_id);
           const selected = get().photos;
+          // 분석에 실패한 사진은 빠진 채로 돌아온다(#126). 응답이 선택 목록의 부분집합이기만 하면 정상이다 —
+          // 선택하지 않은 사진이 섞여 들어오는 경우는 여전히 잡는다.
           if (
             selected.length &&
-            (selected.length !== ids.length ||
-              selected.some((photo) => !ids.includes(photo.photo_id)))
+            (!ids.length ||
+              ids.some(
+                (id) => !selected.some((photo) => photo.photo_id === id),
+              ))
           )
             throw new Error('Selected photos differ');
+          // 분석에서 빠진 사진은 화면에서도 내린다. 미리보기 URL 은 여기서 놓아 준다.
+          const survivors = selected.filter((photo) =>
+            ids.includes(photo.photo_id),
+          );
+          if (selected.length && survivors.length !== selected.length)
+            for (const photo of selected)
+              if (!ids.includes(photo.photo_id)) URL.revokeObjectURL(photo.url);
           const original = structuredClone(response);
           const order = original.feed.slots
             .toSorted((a, b) => a.position - b.position)
@@ -258,6 +269,7 @@ export function createEditorStore() {
             order,
             original,
             originalOutput: null,
+            ...(selected.length ? { photos: survivors } : {}),
             request: { status: 'ready' },
           });
         } catch (error) {

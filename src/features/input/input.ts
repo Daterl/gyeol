@@ -72,6 +72,56 @@ export function identityInput(
   }
   return identity;
 }
+// 동시 실행 상한. 15장을 한꺼번에 던지면 429 를 맞고, 1개(순차)면 15장에 155초가 걸린다.
+// 값의 실측 근거는 docs/specs/126-parallel-analysis/report.md.
+const ANALYZE_CONCURRENCY = 8;
+// 첫 시도 + 재시도 1회. 재시도 한 번이 최악 20초를 더하므로 그 이상 늘리면 30초 목표를 스스로 깬다.
+const ANALYZE_ATTEMPTS = 2;
+const ANALYZE_RETRY_MS = 400;
+// 인증 문제는 다시 물어도 같은 답이 온다. lib/model.js 가 429·5xx 만 재시도하는 규칙과 같은 자리.
+const NEVER_RETRY = new Set(['MODEL_KEY_MISSING', 'CANCELLED']);
+const retryable = (error: unknown) =>
+  error instanceof ApiError &&
+  error.retryable &&
+  error.status !== 401 &&
+  error.status !== 403 &&
+  !NEVER_RETRY.has(error.code);
+
+async function analyzeOnce(
+  photo: SelectedPhoto,
+  index: number,
+  sessionId: string,
+  collection: UploadRequest['collection'],
+  signal: AbortSignal,
+  mock: boolean,
+) {
+  const bytes = new Uint8Array(await photo.file.arrayBuffer());
+  let binary = '';
+  for (let start = 0; start < bytes.length; start += 8192)
+    binary += String.fromCharCode(...bytes.subarray(start, start + 8192));
+  const request: UploadRequest = {
+    collection,
+    file_ref: photo.file.name,
+    image_base64: btoa(binary),
+    input_index: index,
+    media_type: photo.file.type as UploadRequest['media_type'],
+    photo_id: photo.photo_id,
+    schema_version: '1.0',
+    session_id: sessionId,
+  };
+  for (let attempt = 1; ; attempt++) {
+    signal.throwIfAborted();
+    try {
+      return await analyzePhoto(request, signal, mock);
+    } catch (error) {
+      if (attempt >= ANALYZE_ATTEMPTS || !retryable(error)) throw error;
+      await new Promise((resolve) => setTimeout(resolve, ANALYZE_RETRY_MS));
+    }
+  }
+}
+
+// 사진 한 장당 요청 한 번은 그대로다. 겹치는 정도만 상한을 둔다.
+// 한 장이 끝내 실패해도 나머지는 살리고, input_index 는 lib/interaction.js 가 요구하는 0..n-1 로 다시 매긴다.
 async function upload(
   photos: SelectedPhoto[],
   sessionId: string,
@@ -79,46 +129,46 @@ async function upload(
   signal: AbortSignal,
   mock: boolean,
 ) {
-  const analyses = Array<PhotoAnalysis>(photos.length);
-  let next = 0;
-  const failed = new AbortController();
-  const sharedSignal = AbortSignal.any([signal, failed.signal]);
+  signal.throwIfAborted();
+  const done: (PhotoAnalysis | null)[] = new Array(photos.length).fill(null);
+  const failed: (string | null)[] = new Array(photos.length).fill(null);
+  let cursor = 0;
+  let cancelled: unknown = null;
   const worker = async () => {
-    while (next < photos.length) {
-      const index = next++;
-      const photo = photos[index];
-      sharedSignal.throwIfAborted();
-      const bytes = new Uint8Array(await photo.file.arrayBuffer());
-      let binary = '';
-      for (let start = 0; start < bytes.length; start += 8192)
-        binary += String.fromCharCode(...bytes.subarray(start, start + 8192));
-      sharedSignal.throwIfAborted();
-      analyses[index] = await analyzePhoto(
-        {
+    while (cursor < photos.length && !signal.aborted && !cancelled) {
+      const index = cursor++;
+      try {
+        done[index] = await analyzeOnce(
+          photos[index],
+          index,
+          sessionId,
           collection,
-          file_ref: photo.file.name,
-          image_base64: btoa(binary),
-          input_index: index,
-          media_type: photo.file.type as UploadRequest['media_type'],
-          photo_id: photo.photo_id,
-          schema_version: '1.0',
-          session_id: sessionId,
-        },
-        sharedSignal,
-        mock,
-      );
+          signal,
+          mock,
+        );
+      } catch (error) {
+        // 취소는 전체를 멈춘다. 그 밖의 실패는 이 사진 한 장만 버린다.
+        if (
+          signal.aborted ||
+          (error instanceof ApiError && error.code === 'CANCELLED')
+        )
+          cancelled ??= error;
+        else failed[index] = photos[index].file.name;
+      }
     }
   };
-  try {
-    // Four 3MB requests cap in-flight source data near 12MB and put the measured 15-photo path under one minute.
-    await Promise.all(
-      Array.from({ length: Math.min(4, photos.length) }, worker),
-    );
-  } catch (error) {
-    failed.abort(error);
-    throw error;
-  }
-  return analyses;
+  await Promise.all(
+    Array.from(
+      { length: Math.min(ANALYZE_CONCURRENCY, photos.length) },
+      worker,
+    ),
+  );
+  if (cancelled) throw cancelled;
+  signal.throwIfAborted();
+  const analyses = done
+    .filter((analysis): analysis is PhotoAnalysis => analysis !== null)
+    .map((analysis, input_index) => ({ ...analysis, input_index }));
+  return { analyses, failed: failed.filter((name) => name !== null) };
 }
 export async function submitPhotos(
   photos: SelectedPhoto[],
@@ -143,13 +193,24 @@ export async function submitPhotos(
   identityInput(fields, []);
   const sessionId = crypto.randomUUID();
   const selected = await upload(photos, sessionId, 'selected', signal, mock);
+  // 3장 미만이면 /api/feed 가 받지 않는다. 빈 자리를 지어내지 않고 무엇이 빠졌는지 말한다.
+  if (selected.analyses.length < 3)
+    throw new ApiError(
+      'ANALYSIS_FAILED',
+      `사진 ${selected.failed.length}장을 읽지 못했어요(${selected.failed.join(', ')}). 남은 사진이 3장보다 적어요.`,
+    );
   const previous = await upload(oldPhotos, sessionId, 'current', signal, mock);
+  if (oldPhotos.length && !previous.analyses.length)
+    throw new ApiError(
+      'ANALYSIS_FAILED',
+      `기존 게시물 사진을 읽지 못했어요(${previous.failed.join(', ')}). 사진을 비우거나 다시 시도해 주세요.`,
+    );
   return orderPhotos(
     {
       schema_version: '1.0',
       session_id: sessionId,
-      photos: selected,
-      identity: identityInput(fields, previous),
+      photos: selected.analyses,
+      identity: identityInput(fields, previous.analyses),
     },
     signal,
   );
