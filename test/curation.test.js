@@ -91,6 +91,32 @@ test('G5 offline fixture preserves independently specified photo set, provenance
   }
 });
 
+// #69 D6/S3. 이 이슈의 HTTP 회귀는 test/pipeline.test.js 에 있었는데 그쪽은 handleLegacyFeed 를 부른다.
+// 제품 POST /api/feed 는 buildCuration 이므로 같은 판정을 제품 진입점에서 다시 고정한다.
+// position 배열이 아니라 position 으로 정렬한 photo_id 배열을 비교한다 — [1..15] 비교는 아무것도 증명하지 않는다.
+test('#69 production POST /api/feed reorders 15 heuristic photos and two prompts disagree by photo_id',async()=>{
+  const prompts=['차분하고 미니멀한 흑백, 여백을 많이 두고 짧게','쨍하고 화려한 원색, 자세하게 기록하듯 빼곡하게'];
+  const orders=[];
+  for(const prompt of prompts) {
+    const body={...input(15),prompt};
+    const response=await run(body);
+    assert.equal(response.status,200,JSON.stringify(await response.clone().json()));
+    const {feed}=await response.json();
+    const ids=new Set(body.photos.map(p=>p.photo_id));
+    assert.ok(body.photos.every(p=>p.analysis_source==='heuristic'),'휴리스틱 입력이 아니면 이 회귀가 지키려는 분기가 아니다');
+    assert.deepEqual([...feed.slots].map(s=>s.position),Array.from({length:15},(_,i)=>i+1));
+    const order=[...feed.slots].sort((a,b)=>a.position-b.position).map(s=>s.photo_id);
+    assert.notDeepEqual(order,body.photos.map(p=>p.photo_id),'입력 순서 그대로다: 순서 제안이 꺼져 있다');
+    for(const slot of feed.slots) {
+      const own=slot.rationale.evidence.filter(e=>e.kind==='uploaded_photo');
+      assert.ok(own.length>0,`slot ${slot.position} 에 사진 근거가 없다`);
+      for(const e of own) assert.ok(ids.has(e.ref),`slot ${slot.position} 근거 ref ${e.ref} 가 입력에 없다`);
+    }
+    orders.push(order);
+  }
+  assert.notDeepEqual(orders[0],orders[1],'프롬프트 2벌이 같은 순서를 냈다: 프로필이 결과를 바꾸지 않는다');
+});
+
 test('authenticated duplicate is only an exclusion candidate; forged hints cannot exclude',async()=>{
   const receiptSecret='g5-receipt-secret-32-characters-long';
   const body=input();
