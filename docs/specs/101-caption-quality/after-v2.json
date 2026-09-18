@@ -1,0 +1,3281 @@
+[
+  {
+    "run": 1,
+    "scenario": "reference",
+    "input_sha256": "e1c3c124bf387a9eeb93324762adaf1267f2d63c0ead053d9b26deb97b1c2cf8",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:31.363Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15914,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1768,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진으로 잇는 순서\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"초록 접시에 튀김, 떡, 식빵. 줄무늬 종이컵에 담은 튀김들.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷에 흰 스카프.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"개의 양쪽 귀에 흰 이어폰을 걸친 모습.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"한쪽 팔을 머리 위로 올리고 서 있는 모습.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉아 검은 핸드백을 들고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"연한 녹색 민소매를 겹쳐 입고 앉은 모습. 아래는 크림색 케이블 니트.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"분홍색 배경의 크림색 노트. 책 모양 캐릭터 스티커.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트에 여러 손가락의 반지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍색 니트를 입은 개가 격자무늬 소파 위에 앉아 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"개는 분홍색 니트 옷을 입고 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 재킷 위에 흰 리본 끈 상의. 하늘색 주름 치마.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"투명한 유리 접시에 갈색 과자들이 원형으로 둘러 놓여 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 청바지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"턱을 괴고 앉은 모습. 연한 하늘색 상의에 파란 하트 무늬 바지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"손으로 턱을 괴고 정면을 보고 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리색 니트 카디건. 앞면에 흰 실로 꽃 자수.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"파란색과 노란색 줄무늬 회색 모자. 한쪽 팔을 머리 위로.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "사진으로 잇는 순서",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "초록 접시에 튀김, 떡, 식빵. 줄무늬 종이컵에 담은 튀김들.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷에 흰 스카프.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "개의 양쪽 귀에 흰 이어폰을 걸친 모습.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "한쪽 팔을 머리 위로 올리고 서 있는 모습.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉아 검은 핸드백을 들고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "연한 녹색 민소매를 겹쳐 입고 앉은 모습. 아래는 크림색 케이블 니트.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "연한 녹색 민소매 상의를 겹쳐 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "분홍색 배경의 크림색 노트. 책 모양 캐릭터 스티커.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트에 여러 손가락의 반지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍색 니트를 입은 개가 격자무늬 소파 위에 앉아 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "개는 분홍색 니트 옷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 재킷 위에 흰 리본 끈 상의. 하늘색 주름 치마.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "투명한 유리 접시에 갈색 과자들이 원형으로 둘러 놓여 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란색 체크무늬 셔츠를 앞을 열어 입고 청바지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "턱을 괴고 앉은 모습. 연한 하늘색 상의에 파란 하트 무늬 바지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "손으로 턱을 괴고 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리색 니트 카디건. 앞면에 흰 실로 꽃 자수.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "파란색과 노란색 줄무늬 회색 모자. 한쪽 팔을 머리 위로.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13813
+  },
+  {
+    "run": 2,
+    "scenario": "freetext",
+    "input_sha256": "20d6be8b4d13d6e47b41bfcb428ab0e0055fca8b5e7338afa5fc43696c08ab81",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:31.369Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15235,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1980,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"차분한 색감 아래 모인 사진들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"검은 스프링 노트, 크림색 표지에 분홍 라벨.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"팔을 올린 채 서 있고, 줄무늬 모자와 황록색 가방.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"분홍 줄무늬 침구 위의 개, 이어폰을 걸치고 정면을 보다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진 속 글씨와 광고 문구가 캡션 대부분을 차지해 관측 사실이 제한적이다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"이미지 중앙에 갈색 배경의 흰 글자 띠가 있고 광고 문구가 적혀 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉아, 검은 핸드백을 무릎 앞에.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"위아래 두 장 병합 이미지로 각 부분 묘사가 제한적이며, 브랜드명과 해시태그가 포함되어 있다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍 니트를 입은 개가 소파에 앉아, 머리 위로 병.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진 속 광고 문구와 브랜드명이 주요 정보이며, 의복 세부만으로는 캡션 주제가 약하다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"화면 왼쪽 아래에 '수요입점회' 라는 흰 박스 안 검은 글자가 있다\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진에 자막과 광고 요소가 중첩되어 있어 순수 관측 사실이 흐려진다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"화면에 검은 배경의 자막 상자가 겹쳐져 있다\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"테이블 위 음식과 손, 추억의 분식을 고르는 순간.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"셔츠와 청바지의 세부만으로는 독립적인 캡션이 약하며, 화면 하단 글씨가 이미지의 주요 요소다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"화면 하단에 흰색 한글 문구와 불꽃 하트 이모지가 겹쳐져 있다\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진에 캐릭터 이름과 퀴즈 문구가 주 요소이며, 의복과 배경만으로는 독립 캡션이 부족하다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"화면 아래쪽에 흰색 한글 글자가 적혀 있다\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진 하단 자막('POV' 형식)이 이미지의 중심 메시지이며, 의복 묘사만으로는 독립 캡션이 제한적이다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"화면 하단 중앙에 검은 배경의 흰 글자 자막이 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사진 속 이벤트 표기와 글씨가 주요 정보이며, 의복 세부만으로는 캡션 소재가 약하다.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"화면 왼쪽 아래에 주황색 사각형 바탕에 흰 글씨로 'EVENT'가 적혀 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"팔을 올린 채 서 있고, 줄무늬 모자와 황록색 가방.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "차분한 색감 아래 모인 사진들",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "검은 스프링 노트, 크림색 표지에 분홍 라벨.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "팔을 올린 채 서 있고, 줄무늬 모자와 황록색 가방.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "분홍 줄무늬 침구 위의 개, 이어폰을 걸치고 정면을 보다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진 속 글씨와 광고 문구가 캡션 대부분을 차지해 관측 사실이 제한적이다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "이미지 중앙에 갈색 배경의 흰 글자 띠가 있고 광고 문구가 적혀 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉아, 검은 핸드백을 무릎 앞에.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "위아래 두 장 병합 이미지로 각 부분 묘사가 제한적이며, 브랜드명과 해시태그가 포함되어 있다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍 니트를 입은 개가 소파에 앉아, 머리 위로 병.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진 속 광고 문구와 브랜드명이 주요 정보이며, 의복 세부만으로는 캡션 주제가 약하다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "화면 왼쪽 아래에 '수요입점회' 라는 흰 박스 안 검은 글자가 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진에 자막과 광고 요소가 중첩되어 있어 순수 관측 사실이 흐려진다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "화면에 검은 배경의 자막 상자가 겹쳐져 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "테이블 위 음식과 손, 추억의 분식을 고르는 순간.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "셔츠와 청바지의 세부만으로는 독립적인 캡션이 약하며, 화면 하단 글씨가 이미지의 주요 요소다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "화면 하단에 흰색 한글 문구와 불꽃 하트 이모지가 겹쳐져 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진에 캐릭터 이름과 퀴즈 문구가 주 요소이며, 의복과 배경만으로는 독립 캡션이 부족하다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "화면 아래쪽에 흰색 한글 글자가 적혀 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진 하단 자막('POV' 형식)이 이미지의 중심 메시지이며, 의복 묘사만으로는 독립 캡션이 제한적이다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "화면 하단 중앙에 검은 배경의 흰 글자 자막이 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "사진 속 이벤트 표기와 글씨가 주요 정보이며, 의복 세부만으로는 캡션 소재가 약하다.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "화면 왼쪽 아래에 주황색 사각형 바탕에 흰 글씨로 'EVENT'가 적혀 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "팔을 올린 채 서 있고, 줄무늬 모자와 황록색 가방.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 15466
+  },
+  {
+    "run": 3,
+    "scenario": "photos_only",
+    "input_sha256": "0711dfd3104c58163ff0a7e882bfaa4d20977ddb23a2a3397d1881f47cf337b2",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:45.180Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 14864,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1747,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진 모음\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"측면을 향해 선 자태, 파란 줄무늬 모자와 남색 조끼.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"}]},{\"position\":2,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 카디건, 흰색 꽃 자수가 놓여 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":3,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 오버사이즈 재킷, 하늘색 주름 치마.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"나무 테이블 위 초록 접시에 담긴 튀김과 음식들.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다\"}]},{\"position\":5,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"투명 유리 접시 위 갈색 과자들, 하나씩 둘러 놓여 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":6,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉아 검은 핸드백을 들고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷, 흰색 스카프를 여러 번 감고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":8,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크 셔츠를 앞 열어 입고 청바지를 입었다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"흰 털 개가 분홍색 니트 옷을 입고 앉아 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":10,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"밝은 하늘색 니트, 은색 체인 목걸이 두 개.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"침대 옆에 앉아 위로 묶은 머리, 큰 봉제 인형 곁에.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"}]},{\"position\":12,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"분홍색 침구 위 개가 엎드려 정면을 보고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"측면을 향해 선 자태, 파란 줄무늬 모자와 남색 조끼.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"}]},{\"position\":14,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트, 분홍 배경에 검은 글씨로 라벨이 붙어 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":15,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"초록 배경 앞 흰 티셔츠, 아래는 크림색 케이블 니트.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "사진 모음",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "측면을 향해 선 자태, 파란 줄무늬 모자와 남색 조끼.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 카디건, 흰색 꽃 자수가 놓여 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 오버사이즈 재킷, 하늘색 주름 치마.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "나무 테이블 위 초록 접시에 담긴 튀김과 음식들.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "투명 유리 접시 위 갈색 과자들, 하나씩 둘러 놓여 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉아 검은 핸드백을 들고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷, 흰색 스카프를 여러 번 감고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크 셔츠를 앞 열어 입고 청바지를 입었다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "흰 털 개가 분홍색 니트 옷을 입고 앉아 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "밝은 하늘색 니트, 은색 체인 목걸이 두 개.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "침대 옆에 앉아 위로 묶은 머리, 큰 봉제 인형 곁에.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "분홍색 침구 위 개가 엎드려 정면을 보고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "측면을 향해 선 자태, 파란 줄무늬 모자와 남색 조끼.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트, 분홍 배경에 검은 글씨로 라벨이 붙어 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "노트 표지는 흰색에 가까운 크림색이다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "초록 배경 앞 흰 티셔츠, 아래는 크림색 케이블 니트.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13625
+  },
+  {
+    "run": 4,
+    "scenario": "corrected",
+    "input_sha256": "35b6c5ba841c9ac9827d6c2ccdbd3865d2196c9585861a26d95a6178e87252ea",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:46.837Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15923,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1741,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"음식과 옷, 소품을 담은 사진 열다섯 장\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"초록 접시에 튀김, 떡, 식빵. 종이컵에 담긴 튀김과 붉은 양념 음식. 분식의 한때.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷과 흰 스카프.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"개가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"파란색과 노란색 줄무늬 모자. 황록색 가방.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 검은 긴팔과 흰 하의. 진주 목걸이.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 긴팔 상의와 흰색 하의를 입고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"연한 녹색 민소매와 흰 티셔츠. 초록 배경.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 표지, 분홍 라벨. 노트.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트. 은색 체인 목걸이 두 개.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍색 니트를 입은 개.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 재킷. 하늘색 주름 치마.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"유리 접시에 갈색 과자들을 원형으로 둘렀다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크 셔츠와 진한 청바지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"손으로 턱을 괴고 앉아 있다. 하늘색 상의.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 카디건. 흰 꽃 자수.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"파란색과 노란색 줄무늬 모자. 황록색 가방. 측면 포즈.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "음식과 옷, 소품을 담은 사진 열다섯 장",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "초록 접시에 튀김, 떡, 식빵. 종이컵에 담긴 튀김과 붉은 양념 음식. 분식의 한때.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷과 흰 스카프.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "개가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "파란색과 노란색 줄무늬 모자. 황록색 가방.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 검은 긴팔과 흰 하의. 진주 목걸이.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "검은색 긴팔 상의와 흰색 하의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "연한 녹색 민소매와 흰 티셔츠. 초록 배경.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 표지, 분홍 라벨. 노트.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "노트 표지는 흰색에 가까운 크림색이다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트. 은색 체인 목걸이 두 개.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍색 니트를 입은 개.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 재킷. 하늘색 주름 치마.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "유리 접시에 갈색 과자들을 원형으로 둘렀다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크 셔츠와 진한 청바지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "손으로 턱을 괴고 앉아 있다. 하늘색 상의.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 카디건. 흰 꽃 자수.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "파란색과 노란색 줄무늬 모자. 황록색 가방. 측면 포즈.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 12862
+  },
+  {
+    "run": 5,
+    "scenario": "reference",
+    "input_sha256": "e1c3c124bf387a9eeb93324762adaf1267f2d63c0ead053d9b26deb97b1c2cf8",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:58.808Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15914,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2069,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진 모음\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"분식부터 치즈 떡볶이까지, 한입 가득 담은 상.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷에 흰 스카프, 가을 시작.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"강아지와 펫 간식.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.81\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.813\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.841\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"미래의 나를 오늘로 초대하기.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.864\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.866\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 재킷으로 가을의 시작.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.881\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.882\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.908\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.936\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.923\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "사진 모음",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "분식부터 치즈 떡볶이까지, 한입 가득 담은 상.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷에 흰 스카프, 가을 시작.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "강아지와 펫 간식.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.81"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.813"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.841"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "미래의 나를 오늘로 초대하기.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.864"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.866"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 재킷으로 가을의 시작.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.881"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.882"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.908"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.936"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.923"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13282
+  },
+  {
+    "run": 6,
+    "scenario": "freetext",
+    "input_sha256": "20d6be8b4d13d6e47b41bfcb428ab0e0055fca8b5e7338afa5fc43696c08ab81",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:45:59.702Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15235,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2281,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"차분한 여백을 잇는 순서\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트와 펼친 책 모양 스티커.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.825로 높음\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.81로 높음\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.828로 높음\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.827로 높음\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.841로 높음\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.861로 높음\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.856로 높음\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.859로 높음\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"튀김과 떡, 치즈가 녹은 음식.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.709로 높음\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.908로 높음\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.895로 높음\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.932로 높음\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.923로 높음\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "차분한 여백을 잇는 순서",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트와 펼친 책 모양 스티커.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "노트 표지는 흰색에 가까운 크림색이다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.825로 높음"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.81로 높음"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.828로 높음"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.827로 높음"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.841로 높음"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.861로 높음"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.856로 높음"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.859로 높음"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "튀김과 떡, 치즈가 녹은 음식.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.709로 높음"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.908로 높음"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.895로 높음"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.932로 높음"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.923로 높음"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 14538
+  },
+  {
+    "run": 7,
+    "scenario": "photos_only",
+    "input_sha256": "0711dfd3104c58163ff0a7e882bfaa4d20977ddb23a2a3397d1881f47cf337b2",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:12.093Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 14864,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1608,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"선택한 사진들을 순서대로\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"팔을 올려 햇빛을 받다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]},{\"position\":2,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 카디건의 흰 자수.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"카디건 앞면 오른쪽에 흰색 실로 꽃 자수가 놓여 있다\"}]},{\"position\":3,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 재킷.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"튀김과 떡, 소스.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":5,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"유리 접시에 담긴 갈색 과자들.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":6,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉아 검은 핸드백을 들다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷과 흰 스카프.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":8,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크 셔츠를 열어 입고 흰 가방을 메다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍색 니트를 입은 흰 개.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":10,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트와 은색 목걸이 두 개.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"침대 위 큰 봉제 인형과 함께.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"흰색과 갈색 털의 개, 이어폰을 걸고.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":13,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"팔을 올려 햇빛을 받다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]},{\"position\":14,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트에 붙은 스티커.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"라벨 아래에 얼굴과 팔다리가 그려진 펼친 책 모양 캐릭터 스티커 두 개가 나란히 붙어 있다\"}]},{\"position\":15,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"초록 잎 사이로, 두 장의 순간.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물의 뒤로 짙은 초록색 잎이 무성하게 보인다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "선택한 사진들을 순서대로",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "팔을 올려 햇빛을 받다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 카디건의 흰 자수.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "카디건 앞면 오른쪽에 흰색 실로 꽃 자수가 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 재킷.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "튀김과 떡, 소스.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "유리 접시에 담긴 갈색 과자들.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉아 검은 핸드백을 들다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷과 흰 스카프.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크 셔츠를 열어 입고 흰 가방을 메다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍색 니트를 입은 흰 개.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트와 은색 목걸이 두 개.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "침대 위 큰 봉제 인형과 함께.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "흰색과 갈색 털의 개, 이어폰을 걸고.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "팔을 올려 햇빛을 받다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트에 붙은 스티커.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "라벨 아래에 얼굴과 팔다리가 그려진 펼친 책 모양 캐릭터 스티커 두 개가 나란히 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "초록 잎 사이로, 두 장의 순간.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 인물의 뒤로 짙은 초록색 잎이 무성하게 보인다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13105
+  },
+  {
+    "run": 8,
+    "scenario": "corrected",
+    "input_sha256": "35b6c5ba841c9ac9827d6c2ccdbd3865d2196c9585861a26d95a6178e87252ea",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:14.242Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15923,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1643,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진을 잇는 순서\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"나무 테이블 위 여러 음식과 손.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷에 흰 스카프.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"개의 귀에 이어폰을 걸쳐서.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"팔을 머리 위로 올린 채 서 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉아 핸드백을 들고.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"초록색 배경 앞에서 옷을 겹쳐 입고.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트의 분홍 라벨과 스티커.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트와 은색 목걸이.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍색 옷을 입은 개가 소파에.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"거울 앞에서 휴대폰을 들고 갈색 재킷.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"투명 접시에 둘러 놓인 갈색 과자들.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크무늬 셔츠와 흰 천 가방.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"침대 옆에 앉아 턱을 괴고 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 카디건에 꽃 자수가 놓여 있다.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"팔을 머리 위로 올린 채 스마트폰을 들고.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "사진을 잇는 순서",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "나무 테이블 위 여러 음식과 손.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷에 흰 스카프.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "개의 귀에 이어폰을 걸쳐서.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "팔을 머리 위로 올린 채 서 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉아 핸드백을 들고.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "초록색 배경 앞에서 옷을 겹쳐 입고.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트의 분홍 라벨과 스티커.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트와 은색 목걸이.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍색 옷을 입은 개가 소파에.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "거울 앞에서 휴대폰을 들고 갈색 재킷.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "투명 접시에 둘러 놓인 갈색 과자들.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크무늬 셔츠와 흰 천 가방.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "침대 옆에 앉아 턱을 괴고 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 카디건에 꽃 자수가 놓여 있다.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "팔을 머리 위로 올린 채 스마트폰을 들고.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 11820
+  },
+  {
+    "run": 9,
+    "scenario": "reference",
+    "input_sha256": "e1c3c124bf387a9eeb93324762adaf1267f2d63c0ead053d9b26deb97b1c2cf8",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:25.200Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15914,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1990,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진 모음\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"위아래로 나눈 분식 사진. 위는 초록 접시에 담은 튀김과 떡, 아래는 치즈 오그라떡.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"올리브색 재킷에 하얀 스카프. 가을 입맛 맞춘 옷차림.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"이어폰을 낀 개. 분홍 줄무늬 침구 위에서.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"줄무늬 모자 쓴 아웃핏. 햇빛 아래 그림자.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파에 앉은 검은 코트 차림. 진주 목걸이.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 긴팔 상의와 흰색 하의를 입고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"},{\"kind\":\"aggregate\",\"ref\":\"ig_snapshot_29cm_2026-09-17\",\"note\":\"인접한 슬롯 간 겹침 신호 0.841\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"인접 사진과의 유사도가 높음\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트에 핑크 라벨. 미래의 나를 오늘로 초대하기.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트에 은색 체인. 손가락 반지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍 니트 입은 개. 소파 위에 앉아 정면 응시.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"개는 분홍색 니트 옷을 입고 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"갈색 스웨이드 재킷에 하늘색 주름 치마. 거울 앞에서.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"갈색 과자 여러 개를 유리 접시에. 가운데 진한색 토핑.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크 셔츠에 흰 천 가방. 밝은 햇빛.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"aggregate\",\"ref\":\"ig_snapshot_29cm_2026-09-17\",\"note\":\"인접한 슬롯 간 겹침 신호 0.908\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"인접 사진과의 유사도가 높음\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 니트 카디건에 흰 자수. 체크 하의.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"줄무늬 모자와 황록색 가방. 햇빛 속 실루엣.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "사진 모음",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "위아래로 나눈 분식 사진. 위는 초록 접시에 담은 튀김과 떡, 아래는 치즈 오그라떡.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "올리브색 재킷에 하얀 스카프. 가을 입맛 맞춘 옷차림.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "이어폰을 낀 개. 분홍 줄무늬 침구 위에서.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "줄무늬 모자 쓴 아웃핏. 햇빛 아래 그림자.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파에 앉은 검은 코트 차림. 진주 목걸이.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "검은색 긴팔 상의와 흰색 하의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다"
+              },
+              {
+                "kind": "aggregate",
+                "ref": "ig_snapshot_29cm_2026-09-17",
+                "note": "인접한 슬롯 간 겹침 신호 0.841"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "인접 사진과의 유사도가 높음"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트에 핑크 라벨. 미래의 나를 오늘로 초대하기.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트에 은색 체인. 손가락 반지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍 니트 입은 개. 소파 위에 앉아 정면 응시.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "개는 분홍색 니트 옷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "갈색 스웨이드 재킷에 하늘색 주름 치마. 거울 앞에서.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "갈색 과자 여러 개를 유리 접시에. 가운데 진한색 토핑.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크 셔츠에 흰 천 가방. 밝은 햇빛.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "aggregate",
+                "ref": "ig_snapshot_29cm_2026-09-17",
+                "note": "인접한 슬롯 간 겹침 신호 0.908"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "인접 사진과의 유사도가 높음"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 니트 카디건에 흰 자수. 체크 하의.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "줄무늬 모자와 황록색 가방. 햇빛 속 실루엣.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 16040
+  },
+  {
+    "run": 10,
+    "scenario": "freetext",
+    "input_sha256": "20d6be8b4d13d6e47b41bfcb428ab0e0055fca8b5e7338afa5fc43696c08ab81",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:26.065Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15235,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2284,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"차분한 색감으로 잇는 열다섯 장\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"흰 크림색 노트에 붙은 라벨과 스티커.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.825로 높음\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.81로 높음\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.828로 높음\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.827로 높음\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.841로 높음\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.861로 높음\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.856로 높음\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.859로 높음\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"음식과 손, 딱 하나만 고르는 순간.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.709로 높음\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.908로 높음\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.895로 높음\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.932로 높음\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"파란 줄무늬 모자와 가방.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "차분한 색감으로 잇는 열다섯 장",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "흰 크림색 노트에 붙은 라벨과 스티커.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "노트 표지는 흰색에 가까운 크림색이다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.825로 높음"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.81로 높음"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.828로 높음"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.827로 높음"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.841로 높음"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.861로 높음"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.856로 높음"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.859로 높음"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "음식과 손, 딱 하나만 고르는 순간.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.709로 높음"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.908로 높음"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.895로 높음"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.932로 높음"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "파란 줄무늬 모자와 가방.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 14163
+  },
+  {
+    "run": 11,
+    "scenario": "reference",
+    "input_sha256": "e1c3c124bf387a9eeb93324762adaf1267f2d63c0ead053d9b26deb97b1c2cf8",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:40.230Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15914,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1615,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"혼자만의 시간과 즐거움\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"위아래로 이어진 분식 선택지. 추억 속 최애는?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"초록 스카프로 감싼 오후.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"목에 흰색 스카프를 여러 번 감고 있어 입과 코 아래가 가려져 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"이어폰을 낀 강아지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"팔 들고 선 순간.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"크림색 소파, 검은 핸드백.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"초록 잎 사이로, 두 가지 무드.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"미래의 나를 오늘로 초대하기.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"하늘색 니트, 손가락 위의 반짝임.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"분홍 니트를 입은 흰 강아지.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"거울 앞 갈색 스웨이드와 하늘색 치마.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"유리 접시 위 둥근 과자들.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"파란 체크 셔츠, 창밖 초록.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"침대 위 봉제 인형과 함께.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"아이보리 카디건, 흰 꽃 자수.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"노란 줄무늬 모자, 팔 위로.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "혼자만의 시간과 즐거움",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "위아래로 이어진 분식 선택지. 추억 속 최애는?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "초록 스카프로 감싼 오후.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "목에 흰색 스카프를 여러 번 감고 있어 입과 코 아래가 가려져 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "이어폰을 낀 강아지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "팔 들고 선 순간.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "한쪽 팔을 머리 위로 올리고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "크림색 소파, 검은 핸드백.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "초록 잎 사이로, 두 가지 무드.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "미래의 나를 오늘로 초대하기.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "하늘색 니트, 손가락 위의 반짝임.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "분홍 니트를 입은 흰 강아지.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_03",
+            "caption_state": "filled",
+            "text": "거울 앞 갈색 스웨이드와 하늘색 치마.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_05",
+            "caption_state": "filled",
+            "text": "유리 접시 위 둥근 과자들.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "파란 체크 셔츠, 창밖 초록.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_11",
+            "caption_state": "filled",
+            "text": "침대 위 봉제 인형과 함께.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "아이보리 카디건, 흰 꽃 자수.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "노란 줄무늬 모자, 팔 위로.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 12113
+  },
+  {
+    "run": 12,
+    "scenario": "freetext",
+    "input_sha256": "20d6be8b4d13d6e47b41bfcb428ab0e0055fca8b5e7338afa5fc43696c08ab81",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T04:46:41.242Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 15235,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2280,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"차분한 일상의 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"크림색 노트와 펼친 책 캐릭터.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.825로 높은 유사도\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.81로 높은 유사도\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.828로 높은 유사도\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.827로 높은 유사도\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.841로 높은 유사도\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.861로 높은 유사도\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.856로 높은 유사도\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.859로 높은 유사도\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"추억의 분식, 고르자.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"아래쪽 사진에는 검은 돌솥에 주황색 음식과 녹은 치즈가 담겨 있다\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.709\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.908로 높은 유사도\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.895로 높은 유사도\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"adjacent_overlap 0.932로 높은 유사도\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"모자 쓴 하루.\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "cf28d9b49cc39424502b9608cf0e832f2d3a74ced2c9f45cd115e763aa7be381",
+    "result": {
+      "output": {
+        "title": "차분한 일상의 순간들",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "크림색 노트와 펼친 책 캐릭터.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "노트 표지는 흰색에 가까운 크림색이다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.825로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.81로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.828로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.827로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.841로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.861로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.856로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.859로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "filled",
+            "text": "추억의 분식, 고르자.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "아래쪽 사진에는 검은 돌솥에 주황색 음식과 녹은 치즈가 담겨 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.709"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.908로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.895로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "adjacent_overlap 0.932로 높은 유사도"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "filled",
+            "text": "모자 쓴 하루.",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13599
+  }
+]

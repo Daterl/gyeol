@@ -67,6 +67,7 @@ export type PhotoPlan = {
   visual: Visual;
 };
 export type PhotoAnalysis = {
+  analysis_receipt?: string;
   analysis_source: 'vision_model' | 'heuristic';
   analyzed_at: string;
   color: Color;
@@ -102,9 +103,21 @@ export type AppliedProfile = {
   target_profile_id: string | null;
   visual: Visual;
 };
+export type OmitSuggestion =
+  | { recommended: false; reason: null; evidence: [] }
+  | { recommended: true; reason: string; evidence: Evidence[] };
+export type OmitSummary = {
+  recommended_count: number;
+  message: string;
+};
 export type OrderedFeed = {
   applied_profile: AppliedProfile;
+  // Feed-level curation concept. Absent when the measured color spread stays below
+  // the design threshold, and never stored on a slot so reordering cannot move it.
+  concept?: Claim<string>;
   feed_id: string;
+  // Optional for legacy feeds without the additive suggestion extension.
+  omit_summary?: OmitSummary;
   generated_at: string;
   invariants: {
     input_count: number;
@@ -120,6 +133,7 @@ export type OrderedFeed = {
       is_visual_peak: boolean;
     };
     narrative_role: 'opener' | 'sustain' | 'turn' | 'closer';
+    omit_suggestion?: OmitSuggestion;
     photo_id: string;
     position: number;
     rationale: Claim<string>;
@@ -130,7 +144,7 @@ export type CaptionSlot = {
   photo_id: string;
   position: number;
 } & (
-  | { caption_state: 'filled' | 'user'; omit_reason: null; text: string }
+  | { caption_state: 'seed' | 'user'; omit_reason: null; text: string }
   | { caption_state: 'omitted'; omit_reason: string; text: null }
 );
 export type F3Export = { slots: CaptionSlot[]; title: string };
@@ -161,12 +175,23 @@ export type GenerateRequest = FeedResponse & { schema_version: '1.0' } & (
     | { mode: 'all' }
     | { mode: 'slot'; photo_id: string }
   );
-export type GenerateResponse = { output: F3Export } | { slot: CaptionSlot };
+export type Omission = {
+  evidence: Evidence[];
+  note: string;
+  note_key: 'omission.none' | 'omission.some';
+  omitted: number;
+  total: number;
+};
+export type GenerateResponse =
+  | { omission?: Omission; output: F3Export }
+  | { slot: CaptionSlot };
 export type UploadRequest = {
+  collection: 'selected' | 'current';
   file_ref: string;
   image_base64: string;
   input_index: number;
   media_type: 'image/jpeg' | 'image/png' | 'image/webp';
   photo_id: string;
   schema_version: '1.0';
+  session_id: string;
 };

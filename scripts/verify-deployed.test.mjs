@@ -6,7 +6,8 @@ import { readFile } from 'node:fs/promises';
 import { buildFeed } from '../lib/pipeline.js';
 import { validateGenerateRequest } from '../lib/interaction.js';
 
-const fixture = JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json', import.meta.url), 'utf8'));
+const visionCases = JSON.parse(await readFile(new URL('../docs/specs/101-caption-quality/inputs.json', import.meta.url), 'utf8'));
+const photos = visionCases.find(item => item.name === 'photos_only').request.context.photos;
 
 async function run(generation, feedStatus = 200) {
   const calls = [];
@@ -20,7 +21,9 @@ async function run(generation, feedStatus = 200) {
         assert.match(req.headers['content-type'], /application\/json/);
         const body = JSON.parse(raw);
         if (req.url === '/api/feed') {
-          assert.deepEqual(body.photos, fixture.context.photos);
+          assert.equal(body.photos.length, 15);
+          assert.ok(body.photos.every(photo => photo.analysis_source === 'vision_model'));
+          assert.deepEqual(body.photos, photos);
           assert.equal(body.schema_version, '1.0');
           res.writeHead(feedStatus).end(JSON.stringify(await buildFeed(body)));
           return;
@@ -30,8 +33,8 @@ async function run(generation, feedStatus = 200) {
         assert.equal(Object.hasOwn(body, 'photo_id'), false);
         const output = { title: '사진의 하루', slots: body.feed.slots.map((slot, i) => ({
           position: slot.position, photo_id: slot.photo_id,
-          caption_state: i === 0 ? 'filled' : 'omitted',
-          text: i === 0 ? '빛이 든 자리' : null,
+          caption_state: i === 0 ? 'seed' : 'omitted',
+          text: i === 0 ? '쓸 거리: 빛이 든 자리\n이 중 기억에 남은 건?' : null,
           omit_reason: i === 0 ? null : '사진만으로 충분해요',
           evidence: [{ kind: 'uploaded_photo', ref: slot.photo_id, note: '사진 근거' }],
         })) };
@@ -69,8 +72,8 @@ for (const [name, mutate, expected] of [
   ['blank title', output => { output.title = ' '; }, /FAIL D4/],
   ['multiline title', output => { output.title = 'a\rb'; }, /FAIL D4/],
   ['one missing omission reason', output => { output.slots[2].omit_reason = ' '; }, /FAIL D5.*omit_reason/],
-  ['no filled slots', output => { Object.assign(output.slots[0], { caption_state: 'omitted', text: null, omit_reason: '사진으로 충분해요' }); }, /FAIL D5.*일부/],
-  ['no omitted slots', output => { output.slots.forEach(slot => Object.assign(slot, { caption_state: 'filled', text: '사진', omit_reason: null })); }, /FAIL D5.*일부/],
+  ['no seed slots', output => { Object.assign(output.slots[0], { caption_state: 'omitted', text: null, omit_reason: '사진으로 충분해요' }); }, /FAIL D5.*일부/],
+  ['no omitted slots', output => { output.slots.forEach(slot => Object.assign(slot, { caption_state: 'seed', text: '쓸 거리: 사진\n이 중 기억에 남은 건?', omit_reason: null })); }, /FAIL D5.*일부/],
 ]) test(name + ' fails', async () => {
   const result = await run(output => { mutate(output); return {}; });
   assert.equal(result.code, 1, result.text);

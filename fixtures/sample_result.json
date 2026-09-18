@@ -99,7 +99,7 @@
               {
                 "kind": "uploaded_photo",
                 "ref": "sample_coffee",
-                "note": "샘플 편집자가 확인: 나무 테이블에 아이보리색 커피잔이 놓여 있어요."
+                "note": "나무 테이블에 아이보리색 커피잔이 놓여 있어요."
               },
               {
                 "kind": "rule",
@@ -169,7 +169,7 @@
               {
                 "kind": "uploaded_photo",
                 "ref": "sample_sea",
-                "note": "샘플 편집자가 확인: 잔물결 위로 주황색 부표가 보여요."
+                "note": "잔물결 위로 주황색 부표가 보여요."
               },
               {
                 "kind": "rule",
@@ -413,11 +413,11 @@
           {
             "kind": "uploaded_photo",
             "ref": "sample_coffee",
-            "note": "샘플 편집자가 확인: 나무 테이블에 아이보리색 커피잔이 놓여 있어요."
+            "note": "나무 테이블에 아이보리색 커피잔이 놓여 있어요."
           }
         ],
-        "caption_state": "filled",
-        "text": "커피 한 잔을 놓은 자리.",
+        "caption_state": "seed",
+        "text": "쓸 거리: 아이보리색 커피잔\n이 중 기억에 남은 건?",
         "omit_reason": null
       },
       {
@@ -441,11 +441,11 @@
           {
             "kind": "uploaded_photo",
             "ref": "sample_sea",
-            "note": "샘플 편집자가 확인: 잔물결 위로 주황색 부표가 보여요."
+            "note": "잔물결 위로 주황색 부표가 보여요."
           }
         ],
-        "caption_state": "filled",
-        "text": "잔물결 사이, 작은 주황 점.",
+        "caption_state": "seed",
+        "text": "쓸 거리: 주황색 부표\n이 중 기억에 남은 건?",
         "omit_reason": null
       }
     ]

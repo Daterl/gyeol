@@ -21,6 +21,8 @@ const record = (id, what, ok, detail) => { results.push({ id, what, status: ok =
 const nonempty = value => typeof value === 'string' && value.trim().length > 0;
 const responseDetail = r => `status=${r.status}${r.error ? ` error=${r.error}` : ''} (${r.ms}ms)\n${r.text}`;
 const post = body => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+const visionCases = JSON.parse(await readFile(new URL('../docs/specs/101-caption-quality/inputs.json', import.meta.url), 'utf8'));
+const visionPhotos = visionCases.find(item => item.name === 'photos_only')?.request?.context?.photos ?? [];
 
 async function fetchWithTimeout(path, init = {}) {
   const ac = new AbortController();
@@ -46,10 +48,13 @@ async function d1() {
 
 // D3 — 기존 계약 fixture의 분석된 사진으로 실제 POST 경로를 실행한다.
 async function feedShape() {
-  const fixture = JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json', import.meta.url), 'utf8'));
+  if (visionPhotos.length !== 15 || visionPhotos.some(photo => photo.analysis_source !== 'vision_model')) {
+    record('D3', '실사진 vision 분석 15장을 사용한다', false, `vision_model ${visionPhotos.filter(photo => photo.analysis_source === 'vision_model').length}/${visionPhotos.length}`);
+    return null;
+  }
   const r = await fetchWithTimeout('/api/feed', post({
     schema_version: '1.0', session_id: 'verify-deployed',
-    photos: fixture.context.photos,
+    photos: visionPhotos,
     identity: { target: { kind: 'none' }, current: { kind: 'none' } },
   }));
   if (r.status !== 200) {
@@ -103,11 +108,11 @@ async function generation(feedResponse) {
     nonempty(title) && !/[\r\n\u2028\u2029]/u.test(title),
     `title=${JSON.stringify(title ?? null)}`);
   const slots = Array.isArray(output?.slots) ? output.slots : [];
-  const filled = slots.filter(s => s?.caption_state === 'filled' && nonempty(s.text));
+  const seeded = slots.filter(s => s?.caption_state === 'seed' && nonempty(s.text));
   const empty = slots.filter(s => s?.caption_state === 'omitted');
   const emptyWithReason = empty.filter(s => nonempty(s.omit_reason));
-  record('D5', '일부는 채우고 일부는 비운다', filled.length > 0 && empty.length > 0,
-    `채움 ${filled.length} / 비움 ${empty.length}`);
+  record('D5', '일부에는 쓸 거리를 제안하고 일부는 비운다', seeded.length > 0 && empty.length > 0,
+    `쓸 거리 ${seeded.length} / 비움 ${empty.length}`);
   record('D5', '비운 자리에 모두 omit_reason 이 붙는다',
     empty.length > 0 && emptyWithReason.length === empty.length,
     `${emptyWithReason.length}/${empty.length} 비움 슬롯에 이유`);

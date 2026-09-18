@@ -1,0 +1,1694 @@
+{
+  "verified_at": "2026-09-18T03:26:50.563Z",
+  "runs": [
+    {
+      "scenario": "서로 다른 실사진 15장",
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.375 (다소 어두움)",
+            "평균 채도 0.288 (낮음)",
+            "주요 색 #16150f (점유 26%)",
+            "주요 색 #434040 (점유 14%)",
+            "주요 색 #6b6765 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.619Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-auqBCVXI_09.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 207.3,
+            "sat_mean": 0.273,
+            "bright_mean": 0.346,
+            "palette_hex": [
+              "#0a1014",
+              "#bdbbba",
+              "#374249"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.346 (다소 어두움)",
+            "평균 채도 0.273 (낮음)",
+            "주요 색 #0a1014 (점유 31%)",
+            "주요 색 #bdbbba (점유 12%)",
+            "주요 색 #374249 (점유 11%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.655Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc94ZfOD1-q_07.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 19.3,
+            "sat_mean": 0.343,
+            "bright_mean": 0.589,
+            "palette_hex": [
+              "#120d0d",
+              "#e0eaeb",
+              "#777366"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.589 (중간)",
+            "평균 채도 0.343 (중간)",
+            "주요 색 #120d0d (점유 9%)",
+            "주요 색 #e0eaeb (점유 8%)",
+            "주요 색 #777366 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.682Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_04",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdEAAeHm6u0_01.jpg",
+          "input_index": 3,
+          "color": {
+            "hue_mean": 19.9,
+            "sat_mean": 0.362,
+            "bright_mean": 0.441,
+            "palette_hex": [
+              "#17100e",
+              "#362114",
+              "#413d3f"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1440×1800 세로 이미지",
+            "평균 밝기 0.441 (다소 어두움)",
+            "평균 채도 0.362 (중간)",
+            "주요 색 #17100e (점유 14%)",
+            "주요 색 #362114 (점유 12%)",
+            "주요 색 #413d3f (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.730Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_05",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdILtQ0CRl8_01.jpg",
+          "input_index": 4,
+          "color": {
+            "hue_mean": 104.1,
+            "sat_mean": 0.301,
+            "bright_mean": 0.328,
+            "palette_hex": [
+              "#171a18",
+              "#3a3c3f",
+              "#383e22"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1440×1800 세로 이미지",
+            "평균 밝기 0.328 (다소 어두움)",
+            "평균 채도 0.301 (중간)",
+            "주요 색 #171a18 (점유 29%)",
+            "주요 색 #3a3c3f (점유 15%)",
+            "주요 색 #383e22 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.746Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_06",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdKwYzyFJUS_09.jpg",
+          "input_index": 5,
+          "color": {
+            "hue_mean": 216.3,
+            "sat_mean": 0.188,
+            "bright_mean": 0.429,
+            "palette_hex": [
+              "#c2c1c1",
+              "#0d1015",
+              "#403d3b"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.429 (다소 어두움)",
+            "평균 채도 0.188 (낮음)",
+            "주요 색 #c2c1c1 (점유 24%)",
+            "주요 색 #0d1015 (점유 21%)",
+            "주요 색 #403d3b (점유 19%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.758Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_07",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdOTLpSIBNf_07.jpg",
+          "input_index": 6,
+          "color": {
+            "hue_mean": 215.5,
+            "sat_mean": 0.399,
+            "bright_mean": 0.512,
+            "palette_hex": [
+              "#060e1b",
+              "#bbbcbd",
+              "#c2b39a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.512 (중간)",
+            "평균 채도 0.399 (중간)",
+            "주요 색 #060e1b (점유 30%)",
+            "주요 색 #bbbcbd (점유 16%)",
+            "주요 색 #c2b39a (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.771Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_08",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdTPMgpiZWR_05.jpg",
+          "input_index": 7,
+          "color": {
+            "hue_mean": 29.3,
+            "sat_mean": 0.241,
+            "bright_mean": 0.452,
+            "palette_hex": [
+              "#44413a",
+              "#c2b3a3",
+              "#6f6860"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "3072×4096 세로 이미지",
+            "평균 밝기 0.452 (중간)",
+            "평균 채도 0.241 (낮음)",
+            "주요 색 #44413a (점유 17%)",
+            "주요 색 #c2b3a3 (점유 14%)",
+            "주요 색 #6f6860 (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.845Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_09",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdVDlTviVrG_08.jpg",
+          "input_index": 8,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.097,
+            "bright_mean": 0.612,
+            "palette_hex": [
+              "#bfc1bf",
+              "#e2e3e3",
+              "#9c9c97"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1078×1350 세로 이미지",
+            "평균 밝기 0.612 (중간)",
+            "평균 채도 0.097 (매우 낮음)",
+            "주요 색 #bfc1bf (점유 38%)",
+            "주요 색 #e2e3e3 (점유 10%)",
+            "주요 색 #9c9c97 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.858Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_10",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdWHSQGlMt4_00.jpg",
+          "input_index": 9,
+          "color": {
+            "hue_mean": 340.6,
+            "sat_mean": 0.214,
+            "bright_mean": 0.456,
+            "palette_hex": [
+              "#6b6865",
+              "#15171c",
+              "#999492"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1620×2025 세로 이미지",
+            "평균 밝기 0.456 (중간)",
+            "평균 채도 0.214 (낮음)",
+            "주요 색 #6b6865 (점유 16%)",
+            "주요 색 #15171c (점유 14%)",
+            "주요 색 #999492 (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.887Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_11",
+          "file_ref": "pivot/apify-check/fixtures/images/hony_DdJWXXTHCMv_13.jpg",
+          "input_index": 10,
+          "color": {
+            "hue_mean": 110.5,
+            "sat_mean": 0.086,
+            "bright_mean": 0.808,
+            "palette_hex": [
+              "#fcfcfc",
+              "#c0c0bf",
+              "#9b9a97"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1440 세로 이미지",
+            "평균 밝기 0.808 (밝음)",
+            "평균 채도 0.086 (매우 낮음)",
+            "주요 색 #fcfcfc (점유 57%)",
+            "주요 색 #c0c0bf (점유 10%)",
+            "주요 색 #9b9a97 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:45.984Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_12",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_Dc-auqBCVXI_02.jpg",
+          "input_index": 11,
+          "color": {
+            "hue_mean": 33.7,
+            "sat_mean": 0.322,
+            "bright_mean": 0.472,
+            "palette_hex": [
+              "#9a8c78",
+              "#746d5f",
+              "#afa28c"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.472 (중간)",
+            "평균 채도 0.322 (중간)",
+            "주요 색 #9a8c78 (점유 18%)",
+            "주요 색 #746d5f (점유 12%)",
+            "주요 색 #afa28c (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:46.024Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_13",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_Dc94ZfOD1-q_00.jpg",
+          "input_index": 12,
+          "color": {
+            "hue_mean": 12.8,
+            "sat_mean": 0.293,
+            "bright_mean": 0.501,
+            "palette_hex": [
+              "#100e0e",
+              "#c3c1bd",
+              "#e8e9e7"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.501 (중간)",
+            "평균 채도 0.293 (낮음)",
+            "주요 색 #100e0e (점유 21%)",
+            "주요 색 #c3c1bd (점유 11%)",
+            "주요 색 #e8e9e7 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:46.038Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_14",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_DdDCDKgFCLE_09.jpg",
+          "input_index": 13,
+          "color": {
+            "hue_mean": 1.3,
+            "sat_mean": 0.176,
+            "bright_mean": 0.555,
+            "palette_hex": [
+              "#161618",
+              "#e6e6e3",
+              "#747270"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1346 세로 이미지",
+            "평균 밝기 0.555 (중간)",
+            "평균 채도 0.176 (낮음)",
+            "주요 색 #161618 (점유 13%)",
+            "주요 색 #e6e6e3 (점유 12%)",
+            "주요 색 #747270 (점유 11%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:46.116Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_15",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_DdGkodnCOAZ_03.jpg",
+          "input_index": 14,
+          "color": {
+            "hue_mean": 12.9,
+            "sat_mean": 0.196,
+            "bright_mean": 0.524,
+            "palette_hex": [
+              "#c2c0bc",
+              "#141314",
+              "#433e3b"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.524 (중간)",
+            "평균 채도 0.196 (낮음)",
+            "주요 색 #c2c0bc (점유 13%)",
+            "주요 색 #141314 (점유 12%)",
+            "주요 색 #433e3b (점유 11%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:46.387Z"
+        }
+      ],
+      "digests": [
+        "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+        "6fdbd5c85303ae2556f96a8afe58d6d038af8b75153ff5d215fe545ccb12c256",
+        "df1f3f4890d8cce4cc14f5e07478185a48e325dc301cbea38ff93cdb9b743578",
+        "498d44ecc219c5fa4a7ef458ff8dda52571ee610d45c6ea5514c1e527c360974",
+        "335aa7cab4011c61362dd02cf128f1f43997a5a4912ae3352fa52d0f0ab853ad",
+        "2cc94d0296232d3faa163dc2411c0007593ab533eff253bb9b4f034a19694c94",
+        "80a51a711f440246cf348952eee90696e6681eb31eeda52a90ebd61edffe7c2a",
+        "0c00f5d75c4f076bdceb4ce8234e44c3e475f04ddf00777116cb62e0cb63a87c",
+        "8791632b419cd7f81547a7ff1b898c673137da907aec23d4d038d66b76cb5dff",
+        "5a0718d15c988fe9f1ee920cd4e2cce586e81c62d1f5bf179087a3338b486c4a",
+        "a407ee7d49a7368ee46451ed6854ce3fe7e495104e8d6c518cae07146637a25a",
+        "705ce9e63aa697d9387f1626c5e83efa5a646b70c46471d8aeb90edbee725537",
+        "3a85cbfeb5e1844ee754987b0ff80d19824d984ab73dd50acd12b2466a223cd3",
+        "a2e69d2c4668a3a1305fcdaa38efcdacca1fcc5bec8d1a1844e896e08c2a1fcd",
+        "65669abf7e905d26c1429fe0d5ff4baf5ada51e223bd2f7720544042b6f6057e"
+      ],
+      "analysisCounters": {
+        "modelCalls": 0,
+        "modelFailures": 0,
+        "cacheHits": 0,
+        "cacheMisses": 15,
+        "cacheSize": 15
+      },
+      "outputs": [
+        {
+          "target": {
+            "kind": "none"
+          },
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "ph_01",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 2,
+              "photo_id": "ph_02",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 3,
+              "photo_id": "ph_03",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 4,
+              "photo_id": "ph_04",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 5,
+              "photo_id": "ph_05",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 6,
+              "photo_id": "ph_06",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 7,
+              "photo_id": "ph_07",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 8,
+              "photo_id": "ph_08",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 9,
+              "photo_id": "ph_09",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 10,
+              "photo_id": "ph_10",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 11,
+              "photo_id": "ph_11",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 12,
+              "photo_id": "ph_12",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 13,
+              "photo_id": "ph_13",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 14,
+              "photo_id": "ph_14",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 15,
+              "photo_id": "ph_15",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            }
+          ],
+          "omit_summary": {
+            "recommended_count": 0,
+            "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+          },
+          "E1": "PASS: 15 photos = 15 slots",
+          "E10": "PASS: all uploaded_photo refs resolve"
+        },
+        {
+          "target": {
+            "kind": "text",
+            "text": "짧게, 조용하게"
+          },
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "ph_11",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 2,
+              "photo_id": "ph_02",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 3,
+              "photo_id": "ph_09",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 4,
+              "photo_id": "ph_01",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 5,
+              "photo_id": "ph_03",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 6,
+              "photo_id": "ph_06",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 7,
+              "photo_id": "ph_13",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 8,
+              "photo_id": "ph_14",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 9,
+              "photo_id": "ph_04",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 10,
+              "photo_id": "ph_07",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 11,
+              "photo_id": "ph_08",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 12,
+              "photo_id": "ph_15",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 13,
+              "photo_id": "ph_12",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 14,
+              "photo_id": "ph_10",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 15,
+              "photo_id": "ph_05",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            }
+          ],
+          "omit_summary": {
+            "recommended_count": 0,
+            "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+          },
+          "E1": "PASS: 15 photos = 15 slots",
+          "E10": "PASS: all uploaded_photo refs resolve"
+        }
+      ]
+    },
+    {
+      "scenario": "실사진 14종 + 첫 사진 동일 바이트 재입력 = 15장",
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.375 (다소 어두움)",
+            "평균 채도 0.288 (낮음)",
+            "주요 색 #16150f (점유 26%)",
+            "주요 색 #434040 (점유 14%)",
+            "주요 색 #6b6765 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.165Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-auqBCVXI_09.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 207.3,
+            "sat_mean": 0.273,
+            "bright_mean": 0.346,
+            "palette_hex": [
+              "#0a1014",
+              "#bdbbba",
+              "#374249"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.346 (다소 어두움)",
+            "평균 채도 0.273 (낮음)",
+            "주요 색 #0a1014 (점유 31%)",
+            "주요 색 #bdbbba (점유 12%)",
+            "주요 색 #374249 (점유 11%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.448Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc94ZfOD1-q_07.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 19.3,
+            "sat_mean": 0.343,
+            "bright_mean": 0.589,
+            "palette_hex": [
+              "#120d0d",
+              "#e0eaeb",
+              "#777366"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.589 (중간)",
+            "평균 채도 0.343 (중간)",
+            "주요 색 #120d0d (점유 9%)",
+            "주요 색 #e0eaeb (점유 8%)",
+            "주요 색 #777366 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.481Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_04",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdEAAeHm6u0_01.jpg",
+          "input_index": 3,
+          "color": {
+            "hue_mean": 19.9,
+            "sat_mean": 0.362,
+            "bright_mean": 0.441,
+            "palette_hex": [
+              "#17100e",
+              "#362114",
+              "#413d3f"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1440×1800 세로 이미지",
+            "평균 밝기 0.441 (다소 어두움)",
+            "평균 채도 0.362 (중간)",
+            "주요 색 #17100e (점유 14%)",
+            "주요 색 #362114 (점유 12%)",
+            "주요 색 #413d3f (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.499Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_05",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdILtQ0CRl8_01.jpg",
+          "input_index": 4,
+          "color": {
+            "hue_mean": 104.1,
+            "sat_mean": 0.301,
+            "bright_mean": 0.328,
+            "palette_hex": [
+              "#171a18",
+              "#3a3c3f",
+              "#383e22"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1440×1800 세로 이미지",
+            "평균 밝기 0.328 (다소 어두움)",
+            "평균 채도 0.301 (중간)",
+            "주요 색 #171a18 (점유 29%)",
+            "주요 색 #3a3c3f (점유 15%)",
+            "주요 색 #383e22 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.531Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_06",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdKwYzyFJUS_09.jpg",
+          "input_index": 5,
+          "color": {
+            "hue_mean": 216.3,
+            "sat_mean": 0.188,
+            "bright_mean": 0.429,
+            "palette_hex": [
+              "#c2c1c1",
+              "#0d1015",
+              "#403d3b"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.429 (다소 어두움)",
+            "평균 채도 0.188 (낮음)",
+            "주요 색 #c2c1c1 (점유 24%)",
+            "주요 색 #0d1015 (점유 21%)",
+            "주요 색 #403d3b (점유 19%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.543Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_07",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdOTLpSIBNf_07.jpg",
+          "input_index": 6,
+          "color": {
+            "hue_mean": 215.5,
+            "sat_mean": 0.399,
+            "bright_mean": 0.512,
+            "palette_hex": [
+              "#060e1b",
+              "#bbbcbd",
+              "#c2b39a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.512 (중간)",
+            "평균 채도 0.399 (중간)",
+            "주요 색 #060e1b (점유 30%)",
+            "주요 색 #bbbcbd (점유 16%)",
+            "주요 색 #c2b39a (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.556Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_08",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdTPMgpiZWR_05.jpg",
+          "input_index": 7,
+          "color": {
+            "hue_mean": 29.3,
+            "sat_mean": 0.241,
+            "bright_mean": 0.452,
+            "palette_hex": [
+              "#44413a",
+              "#c2b3a3",
+              "#6f6860"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "3072×4096 세로 이미지",
+            "평균 밝기 0.452 (중간)",
+            "평균 채도 0.241 (낮음)",
+            "주요 색 #44413a (점유 17%)",
+            "주요 색 #c2b3a3 (점유 14%)",
+            "주요 색 #6f6860 (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.990Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_09",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdVDlTviVrG_08.jpg",
+          "input_index": 8,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.097,
+            "bright_mean": 0.612,
+            "palette_hex": [
+              "#bfc1bf",
+              "#e2e3e3",
+              "#9c9c97"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1078×1350 세로 이미지",
+            "평균 밝기 0.612 (중간)",
+            "평균 채도 0.097 (매우 낮음)",
+            "주요 색 #bfc1bf (점유 38%)",
+            "주요 색 #e2e3e3 (점유 10%)",
+            "주요 색 #9c9c97 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.009Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_10",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_DdWHSQGlMt4_00.jpg",
+          "input_index": 9,
+          "color": {
+            "hue_mean": 340.6,
+            "sat_mean": 0.214,
+            "bright_mean": 0.456,
+            "palette_hex": [
+              "#6b6865",
+              "#15171c",
+              "#999492"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1620×2025 세로 이미지",
+            "평균 밝기 0.456 (중간)",
+            "평균 채도 0.214 (낮음)",
+            "주요 색 #6b6865 (점유 16%)",
+            "주요 색 #15171c (점유 14%)",
+            "주요 색 #999492 (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.049Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_11",
+          "file_ref": "pivot/apify-check/fixtures/images/hony_DdJWXXTHCMv_13.jpg",
+          "input_index": 10,
+          "color": {
+            "hue_mean": 110.5,
+            "sat_mean": 0.086,
+            "bright_mean": 0.808,
+            "palette_hex": [
+              "#fcfcfc",
+              "#c0c0bf",
+              "#9b9a97"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1440 세로 이미지",
+            "평균 밝기 0.808 (밝음)",
+            "평균 채도 0.086 (매우 낮음)",
+            "주요 색 #fcfcfc (점유 57%)",
+            "주요 색 #c0c0bf (점유 10%)",
+            "주요 색 #9b9a97 (점유 8%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.200Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_12",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_Dc-auqBCVXI_02.jpg",
+          "input_index": 11,
+          "color": {
+            "hue_mean": 33.7,
+            "sat_mean": 0.322,
+            "bright_mean": 0.472,
+            "palette_hex": [
+              "#9a8c78",
+              "#746d5f",
+              "#afa28c"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.472 (중간)",
+            "평균 채도 0.322 (중간)",
+            "주요 색 #9a8c78 (점유 18%)",
+            "주요 색 #746d5f (점유 12%)",
+            "주요 색 #afa28c (점유 12%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.259Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_13",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_Dc94ZfOD1-q_00.jpg",
+          "input_index": 12,
+          "color": {
+            "hue_mean": 12.8,
+            "sat_mean": 0.293,
+            "bright_mean": 0.501,
+            "palette_hex": [
+              "#100e0e",
+              "#c3c1bd",
+              "#e8e9e7"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.501 (중간)",
+            "평균 채도 0.293 (낮음)",
+            "주요 색 #100e0e (점유 21%)",
+            "주요 색 #c3c1bd (점유 11%)",
+            "주요 색 #e8e9e7 (점유 10%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.277Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_14",
+          "file_ref": "pivot/apify-check/fixtures/images/kr29cm_DdDCDKgFCLE_09.jpg",
+          "input_index": 13,
+          "color": {
+            "hue_mean": 1.3,
+            "sat_mean": 0.176,
+            "bright_mean": 0.555,
+            "palette_hex": [
+              "#161618",
+              "#e6e6e3",
+              "#747270"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1346 세로 이미지",
+            "평균 밝기 0.555 (중간)",
+            "평균 채도 0.176 (낮음)",
+            "주요 색 #161618 (점유 13%)",
+            "주요 색 #e6e6e3 (점유 12%)",
+            "주요 색 #747270 (점유 11%)"
+          ],
+          "quality_flags": [],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:49.290Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_15",
+          "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 14,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [],
+          "has_face": false,
+          "text_in_image": null,
+          "describable_facts": [
+            "1080×1350 세로 이미지",
+            "평균 밝기 0.375 (다소 어두움)",
+            "평균 채도 0.288 (낮음)",
+            "주요 색 #16150f (점유 26%)",
+            "주요 색 #434040 (점유 14%)",
+            "주요 색 #6b6765 (점유 10%)"
+          ],
+          "quality_flags": [
+            "duplicate_of:ph_01"
+          ],
+          "analysis_source": "heuristic",
+          "model": "heuristic-jpeg-dc@1",
+          "analyzed_at": "2026-09-18T03:26:48.165Z"
+        }
+      ],
+      "digests": [
+        "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+        "6fdbd5c85303ae2556f96a8afe58d6d038af8b75153ff5d215fe545ccb12c256",
+        "df1f3f4890d8cce4cc14f5e07478185a48e325dc301cbea38ff93cdb9b743578",
+        "498d44ecc219c5fa4a7ef458ff8dda52571ee610d45c6ea5514c1e527c360974",
+        "335aa7cab4011c61362dd02cf128f1f43997a5a4912ae3352fa52d0f0ab853ad",
+        "2cc94d0296232d3faa163dc2411c0007593ab533eff253bb9b4f034a19694c94",
+        "80a51a711f440246cf348952eee90696e6681eb31eeda52a90ebd61edffe7c2a",
+        "0c00f5d75c4f076bdceb4ce8234e44c3e475f04ddf00777116cb62e0cb63a87c",
+        "8791632b419cd7f81547a7ff1b898c673137da907aec23d4d038d66b76cb5dff",
+        "5a0718d15c988fe9f1ee920cd4e2cce586e81c62d1f5bf179087a3338b486c4a",
+        "a407ee7d49a7368ee46451ed6854ce3fe7e495104e8d6c518cae07146637a25a",
+        "705ce9e63aa697d9387f1626c5e83efa5a646b70c46471d8aeb90edbee725537",
+        "3a85cbfeb5e1844ee754987b0ff80d19824d984ab73dd50acd12b2466a223cd3",
+        "a2e69d2c4668a3a1305fcdaa38efcdacca1fcc5bec8d1a1844e896e08c2a1fcd",
+        "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3"
+      ],
+      "analysisCounters": {
+        "modelCalls": 0,
+        "modelFailures": 0,
+        "cacheHits": 1,
+        "cacheMisses": 14,
+        "cacheSize": 14
+      },
+      "outputs": [
+        {
+          "target": {
+            "kind": "none"
+          },
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "ph_01",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 2,
+              "photo_id": "ph_02",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 3,
+              "photo_id": "ph_03",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 4,
+              "photo_id": "ph_04",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 5,
+              "photo_id": "ph_05",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 6,
+              "photo_id": "ph_06",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 7,
+              "photo_id": "ph_07",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 8,
+              "photo_id": "ph_08",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 9,
+              "photo_id": "ph_09",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 10,
+              "photo_id": "ph_10",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 11,
+              "photo_id": "ph_11",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 12,
+              "photo_id": "ph_12",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 13,
+              "photo_id": "ph_13",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 14,
+              "photo_id": "ph_14",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 15,
+              "photo_id": "ph_15",
+              "omit_suggestion": {
+                "recommended": true,
+                "reason": "ph_01와 동일 바이트 중복으로 관측되어 이 사진은 빼는 것을 권합니다.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_15",
+                    "note": "PhotoAnalysis.quality_flags의 관측값: duplicate_of:ph_01"
+                  },
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "ph_15의 duplicate_of가 가리키는 현재 입력 사진입니다."
+                  }
+                ]
+              }
+            }
+          ],
+          "omit_summary": {
+            "recommended_count": 1,
+            "message": "동일 바이트 중복이 관측된 1장의 빼기를 권합니다. 사진은 모두 유지했으며 제외 여부는 직접 결정해 주세요."
+          },
+          "E1": "PASS: 15 photos = 15 slots",
+          "E10": "PASS: all uploaded_photo refs resolve"
+        },
+        {
+          "target": {
+            "kind": "text",
+            "text": "짧게, 조용하게"
+          },
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "ph_11",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 2,
+              "photo_id": "ph_02",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 3,
+              "photo_id": "ph_09",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 4,
+              "photo_id": "ph_01",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 5,
+              "photo_id": "ph_03",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 6,
+              "photo_id": "ph_06",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 7,
+              "photo_id": "ph_13",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 8,
+              "photo_id": "ph_15",
+              "omit_suggestion": {
+                "recommended": true,
+                "reason": "ph_01와 동일 바이트 중복으로 관측되어 이 사진은 빼는 것을 권합니다.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_15",
+                    "note": "PhotoAnalysis.quality_flags의 관측값: duplicate_of:ph_01"
+                  },
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "ph_15의 duplicate_of가 가리키는 현재 입력 사진입니다."
+                  }
+                ]
+              }
+            },
+            {
+              "position": 9,
+              "photo_id": "ph_14",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 10,
+              "photo_id": "ph_07",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 11,
+              "photo_id": "ph_08",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 12,
+              "photo_id": "ph_04",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 13,
+              "photo_id": "ph_10",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 14,
+              "photo_id": "ph_12",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 15,
+              "photo_id": "ph_05",
+              "omit_suggestion": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            }
+          ],
+          "omit_summary": {
+            "recommended_count": 1,
+            "message": "동일 바이트 중복이 관측된 1장의 빼기를 권합니다. 사진은 모두 유지했으며 제외 여부는 직접 결정해 주세요."
+          },
+          "E1": "PASS: 15 photos = 15 slots",
+          "E10": "PASS: all uploaded_photo refs resolve"
+        }
+      ]
+    }
+  ],
+  "mutationCheck": {
+    "fields": [
+      "composition",
+      "scale",
+      "has_face",
+      "subjects",
+      "text_in_image",
+      "dark",
+      "blurry"
+    ],
+    "comparisons": 420,
+    "changedDecisions": 0
+  },
+  "limitations": [
+    "실제 픽셀 분석이며 외부 모델 호출은 0회",
+    "mock=1은 키 사용을 끄며 사진 바이트는 실제로 분석한다",
+    "HTTP Request/Response 핸들러 실행이며 배포 네트워크 검증은 아니다",
+    "중복 플래그는 프로세스 캐시에 의존하며 미관측 중복은 권고하지 않는다"
+  ]
+}
