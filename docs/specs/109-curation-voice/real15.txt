@@ -1,0 +1,1 @@
+PASS: 15 real photos; visible forbidden hits 0; order/caption inputs unchanged; original evidence and decision calculations retained

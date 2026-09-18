@@ -58,11 +58,11 @@ test('no slot is justified by rules alone, and every photo evidence resolves to 
   for (const slot of feed.slots) {
     const kinds = slot.rationale.evidence.map(e => e.kind);
     assert.ok(kinds.some(kind => kind !== 'rule'), `slot ${slot.position} is rule-only`);
-    const own = slot.rationale.evidence.filter(e => e.kind === 'uploaded_photo');
+    const own = slot.rationale.evidence.filter(e => e.kind === 'uploaded_photo' && e.note.startsWith('측정값 —'));
     assert.equal(own.length, 1);
     assert.equal(own[0].ref, slot.photo_id);
     assert.ok(ids.has(own[0].ref));
-    assert.match(slot.rationale.value, /밝기|채도|색/);
+    assert.match(slot.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /밝기|채도|색/);
   }
 });
 
@@ -124,11 +124,11 @@ test('two profiles that agree on direction collide at R1, and the measured palet
   // 타이브레이크가 걸린 사실과 이유가 근거로 나온다 (P2). 조용히 다른 사진을 고르면 안 된다.
   for (const feed of [warm, cool]) {
     const opener = byPosition(feed)[0];
-    assert.match(opener.rationale.value, /가르지 못해/);
-    assert.match(opener.rationale.value, /지향이 잰 색/);
-    assert.ok(!/점수가 입력 20장 중 가장 높아/.test(opener.rationale.value), '밴드가 갈랐는데 점수 1위였다고 말하면 안 된다');
+    assert.match(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /가르지 못해/);
+    assert.match(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /지향이 잰 색/);
+    assert.ok(!/점수가 입력 20장 중 가장 높아/.test(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note), '밴드가 갈랐는데 점수 1위였다고 말하면 안 된다');
     assert.ok(opener.rationale.evidence.some(e => e.ref.startsWith('photo_analysis:')), '잰 색 근거가 실려야 한다');
-    assert.match(opener.rationale.evidence.at(-1).note, /2순위 이하까지 내려가/);
+    assert.match(opener.rationale.evidence.find(e => e.ref === 'order.R1').note, /2순위 이하까지 내려가/);
   }
 
   // 잰 색은 밴드 안에서만 쓴다. quiet 은 1·2위 차가 0.072 로 밴드 밖이라 잰 색이 있어도 1번이 안 바뀐다.
@@ -198,7 +198,7 @@ test('carousel opener tendency only nudges when it was actually observed, and ca
   assert.equal(orderOf(nudged)[0], 'ph_09', 'a close runner-up may be nudged ahead');
   const opener = byPosition(nudged)[0];
   assert.ok(opener.rationale.evidence.some(e => e.kind === 'ig_post'), 'the nudge must carry the carousel evidence');
-  assert.match(opener.rationale.value, /캐러셀/);
+  assert.match(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /캐러셀/);
 
   assert.equal(orderOf(run(faceSeen('ph_20'), tendencyTarget('인물', 12)))[0], base, 'the bonus must not flip a gap wider than itself');
   // 휴리스틱 사진의 scale 은 고정값이므로 풀샷 경향은 아무 사진에도 걸리지 않는다.
@@ -220,18 +220,18 @@ test('a bonus that flipped the opener is named as the reason, not hidden behind 
   const flipped = byPosition(run(faceSeen('ph_09'), tendencyTarget('인물', 12)))[0];
   assert.equal(flipped.photo_id, 'ph_09');
   assert.ok(scoreOf('ph_09') < scoreOf('ph_11'), '전제: ph_09 의 측정 점수는 1위가 아니다');
-  assert.match(flipped.rationale.value, new RegExp(`측정 점수는 ${shown(scoreOf('ph_09'))} 로 입력 20장 중 1위가 아니지만`));
-  assert.match(flipped.rationale.value, new RegExp(`보너스 0\\.15 를 더한 총점이 ${shown(scoreOf('ph_09') + 0.15)} 로 가장 높아`));
-  assert.ok(!/점수가 입력 20장 중 가장 높아/.test(flipped.rationale.value), '측정 점수가 1위였다고 말하면 안 된다');
+  assert.match(flipped.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, new RegExp(`측정 점수는 ${shown(scoreOf('ph_09'))} 로 입력 20장 중 1위가 아니지만`));
+  assert.match(flipped.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, new RegExp(`보너스 0\\.15 를 더한 총점이 ${shown(scoreOf('ph_09') + 0.15)} 로 가장 높아`));
+  assert.ok(!/점수가 입력 20장 중 가장 높아/.test(flipped.rationale.evidence.find(e => e.ref.endsWith('.decision')).note), '측정 점수가 1위였다고 말하면 안 된다');
 
   // (b) 보너스가 걸렸지만 측정 점수도 1위인 자리 — 이때는 1위 주장이 맞고, 보너스는 부수적 일치다.
   const alreadyTop = byPosition(run(faceSeen('ph_11'), tendencyTarget('인물', 12)))[0];
   assert.equal(alreadyTop.photo_id, 'ph_11');
-  assert.match(alreadyTop.rationale.value, new RegExp(`측정 점수가 ${shown(scoreOf('ph_11'))} 로 입력 20장 중 가장 높아`));
-  assert.match(alreadyTop.rationale.value, /보너스 0\.15 도 같은 방향이다/);
+  assert.match(alreadyTop.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, new RegExp(`측정 점수가 ${shown(scoreOf('ph_11'))} 로 입력 20장 중 가장 높아`));
+  assert.match(alreadyTop.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /보너스 0\.15 도 같은 방향이다/);
 
   // (c) 보너스가 없는 자리의 문장은 그대로다.
-  assert.match(byPosition(run(photos20))[0].rationale.value, /지향 방향\(조용한 쪽\) 점수가 입력 20장 중 가장 높아 1번에 뒀다$/);
+  assert.match(byPosition(run(photos20))[0].rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /지향 방향\(조용한 쪽\) 점수가 입력 20장 중 가장 높아 1번에 뒀다$/);
 });
 
 // H1 (review-codex.md). 이슈의 "사진만 입력" DoD 는 이 함수의 인수 계약이 아니다.
