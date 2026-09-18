@@ -79,17 +79,21 @@ async function upload(
   signal: AbortSignal,
   mock: boolean,
 ) {
-  const analyses: PhotoAnalysis[] = [];
-  // Sequential uploads keep at most one 3MB photo request in flight and make cancellation immediate between photos.
-  for (const [index, photo] of photos.entries()) {
-    signal.throwIfAborted();
-    const bytes = new Uint8Array(await photo.file.arrayBuffer());
-    let binary = '';
-    for (let start = 0; start < bytes.length; start += 8192)
-      binary += String.fromCharCode(...bytes.subarray(start, start + 8192));
-    signal.throwIfAborted();
-    analyses.push(
-      await analyzePhoto(
+  const analyses = Array<PhotoAnalysis>(photos.length);
+  let next = 0;
+  const failed = new AbortController();
+  const sharedSignal = AbortSignal.any([signal, failed.signal]);
+  const worker = async () => {
+    while (next < photos.length) {
+      const index = next++;
+      const photo = photos[index];
+      sharedSignal.throwIfAborted();
+      const bytes = new Uint8Array(await photo.file.arrayBuffer());
+      let binary = '';
+      for (let start = 0; start < bytes.length; start += 8192)
+        binary += String.fromCharCode(...bytes.subarray(start, start + 8192));
+      sharedSignal.throwIfAborted();
+      analyses[index] = await analyzePhoto(
         {
           collection,
           file_ref: photo.file.name,
@@ -100,10 +104,19 @@ async function upload(
           schema_version: '1.0',
           session_id: sessionId,
         },
-        signal,
+        sharedSignal,
         mock,
-      ),
+      );
+    }
+  };
+  try {
+    // Four 3MB requests cap in-flight source data near 12MB and put the measured 15-photo path under one minute.
+    await Promise.all(
+      Array.from({ length: Math.min(4, photos.length) }, worker),
     );
+  } catch (error) {
+    failed.abort(error);
+    throw error;
   }
   return analyses;
 }
