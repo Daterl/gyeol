@@ -23,6 +23,7 @@
     "verify:deployed": "node scripts/verify-deployed.mjs"
   },
   "dependencies": {
+    "@vercel/blob": "2.8.0",
     "cn": "^0.3.0",
     "motion": "13.4.0",
     "next": "16.3.5",

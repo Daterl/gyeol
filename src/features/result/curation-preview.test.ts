@@ -90,6 +90,7 @@ test('two authenticated equal digests among three photos produce one visible rec
       createElement(CurationPreview, { store, mock: true }),
     );
     expect(off).toContain('GYEOL · 나의 사진 기록');
+    expect(off).toContain('공유 링크 만들기');
     expect(off).not.toContain('@g5_public');
     store.getState().setProfileSharing(true);
     expect(

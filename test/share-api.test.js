@@ -4,6 +4,8 @@ import test from 'node:test';
 import {
   handleManage,
   handleShare,
+  handleShareBlobUpload,
+  handleShareCleanup,
   handleShareUpload,
 } from '../lib/share-api.js';
 import {
@@ -87,6 +89,26 @@ test('an asynchronous durable rate limiter rejects before share creation', async
   });
 });
 
+test('JSON control routes reject simple cross-site content types before service work', async () => {
+  let touched = false;
+  const response = await handleShareUpload(
+    new Request('http://localhost/api/share-upload', {
+      method: 'POST',
+      headers: { 'content-type': 'text/plain' },
+      body: JSON.stringify({ action: 'start', photos: [] }),
+    }),
+    {
+      service: {
+        async startShare() {
+          touched = true;
+        },
+      },
+    },
+  );
+  assert.equal(response.status, 400);
+  assert.equal(touched, false);
+});
+
 test('HTTP adapters expose start, current share/image, rotation and revoke without caching', async () => {
   const rateChecks = [];
   const service = fixture({
@@ -159,7 +181,10 @@ test('HTTP adapters expose start, current share/image, rotation and revoke witho
   const rotate = await handleManage(
     request(
       `http://localhost/api/manage/${started.shareId}`,
-      { action: 'rotate' },
+      {
+        action: 'rotate',
+        nextManagementKey: Buffer.alloc(32, 9).toString('base64url'),
+      },
       { authorization: `Bearer ${started.managementKey}`, 'if-match': published.etag },
     ),
     { service, shareId: started.shareId },
@@ -184,4 +209,95 @@ test('HTTP adapters expose start, current share/image, rotation and revoke witho
     ).status,
     410,
   );
+});
+
+test('client upload token exchange authorizes the exact temporary WebP path', async () => {
+  const bytes = ['a', 'b', 'c'].map(body);
+  const photos = bytes.map((value, index) => ({
+    id: `p_${index}`,
+    sha256: hash(value),
+  }));
+  const service = fixture();
+  const started = await service.startShare({ photos, caller: 'test' });
+  const session = await service.openUploadSession(started.receipt, {
+    caller: 'test',
+  });
+  let tokenOptions;
+  const response = await handleShareBlobUpload(
+    request('http://localhost/api/share-blob-upload', {
+      type: 'blob.generate-client-token',
+      payload: {},
+    }),
+    {
+      service,
+      async uploadHandler(options) {
+        tokenOptions = await options.onBeforeGenerateToken(
+          `${session.prefix}p_0.webp`,
+          JSON.stringify({
+            receipt: started.receipt,
+            uploadToken: session.uploadToken,
+            photoId: 'p_0',
+          }),
+          false,
+        );
+        return { type: 'blob.generate-client-token', clientToken: 'limited' };
+      },
+    },
+  );
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    type: 'blob.generate-client-token',
+    clientToken: 'limited',
+  });
+  assert.deepEqual(tokenOptions, {
+    allowedContentTypes: ['image/webp'],
+    maximumSizeInBytes: 4 * 1024 * 1024,
+    validUntil: session.expiresAt,
+    addRandomSuffix: false,
+    allowOverwrite: false,
+    cacheControlMaxAge: 60,
+  });
+
+  const wrongPath = await handleShareBlobUpload(
+    request('http://localhost/api/share-blob-upload', {}),
+    {
+      service,
+      async uploadHandler(options) {
+        await options.onBeforeGenerateToken(
+          'temp/another/1/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/p_0.webp',
+          JSON.stringify({
+            receipt: started.receipt,
+            uploadToken: session.uploadToken,
+            photoId: 'p_0',
+          }),
+          false,
+        );
+      },
+    },
+  );
+  assert.equal(wrongPath.status, 400);
+});
+
+test('share cleanup authenticates before touching storage', async () => {
+  let touched = false;
+  const service = {
+    async cleanup() {
+      touched = true;
+      return { deleted: 2 };
+    },
+  };
+  const denied = await handleShareCleanup(
+    new Request('http://localhost/api/share-cleanup'),
+    { service, secret: 'cron-secret' },
+  );
+  assert.equal(denied.status, 401);
+  assert.equal(touched, false);
+  const accepted = await handleShareCleanup(
+    new Request('http://localhost/api/share-cleanup', {
+      headers: { authorization: 'Bearer cron-secret' },
+    }),
+    { service, secret: 'cron-secret' },
+  );
+  assert.equal(accepted.status, 200);
+  assert.deepEqual(await accepted.json(), { deleted: 2 });
 });

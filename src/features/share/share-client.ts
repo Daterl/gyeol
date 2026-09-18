@@ -1,3 +1,4 @@
+import { upload } from '@vercel/blob/client';
 import type { ConfirmedCuration } from '../editor/curation-store';
 import { type PublicShare, parsePublicShare } from './public-share';
 
@@ -77,6 +78,37 @@ export type PhotoUploader = (upload: {
   receipt: string;
   session: UploadSession;
 }) => Promise<void>;
+
+export function createManagementKey() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary)
+    .replaceAll('+', '-')
+    .replaceAll('/', '_')
+    .replace(/=+$/, '');
+}
+
+export function createBlobPhotoUploader(
+  uploadBlob: typeof upload = upload,
+): PhotoUploader {
+  return async ({ photo, receipt, session }) => {
+    await uploadBlob(
+      `${session.prefix}${photo.id}.webp`,
+      photo.body.slice().buffer as ArrayBuffer,
+      {
+        access: 'private',
+        clientPayload: JSON.stringify({
+          receipt,
+          uploadToken: session.uploadToken,
+          photoId: photo.id,
+        }),
+        contentType: 'image/webp',
+        handleUploadUrl: '/api/share-blob-upload',
+      },
+    );
+  };
+}
 type Fetcher = (
   input: RequestInfo | URL,
   init?: RequestInit,
@@ -205,9 +237,14 @@ export function createShareClient({
     },
     async publish({
       confirmed,
+      onStarted,
       photos,
     }: {
       confirmed: ConfirmedCuration;
+      onStarted?: (started: {
+        managementKey: string;
+        shareId: string;
+      }) => Promise<void> | void;
       photos: SharePhoto[];
     }) {
       const curation = toShareCuration(confirmed);
@@ -221,6 +258,10 @@ export function createShareClient({
         receipt: string;
         shareId: string;
       };
+      await onStarted?.({
+        managementKey: started.managementKey,
+        shareId: started.shareId,
+      });
       const published = await send(
         started.receipt,
         photos,
@@ -255,18 +296,20 @@ export function createShareClient({
     async rotateKey({
       etag,
       managementKey,
+      nextManagementKey,
       shareId,
     }: {
       etag: string;
       managementKey: string;
+      nextManagementKey: string;
       shareId: string;
     }) {
       const { value } = await call(
         `/api/manage/${encodeURIComponent(shareId)}`,
-        { action: 'rotate' },
+        { action: 'rotate', nextManagementKey },
         { ...auth(managementKey), 'If-Match': etag },
       );
-      return value as unknown as { etag: string; managementKey: string };
+      return value as unknown as { etag: string };
     },
     async revoke({
       etag,

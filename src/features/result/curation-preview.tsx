@@ -6,6 +6,7 @@ import { useStore } from 'zustand';
 import { Button } from '@/components/ui/button';
 import { CaptionEditor, OutputControls } from '../captions/caption-editor';
 import type { CurationEditorStore } from '../editor/curation-store';
+import { ShareControls } from '../share/share-controls';
 
 export function CurationPreview({
   store,
@@ -310,11 +311,13 @@ export function CurationPreview({
         큐레이션 확정
       </Button>
       {state.confirmed && (
-        <p className="mt-3 text-sm">
-          확정본: {state.confirmed.output.slots.length}장 · 프로필{' '}
-          {state.confirmed.profileSharing ? '포함' : '미포함'}. 현재 브라우저의
-          확정본이며 공유 링크는 아직 만들지 않았어요.
-        </p>
+        <>
+          <p className="mt-3 text-sm">
+            확정본: {state.confirmed.output.slots.length}장 · 프로필{' '}
+            {state.confirmed.profileSharing ? '포함' : '미포함'}
+          </p>
+          <ShareControls confirmed={state.confirmed} photos={state.photos} />
+        </>
       )}
       <p role="status" className="mt-3 text-sm">
         {notice}

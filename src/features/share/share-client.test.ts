@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import type { F3Export } from '@/types/contracts';
 import fixture from '../../../fixtures/interaction.sample.json';
 import {
@@ -17,12 +17,72 @@ import {
 } from '../editor/curation-store';
 import { curationFixture } from '../editor/curation-test-fixture';
 import {
+  createBlobPhotoUploader,
+  createManagementKey,
   createShareClient,
   type PhotoUploader,
   ShareApiError,
   type SharePhoto,
   toShareCuration,
 } from './share-client';
+
+test('browser management keys are canonical 32-byte base64url tokens', () => {
+  const keys = new Set(Array.from({ length: 3 }, () => createManagementKey()));
+  expect(keys.size).toBe(3);
+  for (const key of keys) {
+    expect(key).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    expect(Buffer.from(key, 'base64url')).toHaveLength(32);
+    expect(Buffer.from(key, 'base64url').toString('base64url')).toBe(key);
+  }
+});
+
+test('browser photo upload uses the private token-exchange contract', async () => {
+  const upload = vi.fn(async () => ({
+    contentDisposition: 'inline',
+    contentType: 'image/webp',
+    downloadUrl: 'https://blob.test/download',
+    etag: 'etag',
+    pathname: 'share-upload/session/photo.webp',
+    url: 'https://blob.test/photo',
+  }));
+  const uploader = createBlobPhotoUploader(upload);
+  const session = {
+    constraints: {
+      contentType: 'image/webp' as const,
+      maxFileBytes: 100,
+      maxFiles: 15,
+      maxTotalBytes: 1500,
+    },
+    expiresAt: 1_800_000_000_000,
+    photoIds: ['photo'],
+    prefix: 'share-upload/session/',
+    sessionId: 'session',
+    shareId: 'share',
+    uploadToken: 'upload-token',
+    version: 1,
+  };
+
+  await uploader({
+    photo: { id: 'photo', body: webp('photo') },
+    receipt: 'receipt',
+    session,
+  });
+
+  expect(upload).toHaveBeenCalledWith(
+    'share-upload/session/photo.webp',
+    expect.any(ArrayBuffer),
+    {
+      access: 'private',
+      clientPayload: JSON.stringify({
+        receipt: 'receipt',
+        uploadToken: 'upload-token',
+        photoId: 'photo',
+      }),
+      contentType: 'image/webp',
+      handleUploadUrl: '/api/share-blob-upload',
+    },
+  );
+});
 
 const webp = (label: string) => {
   const bytes = Buffer.alloc(12 + label.length);
@@ -119,6 +179,48 @@ function server() {
     uploadPhoto,
   };
 }
+
+test('publish awaits durable start recovery before uploading any photo', async () => {
+  const running = server();
+  const events: string[] = [];
+  const client = createShareClient({
+    fetcher: running.fetcher,
+    uploadPhoto: async (input) => {
+      events.push('upload');
+      await running.uploadPhoto(input);
+    },
+  });
+  const store = await confirmedStore();
+  const input = {
+    confirmed: store.getState().confirmCuration(),
+    photos: sharePhotos(),
+  };
+
+  await client.publish({
+    ...input,
+    onStarted: async () => {
+      events.push('started');
+      await Promise.resolve();
+      events.push('persisted');
+    },
+  });
+  expect(events.slice(0, 3)).toEqual(['started', 'persisted', 'upload']);
+
+  const aborted = server();
+  const upload = vi.fn(aborted.uploadPhoto);
+  await expect(
+    createShareClient({
+      fetcher: aborted.fetcher,
+      uploadPhoto: upload,
+    }).publish({
+      ...input,
+      onStarted: () => {
+        throw new ShareApiError('STORAGE_REQUIRED');
+      },
+    }),
+  ).rejects.toMatchObject({ code: 'STORAGE_REQUIRED' });
+  expect(upload).not.toHaveBeenCalled();
+});
 
 test('profile sharing sends only the signed reference when explicitly enabled', async () => {
   const store = await confirmedStore();
@@ -239,9 +341,11 @@ test('publish, reconfirm, rotate and revoke drive the real share contract', asyn
   ).rejects.toMatchObject({ code: 'CONFLICT' });
   expect((await client.read(published.shareId)).share.version).toBe(2);
 
+  const nextManagementKey = Buffer.alloc(32, 9).toString('base64url');
   const rotated = await client.rotateKey({
     etag: updated.etag as string,
     managementKey: published.managementKey,
+    nextManagementKey,
     shareId: published.shareId,
   });
   await expect(
@@ -254,7 +358,7 @@ test('publish, reconfirm, rotate and revoke drive the real share contract', asyn
 
   await client.revoke({
     etag: rotated.etag,
-    managementKey: rotated.managementKey,
+    managementKey: nextManagementKey,
     shareId: published.shareId,
   });
   await expect(client.read(published.shareId)).rejects.toBeInstanceOf(

@@ -18,6 +18,7 @@ const webp = label => {
   return bytes;
 };
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
+const nextManagementKey = Buffer.alloc(32, 9).toString('base64url');
 const photos = (labels, prefix = 'photo') => labels.map((label, index) => ({
   id: `${prefix}_${index + 1}`,
   sha256: digest(webp(label)),
@@ -426,9 +427,20 @@ test('key rotation immediately rejects the old key and revoke writes a PII-free 
   const rotated = await service.rotateKey({
     shareId: staged.pending.shareId,
     managementKey: staged.pending.managementKey,
+    nextManagementKey,
     ifMatch: published.etag,
     caller: 'one',
   });
+  assert.deepEqual(
+    await service.rotateKey({
+      shareId: staged.pending.shareId,
+      managementKey: staged.pending.managementKey,
+      nextManagementKey,
+      ifMatch: published.etag,
+      caller: 'one',
+    }),
+    rotated,
+  );
   await throwsCode(
     service.revoke({
       shareId: staged.pending.shareId,
@@ -592,7 +604,10 @@ for (const change of ['revoke', 'rotateKey', 'publish']) {
     const uploading = restart(f).uploadPhoto(uploadFirst(staged));
     await gate.ready;
     if (change === 'publish') await publishStaged(f.service, staged, { managementKey: auth.managementKey, ifMatch: auth.ifMatch });
-    else await f.service[change](auth);
+    else
+      await f.service[change](
+        change === 'rotateKey' ? { ...auth, nextManagementKey } : auth,
+      );
     gate.release();
     await throwsCode(uploading, change === 'revoke' ? 'GONE' : change === 'rotateKey' ? 'UNAUTHORIZED' : 'CONFLICT');
     assert.equal(await f.store.get(`${staged.session.prefix}photo_1.webp`), null);
@@ -621,7 +636,7 @@ test('session issuance rechecks tombstone after a concurrent marker write', asyn
 test('manifest key and next version bind update receipts without blocking prepublish uploads', async () => {
   const f = fixture();
   const { auth, staged } = await pendingUpdate(f);
-  await f.service.rotateKey(auth);
+  await f.service.rotateKey({ ...auth, nextManagementKey });
   await throwsCode(restart(f).openUploadSession(staged.pending.receipt), 'UNAUTHORIZED');
   await throwsCode(restart(f).uploadPhoto(uploadFirst(staged)), 'UNAUTHORIZED');
   const other = fixture();
