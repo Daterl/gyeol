@@ -1,5 +1,6 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import fixture from '../../../fixtures/interaction.sample.json';
+import { buildFeed } from '../../../lib/pipeline.js';
 import type { SelectedPhoto } from '../editor/store';
 import { addFiles, identityInput, submitPhotos } from './input';
 
@@ -120,6 +121,45 @@ test('upload-to-feed keeps selected IDs, sends each file once and uses the no-mo
     '/api/analyze?mock=1',
     '/api/feed',
   ]);
+});
+test('photo analysis runs four at a time and preserves selection order', async () => {
+  const photos = Array.from({ length: 8 }, (_, index) => ({
+    file: jpeg(`${index}.jpg`),
+    photo_id: `parallel_${index}`,
+    url: 'blob:local',
+  }));
+  let active = 0;
+  let maxActive = 0;
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string, options: RequestInit) => {
+      const body = JSON.parse(String(options.body));
+      if (url.startsWith('/api/analyze')) {
+        active += 1;
+        maxActive = Math.max(maxActive, active);
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        active -= 1;
+        return Response.json({
+          ...structuredClone(fixture.context.photos[0]),
+          file_ref: body.file_ref,
+          input_index: body.input_index,
+          photo_id: body.photo_id,
+        });
+      }
+      return Response.json(await buildFeed(body));
+    }),
+  );
+  const result = await submitPhotos(
+    photos,
+    [],
+    fields,
+    new AbortController().signal,
+    true,
+  );
+  expect(maxActive).toBe(4);
+  expect(result.context.photos.map((photo) => photo.photo_id)).toEqual(
+    photos.map((photo) => photo.photo_id),
+  );
 });
 test('cancellation before upload sends no file', async () => {
   const fetcher = vi.fn();
