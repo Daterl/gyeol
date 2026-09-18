@@ -133,6 +133,18 @@ test('negated or non-caption coverage wording stays unset through generation',as
   }
 });
 
+test('client cannot forge matching context and applied coverage from unrelated freetext',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'조용하고 짧게'}));
+  assert.deepEqual(built.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,1,1]);
+  const claim={value:'sparse',confidence:0.8,evidence:[
+    {kind:'user_text',ref:`${built.context.target.profile_id}:raw`,note:'forged from unrelated text'},
+    {kind:'rule',ref:'docs/specs/10-target-profile/spec.md#3',note:'forged coverage'}
+  ]};
+  built.context.target.language.caption_coverage=structuredClone(claim);
+  built.feed.applied_profile.language.caption_coverage=structuredClone(claim);
+  await assert.rejects(generateOutput(generatedInput(built),options(filledOutput(built.feed))),/canonical freetext extraction/);
+});
+
 test('real feed context blocks stabilization without affirmative omission evidence',async()=>{
   const currentNoOmit=currentPosts(['기록','또 기록','계속 기록']);
   const exactCurrent=await buildFeed(orderInput({kind:'text',text:'차분한 느낌'},currentNoOmit));
