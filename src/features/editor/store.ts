@@ -144,7 +144,11 @@ export function createEditorStore(
       clearDraft: async () => {
         persistedPhotoKey = '';
         resetState();
-        if (persistence) await enqueuePersistence(persistence.clear);
+        if (persistence)
+          await enqueuePersistence(async () => {
+            await persistence.clear();
+            persistedPhotoKey = '';
+          });
       },
       editCaption: (id, text) => {
         const draft = get().draft;
@@ -335,9 +339,12 @@ export function createEditorStore(
         if (!persistence) return;
         const state = get();
         if (state.photos.length < 3) {
-          if (!persistedPhotoKey) return;
-          persistedPhotoKey = '';
-          return enqueuePersistence(persistence.clear);
+          // Decide after earlier saves finish, including the first binary save.
+          return enqueuePersistence(async () => {
+            if (!persistedPhotoKey) return;
+            await persistence.clear();
+            persistedPhotoKey = '';
+          });
         }
         const value = metadata(state);
         const photoKey = JSON.stringify(value.photoIds);

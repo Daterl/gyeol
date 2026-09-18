@@ -18,7 +18,7 @@ The preview supports keyboard/button/drag order, exclusion/restoration, candidat
 - `excluded`, `crops`, `profileSharing`: current curation edits.
 - `confirmed`: detached confirmation, frozen again on recovery.
 
-The existing base metadata holds draft, title/captions, order, original responses, prompt and profile reference. Adapter data is validated in the existing storage transaction, including optional display field types/provenance and a strict public confirmation allowlist; legacy records without the extension remain readable. Web Locks, revision pairing and binary storage remain G3's implementation. Metadata edits reuse the saved image revision. Restore runs before subscriptions and input unlock; reset calls `clearDraft`. Late restore after reset is rejected. Transient storage read failures preserve valid saved data for retry; invalid save attempts leave the prior revision intact.
+The existing base metadata holds draft, title/captions, order, original responses, prompt and profile reference. Adapter data is validated in the existing storage transaction, including optional display field types/provenance and a strict public confirmation allowlist; legacy records without the extension remain readable. Web Locks, revision pairing and binary storage remain G3's implementation. Metadata edits reuse the saved image revision. Restore runs before subscriptions and input unlock; reset calls `clearDraft`. Late restore after reset is rejected. Removing below three photos queues deletion after any first binary save, so its late completion cannot resurrect removed photos. Transient storage read failures preserve valid saved data for retry; invalid save attempts leave the prior revision intact.
 
 ## Verification
 
@@ -26,8 +26,8 @@ Node 24.21.0; all browser API calls intercepted, with no provider or paid calls.
 
 | Check | Result |
 | --- | --- |
-| Editor-focused Vitest | 28 tests pass |
-| Full UI suite | 77 tests / 20 files pass |
+| Editor-focused Vitest | 29 tests pass |
+| Full UI suite | 78 tests / 20 files pass |
 | Node suite | 375 tests pass |
 | Production build and typecheck | Pass |
 | Lint | 65 files pass |

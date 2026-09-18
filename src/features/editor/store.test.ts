@@ -372,3 +372,54 @@ test('invalid feed and failed generation end loading, preserve draft and allow r
   await store.getState().loadFeed(async () => response());
   expect(store.getState().request.status).toBe('ready');
 });
+
+test('removing below three while the first save is pending cannot resurrect removed photos', async () => {
+  const entered = Promise.withResolvers<void>();
+  const release = Promise.withResolvers<void>();
+  let saved: Awaited<ReturnType<DraftStorage['load']>> = null;
+  const persistence: DraftStorage = {
+    clear: async () => {
+      saved = null;
+    },
+    load: async () => saved,
+    save: async (metadata, images) => {
+      entered.resolve();
+      await release.promise;
+      saved = { ...structuredClone(metadata), images: new Map(images) };
+    },
+    saveMetadata: (metadata) => {
+      if (saved) saved = { ...structuredClone(metadata), images: saved.images };
+    },
+  };
+  const store = createEditorStore(persistence);
+  store
+    .getState()
+    .selectFiles(
+      [1, 2, 3].map(
+        (id) => new File([String(id)], `${id}.webp`, { type: 'image/webp' }),
+      ),
+    );
+  const persist = () =>
+    store
+      .getState()
+      .persistDraft(
+        new Map(
+          store.getState().photos.map((photo) => [photo.photo_id, photo.file]),
+        ),
+      );
+  const first = persist();
+  await entered.promise;
+  store.getState().selectFiles(
+    store
+      .getState()
+      .photos.slice(0, 2)
+      .map((photo) => photo.file),
+  );
+  const removed = persist();
+  release.resolve();
+  await Promise.all([first, removed]);
+  expect(await persistence.load()).toBeNull();
+  const restored = createEditorStore(persistence);
+  expect(await restored.getState().restoreDraft()).toBe(false);
+  expect(restored.getState().photos).toEqual([]);
+});
