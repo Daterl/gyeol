@@ -153,6 +153,7 @@ test('publish uses immutable versions, CAS and profile-off PII omission', async 
     webp('one'),
   );
   await throwsCode(service.readImage(first.pending.shareId, 'foreign'), 'NOT_FOUND');
+  await throwsCode(service.readImage(first.pending.shareId, 'toString'), 'NOT_FOUND');
 
   const update = await service.startUpdate({
     shareId: first.pending.shareId,
@@ -190,6 +191,37 @@ test('publish uses immutable versions, CAS and profile-off PII omission', async 
   await service.cleanup();
   assert.equal((await store.list(`shares/${first.pending.shareId}/versions/1/`)).length, 0);
   assert.ok(replaced.etag);
+});
+
+test('publish revalidates the bytes written by a direct-upload provider', async () => {
+  const { service, store } = fixture();
+  const invalid = Buffer.from('not actually webp');
+  const expected = [
+    { id: 'photo_1', sha256: digest(invalid) },
+    ...photos(['b', 'c']).map((photo, index) => ({ ...photo, id: `photo_${index + 2}` })),
+  ];
+  const pending = await service.startShare({ photos: expected, caller: 'one' });
+  const session = await service.openUploadSession(pending.receipt, { caller: 'one' });
+  await store.put(`${session.prefix}photo_1.webp`, invalid, { contentType: 'image/webp' });
+  for (const [id, label] of [['photo_2', 'b'], ['photo_3', 'c']]) {
+    await service.uploadPhoto({
+      receipt: pending.receipt,
+      uploadToken: session.uploadToken,
+      photoId: id,
+      contentType: 'image/webp',
+      body: webp(label),
+    });
+  }
+  await throwsCode(
+    service.publish({
+      receipt: pending.receipt,
+      uploadToken: session.uploadToken,
+      managementKey: pending.managementKey,
+      curation: curation(expected.map(photo => photo.id)),
+      caller: 'one',
+    }),
+    'INVALID_MEDIA',
+  );
 });
 
 test('profile data is accepted only after explicit inclusion and exact validation', async () => {

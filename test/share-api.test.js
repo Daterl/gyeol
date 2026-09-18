@@ -23,7 +23,7 @@ const request = (url, value, headers = {}) =>
     body: JSON.stringify(value),
   });
 
-function fixture() {
+function fixture(options = {}) {
   let random = 0;
   const service = createShareService({
     store: new MemoryBlobStore({ now: () => 1_800_000_000_000 }),
@@ -33,6 +33,7 @@ function fixture() {
       random += 1;
       return Buffer.alloc(size, random);
     },
+    ...options,
   });
   return service;
 }
@@ -56,7 +57,14 @@ test('upload API is bounded, no-store and explicit when the live adapter is abse
 });
 
 test('HTTP adapters expose start, current share/image, rotation and revoke without caching', async () => {
-  const service = fixture();
+  const rateChecks = [];
+  const service = fixture({
+    rateLimiter: {
+      check(...args) {
+        rateChecks.push(args);
+      },
+    },
+  });
   const bytes = ['a', 'b', 'c'].map(body);
   const photos = bytes.map((value, index) => ({
     id: `p_${index}`,
@@ -94,10 +102,14 @@ test('HTTP adapters expose start, current share/image, rotation and revoke witho
         photos: photos.map(photo => ({ id: photo.id })),
         includeProfile: false,
       },
-    }, { authorization: `Bearer ${started.managementKey}` }),
+    }, {
+      authorization: `Bearer ${started.managementKey}`,
+      'x-forwarded-for': '203.0.113.7',
+    }),
     { service },
   );
   assert.equal(publishResponse.status, 200);
+  assert.deepEqual(rateChecks.at(-1), ['share-publish', '203.0.113.7', 1_800_000_000_000]);
   const published = await publishResponse.json();
 
   const shared = await handleShare(

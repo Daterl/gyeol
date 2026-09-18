@@ -19,7 +19,7 @@ G6는 확정된 큐레이션을 안전하게 저장·조회·갱신·비활성�
 - HMAC-SHA256 receipt는 share/version/정렬 photo ID·SHA-256/관리 키 hash/발급·만료 시각을 묶으며 수명은 최대 10분이다.
 - 같은 receipt는 조건부 marker 생성으로 같은 session ID와 upload token을 반환한다.
 - 세션은 최대 15장, `image/webp`, 파일당 4MiB, 전체 60MiB, 지정 photo ID·hash·prefix에 묶인다. 파일별 상한 × 최대 장수가 전체 상한을 넘지 않아 병렬 업로드도 총량을 초과할 수 없다. MIME 문자열뿐 아니라 RIFF/WEBP signature도 확인한다.
-- publish는 receipt, upload token, 관리 키, 모든 예상 객체의 타입·크기·hash가 맞아야 한다. manifest 쓰기는 첫 버전 `ifNoneMatch`, 갱신 `ifMatch` CAS다.
+- publish는 receipt, upload token, 관리 키, 모든 예상 객체의 RIFF/WEBP signature·타입·크기·hash가 맞아야 한다. manifest 쓰기는 첫 버전 `ifNoneMatch`, 갱신 `ifMatch` CAS다.
 - 공유·이미지 응답은 `no-store`다. 이미지 조회는 `shareId + photoId`만 받고 active manifest의 current version pathname을 서버가 결정한다.
 - 프로필 포함 기본값은 off다. off 상태에서 profile 입력을 거부하고 manifest·curation에 PII를 저장하지 않는다.
 - revoke는 먼저 PII 없는 tombstone을 CAS로 쓴 다음 version/temp 객체를 삭제한다. 관리 키 회전이 성공하면 이전 키는 즉시 실패한다.
@@ -32,7 +32,7 @@ G6는 확정된 큐레이션을 안전하게 저장·조회·갱신·비활성�
 - `GET /api/share/{shareId}/image/{photoId}`: current confirmed WebP
 - `POST /api/manage/{shareId}`: `rotate | revoke`
 
-JSON body는 64KiB로 제한한다. 이미지 바이트는 이 Function route로 받지 않으며 G8 client upload adapter가 session 제한을 provider token에 옮긴다. 인증·관리 요청과 세션 발급은 주입한 rate limiter를 사용한다.
+JSON body는 64KiB로 제한한다. 이미지 바이트는 이 Function route로 받지 않으며 G8 client upload adapter가 session 제한을 provider token에 옮긴다. 시작·세션 발급·publish·관리 요청은 주입한 rate limiter를 사용한다.
 
 ## 인수 기준
 
