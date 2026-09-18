@@ -288,7 +288,15 @@ test('negated or non-caption coverage wording stays unset through generation',as
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
     assert.equal(built.context.target.language?.caption_coverage,undefined,text);
     const provider=seedOutput(built.feed);
-    assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider,text);
+    const actual=await generateOutput(generatedInput(built),options(provider));
+    // 커버리지를 못 읽었다는 것이 "전부 채워 달라"는 뜻은 아니다 (#131). 안전망은 겹침 근거로만 켜지고,
+    // 그 한 자리를 빼면 모델이 낸 seed 가 글자 그대로 남는다. 부정 표현을 긍정으로 뒤집지 않는다는
+    // 이 테스트의 본래 주장은 위의 caption_coverage === undefined 가 그대로 지킨다.
+    const omitted=actual.output.slots.filter(slot=>slot.caption_state==='omitted');
+    assert.ok(omitted.length<=1,text);
+    for(const slot of omitted) assert.ok(slot.evidence.some(e=>e.kind==='rule' && e.ref==='gyeol.omit.overlap'),text);
+    assert.deepEqual(actual.output.slots.filter(slot=>slot.caption_state==='seed'),
+      provider.output.slots.filter(slot=>!omitted.some(o=>o.photo_id===slot.photo_id)),text);
   }
 });
 
@@ -388,9 +396,34 @@ test('real feed context blocks stabilization without affirmative omission eviden
   assert.equal(ignoredCurrent.context.current.language.empty_caption_ratio.value,0.5);
   assert.equal(ignoredCurrent.feed.applied_profile.disclosure,'target_only');
 
-  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['less than one expected omission',smallRatio],['target-only ignores current omission ratio',ignoredCurrent]]) {
+  // 관측된 빈 캡션 비율이 0인 계정. "한 자리도 안 비운다"는 실측이므로 안전망을 끈다.
+  const fullSnapshot=structuredClone(referenceFixture);
+  fullSnapshot.snapshot_id='ig_snapshot_zero_ratio';
+  fullSnapshot.posts.forEach(post=>{post.caption='짧은 기록입니다.';});
+  const zeroTarget=await extractFromReference('https://www.instagram.com/29cm/',{registry:{'29cm':fullSnapshot}});
+  const zeroOrder=orderInput({kind:'reference',url:'https://www.instagram.com/29cm/'});
+  const zeroCurrent=buildCurrentProfile();
+  const zeroRatio={feed:composeFeed({photoAnalyses:zeroOrder.photos,targetProfile:zeroTarget,currentProfile:zeroCurrent,currentPhotoAnalyses:[],sessionId:zeroOrder.session_id}),
+    context:{photos:zeroOrder.photos,current:zeroCurrent,target:zeroTarget,current_photos:[]}};
+  assert.equal(zeroRatio.context.target.language.empty_caption_ratio.value,0);
+
+  // 안전망이 꺼져 있어야 하는 맥락 — 겹침 근거가 없거나, 사용자가 전부 써 달라고 말했거나,
+  // 그 계정이 한 자리도 안 비우는 것으로 관측된 경우.
+  for(const [label,built] of [['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['observed zero-omission account',zeroRatio]]) {
     const provider=seedOutput(built.feed);
     assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider,label);
+  }
+
+  // #131 이전에는 아래 맥락도 전부 안전망이 꺼졌다. 커버리지를 말하지 않았다는 것과
+  // "전부 채워 달라"를 같게 본 것이 버그였다. 이제는 겹침 근거가 있으면 한 자리를 비운다.
+  // 여기 사진들은 색이 같아 인접 겹침이 1이고, 그것이 유일한 비움 근거다.
+  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['target-only current omission ratio does not reach the applied profile',smallRatio],['target-only ignores current omission ratio',ignoredCurrent]]) {
+    const actual=await generateOutput(generatedInput(built),options(seedOutput(built.feed)));
+    const omitted=actual.output.slots.filter(slot=>slot.caption_state==='omitted');
+    assert.equal(omitted.length,1,label);
+    assert.ok(omitted[0].evidence.some(e=>e.kind==='rule' && e.ref==='gyeol.omit.overlap'),label);
+    assert.ok(omitted[0].evidence.some(e=>e.kind==='uploaded_photo'
+      && e.ref===built.feed.slots.find(slot=>slot.position===omitted[0].position-1).photo_id),label);
   }
 });
 
@@ -575,4 +608,67 @@ test('an empty fact list uses one fixed note instead of an invented limitation s
   const stillSeed=seedOutput();
   stillSeed.output.slots[0].evidence[0].note=NO_FACTS_NOTE;
   await assert.rejects(generateOutput(input(),options(stillSeed)),{code:'MODEL_CONTRACT'},'사실이 있는데 한계 문구');
+});
+
+// ── #131 비움 안전망이 기본 경로·자유입력 경로에서 항상 꺼지던 문제 ───────────────────
+// 밝기를 벌려 인접 색 겹침을 0.9 아래로 떨어뜨린 입력. 근거가 없으면 비우지 않는다.
+const weakOverlapPhotos=()=>structuredClone(fixture.context.photos)
+  .map((photo,index)=>({...photo,color:{...photo.color,bright_mean:0.7-index*0.25}}));
+
+test('#131 the omission safety net turns on in the default photo-only path with observed evidence',async()=>{
+  const built=await buildFeed(orderInput({kind:'none'}));
+  // 게이트가 꺼지던 실제 값. 지향이 없으면 언어축 자체가 없다 (lib/pipeline.js 의 photo_plan 갈래).
+  assert.equal(built.context.target.kind,'photo_plan');
+  assert.equal(built.feed.applied_profile.language,null);
+  assert.equal(built.context.target.language,null);
+
+  const actual=await generateOutput(generatedInput(built),options(seedOutput(built.feed)));
+  const omitted=actual.output.slots.filter(slot=>slot.caption_state==='omitted');
+  assert.equal(omitted.length,1);
+  assert.equal(omitted[0].text,null);
+  // 동점이면 앞 자리가 이긴다 — 출력이 결정적이어야 한다.
+  assert.equal(omitted[0].position,2);
+  assert.match(omitted[0].omit_reason,/겹침 신호/);
+  // kind:'rule' 하나로 끝내지 않는다. 판단에 쓴 두 장을 가리키는 관측 근거가 함께 있어야 한다 (#131 DoD).
+  const previousId=built.feed.slots.find(slot=>slot.position===1).photo_id;
+  assert.ok(omitted[0].evidence.some(e=>e.kind==='uploaded_photo' && e.ref===previousId));
+  assert.ok(omitted[0].evidence.some(e=>e.kind==='uploaded_photo' && e.ref===omitted[0].photo_id));
+  assert.ok(omitted[0].evidence.some(e=>e.kind==='rule' && e.ref==='gyeol.omit.overlap'));
+  assert.equal(actual.omission.omitted,1);
+  assert.equal(actual.omission.note_key,'omission.some');
+});
+
+test('#131 free text without a coverage request no longer disables the safety net',async()=>{
+  for(const text of ['짧게 조용하게','자세하게 기록처럼 촘촘히','차분한 느낌으로']) {
+    const built=await buildFeed(orderInput({kind:'text',text}));
+    assert.equal(built.context.target.source,'freetext',text);
+    assert.equal(built.context.target.language?.caption_coverage,undefined,text);
+    const actual=await generateOutput(generatedInput(built),options(seedOutput(built.feed)));
+    assert.equal(actual.output.slots.filter(slot=>slot.caption_state==='omitted').length,1,text);
+  }
+});
+
+test('#131 the safety net stays off without an overlap signal or when every slot was requested',async()=>{
+  // 근거가 없으면 비우지 않는 것이 옳다. 개수를 맞추려고 임계값을 내리지 않는다.
+  const weak=await buildFeed(orderInput({kind:'none'},{kind:'none'},weakOverlapPhotos()));
+  const weakProvider=seedOutput(weak.feed);
+  assert.deepEqual(slotsOnly(await generateOutput(generatedInput(weak),options(weakProvider))),weakProvider);
+
+  // 사용자가 전부 써 달라고 말한 회차는 겹침이 아무리 높아도 비우지 않는다.
+  const all=await buildFeed(orderInput({kind:'text',text:'사진마다 한 줄씩'}));
+  assert.equal(all.context.target.language.caption_coverage.value,'all');
+  const allProvider=seedOutput(all.feed);
+  assert.deepEqual(slotsOnly(await generateOutput(generatedInput(all),options(allProvider))),allProvider);
+});
+
+test('#131 a forged adjacent_overlap cannot manufacture an omission',async()=>{
+  const built=await buildFeed(orderInput({kind:'none'},{kind:'none'},weakOverlapPhotos()));
+  // 겹침 신호를 caller 가 위조해도 비움이 생기지 않는다. 판단은 context.photos 에서 다시 재고,
+  // feed 가 적어 둔 값은 그 경로의 정의와 대조해 어긋나면 후보에서 뺀다.
+  for(const forged of [0.99,1]) {
+    const tampered=generatedInput(built);
+    tampered.feed.slots[1].caption_inputs.adjacent_overlap=forged;
+    const provider=seedOutput(built.feed);
+    assert.deepEqual(slotsOnly(await generateOutput(tampered,options(provider))),provider,String(forged));
+  }
 });
