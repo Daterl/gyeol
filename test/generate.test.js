@@ -674,3 +674,138 @@ test('#131 a forged adjacent_overlap cannot manufacture an omission',async()=>{
     assert.deepEqual(slotsOnly(await generateOutput(tampered,options(provider))),provider,String(forged));
   }
 });
+
+// #123: provider selects a fact; public evidence remains an exact server-owned quote.
+const indexedSlot = (req, index=0) => ({
+  ...seedOutput(req.feed).output.slots[0], fact_index:index, evidence:[]
+});
+
+test('#123 indexed all/slot responses compose evidence and preserve grounded hints',async()=>{
+  for(const mode of ['all','slot']) {
+    const req=input(mode);
+    const response=mode==='all'?seedOutput(req.feed):{slot:indexedSlot(req)};
+    const slots=mode==='all'?response.output.slots:[response.slot];
+    for(const slot of slots) {
+      slot.fact_index=0;slot.evidence=[];
+    }
+    const actual=await generateOutput(req,options(response));
+    for(const slot of mode==='all'?actual.output.slots:[actual.slot]) {
+      const fact=req.feed.slots.find(x=>x.photo_id===slot.photo_id).caption_inputs.describable_facts[0];
+      assert.equal(slot.evidence.find(e=>e.ref===slot.photo_id).note,fact);
+      if(slot.caption_state==='seed') assert.equal(slot.text,hint(fact));
+      assert.equal(Object.hasOwn(slot,'fact_index'),false);
+    }
+  }
+});
+
+test('#123 explicit indices cannot bypass range checks through an already valid note',async()=>{
+  const req=input('slot');
+  for(const index of [-1,1.5,'0',null,req.feed.slots[0].caption_inputs.describable_facts.length]) {
+    const slot={...seedOutput(req.feed).output.slots[0],fact_index:index};
+    await assert.rejects(generateOutput(req,options({slot})),{code:'MODEL_CONTRACT'});
+  }
+});
+
+test('#123 indexed hints preserve grounded phrases and still reject malformed or forbidden text',async()=>{
+  const req=input('slot');
+  const fact=req.feed.slots[0].caption_inputs.describable_facts[0];
+  const short=fact.slice(0,3);
+  const slot={...indexedSlot(req),text:hint(short)};
+  assert.equal((await generateOutput(req,options({slot}))).slot.text,hint(short));
+  for(const text of ['완성된 캡션',hint('또한 기록'),hint('밝기 0.712'),hint('a · b · c'),hint(' · a')]) {
+    await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),text}})),{code:'MODEL_CONTRACT'});
+  }
+});
+
+test('#123 indexed responses reject foreign/duplicate evidence and malformed optional evidence',async()=>{
+  const req=input('slot');
+  const own={kind:'uploaded_photo',ref:'ph_01',note:req.feed.slots[0].caption_inputs.describable_facts[0]};
+  for(const evidence of [[{...own,ref:'ph_02'}],[own,own],[{kind:'rule',ref:'',note:''}],
+    [{kind:'rule',ref:'gyeol.omit.overlap',note:42}],[{kind:'rule',ref:'gyeol.omit.overlap',note:'caption_inputs'}]]) {
+    await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),evidence}})),{code:'MODEL_CONTRACT'});
+  }
+  const actual=await generateOutput(req,options({slot:{...indexedSlot(req),evidence:[{kind:'rule',ref:'gyeol.omit.overlap',note:' '}]}}));
+  assert.deepEqual(actual.slot.evidence,[own]);
+});
+
+test('#123 empty facts permit only omission with the fixed server note',async()=>{
+  const req=input('slot');
+  req.feed.slots[0].caption_inputs.describable_facts=[];
+  req.context.photos.find(p=>p.photo_id==='ph_01').describable_facts=[];
+  const slot={...fixture.all_omitted.slots[0],fact_index:0,evidence:[]};
+  const actual=await generateOutput(req,options({slot}));
+  assert.equal(actual.slot.evidence[0].note,NO_FACTS_NOTE);
+  for(const patch of [{fact_index:1},{caption_state:'seed',text:hint('무언가'),omit_reason:null},
+    {evidence:[{kind:'uploaded_photo',ref:'ph_01',note:'새로 지어낸 한계'}]}]) {
+    await assert.rejects(generateOutput(req,options({slot:{...slot,...patch}})),{code:'MODEL_CONTRACT'});
+  }
+});
+
+test('#123 malformed photo evidence is rejected before canonical replacement',async()=>{
+  const req=input('slot');
+  for(const note of [null,42,{},'', ' ']) {
+    const slot={...indexedSlot(req),evidence:[{kind:'uploaded_photo',ref:'ph_01',note}]};
+    await assert.rejects(generateOutput(req,options({slot})),{code:'MODEL_CONTRACT'});
+  }
+});
+
+test('#123 provider schema requires a fact index but public all/slot responses never expose it',async()=>{
+  for(const mode of ['all','slot']) {
+    const req=input(mode);
+    const provider=mode==='all'?seedOutput(req.feed):{slot:indexedSlot(req)};
+    for(const slot of mode==='all'?provider.output.slots:[provider.slot]) {
+      const facts=req.feed.slots.find(s=>s.photo_id===slot.photo_id).caption_inputs.describable_facts;
+      slot.fact_index=facts.length-1;slot.evidence=[];slot.text=hint(facts.at(-1));
+    }
+    const seen=[];
+    const response=await handleGenerate(request(req),{apiKey:'fake-key',fetchImpl:transport(provider,seen)});
+    assert.equal(response.status,200);
+    const actual=await response.json();
+    const schema=JSON.parse(seen[1].options.body).output_config.format.schema;
+    const modelSlot=mode==='all'?schema.properties.output.properties.slots.items:schema.properties.slot;
+    assert.ok(modelSlot.required.includes('fact_index'));
+    assert.equal(modelSlot.properties.fact_index.type,'integer');
+    for(const slot of mode==='all'?actual.output.slots:[actual.slot]) {
+      const facts=req.feed.slots.find(s=>s.photo_id===slot.photo_id).caption_inputs.describable_facts;
+      assert.equal(slot.evidence[0].note,facts.at(-1));
+      assert.equal(Object.hasOwn(slot,'fact_index'),false);
+    }
+  }
+});
+
+test('#123 mocked 3/15-photo HTTP generation preserves identities and canonical evidence',async()=>{
+  for(const count of [3,15]) {
+    const photos=Array.from({length:count},(_,index)=>structuredClone(fixture.context.photos[index%3]));
+    const built=await buildFeed(orderInput({kind:'text',text:'모든 사진에 짧게 써 줘'},{kind:'none'},photos));
+    const req=generatedInput(built);
+    const provider=seedOutput(built.feed);
+    for(const slot of provider.output.slots) {
+      slot.fact_index=0;slot.evidence=[];
+    }
+    const response=await handleGenerate(request(req),options(provider));
+    assert.equal(response.status,200);
+    const actual=await response.json();
+    assert.equal(actual.output.slots.length,count);
+    assert.deepEqual(actual.output.slots.map(s=>s.photo_id),built.feed.slots.map(s=>s.photo_id));
+    for(const [index,slot] of actual.output.slots.entries()) {
+      assert.equal(slot.position,built.feed.slots[index].position);
+      assert.deepEqual(slot.evidence[0],{kind:'uploaded_photo',ref:slot.photo_id,
+        note:built.feed.slots[index].caption_inputs.describable_facts[0]});
+    }
+  }
+});
+
+
+test('#123 selecting evidence never replaces a hint with a long observation',async()=>{
+  const req=input('slot');
+  const facts=['그 사람은 하늘색 단추 달린 카디건과 흰 상의, 회색 통이 넓은 바지를 입고 있다','흰 화분에 초록 잎이 보인다'];
+  req.feed.slots[0].caption_inputs.describable_facts=facts;
+  req.context.photos.find(p=>p.photo_id==='ph_01').describable_facts=facts;
+  const slot={...indexedSlot(req),text:hint('하늘색 단추 달린 카디건')};
+  const actual=await generateOutput(req,options({slot}));
+  assert.equal(actual.slot.text,slot.text);
+  assert.equal(actual.slot.evidence[0].note,facts[0]);
+  for(const patch of [{text:hint('하늘빛 카디건')},{fact_index:1}]) {
+    await assert.rejects(generateOutput(req,options({slot:{...slot,...patch}})),{code:'MODEL_CONTRACT'});
+  }
+});
