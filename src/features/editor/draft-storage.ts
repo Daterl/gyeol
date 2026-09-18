@@ -1,10 +1,12 @@
 import type { F3Export, FeedResponse } from '@/types/contracts';
 import { validateEditedExport } from '../../../lib/contracts.js';
-import { validateFeedResponse } from '../../../lib/interaction.js';
+import {
+  MAX_UPLOAD_BYTES,
+  validateFeedResponse,
+} from '../../../lib/interaction.js';
 
 const DATABASE_NAME = 'gyeol-editor';
 const DATABASE_VERSION = 1;
-const DRAFT_KEY = 'current';
 const LOCAL_KEY = 'gyeol.editor.draft.v1';
 const STORE_NAME = 'drafts';
 
@@ -35,9 +37,12 @@ type StoredImages = {
 };
 
 type LocalStore = Pick<Storage, 'getItem' | 'removeItem' | 'setItem'>;
+type DraftLock = <T>(task: () => Promise<T>) => Promise<T>;
 export type DraftBinaryStore = {
   clear: () => Promise<void>;
-  load: () => Promise<StoredImages | null>;
+  load: (revision: string) => Promise<StoredImages | null>;
+  prune: (keepRevision: string) => Promise<void>;
+  remove: (revision: string) => Promise<void>;
   save: (value: StoredImages) => Promise<void>;
 };
 export type DraftStorage = {
@@ -47,6 +52,7 @@ export type DraftStorage = {
     metadata: DraftMetadata,
     images: ReadonlyMap<string, Blob>,
   ) => Promise<void>;
+  saveMetadata: (metadata: DraftMetadata) => void;
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -149,7 +155,8 @@ function validateImages(
       !metadata.photoIds.includes(image.photoId) ||
       !(image.blob instanceof Blob) ||
       image.blob.type !== 'image/webp' ||
-      image.blob.size === 0
+      image.blob.size === 0 ||
+      image.blob.size > MAX_UPLOAD_BYTES
     )
       throw new Error('Invalid draft image');
     ids.add(image.photoId);
@@ -158,16 +165,42 @@ function validateImages(
     throw new Error('Duplicate draft image');
 }
 
+const storedMetadata = (
+  metadata: DraftMetadata,
+  revision: string,
+): StoredMetadata => ({
+  draft: structuredClone(metadata.draft),
+  order: [...metadata.order],
+  original: structuredClone(metadata.original),
+  originalOutput: structuredClone(metadata.originalOutput),
+  photoIds: [...metadata.photoIds],
+  profileReference: structuredClone(metadata.profileReference),
+  prompt: metadata.prompt,
+  revision,
+  version: 1,
+});
+
 export function createDraftStorage(
   local: LocalStore,
   binary: DraftBinaryStore,
   createRevision: () => string = () => crypto.randomUUID(),
+  lock?: DraftLock,
 ): DraftStorage {
-  const clear = async () => {
-    await Promise.all([
-      binary.clear(),
-      Promise.resolve().then(() => local.removeItem(LOCAL_KEY)),
-    ]);
+  let operations = Promise.resolve();
+  let busy = 0;
+  const run = <T>(task: () => Promise<T>) => {
+    busy++;
+    const operation = operations
+      .catch(() => {})
+      .then(() => (lock ? lock(task) : task()))
+      .finally(() => {
+        busy--;
+      });
+    operations = operation.then(
+      () => {},
+      () => {},
+    );
+    return operation;
   };
   const discard = async () => {
     await Promise.allSettled([
@@ -176,65 +209,84 @@ export function createDraftStorage(
     ]);
   };
   return {
-    clear,
-    load: async () => {
-      try {
-        const raw = local.getItem(LOCAL_KEY);
-        if (raw === null) {
-          await binary.clear();
+    clear: () =>
+      run(async () => {
+        await binary.clear();
+        local.removeItem(LOCAL_KEY);
+      }),
+    load: () =>
+      run(async () => {
+        try {
+          const raw = local.getItem(LOCAL_KEY);
+          if (raw === null) return null;
+          const metadata: unknown = JSON.parse(raw);
+          validateMetadata(metadata);
+          const storedImages = await binary.load(metadata.revision);
+          validateImages(storedImages, metadata);
+          if (lock) await Promise.allSettled([binary.prune(metadata.revision)]);
+          return {
+            draft: structuredClone(metadata.draft),
+            images: new Map(
+              storedImages.images.map(({ blob, photoId }) => [photoId, blob]),
+            ),
+            order: [...metadata.order],
+            original: structuredClone(metadata.original),
+            originalOutput: structuredClone(metadata.originalOutput),
+            photoIds: [...metadata.photoIds],
+            profileReference: structuredClone(metadata.profileReference),
+            prompt: metadata.prompt,
+          };
+        } catch {
+          await discard();
           return null;
         }
-        const metadata: unknown = JSON.parse(raw);
-        validateMetadata(metadata);
-        const storedImages = await binary.load();
-        validateImages(storedImages, metadata);
-        return {
-          draft: structuredClone(metadata.draft),
-          images: new Map(
-            storedImages.images.map(({ blob, photoId }) => [photoId, blob]),
-          ),
-          order: [...metadata.order],
-          original: structuredClone(metadata.original),
-          originalOutput: structuredClone(metadata.originalOutput),
-          photoIds: [...metadata.photoIds],
-          profileReference: structuredClone(metadata.profileReference),
-          prompt: metadata.prompt,
+      }),
+    save: (metadata, images) =>
+      run(async () => {
+        const revision = createRevision();
+        const value = storedMetadata(metadata, revision);
+        validateMetadata(value);
+        const storedImages: StoredImages = {
+          images: value.photoIds.map((photoId) => {
+            const blob = images.get(photoId);
+            if (!blob) throw new Error(`Missing WebP for ${photoId}`);
+            return { blob, photoId };
+          }),
+          revision,
         };
-      } catch {
-        await discard();
-        return null;
-      }
-    },
-    save: async (metadata, images) => {
-      const revision = createRevision();
-      const value: StoredMetadata = {
-        draft: structuredClone(metadata.draft),
-        order: [...metadata.order],
-        original: structuredClone(metadata.original),
-        originalOutput: structuredClone(metadata.originalOutput),
-        photoIds: [...metadata.photoIds],
-        profileReference: structuredClone(metadata.profileReference),
-        prompt: metadata.prompt,
-        revision,
-        version: 1,
-      };
+        validateImages(storedImages, value);
+        const previousRaw = local.getItem(LOCAL_KEY);
+        let previousRevision: string | null = null;
+        if (previousRaw !== null)
+          try {
+            const previous: unknown = JSON.parse(previousRaw);
+            validateMetadata(previous);
+            previousRevision = previous.revision;
+          } catch {}
+        try {
+          await binary.save(storedImages);
+          local.setItem(LOCAL_KEY, JSON.stringify(value));
+        } catch (error) {
+          await Promise.allSettled([binary.remove(revision)]);
+          throw error;
+        }
+        if (previousRevision && previousRevision !== revision)
+          await Promise.allSettled([binary.remove(previousRevision)]);
+      }),
+    saveMetadata: (metadata) => {
+      if (busy) throw new Error('Draft storage is busy');
+      const raw = local.getItem(LOCAL_KEY);
+      if (raw === null) throw new Error('Draft images are not saved');
+      const current: unknown = JSON.parse(raw);
+      validateMetadata(current);
+      if (
+        current.photoIds.length !== metadata.photoIds.length ||
+        !current.photoIds.every((id) => metadata.photoIds.includes(id))
+      )
+        throw new Error('Draft photos changed');
+      const value = storedMetadata(metadata, current.revision);
       validateMetadata(value);
-      const storedImages: StoredImages = {
-        images: value.photoIds.map((photoId) => {
-          const blob = images.get(photoId);
-          if (!blob) throw new Error(`Missing WebP for ${photoId}`);
-          return { blob, photoId };
-        }),
-        revision,
-      };
-      validateImages(storedImages, value);
-      try {
-        await binary.save(storedImages);
-        local.setItem(LOCAL_KEY, JSON.stringify(value));
-      } catch (error) {
-        await discard();
-        throw error;
-      }
+      local.setItem(LOCAL_KEY, JSON.stringify(value));
     },
   };
 }
@@ -276,25 +328,58 @@ export function createIndexedDbBinaryStore(
   };
   return {
     clear: async () => {
-      await run('readwrite', (store) => store.delete(DRAFT_KEY));
+      await run('readwrite', (store) => store.clear());
     },
-    load: () =>
-      run<StoredImages | null>('readonly', (store) => store.get(DRAFT_KEY)),
+    load: (revision) =>
+      run<StoredImages | null>('readonly', (store) => store.get(revision)),
+    prune: async (keepRevision) => {
+      const database = await open();
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const transaction = database.transaction(STORE_NAME, 'readwrite');
+          const request = transaction.objectStore(STORE_NAME).openKeyCursor();
+          request.onsuccess = () => {
+            const cursor = request.result;
+            if (!cursor) return;
+            if (cursor.key !== keepRevision) cursor.delete();
+            cursor.continue();
+          };
+          request.onerror = () => reject(request.error);
+          transaction.onabort = () => reject(transaction.error);
+          transaction.oncomplete = () => resolve();
+          transaction.onerror = () => reject(transaction.error);
+        });
+      } finally {
+        database.close();
+      }
+    },
+    remove: async (revision) => {
+      await run('readwrite', (store) => store.delete(revision));
+    },
     save: async (value) => {
-      await run('readwrite', (store) => store.put(value, DRAFT_KEY));
+      await run('readwrite', (store) => store.put(value, value.revision));
     },
   };
 }
 
+let browserDraftStorage: DraftStorage | null | undefined;
 export function createBrowserDraftStorage(): DraftStorage | null {
+  if (browserDraftStorage !== undefined) return browserDraftStorage;
   try {
     if (typeof localStorage === 'undefined' || typeof indexedDB === 'undefined')
       return null;
-    return createDraftStorage(
+    browserDraftStorage = createDraftStorage(
       localStorage,
       createIndexedDbBinaryStore(indexedDB),
+      () => crypto.randomUUID(),
+      typeof navigator !== 'undefined' && navigator.locks
+        ? <T>(task: () => Promise<T>) =>
+            navigator.locks.request('gyeol-editor-draft', task)
+        : undefined,
     );
+    return browserDraftStorage;
   } catch {
+    browserDraftStorage = null;
     return null;
   }
 }

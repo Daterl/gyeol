@@ -20,19 +20,42 @@ import { PhotoPicker } from './photo-picker';
 const field = tv({
   base: 'mt-2 min-h-11 w-full rounded-md border border-line bg-card px-3 py-2 text-base placeholder:text-muted-foreground disabled:opacity-60',
 });
+const profileFromUrl = (value: string) => {
+  try {
+    const url = new URL(value);
+    const match = url.pathname.match(/^\/([A-Za-z0-9_.]{1,30})\/?$/);
+    if (
+      url.protocol !== 'https:' ||
+      !['instagram.com', 'www.instagram.com'].includes(url.hostname) ||
+      url.port ||
+      url.username ||
+      url.password ||
+      !match
+    )
+      return null;
+    return {
+      displayName: match[1],
+      profileImageUrl: null,
+      username: match[1].toLowerCase(),
+    };
+  } catch {
+    return null;
+  }
+};
 export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [store] = useState(createEditorStore);
   const photos = useStore(store, (state) => state.photos);
   const original = useStore(store, (state) => state.original);
+  const prompt = useStore(store, (state) => state.prompt);
   const request = useStore(store, (state) => state.request);
   const [oldPhotos, setOldPhotos] = useState<SelectedPhoto[]>([]);
   const oldPhotosRef = useRef(oldPhotos);
   oldPhotosRef.current = oldPhotos;
-  const [fields, setFields] = useState<IdentityFields>({
+  const [fields, setFields] = useState<Omit<IdentityFields, 'targetText'>>({
     currentUrl: '',
-    targetText: '',
     targetUrl: '',
   });
+  const [draftReady, setDraftReady] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [normalizing, setNormalizing] = useState(false);
   const normalizingRef = useRef(false);
@@ -49,15 +72,53 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const form = useRef<HTMLFormElement>(null);
   const loading = request.status === 'loading';
   useEffect(() => {
+    let active = true;
+    let unsubscribe = () => {};
     mountedRef.current = true;
+    void store
+      .getState()
+      .restoreDraft()
+      .then(() => {
+        if (!active) return;
+        const restoredProfile = store.getState().profileReference;
+        if (restoredProfile)
+          setFields((current) => ({
+            ...current,
+            currentUrl: `https://www.instagram.com/${restoredProfile.username}/`,
+          }));
+      })
+      .catch(() => {
+        if (active) setErrors(['저장된 초안을 불러오지 못했어요.']);
+      })
+      .finally(() => {
+        if (!active) return;
+        setDraftReady(true);
+        const persist = () => {
+          const state = store.getState();
+          void state
+            .persistDraft(
+              new Map(
+                state.photos.map((photo) => [photo.photo_id, photo.file]),
+              ),
+            )
+            .catch(() => {
+              if (mountedRef.current)
+                setErrors(['이 기기에서 초안을 저장하지 못했어요.']);
+            });
+        };
+        persist();
+        unsubscribe = store.subscribe(persist);
+      });
     return () => {
+      active = false;
+      unsubscribe();
       mountedRef.current = false;
       store.getState().reset();
       for (const photo of oldPhotosRef.current) URL.revokeObjectURL(photo.url);
     };
   }, [store]);
   async function add(incoming: File[], previous = false) {
-    if (normalizingRef.current) return;
+    if (!draftReady || normalizingRef.current) return;
     const selected = previous ? oldPhotos : photos;
     if (selected.length + incoming.length > MAX_SELECTED_PHOTOS) {
       setErrors([
@@ -113,10 +174,13 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         );
   }
   function reset() {
-    store.getState().reset();
+    void store
+      .getState()
+      .clearDraft()
+      .catch(() => setErrors(['저장된 초안을 지우지 못했어요.']));
     for (const photo of oldPhotos) URL.revokeObjectURL(photo.url);
     setOldPhotos([]);
-    setFields({ currentUrl: '', targetText: '', targetUrl: '' });
+    setFields({ currentUrl: '', targetUrl: '' });
     setErrors([]);
     requestAnimationFrame(() =>
       form.current
@@ -164,7 +228,13 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           void store
             .getState()
             .loadFeed((signal) =>
-              submitPhotos(photos, oldPhotos, fields, signal, mock),
+              submitPhotos(
+                photos,
+                oldPhotos,
+                { ...fields, targetText: prompt },
+                signal,
+                mock,
+              ),
             );
         }}
         className="space-y-6"
@@ -180,7 +250,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           photos={photos}
           onAdd={(files) => void add(files)}
           onRemove={(id) => remove(id)}
-          disabled={loading || normalizing}
+          disabled={!draftReady || loading || normalizing}
         />
         {errors.length > 0 && (
           <div
@@ -206,7 +276,9 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <div className="flex flex-wrap gap-3">
             <Button
               type="submit"
-              disabled={photos.length < 3 || loading || normalizing}
+              disabled={
+                !draftReady || photos.length < 3 || loading || normalizing
+              }
               className="min-h-12 px-6"
             >
               {normalizing
@@ -241,22 +313,24 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           </p>
         )}
         <p role="status" className="sr-only">
-          {normalizing
-            ? '사진의 방향과 크기를 정리하고 있어요.'
-            : loading
-              ? request.operation === 'feed'
-                ? '사진을 분석하고 있어요. 취소할 수 있어요.'
-                : '문장을 준비하고 있어요. 취소할 수 있어요.'
-              : request.status === 'ready'
-                ? '요청을 마쳤어요.'
-                : null}
+          {!draftReady
+            ? '저장된 초안을 확인하고 있어요.'
+            : normalizing
+              ? '사진의 방향과 크기를 정리하고 있어요.'
+              : loading
+                ? request.operation === 'feed'
+                  ? '사진을 분석하고 있어요. 취소할 수 있어요.'
+                  : '문장을 준비하고 있어요. 취소할 수 있어요.'
+                : request.status === 'ready'
+                  ? '요청을 마쳤어요.'
+                  : null}
         </p>
         <details ref={identity} className="border-b border-line pb-5">
           <summary className="min-h-11 py-2 font-medium">
             조금 더 나답게 · 모두 선택
           </summary>
           <fieldset
-            disabled={loading}
+            disabled={!draftReady || loading}
             className="min-w-0 space-y-6 pt-4"
             aria-describedby="identity-help"
           >
@@ -273,9 +347,13 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
                   className={field()}
                   placeholder="https://www.instagram.com/계정/"
                   value={fields.currentUrl}
-                  onChange={(event) =>
-                    setFields({ ...fields, currentUrl: event.target.value })
-                  }
+                  onChange={(event) => {
+                    const currentUrl = event.target.value;
+                    setFields({ ...fields, currentUrl });
+                    store
+                      .getState()
+                      .setProfileReference(profileFromUrl(currentUrl));
+                  }}
                 />
                 <span className="mt-2 block text-sm font-normal text-muted-foreground">
                   기존 게시물 사진을 넣으면 이 칸은 비워 주세요.
@@ -304,9 +382,9 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
                 rows={2}
                 maxLength={2000}
                 placeholder="짧고 담백하게. 이모지는 쓰지 않을래요."
-                value={fields.targetText}
+                value={prompt}
                 onChange={(event) =>
-                  setFields({ ...fields, targetText: event.target.value })
+                  store.getState().setPrompt(event.target.value)
                 }
               />
             </label>
@@ -319,7 +397,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
                 않아요.
               </p>
               <PhotoPicker
-                disabled={loading || normalizing}
+                disabled={!draftReady || loading || normalizing}
                 label="기존 게시물 사진"
                 photos={oldPhotos}
                 onAdd={(files) => void add(files, true)}
@@ -332,7 +410,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <button
             type="button"
             className="min-h-11 text-sm underline underline-offset-4"
-            disabled={normalizing}
+            disabled={!draftReady || normalizing}
             onClick={reset}
           >
             입력 초기화

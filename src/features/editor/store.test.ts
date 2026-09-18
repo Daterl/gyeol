@@ -1,7 +1,11 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import type { FeedResponse } from '@/types/contracts';
 import fixture from '../../../fixtures/interaction.sample.json';
-import { createDraftStorage, type DraftBinaryStore } from './draft-storage';
+import {
+  createDraftStorage,
+  type DraftBinaryStore,
+  type DraftStorage,
+} from './draft-storage';
 import { createEditorStore } from './store';
 
 const response = (): FeedResponse =>
@@ -105,6 +109,7 @@ test('selection accepts 15 photos and rejects 16', () => {
 test('persists and restores prompt, profile, photo order and WebP files', async () => {
   const values = new Map<string, string>();
   let saved: Awaited<ReturnType<DraftBinaryStore['load']>> = null;
+  let binarySaves = 0;
   const persistence = createDraftStorage(
     {
       getItem: (key) => values.get(key) ?? null,
@@ -120,7 +125,12 @@ test('persists and restores prompt, profile, photo order and WebP files', async 
         saved = null;
       },
       load: async () => saved,
+      prune: async () => {},
+      remove: async (revision) => {
+        if (saved?.revision === revision) saved = null;
+      },
       save: async (value) => {
+        binarySaves++;
         saved = value;
       },
     },
@@ -154,13 +164,16 @@ test('persists and restores prompt, profile, photo order and WebP files', async 
         ids.map((id) => [id, new Blob([`webp-${id}`], { type: 'image/webp' })]),
       ),
     );
+  first.getState().setPrompt('최신 프롬프트');
+  await first.getState().persistDraft(new Map());
+  expect(binarySaves).toBe(1);
 
   const restored = createEditorStore(persistence);
   expect(await restored.getState().restoreDraft()).toBe(true);
   expect(restored.getState()).toMatchObject({
     order: [ids[1], ids[2], ids[0], ...ids.slice(3)],
     profileReference: { username: 'jangwon_diego_yoon' },
-    prompt: '조용한 흐름',
+    prompt: '최신 프롬프트',
   });
   expect(restored.getState().photos.map((photo) => photo.photo_id)).toEqual(
     ids,
@@ -170,8 +183,94 @@ test('persists and restores prompt, profile, photo order and WebP files', async 
       .getState()
       .photos.every((photo) => photo.file.type === 'image/webp'),
   ).toBe(true);
-  await restored.getState().clearDraft();
+  restored.getState().selectFiles(
+    restored
+      .getState()
+      .photos.slice(0, 2)
+      .map(({ file }) => file),
+  );
+  await restored.getState().persistDraft(new Map());
   expect(await persistence.load()).toBeNull();
+});
+
+test('serializes rapid saves so the newest prompt wins', async () => {
+  const firstSave = Promise.withResolvers<void>();
+  const prompts: string[] = [];
+  let saves = 0;
+  const persistence: DraftStorage = {
+    clear: async () => {},
+    load: async () => null,
+    save: async (metadata) => {
+      saves++;
+      if (saves === 1) await firstSave.promise;
+      prompts.push(metadata.prompt);
+    },
+    saveMetadata: (metadata) => {
+      prompts.push(metadata.prompt);
+    },
+  };
+  vi.spyOn(URL, 'createObjectURL').mockImplementation(
+    () => `blob:${crypto.randomUUID()}`,
+  );
+  const store = createEditorStore(persistence);
+  store
+    .getState()
+    .selectFiles(
+      Array.from(
+        { length: 3 },
+        (_, index) =>
+          new File([String(index)], `${index}.webp`, { type: 'image/webp' }),
+      ),
+    );
+  const images = new Map(
+    store
+      .getState()
+      .photos.map(({ file, photo_id }) => [photo_id, file] as const),
+  );
+  store.getState().setPrompt('first');
+  const first = store.getState().persistDraft(images);
+  store.getState().setPrompt('latest');
+  const latest = store.getState().persistDraft(images);
+  firstSave.resolve();
+  await Promise.all([first, latest]);
+  expect(prompts).toEqual(['first', 'latest']);
+});
+
+test('late restore cannot replace state after reset', async () => {
+  const pending =
+    Promise.withResolvers<Awaited<ReturnType<DraftStorage['load']>>>();
+  const persistence: DraftStorage = {
+    clear: async () => {},
+    load: () => pending.promise,
+    save: async () => {},
+    saveMetadata: () => {},
+  };
+  const create = vi
+    .spyOn(URL, 'createObjectURL')
+    .mockImplementation(() => `blob:${crypto.randomUUID()}`);
+  const store = createEditorStore(persistence);
+  const restoring = store.getState().restoreDraft();
+  store.getState().reset();
+  pending.resolve({
+    ...{
+      draft: null,
+      order: ['one', 'two', 'three'],
+      original: null,
+      originalOutput: null,
+      photoIds: ['one', 'two', 'three'],
+      profileReference: null,
+      prompt: 'old',
+    },
+    images: new Map(
+      ['one', 'two', 'three'].map((id) => [
+        id,
+        new Blob([id], { type: 'image/webp' }),
+      ]),
+    ),
+  });
+  expect(await restoring).toBe(false);
+  expect(store.getState().photos).toEqual([]);
+  expect(create).not.toHaveBeenCalled();
 });
 
 test('reorder and direct edits preserve source evidence and export the same photo set', async () => {
