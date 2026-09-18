@@ -98,6 +98,8 @@ test('internal ordering details fail closed in every public model field for all 
   const text=filledOutput();text.output.slots[0].text='밝기 0.712인 단색 카드';allCases.push(['text',text]);
   const reason=output();reason.output.slots[0].omit_reason='앞자리 사진과 측정 색 거리로 이 자리에 뒀다';allCases.push(['omit_reason',reason]);
   const note=filledOutput();note.output.slots[0].evidence[0].note='is_visual_peak=true라 선택했다';allCases.push(['evidence.note',note]);
+  // 필드명을 안 부르고 값만 옮겨 적는 경로. 위 네 건은 전부 내부 이름이 같이 나와서 잡힌다.
+  const bare=filledOutput();bare.output.slots[0].evidence[0].note='앞 사진과의 겹침이 0.786 이라 이 자리를 골랐다';allCases.push(['bare decimal',bare]);
   for(const [field,response] of allCases) {
     await assert.rejects(generateOutput(input('all'),options(response)),{code:'MODEL_CONTRACT'},`all ${field}`);
   }
