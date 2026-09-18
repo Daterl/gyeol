@@ -12,7 +12,7 @@ Existing compose/order modules produce the feed. Empty prompts use the verified 
 
 All photo IDs survive with `curation.slots[].included: true`. Exclusion candidates remain separate, and only authenticated duplicate-byte observations can recommend an exclusion. The response preserves profile source/collection/expiry/evidence references, original trimmed prompt, and user-text provenance. `ownership_verified: false` is explicit.
 
-`buildFeed`, `validateOrderRequest`, and the renamed `handleLegacyFeed` preserve tested 3–20 photo/optional-identity behavior as internal compatibility surfaces. The production handler has no fallback to them. The legacy client helper/UI still needs the new request contract; that is Diego's separate ownership.
+`buildFeed`, `validateOrderRequest`, and the renamed `handleLegacyFeed` preserve tested 3–20 photo/optional-identity behavior as internal compatibility surfaces. The production handler has no fallback to them. **Merge/deploy compatibility gate:** `src/lib/api.ts` → `orderPhotos` still submits `identity`/`OrderRequest`; this production handler deliberately rejects that retired shape. Diego must migrate the frontend to profile connection and `CurationRequest` before this branch can be merged/deployed as the user flow. This backend work does not establish a working end-to-end UI.
 
 #145's placement module is integrated into `preserveOrder`: tied measurements retain the original order and rule evidence while attaching grounded own/neighbor observations. Observations explicitly do not claim to be ordering evidence. No voice implementation was copied or rewritten.
 
