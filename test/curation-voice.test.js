@@ -45,7 +45,9 @@ test('real buildFeed paths expose concept with evidence without inventing order 
   for(const target of [{kind:'none'},{kind:'text',text:'조용하고 담백하게'}]) {
     const input=photos.slice(0,15);
     const {feed}=await buildFeed({schema_version:'1.0',session_id:'voice-test',photos:input,identity:{target,current:{kind:'none'}}});
-    if(target.kind==='none') assert.deepEqual(feed.slots.map(s=>s.photo_id),input.map(p=>p.photo_id));
+    // #127: 사진만 올린 경로도 순서를 정한다. 사진은 보존되고, 순서는 측정값이 정한다.
+    assert.deepEqual(new Set(feed.slots.map(s=>s.photo_id)),new Set(input.map(p=>p.photo_id)));
+    if(target.kind==='none') assert.match(feed.slots.find(s=>s.position===1).rationale.value,/지향을 넣지 않아/);
     assert.match(feed.concept.value,/흐름으로 엮어요/);
     assert.ok(feed.concept.evidence.some(e=>e.ref==='order.bundle_concept'));
     assert.doesNotMatch(feed.concept.value,forbidden);

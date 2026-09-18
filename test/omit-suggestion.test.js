@@ -128,10 +128,12 @@ test('heuristic defaults, dark/blurry flags, colour, profile and order cannot ch
 test('extension validation rejects forged decisions, evidence, partial fields and wrong count; legacy feeds survive',async()=>{
   const value=input();value.photos[1].quality_flags=['duplicate_of:ph_01'];
   const result=await buildFeed(value);
+  // #127 이후 사진만 올린 경로도 순서를 정하므로 슬롯을 위치가 아니라 photo_id 로 찾는다.
+  const flagged=r=>r.feed.slots.find(s=>s.photo_id==='ph_02');
   for(const mutate of [
     r=>{r.feed.slots[0].omit_suggestion.recommended=true;},
-    r=>{r.feed.slots[1].omit_suggestion.evidence[0].ref='outside';},
-    r=>{r.feed.slots[1].omit_suggestion.evidence[0].note='made up';},
+    r=>{flagged(r).omit_suggestion.evidence[0].ref='outside';},
+    r=>{flagged(r).omit_suggestion.evidence[0].note='made up';},
     r=>{r.feed.omit_summary.recommended_count=0;},
     r=>{delete r.feed.slots[0].omit_suggestion;},
     r=>{delete r.feed.omit_summary;},
