@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import sharp from 'sharp';
-import {buildFeed,handleAnalyze,handleFeed} from '../lib/pipeline.js';
+import {buildFeed,handleAnalyze,handleLegacyFeed as handleFeed} from '../lib/pipeline.js';
 import {validateFeedResponse,validateErrorResponse} from '../lib/interaction.js';
 const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json',import.meta.url),'utf8'));
 const input=(count=3)=>({schema_version:'1.0',session_id:'pipeline-test',photos:Array.from({length:count},(_,index)=>({...structuredClone(fixture.context.photos[index%3]),photo_id:'photo_'+index,input_index:index})),identity:{target:{kind:'none'},current:{kind:'none'}}});

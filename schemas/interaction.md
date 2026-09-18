@@ -9,7 +9,7 @@
 요청: `{schema_version:"1.0",session_id,collection:"selected"|"current",photo_id,input_index,file_ref,media_type,image_base64}`.
 
 - 세션 시작 시 `crypto.randomUUID()`로 사진별 photo_id를 발급한다. 삭제/재정렬/재시도 동안 같은 파일의 ID를 유지하고 교체된 파일은 새 ID다. 파일명·배열 위치로 사진을 식별하지 않는다.
-- 한 번에 사진 1장. 올릴 사진 집합은 3~20장. input_index는 현재 선택 배열의 0..N-1이며 결과의 position과 별개다.
+- 한 번에 사진 1장. 올릴 사진 집합은 3~15장. input_index는 현재 선택 배열의 0..N-1이며 결과의 position과 별개다.
 - file_ref는 최대 512자의 표시용 원본 파일명이다. 파일 경로로 열거나 URL로 fetch하지 않는다. photo_id는 영문/숫자/underscore/hyphen 1~96자다.
 - JPEG/PNG/WebP 정지 사진, **3,000,000 bytes/장**, 긴 변 **8192px**, 전체 **40,000,000 pixels** 이하다. GIF/SVG/애니메이션은 사용자 업로드에서 받지 않는다. 기존 SVG는 합성 fixture 내부 전용이다.
 - image_base64는 data URL 접두어·공백 없이 표준 canonical base64다. JSON 전체 요청은 4,100,000 bytes 이하. 클라이언트에서 원본 파일 크기를 먼저 검사하고 서버는 실제 bytes와 헤더의 형식·해상도를 검사한다.
@@ -19,22 +19,48 @@
 
 배포 근거: [Vercel Functions 4.5MB 한도](https://vercel.com/docs/functions/limitations), [sharp metadata](https://sharp.pixelplumbing.com/api-input/), 2026-09-17 확인. 플랫폼 자체 413은 JSON이 아닐 수 있어 클라이언트는 status를 먼저 처리한다. 큰 파일을 숨겨서 보내거나 전용 스토리지를 추가하지 않는다.
 
-## 순서 — POST /api/feed
+## 큐레이션 — POST /api/feed
 
-`{schema_version:"1.0",session_id,photos:PhotoAnalysis[3..20],identity:{target,current}}`
+[ADR-0008](../docs/adr/0008-public-profile-curation-and-sharing.md)의 공개 프로필 필수 계약이다. 요청은 `{schema_version:"1.0",session_id,profile_url,profile_snapshot_id,photos:PhotoAnalysis[3..15],prompt?:string}`다.
 
-- target: `{kind:"none"}` / `{kind:"text",text:string(1..2000)}` / `{kind:"reference",url}`.
-- current: `{kind:"none"}` / `{kind:"reference",url}` / `{kind:"posts",photos:PhotoAnalysis[1..20],captions?:string[]}`.
-- captions가 있으면 기존 사진과 같은 순서·같은 길이이고, 캡션이 원래 없었던 게시물은 `""`이다. captions 자체가 없으면 언어를 관측하지 않은 것이다. 문자열은 각각 5000자 이하.
-- 기존 게시물 사진은 올릴 사진과 별도 ID다. reference는 HTTPS Instagram 계정 URL이며 준비된 registry에서만 정확히 조회한다. 외부 URL fetch/라이브 스크래핑은 하지 않는다. 준비되지 않은 계정은 `REFERENCE_NOT_PREPARED`로 실패하고 텍스트/사진만 경로를 안내한다. 다른 계정의 스냅샷으로 바꾸지 않는다.
-- target이 none이면 기존 `planFromPhotos`의 PhotoPlan을 쓴다. target_profile_id는 null, photo_plan_id는 plan_id이며 OrderedFeed는 1.1이다. language=null, corrected=false, deltas=[]다. 취향이나 문체를 알아냈다고 표시하지 않는다.
-- current가 none이면 기존 `present:false/source:none/current_profile_id:null/disclosure:target_only`다. 현재 게시물만 제공돼도 사진 계획에 가짜 지향을 추가하지 않는다.
+- `profile_url`은 공개 Instagram 계정 URL, `profile_snapshot_id`는 #143 연결 API가 발급한 불투명 서명 참조다. URL 자체는 공개 여부나 소유권의 증명이 아니다. 서버는 `createProfileCache(...).resolveSnapshot({url,snapshotId})`로 신선한 공개 스냅샷을 읽는다. 이 읽기는 수집을 시작하거나 새로고침하지 않는다.
+- 미연결·비공개·미확인·서명 위조·계정 불일치는 진행하지 못한다. `snapshot`, `profile`, `identity` 같은 추가 필드는 거절한다. 요청의 스냅샷 객체를 프로필 근거로 쓰지 않는다.
+- 사진은 3~15장이고 ID는 누락·중복 없이 유지된다. `input_index`는 선택 배열의 0..N-1이다. 본문 최대 250,000 bytes. `duplicate_of`는 같은 세션·묶음·바이트 해시를 가진 서명된 분석 영수증으로만 복원한다. 나머지 분석 필드의 형태·참조 정합성을 검사하며 진위를 인증하지는 않는다.
+- `prompt`는 생략하거나 빈 문자열로 보낼 수 있고 최대 2000자다. 빈 입력은 연결 스냅샷의 수집 가능한 언어 근거를 기존 reference 추출기로 읽는다. 작성한 입력은 기존 freetext 추출기로 순서·캡션 방향에 반영하며, 연결 프로필 관측과 사용자의 방향을 별도 출처로 유지한다. 지원하지 않는 자유 문장의 의미를 이해했다고 주장하지 않는다.
 
-성공: `{feed:OrderedFeed,context:{photos,current:CurrentProfile,target:TargetProfile|PhotoPlan,current_photos:PhotoAnalysis[]}}`.
+성공은 `{feed:OrderedFeed,context:{photos,current,target,current_photos:[]},curation}`다. `feed`와 `context`만 다음 생성 요청으로 전달한다. `curation`을 `/api/generate` 요청에 그대로 펼치지 않는다.
 
-context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_upload일 때만 current_photos가 있고, 그 근거는 실제 기존 사진 ID로 대조한다. 본문 최대 250,000 bytes. `duplicate_of`는 두 사진의 서명된 분석 영수증이 같은 세션·묶음·바이트 해시를 가질 때만 서버가 다시 구성한다. 그 밖의 PhotoAnalysis 필드는 형태·참조 정합성을 검사하며 진위를 인증하지 않는다.
+```json
+{
+  "schema_version": "1.0",
+  "profile_snapshot_id": "signed-reference-from-profile-connect",
+  "profile": {
+    "snapshot_id": "apify:run:dataset",
+    "source_url": "https://www.instagram.com/account/",
+    "collected_at": "2026-09-18T09:00:00.000Z",
+    "expires_at": "2026-09-19T09:00:00.000Z",
+    "ownership_verified": false,
+    "evidence_refs": {}
+  },
+  "prompt": {"text": null, "evidence": []},
+  "slots": [{
+    "photo_id": "ph_01", "position": 1, "included": true,
+    "exclusion_candidate": {"recommended": false, "reason": null, "evidence": []}
+  }]
+}
+```
 
-기존 `GET /api/feed?mock=1`은 15장 합성 샘플을 그대로 반환한다. 샘플 모드에서는 **샘플 사진만** ph_01..ph_15에 연결한다. 사용자 사진 3~20장에 샘플 ID/결과를 덮어 붙이지 않는다.
+위 예시는 `curation` 객체의 필드 설명이며 실제 성공에는 모든 입력 사진이 들어간다. 모든 `curation.slots[].included`는 최초 제안에서 `true`다. `exclusion_candidate`는 `feed.slots[].omit_suggestion`의 근거 있는 제안이며, `recommended:true`여도 사진을 제외하지 않는다. 제외·복원·재정렬·캡션 편집 및 공유 확정은 후속 프리뷰 계약이다. 캡션 초안은 기존 `/api/generate`에서 생성한다.
+
+작성한 프롬프트는 `curation.prompt.text`와 `context.target.raw_freetext`에 trim한 원문을 남기며 `prompt.evidence`는 `[{kind:"user_text",ref:context.target.profile_id,note:"사용자가 입력한 큐레이션 방향"}]`다. 프로필 provenance에는 서버 저장소에서 확인한 수집 시각·출처와 근거 URL만 넣는다. 공개 프로필 연결은 계정 소유권 인증이 아니다. 이 작성 중 응답은 공유 manifest가 아니며 프로필 PII 공유는 별도 명시적 선택이 필요하다.
+
+오류: 형식·사진 수·추가 필드는 `400 INVALID_REQUEST`, 확인할 수 없는 연결은 `422 PROFILE_NOT_VERIFIED`, 명확히 확인된 만료는 `422 PROFILE_SNAPSHOT_EXPIRED`, 저장소 장애·설정 누락은 `503 PROFILE_RESOLVER_UNAVAILABLE`다. 응답은 `no-store`다.
+
+### 하위 모듈 호환성
+
+기존 `buildFeed`, `handleLegacyFeed`, `validateOrderRequest` 및 `OrderRequest`는 3~20장과 선택 `identity` 경로의 회귀·로컬 사용을 위해 유지한다. 프로덕션 POST는 이 경로를 호출하지 않는다. `GET /api/feed?mock=1`은 15장 합성 샘플 전용이며 사용자 결과나 공개 프로필 연결 증거로 사용하지 않는다.
+
+실행 가능한 결정적 경계 fixture는 [curation.sample.json](../fixtures/curation.sample.json), 검사는 [curation.test.js](../test/curation.test.js)다. 제공자·저장소·실모델·사람 검증 완료의 증거는 아니다.
 
 ## 출력 — POST /api/generate
 
