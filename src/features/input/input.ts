@@ -74,6 +74,8 @@ export function identityInput(
 }
 async function upload(
   photos: SelectedPhoto[],
+  sessionId: string,
+  collection: UploadRequest['collection'],
   signal: AbortSignal,
   mock: boolean,
 ) {
@@ -89,12 +91,14 @@ async function upload(
     analyses.push(
       await analyzePhoto(
         {
+          collection,
           file_ref: photo.file.name,
           image_base64: btoa(binary),
           input_index: index,
           media_type: photo.file.type as UploadRequest['media_type'],
           photo_id: photo.photo_id,
           schema_version: '1.0',
+          session_id: sessionId,
         },
         signal,
         mock,
@@ -124,12 +128,13 @@ export async function submitPhotos(
       '내 인스타 URL과 기존 게시물 사진 중 하나를 골라 주세요.',
     );
   identityInput(fields, []);
-  const selected = await upload(photos, signal, mock);
-  const previous = await upload(oldPhotos, signal, mock);
+  const sessionId = crypto.randomUUID();
+  const selected = await upload(photos, sessionId, 'selected', signal, mock);
+  const previous = await upload(oldPhotos, sessionId, 'current', signal, mock);
   return orderPhotos(
     {
       schema_version: '1.0',
-      session_id: crypto.randomUUID(),
+      session_id: sessionId,
       photos: selected,
       identity: identityInput(fields, previous),
     },

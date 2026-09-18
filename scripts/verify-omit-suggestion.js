@@ -38,7 +38,7 @@ for(const repeat of [false,true]) {
   for(let i=0;i<15;i++) {
     const selected=manifest[repeat&&i===14?0:i];
     const bytes=await readFile(resolve(imageRoot,basename(selected.file_ref)));
-    const upload={schema_version:'1.0',photo_id:manifest[i].photo_id,input_index:i,
+    const upload={schema_version:'1.0',session_id:'verify-omit-suggestion',collection:'selected',photo_id:manifest[i].photo_id,input_index:i,
       file_ref:selected.file_ref,media_type:'image/jpeg',image_base64:bytes.toString('base64')};
     const response=await handleAnalyze(new Request('http://localhost/api/analyze?mock=1',{
       method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(upload)}));

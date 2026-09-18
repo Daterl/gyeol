@@ -67,6 +67,7 @@ export type PhotoPlan = {
   visual: Visual;
 };
 export type PhotoAnalysis = {
+  analysis_receipt?: string;
   analysis_source: 'vision_model' | 'heuristic';
   analyzed_at: string;
   color: Color;
@@ -182,10 +183,12 @@ export type GenerateResponse =
   | { omission?: Omission; output: F3Export }
   | { slot: CaptionSlot };
 export type UploadRequest = {
+  collection: 'selected' | 'current';
   file_ref: string;
   image_base64: string;
   input_index: number;
   media_type: 'image/jpeg' | 'image/png' | 'image/webp';
   photo_id: string;
   schema_version: '1.0';
+  session_id: string;
 };

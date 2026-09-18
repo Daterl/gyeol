@@ -50,12 +50,14 @@ test('typed feed and generation requests reject mismatched identities and malfor
 test('analyze response must preserve photo ID, input index and file reference', async () => {
   const photo = response().context.photos[0];
   const upload: UploadRequest = {
+    collection: 'selected',
     file_ref: photo.file_ref,
     image_base64: 'AA==',
     input_index: photo.input_index,
     media_type: 'image/jpeg',
     photo_id: photo.photo_id,
     schema_version: '1.0',
+    session_id: 'test-session',
   };
   const fetcher = vi.fn().mockResolvedValueOnce(Response.json(photo));
   vi.stubGlobal('fetch', fetcher);

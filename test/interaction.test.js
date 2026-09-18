@@ -65,12 +65,16 @@ test('current post evidence resolves to a separate supplied photo set',()=>{
 });
 
 test('actual JPEG/PNG/WebP metadata, MIME and byte/dimension limits are checked',async()=>{
-  const body={schema_version:'1.0',photo_id:'upload_test',input_index:0,file_ref:'test',media_type:'image/jpeg',image_base64:''};
+  const body={schema_version:'1.0',session_id:'upload-session',collection:'selected',photo_id:'upload_test',input_index:0,file_ref:'test',media_type:'image/jpeg',image_base64:''};
   for(const format of ['jpeg','png','webp']) {
     const bytes=await sharp({create:{width:8,height:6,channels:3,background:'#ffffff'}}).toFormat(format).toBuffer();
     const request={...body,media_type:`image/${format}`,image_base64:bytes.toString('base64')};
     assert.equal((await validateUpload(request)).bytes.length,bytes.length);
     await assert.rejects(validateUpload({...request,media_type:format==='png'?'image/jpeg':'image/png'}),{code:'UNSUPPORTED_MEDIA_TYPE'});
+    for (const missing of [['session_id'],['collection'],['session_id','collection']]) {
+      const invalid={...request};missing.forEach(key=>delete invalid[key]);
+      await assert.rejects(validateUpload(invalid),{code:'INVALID_REQUEST'});
+    }
   }
   await assert.rejects(validateUpload({...body,media_type:'image/svg+xml'}),{code:'UNSUPPORTED_MEDIA_TYPE'});
   await assert.rejects(validateUpload({...body,image_base64:'bm90LWFuLWltYWdl'}),{code:'INVALID_IMAGE'});

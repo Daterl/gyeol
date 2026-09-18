@@ -93,6 +93,8 @@ test('upload-to-feed keeps selected IDs, sends each file once and uses the no-mo
         expect(photo).toBeDefined();
         expect(body.file_ref).toBe(photo?.file_ref);
         expect(atob(body.image_base64)).toBe('JPEG test bytes');
+        expect(body.collection).toBe('selected');
+        expect(typeof body.session_id).toBe('string');
         return Response.json(photo);
       }
       expect(body.photos.map((p: { photo_id: string }) => p.photo_id)).toEqual(

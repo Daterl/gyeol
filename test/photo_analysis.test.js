@@ -167,7 +167,7 @@ test('key/model namespaces separate heuristic and model cache; callers cannot po
   assert.equal((await analyzePhoto(card)).analysis.analysis_source, 'heuristic');
 });
 
-test('same bytes twice: zero extra model calls, identity re-stamped, duplicate reported', async () => {
+test('same bytes twice: zero extra model calls and no cross-request identity is cached', async () => {
   resetAnalysisState();
   const client = async () => ({ model: 'm', observation: { color: { hue_mean: 1, sat_mean: 0, bright_mean: 0, palette_hex: [] }, composition: 'full_frame', scale: 'midshot', subjects: [], has_face: false, text_in_image: null, describable_facts: [], quality_flags: [] } });
   const first = await analyzePhoto({ ...card, apiKey: 'k', client });
@@ -183,7 +183,7 @@ test('same bytes twice: zero extra model calls, identity re-stamped, duplicate r
   assert.equal(renamed.analysis.photo_id, 'ph_99', 'cached result must not carry the first photo_id');
   assert.equal(renamed.analysis.input_index, 9);
   assert.equal(renamed.analysis.file_ref, 'other.svg');
-  assert.ok(renamed.analysis.quality_flags.includes('duplicate_of:ph_01'));
+  assert.deepEqual(renamed.analysis.quality_flags,[]);
   assert.equal(first.analysis.analyzed_at, renamed.analysis.analyzed_at, 'reuse must not pose as a fresh analysis');
 });
 
