@@ -5,12 +5,13 @@ The same-color fallback now quotes the current and adjacent photos' model observ
 ## Validation
 
 - Initial focused baseline: 27/27 pass; five new regressions failed before implementation and passed afterward.
-- Node 24.14.0: npm test 306/306; npm run eval, check, typecheck pass. npm run lint passes (42 files; repository lint excludes lib/test, covered by syntax checks and tests).
-- Node binary: /Users/chowonjae/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node. Existing shared dependencies were reused; no dependencies added.
+- Follow-up finding: identical multi-fact sets in reversed order selected different fallback quotes and incorrectly emitted `order.observed_placement`. Exclusive-fact detection is now separate from quote selection: shared sets disclose `order.placement_limit` when measured contrast is absent, regardless of fact order. The regression covers opener, sustain, turn and closer; the coordinator verified it failing before the fix, and this follow-up reran it successfully.
+- Final validation on Node 24.21.0: `npm test` 307/307; focused placement-evidence, curation-voice, order and order-tie-bonus tests 34/34; `npm run eval`, `check`, `typecheck` and `lint` pass. Check covers 80 JS/JSON files; lint covers 42 files and excludes lib/test, whose changed files also pass explicit `node --check`.
+- Node binary: `/Users/chowonjae/.npm/_npx/387698761821791d/node_modules/node/bin/node`. The existing root-created `node_modules` symlink supplies locked dependencies; its target and tracked manifests were not changed.
 - Same-color synthetic 3/15 fixtures check own/adjacent verbatim references, unchanged selection decisions, photo IDs, caption facts and source metadata. Shared/missing/heuristic observations check honest limits. Repetition follows repeated observations, never random or index-based phrase variation.
 - Archived model replay: 3/15 photos through buildFeed with a text target; no model/network calls. Sources: ../101-caption-quality/audit-analyses.json and recovered-analysis.json. The recovered p05 file used another session's ph_15 ID; only its fixture ID is restored to ph_05 after filename matching. Observations/source/model metadata remain unchanged.
 - Independent baseline comparison against git bcc541a: all 15 archived slots and feed fields excluding rationale are identical; original R1–R4 selection/decision evidence is identical.
-- CodeRabbit initial review: zero findings across four implementation/test files. Final patch review also completed with zero findings across all five changed files, including this report; free CLI allowance, no usage credits.
+- Prior report records CodeRabbit reviews with zero findings before this follow-up. Those reviews do not cover this correction; no independent approval is claimed for the final patch.
 
 ## Limits and integration
 
@@ -18,7 +19,7 @@ The same-color fallback now quotes the current and adjacent photos' model observ
 - Stable export: placementVoice(photo, previous, role, next) returns {value,evidence}; existing three-argument calls work, but opener adjacency requires next. Source must be vision_model before prose facts are quoted.
 - pipeline.js preserveOrder bypasses placementVoice for same-color photo-only inputs. Its owner/coordinator has the integration requirement: preserve input order/no_measured_difference and add this voice/evidence, passing next for opener. This PR does not modify that worker's files.
 - No UI/cache/deployment edits, new dependencies, paid model calls, production deployment or merge.
-- sip audit: observations remain sourced from PhotoAnalysis; order.js retains selection decisions. Pipeline bypass is the identified integration boundary. Fixture acceptance is bounded to provenance, not model quality (mandela audit). Fresh subagent cold-read skipped under the no-recursive-delegation constraint; CodeRabbit and coordinator own independent review. No portability claims or external factual claims require additional skill checks.
+- sip audit: read-only consistency checks locate the observation contract in `lib/curation-voice.js`, its regression in `test/placement-evidence.test.js` and integration in `lib/order.js`; no consolidation is needed. Ordering/scoring code and source data are unchanged. The mandela audit bounds fixture acceptance to provenance and deterministic behavior, not model quality. This report was refreshed with re0; fresh subagent cold-read is skipped under the no-recursive-workers constraint, and factchk/detool are inapplicable because there are no external factual or portability claims. Independent review, coordinator integration into #144 and human/model acceptance remain separate gates.
 
 ## Archived 15-photo placement text
 

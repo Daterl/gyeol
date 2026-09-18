@@ -43,6 +43,19 @@ test('shared, absent and heuristic facts disclose limits instead of inventing di
   }
 });
 
+test('identical multi-fact sets disclose limits regardless of observation order', () => {
+  const [a, b] = fixture(3);
+  const shared = ['흰 개가 앉아 있다', '갈색 가방이 보인다'];
+  const current = {...b, describable_facts: shared};
+  const adjacent = {...a, describable_facts: [...shared].reverse()};
+  for (const role of ['opener', 'sustain', 'turn', 'closer']) {
+    const voice = placementVoice(current, role === 'opener' ? null : adjacent, role, adjacent);
+    assert.match(voice.value, /구분할 관측이 부족/);
+    assert.ok(voice.evidence.some(e => e.ref === 'order.placement_limit'));
+    assert.ok(!voice.evidence.some(e => e.ref === 'order.observed_placement'));
+  }
+});
+
 test('measured contrast cites both photos and does not require model observations', () => {
   const [a, b] = real;
   const current = {...b, color: {...b.color, bright_mean: a.color.bright_mean + .2}};
