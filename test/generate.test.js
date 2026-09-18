@@ -128,7 +128,11 @@ test('negated or non-caption coverage wording stays unset through generation',as
     '제가 싫은 건 사진마다 문장을 쓰는 거예요','내가 싫은 건 전부 쓰는 거야',
     '하지 말아야 할 건 모든 사진에 문장을 쓰는 거예요','원하지 않는 건 말수가 적은 기록이에요',
     '말수가 적당했으면','말수가 적절했으면','말수가 적혀 있는 사진','말수가 적어도 세 문장은 필요해요',
-    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬'
+    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬',
+    '몇 장에만 써 줘, 몇 장에만 쓰지 마','전부 써 줘, 전부 쓰지 마','전부 채워 줘, 전부 채우지는 마',
+    '몇 장에만 문장을 써 줘, 하지만 몇 장에만 문장을 쓰지는 마',
+    '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요',
+    '사진 속 글자를 전부 써 줘','배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘'
   ];
   for(const text of cases) {
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
@@ -148,6 +152,11 @@ test('an unrelated contrast clause preserves the earlier explicit coverage reque
   assert.equal(all.context.target.language.caption_coverage.value,'all');
   const provider=filledOutput(all.feed);
   assert.deepEqual(await generateOutput(generatedInput(all),options(provider)),provider);
+
+  const sentenceScoped=await buildFeed(orderInput({kind:'text',text:'과한 색감은 싫어요. 말수가 적고 여백이 많은 기록.'}));
+  assert.equal(sentenceScoped.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(sentenceScoped),options(filledOutput(sentenceScoped.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 });
 
 test('client cannot forge matching context and applied coverage from unrelated freetext',async()=>{

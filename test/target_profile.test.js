@@ -72,6 +72,7 @@ test('free text preserves explicit caption coverage as a claim without inventing
     ['모든 사진에 짧게 써 줘','all'],
     ['사진마다 한 줄씩 써 줘','all'],
     ['전부 채워 주세요','all'],
+    ['캡션을 전부 써 주세요','all'],
     ['한 장도 비우지 않았으면 해요','all'],
     ['전부 써 주세요','all']
   ];
@@ -95,7 +96,11 @@ test('negated, conflicting, or unsupported coverage cues never become an affirma
     '제가 싫은 건 사진마다 문장을 쓰는 거예요','내가 싫은 건 전부 쓰는 거야',
     '하지 말아야 할 건 모든 사진에 문장을 쓰는 거예요','원하지 않는 건 말수가 적은 기록이에요',
     '말수가 적당했으면','말수가 적절했으면','말수가 적혀 있는 사진','말수가 적어도 세 문장은 필요해요',
-    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬'
+    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬',
+    '몇 장에만 써 줘, 몇 장에만 쓰지 마','전부 써 줘, 전부 쓰지 마','전부 채워 줘, 전부 채우지는 마',
+    '몇 장에만 문장을 써 줘, 하지만 몇 장에만 문장을 쓰지는 마',
+    '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요',
+    '사진 속 글자를 전부 써 줘','배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘'
   ]) {
     const profile=extractFromFreetext(text,{createdAt:at});
     assert.equal(profile.language?.caption_coverage,undefined,text);
@@ -110,6 +115,7 @@ test('coverage contrast keeps the final affirmative wish without reversing a neg
     assert.equal(extractFromFreetext(text,{createdAt:at}).language.caption_coverage.value,'all',text);
   assert.equal(extractFromFreetext('몇 장에만 문장을 써 줘, 하지만 사진 순서는 그대로',{createdAt:at}).language.caption_coverage.value,'sparse');
   assert.equal(extractFromFreetext('모든 사진에 문장을 써 줘, 하지만 색감은 차분하게',{createdAt:at}).language.caption_coverage.value,'all');
+  assert.equal(extractFromFreetext('과한 색감은 싫어요. 말수가 적고 여백이 많은 기록.',{createdAt:at}).language.caption_coverage.value,'sparse');
   assert.equal(extractFromFreetext('한 장도 비우지 않았으면 해요',{createdAt:at}).language.caption_coverage.value,'all');
 });
 
