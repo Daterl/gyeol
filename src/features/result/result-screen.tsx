@@ -104,6 +104,24 @@ export function ResultScreen({
         {announcement}
       </p>
       <OutputControls store={store} mock={mock} />
+      {feed.concept ? (
+        <section className="mb-8 border-t border-line pt-6">
+          <p className="text-sm leading-7">{feed.concept.value}</p>
+          <details className="mt-2 text-sm">
+            <summary className="min-h-11 cursor-pointer py-3 font-medium text-accent">
+              묶음 근거 보기
+            </summary>
+            <ul className="space-y-2 border-l-2 border-accent-line pl-3 text-muted-foreground">
+              {feed.concept.evidence.map((evidence, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: Feed-level evidence never reorders with the photos.
+                <li key={`concept-${evidence.kind}-${evidence.ref}-${i}`}>
+                  {evidence.note}
+                </li>
+              ))}
+            </ul>
+          </details>
+        </section>
+      ) : null}
       <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {order.map((id, index) => {
           const slot = feed.slots.find((item) => item.photo_id === id);

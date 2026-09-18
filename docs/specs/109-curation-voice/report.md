@@ -222,3 +222,67 @@ CodeRabbit CLI 0.7.6을 실행했다. 최초 기존 파일 5개 검토는 지적
 최종 8개 파일 검토 완료: minor 1건, 그 외 지적 0건이다. minor 1건은 검증 스크립트의 JSON 문자열 비교가 객체 키 순서에 의존한다는 지적이다. 실제 코드를 확인하고 isDeepStrictEqual로 바꾼 뒤 실사진 15장 검증과 구문 검사를 재실행해 통과했다. 원문은 review-coderabbit-final.txt다.
 
 Draft PR: https://github.com/Daterl/gyeol/pull/113 (`develop`, Draft). 보드 상태: 검토·인수 대기.
+
+---
+
+# 리뷰 2회차 대응 (2026-09-18) — @jangwonyoon 지적 3건
+
+`origin/develop` (eb6624d · 64965a5 포함) 로 rebase 한 뒤 아래 3건을 고쳤다.
+실행한 명령과 결과는 `verification.md` 에 있다. 원시 로그는 지웠고 재현 명령으로 대체했다.
+
+## 1. 묶음 컨셉이 첫 사진 rationale 에 저장된다 → 피드 단위 Claim 으로 분리
+
+무엇이 문제였나. 컨셉 문장을 `slots[0].rationale.value` 앞에 붙이고 열다섯 장의 측정 근거를
+그 슬롯 evidence 에 넣었다. 화면(`ResultScreen`)은 `photo_id` 로 근거를 찾으므로 사용자가 순서를
+바꾸면 컨셉이 원래 첫 사진을 따라 뒤 카드로 내려갔다. 또 전체 사진의 근거가 한 사진 밑에 붙어
+"이 사진의 근거"라는 화면 약속을 어겼다. `lib/pipeline.js` 의 사진만 경로도 같았다.
+
+어떻게 고쳤나.
+- `lib/curation-voice.js` — `bundleConcept` 이 `Claim<string>` 또는 `null` 을 돌려준다. 슬롯을 만지지 않는다.
+  evidence 는 `photo_id` 오름차순으로 고정해 입력 배열 순서가 달라도 같은 Claim 이 나온다.
+- `lib/order.js` · `lib/pipeline.js` — 슬롯 변형을 지우고 `OrderedFeed.concept` 로 붙인다. 없으면 필드를 생략한다.
+- `lib/contracts.js` — `validateFeed` 에 **선택적** `concept` 검증. 있으면 실제 `PhotoAnalysis` 재계산과
+  value·confidence·evidence 전 필드를 대조한다. `omit_summary` 와 같은 패턴이며, caller 가 문장을 위조해
+  공개 근거로 승격시키는 경로를 막는다 (#107 revert 사유와 같은 축).
+- `src/features/result/result-screen.tsx` — 정렬 목록(`<ol>`) **위**에 컨셉 문장 + `묶음 근거 보기` 접힘.
+  슬롯 카드 안이 아니다. `src/types/contracts.ts` 에 optional `concept` 추가.
+
+무엇으로 증명했나. `test/curation-voice.test.js` 4건 + `src/features/result/result-screen.test.ts` 2건.
+순서를 바꾼 뒤 마크업에서 컨셉이 `<ol>` 앞에만 있고 카드 영역에 컨셉 문장·`order.bundle_concept` 가
+없음을 확인한다. 옛 구현으로 되돌리면 이 2건이 실패한다 (확인함).
+
+## 2. abstention 근거가 값과 모순된다 → (a) concept 을 absent 로 반환
+
+값은 "컨셉은 아직 뚜렷하지 않아요", 근거는 "미달이면 컨셉을 비운다" 였다. 근거를 값에 맞추는 대신
+**값을 없앴다.** 임계 미달이면 `bundleConcept` 이 `null` 을 돌려주고 피드는 `concept` 필드를 생략한다.
+말할 근거가 없으면 말하지 않는 쪽이 P3 비움이고, 스키마도 알 수 없는 판단을 필드 생략으로 다룬다.
+모순이 사라진 이유는 미달 경우에 값도 근거도 존재하지 않기 때문이다.
+
+경계값 테스트가 rule note 전문을 `assert.equal` 로 대조한다.
+`컨셉은 채도 범위, 밝기 범위 순으로 0.25 이상일 때만 설명한다. 임계값은 설계 상수이며 미달이면 컨셉을 내지 않는다.`
+채도 범위 0.25 = 컨셉 있음, 0.2499 · 0.449 · 0.4499 = `Object.hasOwn(feed,'concept') === false`.
+어떤 근거에도 `/비운다/` 가 없고, 어떤 슬롯 rationale 에도 `/뚜렷하지/` 가 없음을 함께 확인한다.
+
+## 3. 증거 파일이 너무 많다 → 원시 로그 10개 삭제, 요약 1개로 대체
+
+지운 것: `test.txt`(43KB) · `before.json`(35KB) · `after.json`(45KB) · `baseline-tests.txt` ·
+`order-tests.txt` · `eval.txt` · `check.txt` · `lint.txt` · `typecheck.txt` · `real15.txt`.
+합계 약 -145KB, 파일 10개 감소. 대신 `verification.md` 에 재현 명령 + exit code + 결과 요약을 표로 남겼다.
+실사진 15장(`photos/`, 252KB)은 사람 적합성 판정이 아직 남아 있어 유지한다.
+
+## 모델 입력 경계 — 이 변경이 왜 유출이 아닌가
+
+`lib/output-generation.js` 의 `forModelSlot` 은 슬롯에서 `{position, photo_id,
+caption_inputs:{describable_facts}}` 만 추리고, 모델 요청 본문은 `{mode, applied_profile, slots}` 다.
+`concept` 는 피드 **최상위** 필드이므로 이 projection 에 들어가지 않는다.
+즉 이 PR 의 모델 입력 증가량은 0 바이트이고, 1회차 리뷰의 지적 2(모델 입력 유출 면적 확대)는
+컨셉을 슬롯에서 빼내면서 자동으로 사라졌다. develop 의 `eb6624d`·`64965a5` 구조는 건드리지 않았다.
+`npm run -s eval` 의 E10(근거 해소)·E11(사실 출처)이 그대로 통과한다.
+
+## 아직 안 된 것 (인수 완료 아님)
+
+- **사람 인스타 적합성 0/15.** 통과율은 여전히 미측정이다. 이 PR 을 인수 완료로 처리하지 않는다.
+- 에이전트 판정 5/15 는 반복적인 설명으로 X 로 남아 있다 (`agent-review.json`). 사람 판정의 대체물이 아니다.
+- 브라우저 인수, 다중 모델 리뷰 pending. Node 22 에서 검증했고 레포 요구 버전은 24 다.
+- `schemas/ordered_feed.md` 에 `concept` 한 줄이 아직 없다. SOP 대로 스키마 4종은 바꾸지 않았다.
+  필요한 문구는 PR 본문에 적었다 — 두 사람 합의 대상이다.

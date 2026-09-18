@@ -111,6 +111,9 @@ export type OmitSummary = {
 };
 export type OrderedFeed = {
   applied_profile: AppliedProfile;
+  // Feed-level curation concept. Absent when the measured color spread stays below
+  // the design threshold, and never stored on a slot so reordering cannot move it.
+  concept?: Claim<string>;
   feed_id: string;
   // Optional for legacy feeds without the additive suggestion extension.
   omit_summary?: OmitSummary;
