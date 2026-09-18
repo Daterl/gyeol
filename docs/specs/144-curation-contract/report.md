@@ -22,11 +22,50 @@ Regression tests were written and observed failing before the production boundar
 
 The real #143 `createProfileCache` is exercised through an injected CAS storage fixture and fake ingestion. It issues a signed reference that G4 accepts for 3/15 photos, rejects tampering/wrong accounts/expiry, and performs no additional ingest starts. A separate default-resolver test uses the configured production handler with intercepted private-storage fetch, no Apify token, and a genuine signed reference. This tests wiring and verification, not live Blob consistency or provider behavior.
 
-Validation commands and final results are recorded after the integration checks complete.
+Validated code commit: `6cefdab4b8d3cb32a2ebc0029eea27057682ce5a`. Node `v24.21.0`; no application dependency changes. Each script below ran as `npm exec --yes --package=node@24 -- npm run <script>` and exited 0.
+
+| Command | Result |
+| --- | --- |
+| `test` | 343 passed, 0 failed |
+| `test:ui` | 44 passed across 12 files |
+| `eval` | Automated contract checks and expected negative cases passed; E4/E5/E7 remain manual |
+| `check` | 89 JS/JSON files, schema fixtures passed |
+| `lint` | 45 files, no fixes required |
+| `build` | Next production build passed, including `/api/profile` and cache cleanup routes |
+| `typecheck` | Route type generation and `tsc --noEmit` passed |
+| `git diff --check` | Passed |
+
+Initial boundary regression: 3 failing tests before implementation. Initial tied-placement integration regression: failed before the caller change. Final focused HTTP/curation tests: 13 passed, included in the full suite above.
+
+## Delivery and ownership
+
+Draft [PR #153](https://github.com/Daterl/gyeol/pull/153) targets `develop`. It contains dependency merges from [#152](https://github.com/Daterl/gyeol/pull/152) (`a54dc6b`, #143 cache) and [#150](https://github.com/Daterl/gyeol/pull/150) (`2c55824`, #145 placement correction). These were merged as branch dependencies, not copied or rewritten. No merge to develop was performed.
+
+Own changed files:
+
+```text
+lib/curation.js
+lib/interaction.js
+lib/pipeline.js
+lib/profile-connection.js
+src/types/contracts.ts
+src/app/api/profile/route.ts
+src/app/api/profile/route.test.ts
+src/app/api/feed/route.test.ts
+src/app/api/analyze/route.test.ts
+test/curation.test.js
+test/profile-connection.test.js
+test/pipeline.test.js
+test/omit-suggestion.test.js
+fixtures/curation.sample.json
+schemas/interaction.md
+docs/specs/144-curation-contract/plan.md
+docs/specs/144-curation-contract/report.md
+```
 
 ## Review and remaining work
 
-The code-review skill requires independent code-reviewer and architect lanes. This dispatch prohibits further agents, so the coordinator owns those lanes; independent review is currently unavailable and no merge-ready approval is claimed. The PR remains a draft until the coordinator supplies that evidence.
+The code-review skill requires independent code-reviewer and architect lanes. This dispatch prohibits further agents, so the coordinator owns those lanes; the coordinator launched both lanes against `6cefdab4b8d3cb32a2ebc0029eea27057682ce5a` and their verdicts are pending; no merge-ready approval is claimed. The PR remains a draft until the coordinator supplies that evidence.
 
 The sip consistency audit found the old optional-profile UI/client request shape; it is intentionally retained outside this backend ownership. The interaction schema is updated and the canonical new shape is `validateCurationRequest` plus `CurationRequest`/`CurationResponse`. No unrelated consolidation was performed. The shower cold-reader step is deferred under the no-further-agents instruction; the coordinator's independent review is the required replacement evidence, not author self-review.
 
