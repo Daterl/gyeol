@@ -622,11 +622,12 @@ test('#123 indexed hints preserve grounded phrases and still reject malformed or
   }
 });
 
-test('#123 indexed responses reject foreign/duplicate evidence and malformed optional evidence',async()=>{
+test('#123 indexed responses reject foreign, duplicate, unobserved, and malformed evidence',async()=>{
   const req=input('slot');
   const own={kind:'uploaded_photo',ref:'ph_01',note:req.feed.slots[0].caption_inputs.describable_facts[0]};
   for(const evidence of [[{...own,ref:'ph_02'}],[own,own],[{kind:'rule',ref:'',note:''}],
-    [{kind:'rule',ref:'gyeol.omit.overlap',note:42}],[{kind:'rule',ref:'gyeol.omit.overlap',note:'caption_inputs'}]]) {
+    [{...own,note:'관측하지 않은 문장'}],[{kind:'rule',ref:'gyeol.omit.overlap',note:42}],
+    [{kind:'rule',ref:'gyeol.omit.overlap',note:'caption_inputs'}]]) {
     await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),evidence}})),{code:'MODEL_CONTRACT'});
   }
   const actual=await generateOutput(req,options({slot:{...indexedSlot(req),evidence:[{kind:'rule',ref:'gyeol.omit.overlap',note:' '}]}}));
