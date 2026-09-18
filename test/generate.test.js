@@ -111,13 +111,32 @@ test('internal ordering details fail closed in every public model field for all 
   }
 });
 
-test('ordinary brightness or saturation wording remains valid when the photo facts contain it',async()=>{
+test('every model-input field name is rejected when echoed into public evidence',async()=>{
+  const names=['mode','slots','position','photo_id','caption_inputs','describable_facts','applied_profile','disclosure','language',
+    'caption_len','emoji_rate','ending_style','linebreak_habit','caption_coverage','banned_words','p50','p90','unit'];
+  for(const name of names) {
+    const response=structuredClone(fixture.output.slots[0]);
+    response.evidence[0].note=`${name}=internal`;
+    await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'},name);
+  }
+});
+
+test('the original brightness and saturation ordering title is rejected even when heuristic facts contain both terms',async()=>{
   const req=input();
-  const fact='채도가 낮은 단색 카드';
+  const facts=['평균 밝기 0.712','평균 채도 0.671'];
+  req.feed.slots[0].caption_inputs.describable_facts=facts;
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=facts;
+  const provider=filledOutput(req.feed);provider.output.title='밝기와 채도로 연결한 세 장';
+  await assert.rejects(generateOutput(req,options(provider)),{code:'MODEL_CONTRACT'});
+});
+
+test('an internal-looking literal remains usable when it is visibly grounded in the same photo',async()=>{
+  const req=input('slot');
+  const fact='화면에 caption_state라는 글자가 보인다';
   req.feed.slots[0].caption_inputs.describable_facts=[fact];
   req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
-  const provider=filledOutput(req.feed);provider.output.title='채도가 낮은 카드들';
-  assert.deepEqual(slotsOnly(await generateOutput(req,options(provider))),provider);
+  const response=structuredClone(fixture.output.slots[0]);response.text=fact;response.evidence[0].note=fact;
+  assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
 });
 
 test('single slot sends only its photo and rejects other photo, position, user state or foreign evidence',async()=>{

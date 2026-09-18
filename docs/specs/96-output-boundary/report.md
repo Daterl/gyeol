@@ -7,6 +7,6 @@
 - 모델 원응답과 최종 응답에 같은 공개 문구 검사기를 적용했다.
 - 기존 PR #108의 화이트리스트 의도를 최신 계약 위에서 대체하며, 원시 실모델 JSON과 유료 호출은 가져오지 않았다.
 
-무료 검증: focused 93/93, Node 264/264, UI 35/35, eval/lint/check/typecheck/build PASS.
+무료 검증: focused 95/95, Node 266/266, UI 35/35, eval/lint/check/typecheck/build PASS.
 
 유료 모델·Apify 호출은 하지 않았다.
