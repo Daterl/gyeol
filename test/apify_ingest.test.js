@@ -42,6 +42,8 @@ test('normalization preserves Unicode, child IDs/order/types, separates comments
   assert.equal('latestComments' in snapshot.posts[0], false);
   assert.equal(snapshot.provenance.actor, ACTOR);
   assert.equal(snapshot.provenance.evidence_refs['public_account:post1'], post.url);
+  const aggregateRef = buildCurrentProfile({ snapshot }).language.empty_caption_ratio.evidence[0].ref;
+  assert.equal(snapshot.provenance.evidence_refs[aggregateRef], snapshot.provenance.source_url);
 });
 test('both existing extractors consume same snapshot and every observation reference resolves', async () => {
   const snapshot = normalizeInstagram([post], options);

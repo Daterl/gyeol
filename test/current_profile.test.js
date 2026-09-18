@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
-import { buildCurrentProfile } from '../lib/current_profile.js';
+import { buildCurrentProfile, captionPopulationRef } from '../lib/current_profile.js';
 import { validateProfile, validateDisclosure } from '../lib/contracts.js';
 
 const read = async path => JSON.parse(await readFile(new URL('../' + path, import.meta.url), 'utf8'));
@@ -48,9 +48,11 @@ test('스냅샷 재생 경로가 source:"cached" 프로필을 만든다', () => 
   assert.equal(profile.sample_size, snapshot.posts.length);
   assert.equal(profile.sequence.carousel_count, carousels.length);
   assert.equal(profile.completeness.visual, 0, '스냅샷에는 사진 분석이 없으므로 visual 은 비어 있어야 한다');
+  assert.equal(profile.completeness.language, 0.8, '검증 불가능한 ending_style은 완전성에서도 채운 것으로 세지 않는다');
+  assert.equal(Object.hasOwn(profile.language, 'ending_style'), false);
   for (const claim of Object.values(profile.language)) {
     if (Array.isArray(claim)) continue;
-    assert.ok(claim.evidence.length > 0 && claim.evidence.every(e => e.kind === 'ig_post'), '스냅샷 근거는 실제 게시물을 가리킨다');
+    assert.ok(claim.evidence.length > 0 && claim.evidence.every(e => ['ig_post', 'aggregate'].includes(e.kind)), '스냅샷 근거는 실제 게시물이나 그 전수 집계를 가리킨다');
   }
 });
 
@@ -107,6 +109,15 @@ test('캡션 1건이면 p50 === p90 이고 스키마의 p90 >= p50 이 유지된
   const profile = buildCurrentProfile({ photos: [photos[0]], captions: ['조용한 오후'] }, NOW);
   validateProfile(profile, 'current');
   assert.deepEqual(profile.language.caption_len.value, { p50: 6, p90: 6, unit: '자' });
+});
+
+test('같은 길이가 여러 건이면 입력 순서의 nearest-rank 게시물을 p50·p90 근거로 고른다 (#100)', () => {
+  const profile = buildCurrentProfile({ photos: photos.slice(0, 4), captions: ['가', '나', '다', '라'] }, NOW);
+  assert.deepEqual(profile.language.caption_len.value, { p50: 1, p90: 1, unit: '자' });
+  assert.deepEqual(profile.language.caption_len.evidence.filter(e => e.kind === 'uploaded_photo').map(e => [e.ref, e.note]), [
+    ['ph_02', '이 게시물의 캡션은 1자로 p50 지점이다'],
+    ['ph_04', '이 게시물의 캡션은 1자로 p90 지점이다']
+  ]);
 });
 
 test('opener_tendency 는 캐러셀 1번 분석이 실제로 들어왔을 때만 나온다', () => {
@@ -251,22 +262,66 @@ test('subjects 의 근거는 그 피사체가 실제로 찍힌 사진만 가리�
   }
 });
 
-test('ending_style 의 근거는 그 끝맺음으로 분류된 캡션만 가리킨다 (H2)', () => {
-  const captions = ['좋아요', '가요', '사진', '기록', '풍경']; // 해요 2 : 명사형 3 — 명사형이 뒤쪽에 있다
-  const profile = buildCurrentProfile({ photos: photos.slice(0, 5), captions }, NOW);
-  validateProfile(profile, 'current');
-  const style = profile.language.ending_style;
-  assert.equal(style.value, '명사형');
-  const supporting = new Set(['ph_03', 'ph_04', 'ph_05']);
-  for (const evidence of style.evidence) {
-    assert.ok(supporting.has(evidence.ref), `${evidence.ref} 의 캡션은 명사형이 아니다`);
-  }
-});
-
 test('집계 Claim 의 근거 note 는 어떤 관측 집합에서 계산했는지 밝힌다 (H2)', () => {
   const profile = buildCurrentProfile({ snapshot }, NOW);
   assert.match(profile.language.empty_caption_ratio.evidence[0].note, new RegExp(`캡션 ${snapshot.posts.length}건 전체`));
   assert.match(profile.language.caption_len.evidence[0].note, /게시물 \d+건 전체/);
   const uploaded = buildCurrentProfile({ photos }, NOW);
   assert.match(uploaded.visual.palette.evidence[0].note, new RegExp(`사진 ${photos.length}장 전체`));
+});
+
+test('실제 30건은 ending_style을 생략하고 측정 가능한 집계 근거만 직접 지지한다 (#100)', () => {
+  const language = buildCurrentProfile({ snapshot }, NOW).language;
+  assert.equal(Object.hasOwn(language, 'ending_style'), false);
+  assert.deepEqual(language.caption_len.evidence.filter(e => e.kind === 'ig_post').map(e => [e.ref, e.note]), [
+    ['29cm.official:DdVDlTviVrG', '이 게시물의 캡션은 289자로 p50 지점이다'],
+    ['29cm.official:DdFvaJRiXnx', '이 게시물의 캡션은 888자로 p90 지점이다']
+  ]);
+  for (const field of ['empty_caption_ratio', 'caption_len', 'emoji_rate', 'linebreak_habit']) {
+    assert.equal(language[field].evidence[0].kind, 'aggregate', `${field} 전수 집계 근거`);
+  }
+});
+
+test('정상 문장·명사·브랜드·불릿 메타데이터 모두 ending_style을 만들지 않는다 (#100)', () => {
+  const examples = [
+    '오늘도 기록해요.', '이제 자요', '오늘은 간다.', '천천히 걷는다', '일상을 담기',
+    '가요', '오늘은 가요', '고요', '수요', '필요', '브랜드는 혼다', '의제는 아젠다', '동물은 판다',
+    '9. 17 (목)', '당첨 인원 : 6명', '298,000원', '디커빈', '마론',
+    '참여 방법\n- 게시물 좋아요\n- 당첨 인원: 6명',
+    '참여 조건\n• 게시물에 좋아요\n• 당첨자 6명',
+    '게시물 좋아요.', '게시물에 좋아요', '브랜드 혼다 🚗', '가요 🎵', '다'
+  ];
+  for (const caption of examples) {
+    const profile = buildCurrentProfile({ photos: photos.slice(0, 2), captions: [caption, caption] }, NOW);
+    assert.equal(Object.hasOwn(profile.language, 'ending_style'), false, caption);
+  }
+  const mixed = buildCurrentProfile({ photos: photos.slice(0, 4), captions: ['정말 예뻐요.', '오늘도 좋아요.', '오늘은 간다.', '밥을 먹는다.'] }, NOW);
+  assert.equal(Object.hasOwn(mixed.language, 'ending_style'), false);
+});
+
+test('집계 근거는 같은 source ID 안에서도 실제 캡션 모집단을 구분한다 (#100)', () => {
+  const first = structuredClone(snapshot);
+  const changed = structuredClone(snapshot);
+  first.snapshot_id = changed.snapshot_id = 'same_snapshot';
+  changed.posts[0].caption += ' 수정';
+  const profile = input => buildCurrentProfile({ snapshot: input }, NOW).language;
+  const ref = input => profile(input).empty_caption_ratio.evidence[0].ref;
+  assert.match(ref(first), /^same_snapshot:caption_population:[0-9a-f]{64}$/);
+  assert.equal(ref(first), ref(structuredClone(first)), '같은 모집단의 digest는 결정적이다');
+  assert.notEqual(ref(first), ref(changed), '캡션 하나라도 다르면 다른 모집단이다');
+  for (const field of ['empty_caption_ratio', 'caption_len', 'emoji_rate', 'linebreak_habit']) {
+    assert.equal(profile(first)[field].evidence[0].ref, ref(first), `${field} 집계는 검증한 모집단 digest를 공유한다`);
+  }
+});
+
+test('캡션 모집단 digest는 구분 문자가 들어간 서로 다른 행 구조도 구별한다 (#100)', () => {
+  assert.notEqual(
+    captionPopulationRef('same', [['a', 'b\u0001c\u0000d']]),
+    captionPopulationRef('same', [['a', 'b'], ['c', 'd']])
+  );
+});
+
+test('줄바꿈 집계 note는 빈 줄이 있는 캡션 건수를 명시한다 (#100)', () => {
+  const profile = buildCurrentProfile({ photos: photos.slice(0, 3), captions: ['하나\n\n둘', '하나\n둘', '하나'] }, NOW);
+  assert.match(profile.language.linebreak_habit.evidence[0].note, /빈 줄이 있는 캡션 1건/);
 });
