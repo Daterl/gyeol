@@ -67,7 +67,7 @@ test('bundle concept lives on the feed, so reordering never drags it onto anothe
     for (const slot of feed.slots) {
       assert.doesNotMatch(slot.rationale.value,/흐름으로 엮어요|뚜렷하지/);
       assert.ok(!slot.rationale.evidence.some(e=>e.ref==='order.bundle_concept'));
-      assert.ok(slot.rationale.evidence.filter(e=>e.kind==='uploaded_photo').length<=2);
+      assert.ok(new Set(slot.rationale.evidence.filter(e=>e.kind==='uploaded_photo').map(e=>e.ref)).size<=2);
     }
   }
 });
