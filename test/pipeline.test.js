@@ -114,7 +114,7 @@ test('#69 heuristic photos never have their constant composition reported as an 
   const seen=structuredClone(body);
   seen.photos=seen.photos.map(p=>({...p,analysis_source:'vision_model'}));
   const {feed:seenFeed}=await (await handleFeed(request('/api/feed',seen))).json();
-  assert.ok(seenFeed.slots.some(s=>s.rationale.value.includes('넓게 깔')));
+  assert.ok(seenFeed.slots.some(s=>s.rationale.evidence.some(e=>e.note.includes('넓게 깔'))));
 });
 
 test('#69 photo-only input still keeps the input order, and the branch is the only one left',async()=>{

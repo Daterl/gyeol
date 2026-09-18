@@ -13,7 +13,7 @@ test('a tie caused by opener bonus explains total score rather than unequal dire
   const result=orderFeed({photoAnalyses:photos,targetProfile:target,currentProfile:f.context.current});
   const first=result.slots.find(s=>s.position===1);
   assert.equal(first.photo_id,photos[1].photo_id);
-  assert.match(first.rationale.value,/보너스 포함 총점/);
-  assert.match(first.rationale.evidence.at(-1).note,/보너스 포함 총점/);
-  assert.doesNotMatch(first.rationale.evidence.at(-1).note,/점수가 가장 높은 사진/);
+  assert.match(first.rationale.evidence.find(e => e.ref.endsWith('.decision')).note,/보너스 포함 총점/);
+  assert.match(first.rationale.evidence.find(e => e.ref === 'order.R1').note,/보너스 포함 총점/);
+  assert.doesNotMatch(first.rationale.evidence.find(e => e.ref === 'order.R1').note,/점수가 가장 높은 사진/);
 });
