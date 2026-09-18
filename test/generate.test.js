@@ -150,6 +150,18 @@ test('an internal-looking literal remains usable when it is visibly grounded in 
   assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
 });
 
+test('a unique near-complete photo note is restored to its canonical fact',async()=>{
+  const req=input('slot');
+  const fact='그 사람은 하늘색 단추 달린 카디건과 흰 상의, 회색 통이 넓은 바지를 입고 있다';
+  req.feed.slots[0].caption_inputs.describable_facts=[fact];
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
+  const response=structuredClone(fixture.output.slots[0]);
+  response.text=hint('하늘색 단추 달린 카디건');
+  response.evidence[0].note=fact.slice('그 사람은 '.length);
+  const actual=await generateOutput(req,options({slot:response}));
+  assert.equal(actual.slot.evidence[0].note,fact);
+});
+
 test('a seed must quote one fact from its own photo',async()=>{
   const cases=[
     response=>{response.text=hint('컬러 카드');},
@@ -160,6 +172,17 @@ test('a seed must quote one fact from its own photo',async()=>{
     const response=structuredClone(fixture.output.slots[0]); mutate(response);
     await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'});
   }
+});
+
+test('an ambiguous partial photo note still fails closed',async()=>{
+  const req=input('slot');
+  const note='파란 줄무늬 셔츠와 검은 바지를 입고 있다';
+  const facts=[`왼쪽 사람은 ${note}`,`오른쪽 사람은 ${note}`];
+  req.feed.slots[0].caption_inputs.describable_facts=facts;
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=facts;
+  const response=structuredClone(fixture.output.slots[0]);
+  response.text=hint('파란 줄무늬 셔츠'); response.evidence[0].note=note;
+  await assert.rejects(generateOutput(req,options({slot:response})),{code:'MODEL_CONTRACT'});
 });
 
 test('a longer photographed word cannot ground an internal identifier substring',async()=>{
