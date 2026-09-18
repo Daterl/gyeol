@@ -567,8 +567,11 @@ npm run verify:deployed                     # 기본 공개 URL
 node scripts/verify-deployed.mjs <URL>      # 다른 배포를 겨냥
 ```
 
-`docs/intent.md` 4-3 절의 **D1~D6 를 배포된 제품에 직접 요청해** 판정한다.
-실패가 하나라도 있으면 **종료 코드 1** 이다.
+`docs/intent.md` 4-3 절 중 HTTP로 확인할 수 있는 D1~D5 항목을 판정한다. 기존 `fixtures/interaction.sample.json`의 분석된 사진을 `POST /api/feed`에 보내고, 반환된 `{feed, context}`로 `POST /api/generate`를 호출한다. D4·D5는 생성 응답의 `output.title`과 `output.slots`를 검사한다.
+
+실패가 하나라도 있으면 **종료 코드 1** 이다. `503 GENERATION_UNAVAILABLE`만 배포 환경의 `ANTHROPIC_API_KEY` 미설정으로 **SKIP** 처리한다. SKIP은 통과 건수에 포함하지 않으며, FAIL이 없으면 종료 코드는 0이다. 다른 4xx/5xx는 응답 원문과 함께 FAIL로 남긴다. 결과와 한계는 [실행 보고서](docs/specs/verify-deployed/report.md)에 기록한다.
+
+스크립트 자체의 오류 분류 회귀 검사는 `node --test scripts/verify-deployed.test.mjs`로 실행한다.
 
 ### 언제 도는가
 
@@ -601,3 +604,5 @@ node scripts/verify-deployed.mjs <URL>      # 다른 배포를 겨냥
 
 HTTP 응답만 본다. **화면에서 실제로 클릭해 봐야 아는 것은 못 잡는다** — 드래그 재배치, 키보드 완주, 비움 카드의 `[그래도 채우기]`, 모바일 폭.
 그건 `chrome-devtools` 로 사람이나 에이전트가 직접 조작해야 한다. **이 스크립트가 통과했다고 D1~D6 가 다 됐다고 말하지 마라.**
+
+사진 업로드·분석은 실행하지 않고 기존 분석 fixture를 사용한다. D2는 첫 HTML 응답 시간만 측정하므로 샘플 클릭부터 생성 완료까지 걸리는 시간은 검증하지 않는다. D4·D5의 문장 품질과 실제 사진 적합성은 사람 검토가 필요하다. 키 미설정으로 SKIP이면 생성 성공 경로는 배포에서 검증되지 않은 상태다.

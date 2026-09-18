@@ -10,11 +10,17 @@
  * 판정 기준은 docs/intent.md 4-3 절의 D1~D6 이다.
  * 실패가 하나라도 있으면 종료 코드 1 을 낸다.
  */
+import { readFile } from 'node:fs/promises';
+import { validateFeedResponse, validateGenerateRequest, validateGenerateResponse } from '../lib/interaction.js';
+
 const BASE = (process.argv[2] || process.env.GYEOL_DEPLOY_URL || 'https://project-7klb1.vercel.app').replace(/\/$/, '');
 const TIMEOUT_MS = Number(process.env.GYEOL_VERIFY_TIMEOUT_MS || 30000);
 
 const results = [];
-const record = (id, what, ok, detail) => { results.push({ id, what, ok, detail }); };
+const record = (id, what, ok, detail) => { results.push({ id, what, status: ok === 'SKIP' ? 'SKIP' : ok ? 'PASS' : 'FAIL', detail }); };
+const nonempty = value => typeof value === 'string' && value.trim().length > 0;
+const responseDetail = r => `status=${r.status}${r.error ? ` error=${r.error}` : ''} (${r.ms}ms)\n${r.text}`;
+const post = body => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
 async function fetchWithTimeout(path, init = {}) {
   const ac = new AbortController();
@@ -38,51 +44,79 @@ async function d1() {
     `status=${r.status}${r.location ? ` location=${r.location.slice(0, 60)}` : ''} (${r.ms}ms)`);
 }
 
-// D3/D4/D5 — 피드 응답이 계약대로 오는가
+// D3 — 기존 계약 fixture의 분석된 사진으로 실제 POST 경로를 실행한다.
 async function feedShape() {
-  const r = await fetchWithTimeout('/api/feed?mock=1');
+  const fixture = JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json', import.meta.url), 'utf8'));
+  const r = await fetchWithTimeout('/api/feed', post({
+    schema_version: '1.0', session_id: 'verify-deployed',
+    photos: fixture.context.photos,
+    identity: { target: { kind: 'none' }, current: { kind: 'none' } },
+  }));
   if (r.status !== 200) {
-    record('D3', '피드 응답 200', false, `status=${r.status}`);
+    record('D3', 'POST 피드 응답 200', false, responseDetail(r));
     return null;
   }
   let parsed;
-  try { parsed = JSON.parse(r.text); }
-  catch (e) {
-    // 배포가 오래되면 타입 설명 문자열이 온 적이 있다. 그때 이 검사가 잡는다.
-    record('D3', '피드 응답이 유효한 JSON', false,
-      `JSON 파싱 실패: ${String(e.message).slice(0, 60)} | 본문 앞부분: ${r.text.slice(0, 60).replace(/\s+/g, ' ')}`);
+  try {
+    parsed = JSON.parse(r.text);
+    validateFeedResponse(parsed);
+  } catch (e) {
+    record('D3', '피드 응답이 JSON·계약을 만족한다', false, `${e.message}\n${responseDetail(r)}`);
     return null;
   }
-  record('D3', '피드 응답이 유효한 JSON', true, `${r.ms}ms`);
-  const feed = parsed.feed ?? parsed;
-  const slots = feed.slots ?? [];
-
+  record('D3', 'POST 피드 응답이 JSON·계약을 만족한다', true, `status=200 (${r.ms}ms)`);
+  const slots = parsed.feed.slots;
   const positions = slots.map(s => s.position);
   const expected = Array.from({ length: slots.length }, (_, i) => i + 1);
   record('D3', 'position 이 1..N 을 한 번씩',
     slots.length > 0 && JSON.stringify([...positions].sort((a, b) => a - b)) === JSON.stringify(expected),
     `슬롯 ${slots.length}개`);
-
   const withEvidence = slots.filter(s => (s.rationale?.evidence ?? []).length > 0);
   record('D3', '자리마다 근거가 있다', slots.length > 0 && withEvidence.length === slots.length,
     `${withEvidence.length}/${slots.length} 슬롯에 근거`);
+  return parsed;
+}
 
-  const title = feed.title;
+// D4/D5 — 피드의 순서·근거와 문장 생성 결과를 혼동하지 않는다.
+async function generation(feedResponse) {
+  if (!feedResponse) {
+    for (const id of ['D4', 'D5']) record(id, '문장 생성 판정', false, 'POST /api/feed 실패로 생성 요청을 실행하지 못했다.');
+    return;
+  }
+  const request = { schema_version: '1.0', mode: 'all', feed: feedResponse.feed, context: feedResponse.context };
+  validateGenerateRequest(request); // mode:all 에 photo_id 를 넣지 않는다.
+  const r = await fetchWithTimeout('/api/generate', post(request));
+  let parsed;
+  try { parsed = JSON.parse(r.text); } catch { /* 원문을 아래 실패 판정에 보존한다. */ }
+  if (r.status === 503 && parsed?.error?.code === 'GENERATION_UNAVAILABLE') {
+    for (const id of ['D4', 'D5']) record(id, '문장 생성 판정', 'SKIP',
+      `배포 환경에 API 키가 없다 (ANTHROPIC_API_KEY 미설정). 기능 검증 미실행.\n${responseDetail(r)}`);
+    return;
+  }
+  if (r.status !== 200) {
+    for (const id of ['D4', 'D5']) record(id, 'POST 문장 생성 응답 200', false, responseDetail(r));
+    return;
+  }
+  const output = parsed?.output;
+  const title = output?.title;
   record('D4', '타이틀이 정확히 1줄',
-    typeof title === 'string' && title.trim().length > 0 && !title.includes('\n'),
-    `title=${JSON.stringify(String(title ?? '').slice(0, 40))}`);
-
-  const filled = slots.filter(s => (s.caption?.text ?? '').trim().length > 0);
-  const empty = slots.filter(s => !(s.caption?.text ?? '').trim());
-  const emptyWithReason = empty.filter(s => (s.caption?.rationale ?? s.caption?.reason ?? s.caption?.evidence));
-  record('D5', '일부는 채우고 일부는 비운다',
-    slots.length > 0 && filled.length > 0 && empty.length > 0,
+    nonempty(title) && !/[\r\n\u2028\u2029]/u.test(title),
+    `title=${JSON.stringify(title ?? null)}`);
+  const slots = Array.isArray(output?.slots) ? output.slots : [];
+  const filled = slots.filter(s => s?.caption_state === 'filled' && nonempty(s.text));
+  const empty = slots.filter(s => s?.caption_state === 'omitted');
+  const emptyWithReason = empty.filter(s => nonempty(s.omit_reason));
+  record('D5', '일부는 채우고 일부는 비운다', filled.length > 0 && empty.length > 0,
     `채움 ${filled.length} / 비움 ${empty.length}`);
-  record('D5', '비운 자리에 이유가 붙는다',
-    empty.length === 0 || emptyWithReason.length === empty.length,
+  record('D5', '비운 자리에 모두 omit_reason 이 붙는다',
+    empty.length > 0 && emptyWithReason.length === empty.length,
     `${emptyWithReason.length}/${empty.length} 비움 슬롯에 이유`);
-
-  return feed;
+  try {
+    validateGenerateResponse(parsed, request);
+    record('D4/D5', '생성 응답이 사진·슬롯 계약을 만족한다', true, `status=200 (${r.ms}ms)`);
+  } catch (e) {
+    record('D4/D5', '생성 응답이 사진·슬롯 계약을 만족한다', false, `${e.message}\n${responseDetail(r)}`);
+  }
 }
 
 // 라우트가 배포됐는가 — 404 는 라우트 자체가 없다는 뜻이다
@@ -103,16 +137,19 @@ const started = Date.now();
 console.log(`대상: ${BASE}\n`);
 await d1();
 await d2();
-await feedShape();
+await generation(await feedShape());
 await routes();
 
 const pad = s => String(s).padEnd(5);
 let failed = 0;
+let skipped = 0;
 for (const r of results) {
-  if (!r.ok) failed++;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'} ${pad(r.id)} ${r.what}\n      ${r.detail}`);
+  if (r.status === 'FAIL') failed++;
+  if (r.status === 'SKIP') skipped++;
+  console.log(`${r.status} ${pad(r.id)} ${r.what}\n      ${r.detail}`);
 }
-console.log(`\n${results.length - failed}/${results.length} 통과 (${Date.now() - started}ms)`);
+console.log(`\n${results.length - failed - skipped}/${results.length} 통과, SKIP ${skipped}건, FAIL ${failed}건 (${Date.now() - started}ms)`);
+if (skipped) console.log('SKIP 은 통과가 아니다. 배포 환경에 API 키를 설정한 뒤 D4·D5 를 다시 검증해야 한다.');
 if (failed) {
   console.log(`\n실패 ${failed}건. 배포된 제품이 판정 기준을 만족하지 않는다.`);
   console.log('로컬에서 통과했더라도 배포가 오래됐을 수 있다 — Production ref 를 develop 과 대조하라.');

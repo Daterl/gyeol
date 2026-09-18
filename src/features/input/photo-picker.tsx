@@ -81,7 +81,7 @@ export function PhotoPicker({
                     else removeButtons.current.delete(photo.photo_id);
                   }}
                   onClick={() => remove(photo.photo_id)}
-                  className="min-h-11 px-2 text-sm underline-offset-4 hover:underline"
+                  className="min-h-11 min-w-11 px-2 text-sm underline-offset-4 hover:underline"
                   aria-label={`${photo.file.name} 삭제`}
                 >
                   삭제
