@@ -4,7 +4,10 @@ import {
   MAX_UPLOAD_BYTES,
   validateFeedResponse,
 } from '../../../lib/interaction.js';
-import { validateCurationState } from './curation-persistence';
+import {
+  migrateCurationStateOnLoad,
+  validateCurationState,
+} from './curation-persistence';
 import type { CurationEdits } from './curation-store';
 
 const DATABASE_NAME = 'gyeol-editor';
@@ -145,6 +148,16 @@ function validateMetadata(value: unknown): asserts value is StoredMetadata {
   }
 }
 
+const migrateMetadataOnLoad = (value: unknown): unknown =>
+  isRecord(value) && value.curationState !== undefined
+    ? (() => {
+        const curationState = migrateCurationStateOnLoad(value.curationState);
+        return curationState === value.curationState
+          ? value
+          : { ...value, curationState };
+      })()
+    : value;
+
 function validateImages(
   value: StoredImages | null,
   metadata: StoredMetadata,
@@ -200,6 +213,7 @@ export function createDraftStorage(
 ): DraftStorage {
   let operations = Promise.resolve();
   let busy = 0;
+  let loadedLegacy: { metadata: StoredMetadata; raw: string } | null = null;
   const run = <T>(task: () => Promise<T>) => {
     busy++;
     const operation = operations
@@ -215,6 +229,7 @@ export function createDraftStorage(
     return operation;
   };
   const discard = async () => {
+    loadedLegacy = null;
     await Promise.allSettled([
       binary.clear(),
       Promise.resolve().then(() => local.removeItem(LOCAL_KEY)),
@@ -225,15 +240,20 @@ export function createDraftStorage(
       run(async () => {
         await binary.clear();
         local.removeItem(LOCAL_KEY);
+        loadedLegacy = null;
       }),
     load: () =>
       run(async () => {
         // I/O failures are retryable; only proven invalid data is discarded.
+        loadedLegacy = null;
         const raw = local.getItem(LOCAL_KEY);
         if (raw === null) return null;
         let metadata: StoredMetadata;
+        let migrated = false;
         try {
-          const parsed: unknown = JSON.parse(raw);
+          const original: unknown = JSON.parse(raw);
+          const parsed: unknown = migrateMetadataOnLoad(original);
+          migrated = parsed !== original;
           validateMetadata(parsed);
           metadata = parsed;
         } catch {
@@ -247,6 +267,7 @@ export function createDraftStorage(
           await discard();
           return null;
         }
+        loadedLegacy = migrated ? { metadata, raw } : null;
         if (lock) await Promise.allSettled([binary.prune(metadata.revision)]);
         return {
           ...(metadata.curationState
@@ -285,10 +306,14 @@ export function createDraftStorage(
             const previous: unknown = JSON.parse(previousRaw);
             validateMetadata(previous);
             previousRevision = previous.revision;
-          } catch {}
+          } catch {
+            if (loadedLegacy?.raw === previousRaw)
+              previousRevision = loadedLegacy.metadata.revision;
+          }
         try {
           await binary.save(storedImages);
           local.setItem(LOCAL_KEY, JSON.stringify(value));
+          loadedLegacy = null;
         } catch (error) {
           await Promise.allSettled([binary.remove(revision)]);
           throw error;
@@ -300,8 +325,15 @@ export function createDraftStorage(
       if (busy) throw new Error('Draft storage is busy');
       const raw = local.getItem(LOCAL_KEY);
       if (raw === null) throw new Error('Draft images are not saved');
-      const current: unknown = JSON.parse(raw);
-      validateMetadata(current);
+      let current: StoredMetadata;
+      try {
+        const parsed: unknown = JSON.parse(raw);
+        validateMetadata(parsed);
+        current = parsed;
+      } catch (error) {
+        if (loadedLegacy?.raw !== raw) throw error;
+        current = loadedLegacy.metadata;
+      }
       if (
         current.photoIds.length !== metadata.photoIds.length ||
         !current.photoIds.every((id) => metadata.photoIds.includes(id))
@@ -310,6 +342,7 @@ export function createDraftStorage(
       const value = storedMetadata(metadata, current.revision);
       validateMetadata(value);
       local.setItem(LOCAL_KEY, JSON.stringify(value));
+      loadedLegacy = null;
     },
   };
 }

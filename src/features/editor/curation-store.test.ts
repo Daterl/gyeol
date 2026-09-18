@@ -37,37 +37,30 @@ test('recommendations never exclude automatically; order, restore, empty caption
 test('confirmation is detached, deeply frozen and omits profile by default; reconfirmation replaces only the snapshot', async () => {
   const store = await ready();
   const [first, second] = store.getState().order;
-  store.getState().setIncluded(second, false);
   const snapshot = store.getState().confirmCuration();
   const serialized = JSON.stringify(snapshot);
-  expect(snapshot.profile).toBeUndefined();
+  expect(snapshot.profileSnapshotId).toBeUndefined();
   expect(serialized).not.toContain('public_example');
   expect(Object.isFrozen(snapshot.output.slots[0])).toBe(true);
-  expect(snapshot.output.slots.some((slot) => slot.photo_id === second)).toBe(
-    false,
-  );
+  expect(snapshot.output.slots).toHaveLength(3);
   store.getState().editCaption(first, '다음 편집');
   store.getState().setCrop(first, { x: 80, y: 10 });
-  store.getState().setIncluded(second, true);
+  store.getState().setIncluded(second, false);
   store.getState().setProfileSharing(true);
   expect(JSON.stringify(store.getState().confirmed)).toBe(serialized);
+  store.getState().setIncluded(second, true);
   const next = store.getState().confirmCuration();
-  expect(next.profile).toEqual({
-    source_url: 'https://www.instagram.com/public_example/',
-    username: 'public_example',
-    collected_at: '2026-09-18T10:00:00Z',
-  });
+  expect(next.profileSnapshotId).toBe('public-reference');
   expect(JSON.stringify(next)).not.toMatch(
-    /evidence_refs|snapshot_id|expires_at/,
+    /public_example|displayName|avatarUrl|source|collectedAt|evidence_refs|expires_at/,
   );
   expect(next.output.slots).toHaveLength(fixture.feed.slots.length);
   expect(snapshot).not.toBe(next);
 });
-test('empty feed cannot be confirmed; new source clears local edits; cancellation cannot install late metadata', async () => {
+test('fewer than three included photos cannot be confirmed; new source clears local edits; cancellation cannot install late metadata', async () => {
   const store = await ready();
-  for (const id of store.getState().order)
-    store.getState().setIncluded(id, false);
-  expect(() => store.getState().confirmCuration()).toThrow('한 장 이상');
+  store.getState().setIncluded(store.getState().order[0], false);
+  expect(() => store.getState().confirmCuration()).toThrow('3장 이상');
   const late = Promise.withResolvers<CurationResponse>();
   const pending = store.getState().loadCuration(() => late.promise);
   store.getState().reset();
@@ -122,7 +115,7 @@ test('regeneration requires the loaded account and snapshot, including same-acco
   expect(store.getState().confirmed).toBe(confirmation);
 });
 
-test('profile display is opt-in and confirmation selects only public identity fields', async () => {
+test('profile display is opt-in and confirmation stores only the signed server reference', async () => {
   const store = await ready();
   const result = curationFixture();
   result.curation.profile.display = {
@@ -142,15 +135,68 @@ test('profile display is opt-in and confirmation selects only public identity fi
     /public_example|공개 이름|private-receipt/,
   );
   store.getState().setProfileSharing(true);
-  expect(store.getState().confirmCuration().profile).toEqual({
-    source_url: 'https://www.instagram.com/public_example/',
-    username: 'public_example',
-    collected_at: '2026-09-18T10:00:00Z',
-    display_name: '공개 이름',
-  });
+  expect(store.getState().confirmCuration().profileSnapshotId).toBe(
+    'public-reference',
+  );
   expect(JSON.stringify(store.getState().confirmed)).not.toMatch(
-    /name_source|receipt|avatar|evidence|snapshot_id/,
+    /public_example|공개 이름|name_source|receipt|"avatar"|evidence/,
   );
   store.getState().setProfileSharing(false);
-  expect(store.getState().confirmCuration().profile).toBeUndefined();
+  expect(store.getState().confirmCuration().profileSnapshotId).toBeUndefined();
+});
+
+test('a new curation preserves the historical confirmation and signed reference until reconfirmed', async () => {
+  const store = await ready();
+  store.getState().setProfileSharing(true);
+  const confirmed = store.getState().confirmCuration();
+  const next = curationFixture();
+  next.curation.profile_snapshot_id = 'another-reference';
+  next.curation.profile.source_url = 'https://www.instagram.com/another/';
+  next.curation.profile.display = { username: 'another' };
+  await store.getState().loadCuration(async () => next);
+  expect(store.getState().confirmed).toBe(confirmed);
+  expect(store.getState().confirmed?.profileSnapshotId).toBe(
+    'public-reference',
+  );
+});
+
+test('profile opt-in rejects a confirmation without a valid verified profile reference', async () => {
+  const store = await ready();
+  store.getState().setProfileSharing(true);
+  store.setState({ curation: null });
+  expect(() => store.getState().confirmCuration()).toThrow(
+    '공유할 공개 프로필 정보를 다시 확인해 주세요.',
+  );
+
+  const result = curationFixture();
+  result.curation.profile_snapshot_id = ' ';
+  store.setState({ curation: result.curation });
+  expect(() => store.getState().confirmCuration()).toThrow(
+    '공유할 공개 프로필 정보를 다시 확인해 주세요.',
+  );
+
+  result.curation.profile_snapshot_id = 'public-reference';
+  result.curation.profile.collected_at = 'invalid';
+  store.setState({ curation: result.curation });
+  expect(() => store.getState().confirmCuration()).toThrow(
+    '공유할 공개 프로필 정보를 다시 확인해 주세요.',
+  );
+
+  result.curation.profile.collected_at = '2026-09-18T10:00:00Z';
+  result.curation.profile.display = {
+    username: 'public_example',
+    display_name: 'control\u0000',
+    name_source: 'apify.ownerFullName',
+  };
+  store.setState({ curation: result.curation });
+  expect(() => store.getState().confirmCuration()).toThrow(
+    '공유할 공개 프로필 정보를 다시 확인해 주세요.',
+  );
+
+  result.curation.profile.display.display_name = 'unverified name';
+  delete result.curation.profile.display.name_source;
+  store.setState({ curation: result.curation });
+  expect(() => store.getState().confirmCuration()).toThrow(
+    '공유할 공개 프로필 정보를 다시 확인해 주세요.',
+  );
 });

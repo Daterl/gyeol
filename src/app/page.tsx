@@ -9,13 +9,13 @@ export default async function HomePage({
   return (
     <>
       <a
-        className="absolute -top-20 left-4 z-50 rounded-lg bg-ink px-4 py-3 text-paper focus:top-3"
+        className="absolute -top-20 left-[max(1rem,env(safe-area-inset-left))] z-50 rounded-lg bg-ink px-4 py-3 text-paper focus:top-[max(0.75rem,env(safe-area-inset-top))]"
         href="#main"
       >
         본문으로 건너뛰기
       </a>
-      <header className="border-b border-line">
-        <div className="mx-auto flex min-h-16 max-w-6xl items-baseline gap-2 px-5 py-4">
+      <header className="border-b border-line pt-[env(safe-area-inset-top)]">
+        <div className="mx-auto flex min-h-16 max-w-6xl items-baseline gap-2 py-4 pr-[max(1.25rem,env(safe-area-inset-right))] pl-[max(1.25rem,env(safe-area-inset-left))]">
           <span className="text-xl font-bold">결</span>
           <span className="font-mono text-xs tracking-[0.2em] text-muted-foreground">
             GYEOL
@@ -26,7 +26,7 @@ export default async function HomePage({
         </div>
       </header>
       <main
-        className="mx-auto max-w-6xl px-5 pb-[calc(4rem+env(safe-area-inset-bottom))]"
+        className="mx-auto max-w-6xl pr-[max(1.25rem,env(safe-area-inset-right))] pb-[calc(4rem+env(safe-area-inset-bottom))] pl-[max(1.25rem,env(safe-area-inset-left))]"
         id="main"
       >
         <PhotoInput mock={mock} />

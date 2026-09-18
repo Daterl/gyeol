@@ -35,11 +35,10 @@ const photoIds = fixture.feed.slots.map((slot) => slot.photo_id);
 const sharePhotos = (label = 'a'): SharePhoto[] =>
   photoIds.map((id) => ({ id, body: webp(`${label}-${id}`) }));
 
-async function confirmedStore(collectedAt?: string) {
+async function confirmedStore() {
   const store = createCurationEditorStore(null);
   await store.getState().loadCuration(async () => {
     const value = curationFixture();
-    if (collectedAt) value.curation.profile.collected_at = collectedAt;
     return value;
   });
   await store.getState().generate(undefined, async () => ({
@@ -75,6 +74,23 @@ function server() {
       random += 1;
       return Buffer.alloc(size, random);
     },
+    async resolveProfile(snapshotId: string) {
+      if (!['public-reference', 'another-reference'].includes(snapshotId))
+        throw Object.assign(new Error('invalid reference'), {
+          code: 'INVALID_SNAPSHOT_REFERENCE',
+        });
+      return {
+        source_url: 'https://www.instagram.com/public_example/',
+        collected_at: '2026-09-18T10:00:00Z',
+        snapshot: {
+          handle: 'public_example',
+          profile_display: {
+            display_name: 'Public Example',
+            name_source: 'apify.ownerFullName',
+          },
+        },
+      };
+    },
   });
   const fetcher = async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(String(input), 'https://share.test');
@@ -104,31 +120,29 @@ function server() {
   };
 }
 
-test('profile sharing off omits the profile; on maps only confirmed evidence', async () => {
+test('profile sharing sends only the signed reference when explicitly enabled', async () => {
   const store = await confirmedStore();
   store.getState().setProfileSharing(false);
   const off = toShareCuration(store.getState().confirmCuration());
   expect(off.includeProfile).toBe(false);
   expect('profile' in off).toBe(false);
+  expect('profileSnapshotId' in off).toBe(false);
 
   store.getState().setProfileSharing(true);
   store.getState().setCrop(photoIds[0], { x: 20, y: 80 });
   const on = toShareCuration(store.getState().confirmCuration());
   expect(on.includeProfile).toBe(true);
-  expect(on.includeProfile && on.profile).toEqual({
-    avatarUrl: null,
-    collectedAt: '2026-09-18T10:00:00Z',
-    displayName: null,
-    source: 'https://www.instagram.com/public_example/',
-    username: 'public_example',
-  });
+  expect(on.includeProfile && on.profileSnapshotId).toBe('public-reference');
+  expect(JSON.stringify(on)).not.toMatch(
+    /public_example|displayName|avatarUrl|source|collectedAt/,
+  );
   expect(on.photos[0].focalPoint).toEqual({ x: 0.2, y: 0.8 });
   expect(on.photos[0].caption).toBe('첫 문장');
   expect(on.photos[1].caption).toBeUndefined();
   expect(on.photos[2].caption).toBe('셋째 문장');
 });
 
-test('a confirmation with no bound collection time is refused, not backfilled', async () => {
+test('a confirmation with no signed profile reference is refused before network', async () => {
   const { fetcher, uploadPhoto } = server();
   const calls: string[] = [];
   const client = createShareClient({
@@ -141,7 +155,7 @@ test('a confirmation with no bound collection time is refused, not backfilled', 
   const store = await confirmedStore();
   const confirmed = store.getState().confirmCuration();
   const legacy = structuredClone(confirmed) as ConfirmedCuration;
-  delete legacy.profile?.collected_at;
+  delete legacy.profileSnapshotId;
 
   await expect(
     client.publish({ confirmed: legacy, photos: sharePhotos() }),
@@ -156,12 +170,12 @@ test('a confirmation with no bound collection time is refused, not backfilled', 
   expect(shared.version).toBe(1);
 });
 
-test('the collection time follows the confirmation, not later editor state', async () => {
+test('the signed profile reference follows the confirmation, not later editor state', async () => {
   const store = await confirmedStore();
   const first = store.getState().confirmCuration();
   await store.getState().loadCuration(async () => {
     const value = curationFixture();
-    value.curation.profile.collected_at = '2026-09-19T10:00:00Z';
+    value.curation.profile_snapshot_id = 'another-reference';
     return value;
   });
   await store.getState().generate(undefined, async () => ({
@@ -169,12 +183,12 @@ test('the collection time follows the confirmation, not later editor state', asy
   }));
   store.getState().setProfileSharing(true);
   const second = store.getState().confirmCuration();
-  const at = (value: typeof first) => {
+  const reference = (value: typeof first) => {
     const curation = toShareCuration(value);
-    return curation.includeProfile ? curation.profile.collectedAt : null;
+    return curation.includeProfile ? curation.profileSnapshotId : null;
   };
-  expect(at(first)).toBe('2026-09-18T10:00:00Z');
-  expect(at(second)).toBe('2026-09-19T10:00:00Z');
+  expect(reference(first)).toBe('public-reference');
+  expect(reference(second)).toBe('another-reference');
 });
 
 test('publish, reconfirm, rotate and revoke drive the real share contract', async () => {
@@ -195,6 +209,8 @@ test('publish, reconfirm, rotate and revoke drive the real share contract', asyn
   ).toMatchObject({
     avatarUrl: null,
     collectedAt: '2026-09-18T10:00:00Z',
+    displayName: 'Public Example',
+    source: 'https://www.instagram.com/public_example/',
     username: 'public_example',
   });
 

@@ -282,11 +282,16 @@ export function CurationPreview({
         연결에서 받은 사용자명과, 제공된 경우에만 표시 이름을 포함해요. 프로필
         사진은 제공되지 않았어요.
       </p>
+      {included.length < 3 && (
+        <p className="mb-3 text-sm text-amber" role="status">
+          큐레이션을 확정하려면 사진을 3장 이상 포함해 주세요.
+        </p>
+      )}
       <Button
         type="button"
         disabled={
           !state.draft?.title.trim() ||
-          !included.length ||
+          included.length < 3 ||
           state.request.status === 'loading'
         }
         onClick={() => {

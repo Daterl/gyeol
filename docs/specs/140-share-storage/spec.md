@@ -21,7 +21,7 @@ G6는 확정된 큐레이션을 안전하게 저장·조회·갱신·비활성�
 - 세션은 최대 15장, `image/webp`, 파일당 4MiB, 전체 60MiB, 지정 photo ID·hash·prefix에 묶인다. 파일별 상한 × 최대 장수가 전체 상한을 넘지 않아 병렬 업로드도 총량을 초과할 수 없다. MIME 문자열뿐 아니라 RIFF/WEBP signature도 확인한다.
 - publish는 receipt, upload token, 관리 키, 모든 예상 객체의 RIFF/WEBP signature·타입·크기·hash가 맞아야 한다. manifest 쓰기는 첫 버전 `ifNoneMatch`, 갱신 `ifMatch` CAS다.
 - 공유·이미지 응답은 `no-store`다. 이미지 조회는 `shareId + photoId`만 받고 active manifest의 current version pathname을 서버가 결정한다.
-- 프로필 포함 기본값은 off다. off 상태에서 profile 입력을 거부하고 manifest·curation에 PII를 저장하지 않는다.
+- 프로필 포함 기본값은 off다. G5는 로컬 확정본에 identity DTO 대신 서명된 `profileSnapshotId`만 둔다. G8 publish 경계가 서버의 `resolvePublicProfile(profileSnapshotId)`을 호출해 유효·미만료 결과로 G6의 exact profile DTO를 만들며, 브라우저가 보낸 username/displayName/avatar/source/collectedAt은 신뢰하거나 전달하지 않는다. off 상태에서 profile 입력을 거부하고 manifest·curation에 PII를 저장하지 않는다.
 - revoke는 먼저 PII 없는 tombstone을 CAS로 쓴 다음 version/temp 객체를 삭제한다. 관리 키 회전이 성공하면 이전 키는 즉시 실패한다.
 - active 공유는 자동 만료하지 않는다. 이전 version은 새 manifest가 게시되는 즉시 접근 경로에서 빠지고 24시간 cleanup에서 삭제한다. 이 유예는 이미 이전 manifest를 읽은 요청과 삭제가 충돌하는 것을 막는다. 중단 temp·receipt marker·orphan version도 24시간 뒤 정리한다.
 

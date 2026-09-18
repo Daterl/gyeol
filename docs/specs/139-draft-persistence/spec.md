@@ -8,6 +8,7 @@
 - 사진 집합이 같을 때 프롬프트·순서·편집 내용은 localStorage에 즉시 갱신하고 IndexedDB의 WebP를 다시 쓰지 않는다. 사진 집합이 바뀔 때만 새 revision으로 두 저장소를 커밋한다.
 - 새 revision 커밋이 실패하면 직전 메타데이터와 WebP를 복원한다. 복구가 진행되는 동안 입력을 잠그고, 초기화·화면 이탈이 먼저 일어나면 늦은 복구 결과를 버린다.
 - `restoreDraft()`는 WebP를 `File`과 object URL로 복원하고 기존 Zustand editor store에 주입한다. `clearDraft()`는 메모리와 두 저장소를 함께 초기화한다.
+- 로드 경로에서만 과거 큐레이션 확인본(1~2장, optional `collected_at`을 포함한 snake_case 공개 프로필, camelCase 공개 프로필 + `confirmedProfileSource`)을 식별해 확인본과 복제 identity/provenance만 제거한다. 나머지 메타데이터와 같은 revision의 WebP는 복구하며, 다음 자동 저장은 profile-on일 때 서명된 `profileSnapshotId`만 허용하는 현재 엄격한 스키마로 정착한다. 그 밖의 손상은 기존대로 두 저장소를 삭제한다.
 
 ## G2/UI 인계
 
