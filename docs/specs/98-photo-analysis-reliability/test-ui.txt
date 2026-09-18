@@ -2,5 +2,5 @@
  RUN  v5.0.1 /Users/diego/orca/workspaces/gyeol/98-photo-analysis-reliability
  Test Files  10 passed (10)
       Tests  31 passed (31)
-   Start at  13:20:12
-   Duration  911ms (transform 52%, import 35%, tests 11%, worker 2%)
+   Start at  13:23:26
+   Duration  693ms (transform 52%, import 36%, tests 10%, worker 1%)
