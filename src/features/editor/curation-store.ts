@@ -9,7 +9,7 @@ export type ConfirmedCuration = {
   crops: Record<string, CropCenter>;
   excluded: string[];
   profileSharing: boolean;
-  profile?: { source_url: string };
+  profile?: { source_url: string; username: string; display_name?: string };
 };
 export type CurationEdits = {
   curation: CurationResponse['curation'] | null;
@@ -150,7 +150,22 @@ export function createCurationEditorStore(
           excluded: state.excluded,
           profileSharing: state.profileSharing,
           ...(state.profileSharing && state.curation
-            ? { profile: { source_url: state.curation.profile.source_url } }
+            ? {
+                profile: {
+                  source_url: state.curation.profile.source_url,
+                  username:
+                    state.curation.profile.display?.username ??
+                    new URL(state.curation.profile.source_url).pathname
+                      .split('/')
+                      .filter(Boolean)[0],
+                  ...(state.curation.profile.display?.display_name
+                    ? {
+                        display_name:
+                          state.curation.profile.display.display_name,
+                      }
+                    : {}),
+                },
+              }
             : {}),
         }),
       );

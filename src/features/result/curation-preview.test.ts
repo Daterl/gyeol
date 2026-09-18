@@ -96,3 +96,36 @@ test('two authenticated equal digests among three photos produce one visible rec
     );
   }
 });
+
+test('optional owner name is React text only when sharing is on; missing name retains username', async () => {
+  const result = (await buildCuration(fixture.request, {
+    resolveSnapshot: async () => ({
+      ...structuredClone(fixture.resolution),
+      currentProfile: null,
+      targetProfile: null,
+    }),
+    now: () => Date.parse(fixture.now),
+  })) as CurationResponse;
+  result.curation.profile.display = {
+    username: 'g5_public',
+    display_name: '<img src=x onerror=alert(1)>',
+    name_source: 'apify.ownerFullName',
+  };
+  const store = createCurationEditorStore();
+  await store.getState().loadCuration(async () => result);
+  const render = () =>
+    renderToStaticMarkup(createElement(CurationPreview, { store }));
+  expect(render()).not.toContain('onerror');
+  expect(render()).not.toContain('@g5_public');
+  store.getState().setProfileSharing(true);
+  expect(render()).toContain('&lt;img src=x onerror=alert(1)&gt;');
+  expect(render()).toContain('@g5_public');
+  expect(render()).toContain('공개 게시물 작성자 정보');
+  expect(render()).not.toContain('<img src="x"');
+  delete result.curation.profile.display.display_name;
+  delete result.curation.profile.display.name_source;
+  await store.getState().loadCuration(async () => result);
+  store.getState().setProfileSharing(true);
+  expect(render()).toContain('@g5_public');
+  expect(render()).not.toContain('onerror');
+});

@@ -417,3 +417,20 @@ test('a real public account still collects, minus the posts other people wrote',
   walk(profile);
   walk(await extractFromReference(inputUrl, { registry: { [snapshot.handle]: snapshot } }));
 });
+
+test('optional display name belongs only to accepted owner posts and conflicts fail closed', () => {
+  const second = extra => ({...post,id:'1002',shortCode:'post2',url:'https://www.instagram.com/p/post2/',...extra});
+  const normalize = rows => normalizeInstagram(rows,options).profile_display;
+  assert.deepEqual(normalize([{...post,ownerFullName:'  공개 이름  '}]), {display_name:'공개 이름',name_source:'apify.ownerFullName'});
+  assert.equal(normalize([post]),undefined);
+  assert.deepEqual(normalize([{...post,ownerFullName:'x'.repeat(100)}]),{display_name:'x'.repeat(100),name_source:'apify.ownerFullName'});
+  assert.deepEqual(normalize([{...post,ownerFullName:' First '},second({ownerFullName:'First'})]),{display_name:'First',name_source:'apify.ownerFullName'});
+  for(const value of [null,42,{},'', '  ','x'.repeat(101),'bad\nname']) {
+    assert.equal(normalize([{...post,ownerFullName:value}]),undefined);
+    assert.equal(normalize([{...post,ownerFullName:'Valid'},second({ownerFullName:value})]),undefined);
+  }
+  assert.equal(normalize([{...post,ownerFullName:'First'},second({ownerFullName:'Second'})]),undefined);
+  assert.deepEqual(normalize([{...post,ownerFullName:'First'},second({})]),{display_name:'First',name_source:'apify.ownerFullName'});
+  assert.deepEqual(normalize([{...post,ownerFullName:'First'},second({ownerUsername:'other',ownerFullName:'Other'})]),{display_name:'First',name_source:'apify.ownerFullName'});
+  assert.equal(normalize([{...post,taggedUsers:[{username:'public_account',full_name:'Tagged'}],coauthorProducers:[{username:'public_account',full_name:'Coauthor'}]},second({ownerUsername:'other',ownerFullName:'Other'})]),undefined);
+});

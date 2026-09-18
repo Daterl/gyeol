@@ -34,6 +34,7 @@ for(const scenario of fixture.scenarios) test(`canonical G4 → generate → G5 
   assert.equal(handoff.context.target.source,scenario.expected_target_source);
   assert.equal(handoff.curation.profile_snapshot_id,profile.request.profile_snapshot_id);
   assert.deepEqual(handoff.curation.profile,{
+    display:{username:'g5_public'},
     snapshot_id:profile.resolution.snapshot.snapshot_id,source_url:profile.resolution.source_url,
     collected_at:profile.resolution.collected_at,expires_at:new Date(profile.resolution.expires_at).toISOString(),
     ownership_verified:false,evidence_refs:profile.resolution.snapshot.provenance.evidence_refs

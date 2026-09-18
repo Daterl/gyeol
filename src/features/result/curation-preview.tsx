@@ -71,19 +71,31 @@ export function CurationPreview({
       </p>
       <div className="mb-3 border-y border-line py-3 text-sm">
         {state.profileSharing && state.curation ? (
-          <a
-            href={state.curation.profile.source_url}
-            target="_blank"
-            rel="noreferrer"
-            className="flex min-h-11 items-center text-[#00376b]"
-          >
-            @
-            {
-              new URL(state.curation.profile.source_url).pathname
-                .split('/')
-                .filter(Boolean)[0]
-            }
-          </a>
+          <div>
+            <a
+              href={state.curation.profile.source_url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-11 flex-wrap items-center gap-2 text-[#00376b]"
+            >
+              {state.curation.profile.display?.display_name && (
+                <span>{state.curation.profile.display.display_name}</span>
+              )}
+              <span>
+                @
+                {state.curation.profile.display?.username ??
+                  new URL(state.curation.profile.source_url).pathname
+                    .split('/')
+                    .filter(Boolean)[0]}
+              </span>
+            </a>
+            {state.curation.profile.display?.name_source ===
+              'apify.ownerFullName' && (
+              <p className="text-muted-foreground">
+                표시 이름 출처: 공개 게시물 작성자 정보
+              </p>
+            )}
+          </div>
         ) : (
           <p className="font-semibold">GYEOL · 나의 사진 기록</p>
         )}
@@ -267,7 +279,8 @@ export function CurationPreview({
       <p className="mb-4 text-sm text-muted-foreground">
         이 선택은 프로필 주체의 동의나 소유권 인증이 아니에요. 끄면 확정
         스냅샷에 프로필 정보가 들어가지 않고 GYEOL 일반 헤더를 사용해요. 현재
-        연결에서 받은 정보만 포함하며 프로필 사진·표시 이름은 제공되지 않았어요.
+        연결에서 받은 사용자명과, 제공된 경우에만 표시 이름을 포함해요. 프로필
+        사진은 제공되지 않았어요.
       </p>
       <Button
         type="button"

@@ -8,7 +8,7 @@ Public-profile connection uses same-origin sessions and in-memory CSRF, explicit
 
 Regeneration requires a live connection matching both the loaded curation's account and `profile_snapshot_id`. Connecting B after creating A, or refreshing A to a different snapshot, preserves photos, edits and the prior confirmation but requires a new curation before regeneration. Reconnecting the same account/reference may resume. Reload restores a profile reference for convenience, never live authorization or paid consent; the user must reconnect.
 
-The preview supports keyboard/button/drag order, exclusion/restoration, candidate rationale, editable or empty captions, crop centers and omission counts. Profile sharing defaults off. Confirmation contains a detached, recursively frozen snapshot of included order, captions, crops and the sharing choice. It excludes internal evidence and signed references; later editing or generation leaves it unchanged until reconfirmed. The current public profile DTO contains only `source_url`; optional display metadata belongs to the separate #160 integration.
+The preview supports keyboard/button/drag order, exclusion/restoration, candidate rationale, editable or empty captions, crop centers and omission counts. Profile sharing defaults off. Confirmation contains a detached, recursively frozen snapshot of included order, captions, crops and the sharing choice. It excludes internal evidence and signed references; later editing or generation leaves it unchanged until reconfirmed. The public profile DTO carries `source_url` and `username`, plus `display_name` only when an owner name was retained and sharing is opted in (#160, integrated on this branch). Internal provenance such as `name_source` stays out of the DTO.
 
 ## G3 integration
 
@@ -42,4 +42,4 @@ The sip pass used mandela to limit these fixture-driven results to deterministic
 
 ## Remaining gates
 
-Independent fixed-head review; sequential #160 display-name integration and avatar availability; G6/G7 shared-link UI integration and deployment acceptance; real HTTPS session/cookie checks; authorized live provider receipts; physical devices and external users. G6's merged storage boundary alone does not demonstrate a working publication UI. This worker neither merges PR158 nor changes main, deploys, closes issues, or makes paid calls; the coordinator owns the atomic PR153/develop integration.
+Independent fixed-head review; avatar availability; G6/G7 shared-link UI integration and deployment acceptance; real HTTPS session/cookie checks; authorized live provider receipts; physical devices and external users. G6's merged storage boundary alone does not demonstrate a working publication UI. This worker neither merges PR158 nor changes main, deploys, closes issues, or makes paid calls; the coordinator owns the atomic PR153/develop integration.
