@@ -294,5 +294,8 @@ test('daily cleanup entrypoint authenticates before storage and reports failures
   assert.equal(failure.status, 503);
   assert.deepEqual(await failure.json(), { error: 'CLEANUP_UNAVAILABLE' });
   const config = JSON.parse(await readFile(new globalThis.URL('../vercel.json', import.meta.url), 'utf8'));
-  assert.deepEqual(config.crons, [{ path: '/api/profile-cache/cleanup', schedule: '0 0 * * *' }]);
+  assert.deepEqual(config.crons, [
+    { path: '/api/profile-cache/cleanup', schedule: '0 0 * * *' },
+    { path: '/api/share-cleanup', schedule: '15 0 * * *' },
+  ]);
 });
