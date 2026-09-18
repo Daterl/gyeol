@@ -5,7 +5,10 @@ import { useStore } from 'zustand';
 import { Companion } from '@/components/companion';
 import { Button } from '@/components/ui/button';
 import { previewOutput } from '../captions/preview-output';
-import { createCurationEditorStore } from '../editor/curation-store';
+import {
+  canRegenerateCuration,
+  createCurationEditorStore,
+} from '../editor/curation-store';
 import { CurationPreview } from '../result/curation-preview';
 import { SamplePreview } from '../sample/sample-preview';
 import { addFiles, MAX_SELECTED_PHOTOS, submitCuration } from './input';
@@ -19,7 +22,10 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const photos = useStore(store, (state) => state.photos);
   const request = useStore(store, (state) => state.request);
   const [profile, setProfile] = useState<ConnectedProfile | null>(null);
-  const [prompt, setPrompt] = useState('');
+  const prompt = useStore(store, (state) => state.prompt);
+  const curation = useStore(store, (state) => state.curation);
+  const [draftReady, setDraftReady] = useState(false);
+  const [restoredUrl, setRestoredUrl] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [normalizing, setNormalizing] = useState(false);
@@ -28,15 +34,49 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const generation = useRef(0);
   const loading = request.status === 'loading';
   useEffect(() => {
+    let active = true;
+    let unsubscribe = () => {};
     mountedRef.current = true;
+    void store
+      .getState()
+      .restoreDraft()
+      .then(() => {
+        if (!active) return;
+        const reference = store.getState().profileReference;
+        if (reference)
+          setRestoredUrl(`https://www.instagram.com/${reference.username}/`);
+      })
+      .catch(() => {
+        if (active) setErrors(['저장된 초안을 불러오지 못했어요.']);
+      })
+      .finally(() => {
+        if (!active) return;
+        setDraftReady(true);
+        const persist = () => {
+          const state = store.getState();
+          void state
+            .persistDraft(
+              new Map(
+                state.photos.map((photo) => [photo.photo_id, photo.file]),
+              ),
+            )
+            .catch(() => {
+              if (mountedRef.current)
+                setErrors(['이 기기에서 초안을 저장하지 못했어요.']);
+            });
+        };
+        unsubscribe = store.subscribe(persist);
+      });
     return () => {
+      active = false;
+      unsubscribe();
       mountedRef.current = false;
       generation.current++;
       store.getState().reset();
     };
   }, [store]);
   async function add(incoming: File[]) {
-    if (normalizingRef.current || !profile) return;
+    if (!draftReady || normalizingRef.current || !profile) return;
     if (photos.length + incoming.length > MAX_SELECTED_PHOTOS) {
       setErrors([
         `사진은 최대 ${MAX_SELECTED_PHOTOS}장까지 추가할 수 있어요. 초과한 선택은 추가하지 않았어요.`,
@@ -54,6 +94,11 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         normalized.files,
       );
       setErrors([...normalized.errors, ...result.errors]);
+      if (
+        result.files.length === photos.length &&
+        result.files.every((file, index) => file === photos[index].file)
+      )
+        return;
       store.getState().selectFiles(result.files);
       setConfirmed(false);
     } finally {
@@ -63,8 +108,10 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   }
   function reset() {
     generation.current++;
-    store.getState().reset();
-    setPrompt('');
+    void store
+      .getState()
+      .clearDraft()
+      .catch(() => setErrors(['저장된 초안을 지우지 못했어요.']));
     setConfirmed(false);
     setErrors([]);
   }
@@ -96,10 +143,21 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
       </div>
       <SamplePreview />
       <ProfileConnection
-        disabled={loading || normalizing}
+        initialUrl={restoredUrl}
+        disabled={!draftReady || loading || normalizing}
         onChange={(value) => {
           generation.current++;
           setProfile(value);
+          if (value) {
+            const username = new URL(value.url).pathname
+              .split('/')
+              .filter(Boolean)[0];
+            store.getState().setProfileReference({
+              username,
+              displayName: username,
+              profileImageUrl: null,
+            });
+          }
           setConfirmed(false);
           store.getState().cancel();
         }}
@@ -115,6 +173,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         onSubmit={async (event) => {
           event.preventDefault();
           if (
+            !draftReady ||
             !profile ||
             loading ||
             normalizing ||
@@ -135,7 +194,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         }}
       >
         <fieldset
-          disabled={!profile || loading || normalizing}
+          disabled={!draftReady || !profile || loading || normalizing}
           className="min-w-0 space-y-5"
         >
           <legend className="mb-3 font-semibold">2. 사진과 원하는 느낌</legend>
@@ -147,7 +206,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <PhotoPicker
             label="올릴 사진"
             photos={photos}
-            disabled={!profile || loading || normalizing}
+            disabled={!draftReady || !profile || loading || normalizing}
             onAdd={(files) => void add(files)}
             onRemove={(id) => {
               store
@@ -170,7 +229,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
               maxLength={2000}
               value={prompt}
               onChange={(event) => {
-                setPrompt(event.target.value);
+                store.getState().setPrompt(event.target.value);
                 setConfirmed(false);
               }}
               placeholder="비워 두면 연결한 공개 프로필의 수집 가능한 스타일을 참고해요."
@@ -215,6 +274,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <Button
             type="submit"
             disabled={
+              !draftReady ||
               !profile ||
               photos.length < 3 ||
               photos.length > MAX_SELECTED_PHOTOS ||
@@ -268,7 +328,12 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
       <CurationPreview
         store={store}
         mock={mock}
-        canGenerate={Boolean(profile)}
+        canGenerate={canRegenerateCuration(curation, profile)}
+        generationNotice={
+          profile
+            ? '연결한 프로필 또는 수집본이 달라졌어요. 사진·편집·이전 확정본은 보존돼요. 이 연결로 큐레이션을 새로 만든 뒤 문장을 제안받아 주세요.'
+            : undefined
+        }
       />
     </div>
   );

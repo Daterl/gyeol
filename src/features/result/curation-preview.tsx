@@ -11,10 +11,12 @@ export function CurationPreview({
   store,
   mock = false,
   canGenerate = true,
+  generationNotice,
 }: {
   store: CurationEditorStore;
   mock?: boolean;
   canGenerate?: boolean;
+  generationNotice?: string;
 }) {
   const state = useStore(store, (value) => value);
   const [selected, setSelected] = useState<string | null>(null);
@@ -53,8 +55,8 @@ export function CurationPreview({
       <h2 className="text-2xl font-semibold">3. 프리뷰를 다듬어 주세요</h2>
       {!canGenerate && (
         <p role="status" className="mt-3 text-sm">
-          프로필을 다시 연결해 주세요. 사진과 편집한 내용은 그대로 남아 있고,
-          연결 전에는 새 문장을 생성하지 않아요.
+          {generationNotice ??
+            '프로필을 다시 연결해 주세요. 사진과 편집한 내용은 그대로 남아 있고, 연결 전에는 새 문장을 생성하지 않아요.'}
         </p>
       )}
       <p className="my-3 text-sm text-muted-foreground">

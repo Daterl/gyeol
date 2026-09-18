@@ -1,4 +1,6 @@
 import type { CaptionSlot, CurationResponse } from '@/types/contracts';
+import type { ConnectedProfile } from '../input/profile-connection';
+import { createBrowserDraftStorage, type DraftStorage } from './draft-storage';
 import { createEditorStore } from './store';
 
 export type CropCenter = { x: number; y: number };
@@ -23,8 +25,45 @@ function freeze<T>(value: T): T {
   }
   return value;
 }
-export function createCurationEditorStore() {
-  const base = createEditorStore();
+export function canRegenerateCuration(
+  curation: CurationEdits['curation'],
+  profile: ConnectedProfile | null,
+) {
+  if (!curation || !profile || profile.expires_at <= Date.now()) return false;
+  try {
+    const account = (url: string) =>
+      new URL(url).pathname.replace(/\/$/, '').toLowerCase();
+    return (
+      curation.profile_snapshot_id === profile.snapshotId &&
+      account(curation.profile.source_url) === account(profile.url)
+    );
+  } catch {
+    return false;
+  }
+}
+export function createCurationEditorStore(
+  persistence: DraftStorage | null = createBrowserDraftStorage(),
+) {
+  const base = createEditorStore(persistence, {
+    save: () => {
+      const { curation, excluded, crops, profileSharing, confirmed } =
+        store.getState();
+      return {
+        curationState: { curation, excluded, crops, profileSharing, confirmed },
+      };
+    },
+    restore: (metadata) =>
+      store.setState(
+        metadata.curationState
+          ? {
+              ...structuredClone(metadata.curationState),
+              confirmed: freeze(
+                structuredClone(metadata.curationState.confirmed),
+              ),
+            }
+          : defaults(),
+      ),
+  });
   const defaults = (): CurationEdits => ({
     curation: null,
     excluded: [],

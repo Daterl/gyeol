@@ -89,3 +89,33 @@ test('cancelling a new feed with an existing preview does not authorize automati
   expect(store.getState().curation).toBe(curation);
   expect(store.getState().request.status).toBe('ready');
 });
+
+test('regeneration requires the loaded account and snapshot, including same-account refresh', async () => {
+  const { canRegenerateCuration } = await import('./curation-store');
+  const store = await ready();
+  const curation = store.getState().curation;
+  const profile = {
+    url: 'https://www.instagram.com/public_example/',
+    snapshotId: 'public-reference',
+    expires_at: Date.now() + 60000,
+  };
+  const confirmation = store.getState().confirmCuration();
+  expect(canRegenerateCuration(curation, null)).toBe(false);
+  expect(canRegenerateCuration(curation, profile)).toBe(true);
+  expect(
+    canRegenerateCuration(curation, {
+      ...profile,
+      url: 'https://www.instagram.com/another/',
+    }),
+  ).toBe(false);
+  expect(
+    canRegenerateCuration(curation, {
+      ...profile,
+      snapshotId: 'fresh-reference',
+    }),
+  ).toBe(false);
+  expect(canRegenerateCuration(curation, { ...profile, expires_at: 0 })).toBe(
+    false,
+  );
+  expect(store.getState().confirmed).toBe(confirmation);
+});

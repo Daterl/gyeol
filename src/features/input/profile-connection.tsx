@@ -31,12 +31,17 @@ export const profileMessage: Record<
 export function ProfileConnection({
   onChange,
   disabled = false,
+  initialUrl = '',
 }: {
   onChange: (value: ConnectedProfile | null) => void;
   disabled?: boolean;
+  initialUrl?: string;
 }) {
   const [client] = useState(createProfileClient);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(initialUrl);
+  useEffect(() => {
+    if (initialUrl) setUrl(initialUrl);
+  }, [initialUrl]);
   const [result, setResult] = useState<ProfileConnectionResponse | null>(null);
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
