@@ -42,6 +42,7 @@ context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_uplo
 
 - all: photo_id를 보내지 않는다. 성공 `{output:F3Export}`. 타이틀 한 줄, 슬롯 N개가 원본 사진과 원본 position을 그대로 사용한다.
 - slot: feed에 있는 photo_id 한 개를 보낸다. 성공 `{slot:CaptionSlot}`. 요청한 ID/원래 position만 반환한다. 전체 output을 새로 생성해 다른 편집을 덮어쓰지 않는다.
+- all 성공에는 `omission:{omitted,total,note_key,note,evidence}`가 함께 온다. 이 값은 **서버가 그 응답의 slots를 센 것**이며 비움 개수를 바꾸지 않는다. `note_key`는 `omission.none`(omitted=0) / `omission.some`이고, 개수·note_key가 실제 slots와 어긋나거나 `gyeol.omit.disclosure` rule 근거가 없으면 응답을 거부한다. 비움 0개도 판단의 결과이므로 미완성으로 표시하지 않는다. `caption_coverage`가 `all`이라 비움이 0개인 회차에도 같은 규칙으로 센다 — 고지는 요청 의도가 아니라 실제 결과를 말한다. slot 성공에는 붙이지 않는다 — 한 슬롯으로 피드 전체의 비움을 관측할 수 없다(#80).
 - 서버 결과에는 filled/omitted만 있다. user 상태는 클라이언트 편집에서만 만든다. 충분한 사실이 없으면 억지 캡션 대신 `NO_FACTS` 실패 또는 근거 있는 omitted다.
 - 오류·timeout은 `{error:{code,message,retryable:boolean}}`. 성공을 빈 배열/빈 output으로 대체하지 않는다.
 - `/api/title`, `/api/caption`은 별도 API로 만들지 않는다. 출력 프롬프트만 역할별 파일로 유지한다.
