@@ -131,8 +131,9 @@ test('negated or non-caption coverage wording stays unset through generation',as
     '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬',
     '몇 장에만 써 줘, 몇 장에만 쓰지 마','전부 써 줘, 전부 쓰지 마','전부 채워 줘, 전부 채우지는 마',
     '몇 장에만 문장을 써 줘, 하지만 몇 장에만 문장을 쓰지는 마',
-    '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요',
-    '사진 속 글자를 전부 써 줘','배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘'
+    '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요','몇 장에만 문장을 써 줘. 아니요, 그건 원하지 않아요.',
+    '사진 속 글자를 전부 써 줘','사진 속 문장을 전부 써 주세요','사진 속 캡션을 전부 써 주세요',
+    '배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘'
   ];
   for(const text of cases) {
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
@@ -156,6 +157,21 @@ test('an unrelated contrast clause preserves the earlier explicit coverage reque
   const sentenceScoped=await buildFeed(orderInput({kind:'text',text:'과한 색감은 싫어요. 말수가 적고 여백이 많은 기록.'}));
   assert.equal(sentenceScoped.context.target.language.caption_coverage.value,'sparse');
   assert.equal((await generateOutput(generatedInput(sentenceScoped),options(filledOutput(sentenceScoped.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  for(const text of [
+    '몇 장에만 써 줘, 아니 모든 사진에 써 줘',
+    '몇 장에만 써 줘, 하지만 모든 사진에 써 줘, 하지만 색감은 차분하게'
+  ]) {
+    const corrected=await buildFeed(orderInput({kind:'text',text}));
+    assert.equal(corrected.context.target.language.caption_coverage.value,'all',text);
+    const correctedProvider=filledOutput(corrected.feed);
+    assert.deepEqual(await generateOutput(generatedInput(corrected),options(correctedProvider)),correctedProvider,text);
+  }
+
+  const correctedSparse=await buildFeed(orderInput({kind:'text',text:'모든 사진에 써 줘, 아니 몇 장에만 써 줘'}));
+  assert.equal(correctedSparse.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(correctedSparse),options(filledOutput(correctedSparse.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 });
 

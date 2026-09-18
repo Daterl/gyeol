@@ -8,7 +8,7 @@
 - `all`은 모든 사진에 문장을 쓰려는 현재 의도, `sparse`는 일부 사진을 비우려는 현재 의도다. `empty_caption_ratio`는 ref/current의 과거 관측값이며 freetext에 금지한다.
 - claim은 매치한 원문 `user_text`와 어휘표 `rule` 근거를 함께 가진다. output 단계는 raw_freetext를 다시 해석하지 않는다.
 - 서버 generate 경계는 같은 extractor로 raw_freetext를 재생해 context target의 claim을 대조한다. context와 applied를 함께 위조해도 통과하지 않으며, output 안정화는 검증된 claim만 읽는다.
-- 부정된 cue는 반대로 읽지 않는다. all/sparse가 함께 나온 진짜 충돌, 전체 무캡션 요청, cue가 없는 모호한 표현은 claim을 만들지 않는다. 유한한 완전 요청 표현만 허용해 부분 단어와 사진 내용 설명을 제외한다. cue는 원문 순서로 적용해 뒤 부정·정정이 앞 선택을 지우고, 문장 부호는 거절 범위를 끊는다. `하지만` 뒤에 실제 coverage cue가 있으면 뒤 절을 평가하고, 무관한 사진 순서·색감 절이면 앞 요청을 유지한다.
+- 부정된 cue는 반대로 읽지 않는다. all/sparse가 함께 나온 진짜 충돌, 전체 무캡션 요청, cue가 없는 모호한 표현은 claim을 만들지 않는다. 유한한 완전 요청 표현만 허용해 부분 단어와 사진 내용 설명을 제외한다. 절을 원문 순서로 훑어 뒤 부정·정정이 앞 선택을 지우고, 같은 정정 절의 긍정 cue는 새 선택이 된다. 문장 부호는 거절 범위를 끊는다. coverage cue가 있는 `하지만` 절만 선택을 갱신하며 무관한 사진 순서·색감 절은 앞 요청을 유지한다.
 - coverage 없는 freetext는 current ratio fallback을 쓰지 않는다. `all`은 서버 비움 보정을 막고, `sparse`는 canonical overlap 0.9 이상일 때 정확히 한 슬롯만 허용한다. sparse와 caption_len은 독립이다.
 
 ## 검증과 한계
