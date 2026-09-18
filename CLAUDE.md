@@ -603,7 +603,8 @@ gh auth refresh -s read:project,project
 # PENDING, 종료 코드 2; 네트워크·모델 호출 없음
 npm run verify:deployed -- https://your-preview.example --environment preview
 
-# 최대 8회 모델 호출에 대한 별도 승인과 해당 환경의 신뢰 가능한 입력 확보 후에만 실행
+# 최대 8회 생성 HTTP 요청에 대한 별도 승인과 해당 환경의 신뢰 가능한 입력 확보 후에만 실행
+# 재시도로 제공자 호출 횟수와 비용이 증가할 수 있음
 node scripts/verify-deployed.mjs https://your-preview.example \
   --environment preview --input /private/path/input.json \
   --metadata /private/path/run-metadata.json --live

@@ -51,7 +51,8 @@ response bodies or server exception messages.
 # Safe preflight: reports PENDING and performs no requests.
 node scripts/verify-deployed.mjs https://your-preview.example --environment preview
 
-# Only after authorization for up to eight model calls:
+# Only after authorization for up to eight generation HTTP requests:
+# Provider retries can increase provider call counts and costs.
 node scripts/verify-deployed.mjs https://your-preview.example \
   --environment preview --input /private/path/input.json \
   --metadata /private/path/run-metadata.json --live
