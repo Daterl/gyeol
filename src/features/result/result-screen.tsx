@@ -116,7 +116,7 @@ export function ResultScreen({
           return (
             <li
               key={id}
-              className="grid min-w-0 grid-cols-[104px_minmax(0,1fr)] gap-x-4 border-b border-line pb-6 max-[359px]:grid-cols-[88px_minmax(0,1fr)] sm:block"
+              className="min-w-0 border-b border-line pb-6"
               onDragOver={(event) => event.preventDefault()}
               onDrop={(event) => {
                 event.preventDefault();
@@ -125,7 +125,7 @@ export function ResultScreen({
                   move(dragged, index);
               }}
             >
-              <div className="col-span-2 mb-3 flex items-center justify-between gap-2">
+              <div className="mb-3 flex items-center justify-between gap-2">
                 <button
                   type="button"
                   draggable
@@ -164,7 +164,7 @@ export function ResultScreen({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${index + 1}번 ${image.alt} 원본 보기`}
-                  className="relative col-start-1 row-start-2 block aspect-[4/5] self-start overflow-hidden bg-line-soft"
+                  className="relative block aspect-[4/5] overflow-hidden bg-line-soft"
                 >
                   <Image
                     src={image.src}
@@ -176,17 +176,15 @@ export function ResultScreen({
                   />
                 </a>
               ) : (
-                <div className="col-start-1 row-start-2 flex aspect-[4/5] items-center justify-center self-start bg-line-soft p-3 text-sm">
+                <div className="flex aspect-[4/5] items-center justify-center bg-line-soft p-3 text-sm">
                   {analysis?.file_ref ?? '사진 원본이 없어요.'}
                 </div>
               )}
-              <div className="col-start-2 row-start-2 min-w-0">
+              <div className="min-w-0">
                 <CaptionEditor store={store} id={id} mock={mock} />
               </div>
-              <p className="col-span-2 mt-4 text-sm leading-7">
-                {slot.rationale.value}
-              </p>
-              <details className="col-span-2 mt-2 text-sm">
+              <p className="mt-4 text-sm leading-7">{slot.rationale.value}</p>
+              <details className="mt-2 text-sm">
                 <summary className="min-h-11 cursor-pointer py-3 font-medium text-accent">
                   근거 보기
                 </summary>
@@ -199,7 +197,7 @@ export function ResultScreen({
                   ))}
                 </ul>
               </details>
-              <div className="col-span-2 mt-3 flex gap-2">
+              <div className="mt-3 flex gap-2">
                 <Button
                   type="button"
                   variant="outline"
