@@ -102,9 +102,18 @@ export type AppliedProfile = {
   target_profile_id: string | null;
   visual: Visual;
 };
+export type OmitSuggestion =
+  | { recommended: false; reason: null; evidence: [] }
+  | { recommended: true; reason: string; evidence: Evidence[] };
+export type OmitSummary = {
+  recommended_count: number;
+  message: string;
+};
 export type OrderedFeed = {
   applied_profile: AppliedProfile;
   feed_id: string;
+  // Optional for legacy feeds without the additive suggestion extension.
+  omit_summary?: OmitSummary;
   generated_at: string;
   invariants: {
     input_count: number;
@@ -120,6 +129,7 @@ export type OrderedFeed = {
       is_visual_peak: boolean;
     };
     narrative_role: 'opener' | 'sustain' | 'turn' | 'closer';
+    omit_suggestion?: OmitSuggestion;
     photo_id: string;
     position: number;
     rationale: Claim<string>;
