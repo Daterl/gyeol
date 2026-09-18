@@ -215,3 +215,8 @@ Generating route types...
 - ⏳ 사람 인스타 적합성 판정과 최종 통과율, 다중 모델 리뷰 및 브라우저 인수는 pending이다.
 
 작업 중 origin/develop에 `558e21d` 복구 커밋이 추가됐다. 이 보고서의 검증 기준은 위 4474bb9이며, 복구 변경을 합친 통합 검증으로 읽으면 안 된다.
+
+## 코드 리뷰
+
+CodeRabbit CLI 0.7.6을 실행했다. 최초 기존 파일 5개 검토는 지적 0건이며 새 파일을 stage한 뒤 8개 구현·검증 파일을 다시 제출했다.
+현재 수신한 minor 1건은 검증 스크립트의 JSON 문자열 비교가 객체 키 순서에 의존한다는 지적이다. 실제 코드를 확인하고 isDeepStrictEqual로 바꾼 뒤 실사진 15장 검증과 구문 검사를 재실행해 통과했다. 원문은 review-coderabbit-final.txt다.

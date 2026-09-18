@@ -2,6 +2,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, basename } from 'node:path';
 import assert from 'node:assert/strict';
+import { isDeepStrictEqual } from 'node:util';
 import { analyzePhoto } from '../lib/photo_analysis.js';
 import sharp from 'sharp';
 import { orderFeed } from '../lib/order.js';
@@ -32,7 +33,7 @@ const hits = feed.slots.flatMap(s => [...s.rationale.value.matchAll(forbidden)])
 assert.equal(hits.length, 0);
 for (const slot of feed.slots) {
   const old = before.feed.slots.find(s => s.photo_id === slot.photo_id);
-  for (const evidence of old.rationale.evidence) assert.ok(slot.rationale.evidence.some(e => JSON.stringify(e)===JSON.stringify(evidence)), '기존 근거 보존');
+  for (const evidence of old.rationale.evidence) assert.ok(slot.rationale.evidence.some(e => isDeepStrictEqual(e, evidence)), '기존 근거 보존');
   assert.ok(slot.rationale.evidence.some(e => e.note.includes(old.rationale.value)), '선택 계산 설명 보존');
 }
 const reviews = await read(`${out}/agent-review.json`);
