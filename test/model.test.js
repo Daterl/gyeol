@@ -145,3 +145,39 @@ test('key-present SVG is an explicit 415 from the production HTTP client, with n
     resetAnalysisState();
   }
 });
+
+test('thinking 블록이 앞에 와도 text 블록 하나를 읽는다', async () => {
+  // claude-opus-5 는 thinking 이 기본으로 켜져 있어 content 가 [thinking, text] 로 온다.
+  // 블록 개수를 1로 강제하면 실모델 호출이 100% MODEL_JSON 으로 죽는다.
+  const withThinking = message({ content: [
+    { type: 'thinking', thinking: '어떤 사진인지 살핀다.' },
+    { type: 'text', text: JSON.stringify(observation) }
+  ]});
+  const result = await analyzeWithModel({ ...args, fetchImpl: fetchFor(() => response(withThinking)) });
+  assert.deepEqual(result.observation, observation);
+});
+
+test('text 블록이 없거나 둘 이상이면 실패한다', async () => {
+  const noText = message({ content: [{ type: 'thinking', thinking: '생각만 했다.' }] });
+  await assert.rejects(analyzeWithModel({ ...args, fetchImpl: fetchFor(() => response(noText)) }), { code: 'MODEL_JSON' });
+  const twoText = message({ content: [
+    { type: 'text', text: JSON.stringify(observation) },
+    { type: 'text', text: '{}' }
+  ]});
+  await assert.rejects(analyzeWithModel({ ...args, fetchImpl: fetchFor(() => response(twoText)) }), { code: 'MODEL_JSON' });
+});
+
+test('워크스페이스 ID 가 있으면 헤더로 보내고 없으면 보내지 않는다', async () => {
+  // 워크스페이스에 묶이지 않은 키는 이 헤더가 없으면 API 가 400 을 돌려준다.
+  let seen = null;
+  const capture = () => async (url, options) => {
+    if (url.includes('/models/')) return response({ id: 'test-model' });
+    seen = options.headers['anthropic-workspace-id'];
+    return response(message());
+  };
+  await analyzeWithModel({ ...args, workspaceId: 'wrkspc_test', fetchImpl: capture() });
+  assert.equal(seen, 'wrkspc_test');
+  seen = null;
+  await analyzeWithModel({ ...args, workspaceId: undefined, fetchImpl: capture() });
+  assert.equal(seen, undefined);
+});
