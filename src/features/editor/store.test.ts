@@ -1,6 +1,7 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import type { FeedResponse } from '@/types/contracts';
 import fixture from '../../../fixtures/interaction.sample.json';
+import { createDraftStorage, type DraftBinaryStore } from './draft-storage';
 import { createEditorStore } from './store';
 
 const response = (): FeedResponse =>
@@ -81,6 +82,96 @@ test('sessions are independent and deletion, replacement, reset release only rem
   expect(create).toHaveBeenCalledTimes(3);
   expect(revoke).toHaveBeenCalledTimes(3);
   expect(other.getState().photos).toEqual([]);
+});
+
+test('selection accepts 15 photos and rejects 16', () => {
+  vi.spyOn(URL, 'createObjectURL').mockImplementation(
+    () => `blob:${crypto.randomUUID()}`,
+  );
+  vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+  const store = createEditorStore();
+  const accepted = Array.from(
+    { length: 15 },
+    (_, index) => new File([String(index)], `${index}.jpg`),
+  );
+  store.getState().selectFiles(accepted);
+  expect(store.getState().photos).toHaveLength(15);
+  expect(store.getState().order).toHaveLength(15);
+  expect(() =>
+    store.getState().selectFiles([...accepted, new File(['16'], '16.jpg')]),
+  ).toThrow('최대 15장');
+});
+
+test('persists and restores prompt, profile, photo order and WebP files', async () => {
+  const values = new Map<string, string>();
+  let saved: Awaited<ReturnType<DraftBinaryStore['load']>> = null;
+  const persistence = createDraftStorage(
+    {
+      getItem: (key) => values.get(key) ?? null,
+      removeItem: (key) => {
+        values.delete(key);
+      },
+      setItem: (key, value) => {
+        values.set(key, value);
+      },
+    },
+    {
+      clear: async () => {
+        saved = null;
+      },
+      load: async () => saved,
+      save: async (value) => {
+        saved = value;
+      },
+    },
+    () => 'store-revision',
+  );
+  vi.spyOn(URL, 'createObjectURL').mockImplementation(
+    () => `blob:${crypto.randomUUID()}`,
+  );
+  vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+  const first = createEditorStore(persistence);
+  first.getState().setPrompt('조용한 흐름');
+  first.getState().setProfileReference({
+    displayName: 'Diego',
+    profileImageUrl: null,
+    username: 'jangwon_diego_yoon',
+  });
+  first
+    .getState()
+    .selectFiles(
+      Array.from(
+        { length: 15 },
+        (_, index) => new File([String(index)], `${index}.jpg`),
+      ),
+    );
+  const ids = first.getState().photos.map((photo) => photo.photo_id);
+  first.getState().movePhoto(ids[0], 2);
+  await first
+    .getState()
+    .persistDraft(
+      new Map(
+        ids.map((id) => [id, new Blob([`webp-${id}`], { type: 'image/webp' })]),
+      ),
+    );
+
+  const restored = createEditorStore(persistence);
+  expect(await restored.getState().restoreDraft()).toBe(true);
+  expect(restored.getState()).toMatchObject({
+    order: [ids[1], ids[2], ids[0], ...ids.slice(3)],
+    profileReference: { username: 'jangwon_diego_yoon' },
+    prompt: '조용한 흐름',
+  });
+  expect(restored.getState().photos.map((photo) => photo.photo_id)).toEqual(
+    ids,
+  );
+  expect(
+    restored
+      .getState()
+      .photos.every((photo) => photo.file.type === 'image/webp'),
+  ).toBe(true);
+  await restored.getState().clearDraft();
+  expect(await persistence.load()).toBeNull();
 });
 
 test('reorder and direct edits preserve source evidence and export the same photo set', async () => {

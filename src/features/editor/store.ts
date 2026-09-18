@@ -10,6 +10,11 @@ import {
   validateGenerateResponse,
 } from '../../../lib/interaction.js';
 import { ApiError, generateOutput } from '../../lib/api';
+import {
+  createBrowserDraftStorage,
+  type DraftProfileReference,
+  type DraftStorage,
+} from './draft-storage';
 
 export type SelectedPhoto = { file: File; photo_id: string; url: string };
 type RequestState =
@@ -22,10 +27,13 @@ type EditorState = {
   original: FeedResponse | null;
   originalOutput: F3Export | null;
   photos: SelectedPhoto[];
+  profileReference: DraftProfileReference | null;
+  prompt: string;
   request: RequestState;
 };
 type EditorActions = {
   cancel: () => void;
+  clearDraft: () => Promise<void>;
   editCaption: (id: string, text: string) => void;
   editTitle: (title: string) => void;
   exportDraft: () => F3Export;
@@ -34,8 +42,12 @@ type EditorActions = {
     task: (signal: AbortSignal) => Promise<FeedResponse>,
   ) => Promise<void>;
   movePhoto: (id: string, destination: number) => void;
+  persistDraft: (images: ReadonlyMap<string, Blob>) => Promise<void>;
   reset: () => void;
+  restoreDraft: () => Promise<boolean>;
   selectFiles: (files: File[]) => void;
+  setProfileReference: (reference: DraftProfileReference | null) => void;
+  setPrompt: (prompt: string) => void;
 };
 const initialState: EditorState = {
   draft: null,
@@ -43,6 +55,8 @@ const initialState: EditorState = {
   original: null,
   originalOutput: null,
   photos: [],
+  profileReference: null,
+  prompt: '',
   request: { status: 'idle' },
 };
 const arrange = (output: F3Export, order: string[]): F3Export => ({
@@ -55,7 +69,9 @@ const arrange = (output: F3Export, order: string[]): F3Export => ({
 });
 
 // Instantiate inside the editor Client Component, never as a server/module singleton.
-export function createEditorStore() {
+export function createEditorStore(
+  persistence: DraftStorage | null = createBrowserDraftStorage(),
+) {
   let active: AbortController | null = null;
   return createStore<EditorState & EditorActions>((set, get) => {
     const stop = () => {
@@ -90,11 +106,20 @@ export function createEditorStore() {
         },
       });
     };
+    const resetState = () => {
+      stop();
+      for (const photo of get().photos) URL.revokeObjectURL(photo.url);
+      set({ ...initialState });
+    };
     return {
       ...initialState,
       cancel: () => {
         stop();
         set({ request: { status: get().original ? 'ready' : 'idle' } });
+      },
+      clearDraft: async () => {
+        resetState();
+        await persistence?.clear();
       },
       editCaption: (id, text) => {
         const draft = get().draft;
@@ -291,18 +316,58 @@ export function createEditorStore() {
         next.splice(destination, 0, id);
         set({ order: next, draft: draft ? arrange(draft, next) : null });
       },
-      reset: () => {
-        stop();
-        for (const photo of get().photos) URL.revokeObjectURL(photo.url);
-        set({ ...initialState });
+      persistDraft: async (images) => {
+        if (!persistence) return;
+        const state = get();
+        await persistence.save(
+          {
+            draft: state.draft,
+            order: state.order,
+            original: state.original,
+            originalOutput: state.originalOutput,
+            photoIds: state.photos.map((photo) => photo.photo_id),
+            profileReference: state.profileReference,
+            prompt: state.prompt,
+          },
+          images,
+        );
+      },
+      reset: resetState,
+      restoreDraft: async () => {
+        if (!persistence) return false;
+        const restored = await persistence.load();
+        if (!restored) return false;
+        resetState();
+        set({
+          draft: restored.draft,
+          order: restored.order,
+          original: restored.original,
+          originalOutput: restored.originalOutput,
+          photos: restored.photoIds.map((photoId) => {
+            const blob = restored.images.get(photoId);
+            if (!blob) throw new Error(`Missing restored WebP for ${photoId}`);
+            const file = new File([blob], `${photoId}.webp`, {
+              type: 'image/webp',
+            });
+            return {
+              file,
+              photo_id: photoId,
+              url: URL.createObjectURL(file),
+            };
+          }),
+          profileReference: restored.profileReference,
+          prompt: restored.prompt,
+          request: { status: restored.original ? 'ready' : 'idle' },
+        });
+        return true;
       },
       selectFiles: (files) => {
-        if (files.length > 20 || new Set(files).size !== files.length)
+        if (files.length > 15 || new Set(files).size !== files.length)
           throw new ApiError(
             'INVALID_SELECTION',
-            '서로 다른 사진을 최대 20장 선택해 주세요.',
+            '서로 다른 사진을 최대 15장 선택해 주세요.',
           );
-        const previous = get().photos;
+        const { photos: previous, profileReference, prompt } = get();
         const photos = files.map(
           (file) =>
             previous.find((photo) => photo.file === file) ?? {
@@ -314,8 +379,16 @@ export function createEditorStore() {
         stop();
         for (const photo of previous)
           if (!photos.includes(photo)) URL.revokeObjectURL(photo.url);
-        set({ ...initialState, photos });
+        set({
+          ...initialState,
+          order: photos.map((photo) => photo.photo_id),
+          photos,
+          profileReference,
+          prompt,
+        });
       },
+      setProfileReference: (profileReference) => set({ profileReference }),
+      setPrompt: (prompt) => set({ prompt }),
     };
   });
 }
