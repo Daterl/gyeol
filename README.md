@@ -4,6 +4,8 @@
 
 사진을 보정하지 않습니다. **고릅니다.** 그리고 굳이 말할 필요 없는 자리는 **비운 채로** 돌려줍니다.
 
+현재 제품 계약은 **공개 Instagram 프로필 연결 → 사진 3~15장 → 선택 프롬프트 → 큐레이션 프리뷰·편집·확정 → 공유 링크**다. 구현된 화면과 새 계약의 차이는 [ADR-0008](docs/adr/0008-public-profile-curation-and-sharing.md)과 [엄브렐라 #65](https://github.com/Daterl/gyeol/issues/65)에서 관리한다.
+
 원티드 AI 챔피언십 2026 출품작.
 
 ---
@@ -40,7 +42,7 @@ npm run start:mock       # 기존 standalone mock 서버 (기본 3000)
 ## 스택
 
 Next.js App Router · React · TypeScript strict · Zustand · Tailwind CSS · shadcn/ui · tailwind-variants(`tv`). 서버는 Next.js Route Handlers(Node runtime)와 기존 lib/ 로직·Anthropic API를 사용한다. 라이브러리는 구현 시 최신 stable·peer·Node 호환을 확인하고 lockfile에 고정하며, 모델은 계정 접근을 확인한 ID를 사용한다.
-DB와 로그인은 없다. 선택 근거는 [ADR-0002](docs/adr/0002-react-stack-and-ai-session-graph.md)에 있다.
+계정 로그인과 관계형 서버 DB는 없다. 작성 중 메타데이터는 localStorage, 정규화 이미지 초안은 IndexedDB, 확정 공유본은 Private Vercel Blob에 둔다. 저장·공유 근거는 [ADR-0008](docs/adr/0008-public-profile-curation-and-sharing.md)에 있다.
 
 ## 구조
 
@@ -78,7 +80,7 @@ codex mcp add shadcn -- npx -y shadcn@latest mcp
 
 - [작업 칸반](https://github.com/orgs/Daterl/projects/2/views/1): 기존 이슈의 현재 상태를 관리한다. 작업 시작·PR 작성·막힘 발생·인수 완료 시 갱신한다.
 - [제출 마일스톤](https://github.com/Daterl/gyeol/milestone/1): 제출 범위와 마감 **2026-09-21 00:00 KST**를 관리한다.
-- [ADR](docs/adr/0001-single-screen-photo-only-entry.md): diego.yoon의 제품 결정과 enzo.cho 협업 시 반영할 내용을 기록한다.
+- [ADR](docs/adr/0008-public-profile-curation-and-sharing.md): 현재 제품 결정과 diego.yoon·enzo.cho 협업 시 반영할 내용을 기록한다.
 
 상태는 `대기 → 착수 가능 → 진행 중 → 검토·인수 대기 → 완료`, 진행 도중 중단은 `막힘`으로 표시한다. 진행 근거·다음 행동·막힘 해제 조건은 해당 이슈/PR에 남긴다. PR 생성이나 로컬 테스트 통과만으로 완료 처리하지 않는다.
 

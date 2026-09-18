@@ -1,12 +1,12 @@
 # ADR-0001: 한 화면 입력과 사진만으로 시작하기
 
 - 날짜: 2026-09-17
-- 상태: 제품 방향 확정 — diego.yoon 결정. 공동 계약 반영은 협업 확인 필요
+- 상태: 대체됨 — 2026-09-18 [ADR-0008](0008-public-profile-curation-and-sharing.md)이 공개 프로필 연결 필수와 사진 3~15장으로 변경
 - 결정자 / 화면·출력 생성 담당: **diego.yoon** (`@jangwonyoon`)
 - 협업자 / 입력 이해 담당: **enzo.cho** (`@onejaejae`)
 - 관련: [개발 범위](../intent.md), [#14 입력 화면](https://github.com/Daterl/gyeol/issues/14), [#15 결과 화면](https://github.com/Daterl/gyeol/issues/15), [PR #21 계약 초안](https://github.com/Daterl/gyeol/pull/21)
 
-> 2026-09-18 후속 결정: [ADR-0006](0006-apify-public-instagram.md)에 따라 Instagram 조회는 Apify의 공개 계정·게시물만 대상으로 한다. 아래 “비공개 계정용 업로드”는 계정 조회가 아닌 일반 수동 자료 입력으로 대체한다. 앱 전체 화면은 [ADR-0007](0007-mobile-first-experience.md)의 모바일 우선 기준을 따른다.
+> 이 문서는 초기 결정을 보존한다. 현재 제품 계약은 [ADR-0008](0008-public-profile-curation-and-sharing.md)을 따른다. 공개 프로필 연결 없이 사진만으로 시작하는 경로와 3~20장 범위는 더 이상 적용하지 않는다.
 
 ## 배경
 
