@@ -43,7 +43,10 @@ test('all generation preserves each contract path and loads actual shared/output
     assert.ok(body.system.includes(guard));assert.match(body.system,/정확히.*한/);
     assert.equal(body.output_config.format.type,'json_schema');
     const sent=JSON.parse(body.messages[0].content[0].text);
-    assert.equal(sent.slots.length,3);assert.deepEqual(sent.applied_profile,source.feed.applied_profile);
+    assert.equal(sent.slots.length,3);
+    assert.deepEqual(Object.keys(sent.applied_profile).sort(),['disclosure','language']);
+    assert.equal(sent.applied_profile.disclosure,source.feed.applied_profile.disclosure);
+    assert.ok(!JSON.stringify(sent.applied_profile).includes('evidence'));
     assert.equal(body.messages[0].content[0].type,'text');
   }
 });
@@ -61,11 +64,95 @@ test('target-only current profiles stay traceable in the feed but produce byte-i
     assert.equal(built.feed.applied_profile.current_profile_id,currentIds.at(-1));
     bodies.push(seen[1].options.body);
     const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
-    assert.equal(sent.applied_profile.current_profile_id,null);
+    assert.equal(Object.hasOwn(sent.applied_profile,'current_profile_id'),false);
   }
   assert.equal(currentIds[0],null);
   assert.ok(currentIds[1]);assert.ok(currentIds[2]);assert.notEqual(currentIds[1],currentIds[2]);
   assert.equal(bodies[0],bodies[1]);assert.equal(bodies[1],bodies[2]);
+});
+
+test('model request whitelists photo facts and applied language values in all and slot modes',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'짧고 담백하게'},currentPosts(['기록',''])));
+  const rationale=structuredClone(built.feed.slots[0].rationale);
+  for(const mode of ['all','slot']) {
+    const seen=[];
+    const provider=mode==='all'?filledOutput(built.feed):{slot:filledOutput(built.feed).output.slots[0]};
+    const requested={schema_version:'1.0',mode,feed:structuredClone(built.feed),context:structuredClone(built.context),
+      ...(mode==='slot'?{photo_id:built.feed.slots[0].photo_id}:{})};
+    await generateOutput(requested,{apiKey:'fake-key',fetchImpl:transport(provider,seen)});
+    const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
+    assert.deepEqual(Object.keys(sent.applied_profile).sort(),['disclosure','language']);
+    assert.ok(!JSON.stringify(sent.applied_profile).match(/target_profile_id|current_profile_id|deltas|visual|sequence|confidence|evidence/));
+    for(const slot of sent.slots) {
+      assert.deepEqual(Object.keys(slot).sort(),['caption_inputs','photo_id','position']);
+      assert.deepEqual(Object.keys(slot.caption_inputs),['describable_facts']);
+    }
+    assert.ok(!JSON.stringify(sent).match(/rationale|narrative_role|adjacent_overlap|is_visual_peak|omit_suggestion/));
+    assert.deepEqual(requested.feed.slots[0].rationale,rationale);
+  }
+});
+
+test('internal ordering details fail closed in every public model field for all and slot modes',async()=>{
+  const allCases=[];
+  const title=filledOutput();title.output.title='밝기와 채도로 연결한 세 장';allCases.push(['title',title]);
+  const text=filledOutput();text.output.slots[0].text='밝기 0.712인 단색 카드';allCases.push(['text',text]);
+  const reason=output();reason.output.slots[0].omit_reason='앞자리 사진과 측정 색 거리로 이 자리에 뒀다';allCases.push(['omit_reason',reason]);
+  const note=filledOutput();note.output.slots[0].evidence[0].note='is_visual_peak=true라 선택했다';allCases.push(['evidence.note',note]);
+  for(const [field,response] of allCases) {
+    await assert.rejects(generateOutput(input('all'),options(response)),{code:'MODEL_CONTRACT'},`all ${field}`);
+  }
+
+  const slotCases=[];
+  const slotText=structuredClone(fixture.output.slots[0]);slotText.text='caption_inputs를 사용했다';slotCases.push(['text',slotText]);
+  const slotReason=structuredClone(fixture.all_omitted.slots[0]);slotReason.omit_reason='점수가 가장 높아 1번에 뒀다';slotCases.push(['omit_reason',slotReason]);
+  const slotNote=structuredClone(fixture.output.slots[0]);slotNote.evidence[0].note='adjacent_overlap=0.8';slotCases.push(['evidence.note',slotNote]);
+  for(const [field,response] of slotCases) {
+    await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'},`slot ${field}`);
+  }
+});
+
+test('every model-input field name is rejected when echoed into public evidence',async()=>{
+  const names=['mode','slots','position','photo_id','caption_inputs','describable_facts','applied_profile','disclosure','language',
+    'caption_len','emoji_rate','ending_style','linebreak_habit','caption_coverage','banned_words','p50','p90','unit'];
+  for(const name of names) {
+    const response=structuredClone(fixture.output.slots[0]);
+    response.evidence[0].note=`${name}=internal`;
+    await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'},name);
+  }
+});
+
+test('model-visible disclosure values are rejected in both output modes',async()=>{
+  const all=filledOutput();all.output.title='target_only로 만든 세 장';
+  await assert.rejects(generateOutput(input('all'),options(all)),{code:'MODEL_CONTRACT'});
+  const slot=structuredClone(fixture.output.slots[0]);slot.evidence[0].note='corrected를 적용했다';
+  await assert.rejects(generateOutput(input('slot'),options({slot})),{code:'MODEL_CONTRACT'});
+});
+
+test('the original brightness and saturation ordering title is rejected even when heuristic facts contain both terms',async()=>{
+  const req=input();
+  const facts=['평균 밝기 0.712','평균 채도 0.671'];
+  req.feed.slots[0].caption_inputs.describable_facts=facts;
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=facts;
+  const provider=filledOutput(req.feed);provider.output.title='밝기와 채도로 연결한 세 장';
+  await assert.rejects(generateOutput(req,options(provider)),{code:'MODEL_CONTRACT'});
+});
+
+test('an internal-looking literal remains usable when it is visibly grounded in the same photo',async()=>{
+  const req=input('slot');
+  const fact='화면에 caption_state라는 글자가 보인다';
+  req.feed.slots[0].caption_inputs.describable_facts=[fact];
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
+  const response=structuredClone(fixture.output.slots[0]);response.text=fact;response.evidence[0].note=fact;
+  assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
+});
+
+test('a longer photographed word cannot ground an internal identifier substring',async()=>{
+  const req=input('slot');
+  const fact='balanced composition';
+  req.feed.slots[0].caption_inputs.describable_facts=[fact];
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
+  const response=structuredClone(fixture.output.slots[0]);response.text='position=1을 사용했다';
+  await assert.rejects(generateOutput(req,options({slot:response})),{code:'MODEL_CONTRACT'});
 });
 
 test('single slot sends only its photo and rejects other photo, position, user state or foreign evidence',async()=>{
