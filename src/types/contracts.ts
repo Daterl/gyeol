@@ -20,6 +20,7 @@ export type Visual = {
 };
 export type Language = {
   banned_words: string[];
+  caption_coverage?: Claim<'all' | 'sparse'>;
   caption_len?: Claim<{ p50: number; p90: number; unit: '자' }>;
   emoji_rate?: Claim<number>;
   empty_caption_ratio?: Claim<number>;

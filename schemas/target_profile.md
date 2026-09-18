@@ -27,7 +27,8 @@ visual의 선택 항목: palette Claim<{hue_mean:0..360,sat_mean:0..1,bright_mea
 tone_words/subjects Claim<string[]>, composition_mix Claim<{full_frame:0..1,negative_space:0..1}> (합 1),
 scale_mix Claim<{closeup:0..1,midshot:0..1,fullshot:0..1}> (합 1).
 language의 선택 항목: caption_len Claim<{p50:integer≥0,p90:integer≥p50,unit:"자"}>, emoji_rate Claim<number≥0>,
-ending_style Claim<해요|다|명사형|혼합>, linebreak_habit Claim<없음|짧게 자주|문단>, empty_caption_ratio Claim<number[0,1]>.
+ending_style Claim<해요|다|명사형|혼합>, linebreak_habit Claim<없음|짧게 자주|문단>, empty_caption_ratio Claim<number[0,1]>,
+caption_coverage Claim<all|sparse>. `caption_coverage`는 target+freetext에만 허용하며, `empty_caption_ratio`는 freetext에 허용하지 않는다.
 language가 객체이면 banned_words:string[]은 필수이며 Claim이 아니다.
 sequence.opener_tendency는 Claim<풀샷|클로즈업|인물|불명>. carousel_count=0이면 생략하거나 불명만 가능하다.
 
@@ -47,7 +48,7 @@ axis=target, present=true만 가능. source는 ig_reference/freetext만 가능�
     "sample_size": 1,
     "completeness": {
       "visual": 0.2,
-      "language": 0.4,
+      "language": 0.2,
       "sequence": 0
     },
     "visual": {
@@ -72,17 +73,6 @@ axis=target, present=true만 가능. source는 ig_reference/freetext만 가능�
           "p90": 18,
           "unit": "자"
         },
-        "confidence": 1,
-        "evidence": [
-          {
-            "kind": "user_text",
-            "ref": "tgt_synthetic_quiet:input",
-            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
-          }
-        ]
-      },
-      "empty_caption_ratio": {
-        "value": 0.5,
         "confidence": 1,
         "evidence": [
           {

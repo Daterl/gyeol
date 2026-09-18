@@ -9,7 +9,7 @@
     "sample_size": 1,
     "completeness": {
       "visual": 0.2,
-      "language": 0.4,
+      "language": 0.2,
       "sequence": 0
     },
     "visual": {
@@ -34,17 +34,6 @@
           "p90": 18,
           "unit": "자"
         },
-        "confidence": 1,
-        "evidence": [
-          {
-            "kind": "user_text",
-            "ref": "tgt_synthetic_quiet:input",
-            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
-          }
-        ]
-      },
-      "empty_caption_ratio": {
-        "value": 0.5,
         "confidence": 1,
         "evidence": [
           {
