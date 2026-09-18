@@ -318,7 +318,7 @@ test('mode=all discloses the counted omissions, including zero, and never on a s
   assert.equal(none.output.slots.filter(slot=>slot.caption_state==='omitted').length,0);
   assert.deepEqual(none.omission,{
     omitted:0,total:3,note_key:'omission.none',
-    note:'이번에는 3자리 모두에 문장을 두는 편이 낫다고 봤어요.',
+    note:'이번에는 3자리 모두에 쓸 거리를 제안했어요.',
     evidence:[{kind:'rule',ref:'gyeol.omit.disclosure',note:'생성 결과의 omitted 슬롯을 세어 0/3로 적었다'}]
   });
   for(const word of ['미완성','채워','아직','못']) assert.ok(!none.omission.note.includes(word),word);

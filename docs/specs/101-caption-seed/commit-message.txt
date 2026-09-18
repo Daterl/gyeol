@@ -1,0 +1,13 @@
+사용자가 쓸 단서의 품질 한계와 재현 근거를 남긴다
+
+완성 캡션 대신 소재와 질문을 제안하는 세 번의 시도를 보존한다.
+최종 S4·P2·비움 검증 실패를 인수 완료로 표시하지 않는다.
+
+Constraint: 타이틀·스키마·UI·사진 분석 경로를 변경하지 않는다
+Rejected: 응답 후처리로 실패 소재 숨기기 | 품질 문제를 가리는 우회이므로 제외
+Confidence: high
+Scope-risk: narrow
+Directive: 품질 게이트 실패 상태이므로 ready 또는 merge하지 않는다
+Tested: npm test 254/254 및 eval/check/typecheck/lint, 실모델 36회와 최종 180슬롯 사진 대조
+Not-tested: 사람의 1분 작성 판정, 독립 holdout·교차 리뷰, Node 24 환경, 배포
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>

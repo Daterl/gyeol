@@ -1,0 +1,92 @@
+[
+  {
+    "photo_id": "cq_01",
+    "file": "c29_Dc-2OOrFBnb_00.jpg",
+    "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_02",
+    "file": "c29_Dc94ZfOD1-q_00.jpg",
+    "sha256": "3a85cbfeb5e1844ee754987b0ff80d19824d984ab73dd50acd12b2466a223cd3",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_03",
+    "file": "c29_DdEAAeHm6u0_00.jpg",
+    "sha256": "498d44ecc219c5fa4a7ef458ff8dda52571ee610d45c6ea5514c1e527c360974",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_04",
+    "file": "c29_DdJNrukFMtV_00.jpg",
+    "sha256": "f27eaa245ff72fe3a7a573bd418159584e2bc9bb8079e2d376f8a7db8b4334b6",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_05",
+    "file": "c29_DdQ30v-lDhe_00.jpg",
+    "sha256": "3788569108b2ba24ff3d6abfa8fe9e2e7ba7e33d0e74ed77e6f2b31e6738fe9e",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_06",
+    "file": "c29_DdVDlTviVrG_00.jpg",
+    "sha256": "1797c3f131fe998fd28a2d532d0a092195fc5a7848b30bc7499300996b7b0cd9",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_07",
+    "file": "c29_DdDCDKgFCLE_00.jpg",
+    "sha256": "6d903245981461b3dfab76b56e649e8963c476eac20638b034ec69a4e7633272",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_08",
+    "file": "kr29cm_Dc8RZMAjXm8_00.jpg",
+    "sha256": "9b3e1426f237b760990bb2809a7cd20fff865aa542477623005d8fc2d45249f8",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_09",
+    "file": "kr29cm_DdDx752PuVM_00.jpg",
+    "sha256": "51ee9634870e25bba3532627a0e48c7f9a6ea8d9a2c6963b19e88cfcb06c28f9",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_10",
+    "file": "kr29cm_DdIt_2szpfb_00.jpg",
+    "sha256": "684a06d7c453d7a5e88e1b99808e86ddc232eb8eb139f39f19dc164a2dd7ccf4",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_11",
+    "file": "kr29cm_DdOTLpSIBNf_00.jpg",
+    "sha256": "30c0acf1c9dd963abefe98197e6741bc3d1479eed7ce1daccbc27b37e49c14a9",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_12",
+    "file": "kr29cm_DdTSeJJxy7l_00.jpg",
+    "sha256": "f214c2e9018375f2bf605882ab347fe107fe2e101b064b3537687370ae8fb1d7",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_13",
+    "file": "c29_Dc-2OOrFBnb_01.jpg",
+    "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_14",
+    "file": "c29_Dc7cY9WiUbs_08.jpg",
+    "sha256": "0c8269acb18566185699016f4f1c0649816c8e25bb7ab8a5e7bcfb4b62decb06",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  },
+  {
+    "photo_id": "cq_15",
+    "file": "c29_DdDCDKgFCLE_06.jpg",
+    "sha256": "530ccdc70a4d7d44de31c0d4e1899b4bc354e9137df1ccd5ace6a54c39482e13",
+    "analysis_source": "previous 101-caption-quality/inputs.json, unchanged"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "command": "npm test",
+    "exit_code": 0,
+    "elapsed_seconds": 2.79,
+    "log": "test.log"
+  },
+  {
+    "command": "npm run eval",
+    "exit_code": 0,
+    "elapsed_seconds": 0.45,
+    "log": "eval.log"
+  },
+  {
+    "command": "npm run check",
+    "exit_code": 0,
+    "elapsed_seconds": 1.77,
+    "log": "check.log"
+  },
+  {
+    "command": "npm run typecheck",
+    "exit_code": 0,
+    "elapsed_seconds": 1.45,
+    "log": "typecheck.log"
+  },
+  {
+    "command": "npm run lint",
+    "exit_code": 0,
+    "elapsed_seconds": 0.63,
+    "log": "lint.log"
+  }
+]
