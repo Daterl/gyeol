@@ -43,7 +43,7 @@ context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_uplo
 - all: photo_id를 보내지 않는다. 성공 `{output:F3Export}`. 타이틀 한 줄, 슬롯 N개가 원본 사진과 원본 position을 그대로 사용한다.
 - slot: feed에 있는 photo_id 한 개를 보낸다. 성공 `{slot:CaptionSlot}`. 요청한 ID/원래 position만 반환한다. 전체 output을 새로 생성해 다른 편집을 덮어쓰지 않는다.
 - all 성공에는 `omission:{omitted,total,note_key,note,evidence}`가 함께 온다. 이 값은 **서버가 그 응답의 slots를 센 것**이며 비움 개수를 바꾸지 않는다. `note_key`는 `omission.none`(omitted=0) / `omission.some`이고, 개수·note_key가 실제 slots와 어긋나거나 `gyeol.omit.disclosure` rule 근거가 없으면 응답을 거부한다. 비움 0개도 판단의 결과이므로 미완성으로 표시하지 않는다. `caption_coverage`가 `all`이라 비움이 0개인 회차에도 같은 규칙으로 센다 — 고지는 요청 의도가 아니라 실제 결과를 말한다. slot 성공에는 붙이지 않는다 — 한 슬롯으로 피드 전체의 비움을 관측할 수 없다(#80).
-- 서버 결과에는 filled/omitted만 있다. user 상태는 클라이언트 편집에서만 만든다. 충분한 사실이 없으면 억지 캡션 대신 `NO_FACTS` 실패 또는 근거 있는 omitted다.
+- 서버 결과에는 seed/omitted만 있다. user 상태는 클라이언트 편집에서만 만든다. 충분한 사실이 없으면 억지 캡션 대신 `NO_FACTS` 실패 또는 근거 있는 omitted다.
 - 오류·timeout은 `{error:{code,message,retryable:boolean}}`. 성공을 빈 배열/빈 output으로 대체하지 않는다.
 - `/api/title`, `/api/caption`은 별도 API로 만들지 않는다. 출력 프롬프트만 역할별 파일로 유지한다.
 - 키가 없으면 `GENERATION_UNAVAILABLE`(503)다. 고정 샘플은 샘플임을 표시한 별도 경로다. 유료 모델 검증과 fake-provider 검증을 구분한다.
@@ -54,7 +54,7 @@ context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_uplo
 - `validateExport`: **서버 원본 생성 결과**의 position→photo_id 대응을 고정한다.
 - `validateEditedExport`: **사용자 draft**의 동일 photo_id 집합·1..N position을 확인하되 재정렬을 허용한다. 외부/중복/누락 ID는 거부한다.
 - F3Export는 `{title,slots:[{position,photo_id,caption_state,text,omit_reason,evidence}]}`.
-- filled: nonempty text / omit_reason=null. omitted: text=null / nonempty omit_reason / evidence 유지. user: nonempty text / omit_reason=null / user_text evidence 포함.
+- seed: 두 줄 쓸 거리 / omit_reason=null. omitted: text=null / nonempty omit_reason / evidence 유지. user: nonempty text / omit_reason=null / user_text evidence 포함.
 - 전체 omitted도 유효하다. 내보내기는 JSON과 사람이 읽을 텍스트를 제공한다. 사용자 직접 비움도 근거를 보존한다. 저장소·DB·인스타 자동 게시를 추가하지 않는다.
 - 비동기 응답은 세션/요청 식별자를 대조해 늦은 응답이 새 세션·사용자 수정을 덮지 못하게 한다(#25).
 

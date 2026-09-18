@@ -43,7 +43,7 @@ test('request boundaries reject foreign IDs, bad versions, false photo targets a
 
 test('generation all and single-slot responses keep the requested original photo and position',()=>{
   const all=generate();validateGenerateRequest(all);
-  const output=clone(fixture.output);output.slots[2]={...output.slots[2],caption_state:'filled',text:'단색 카드',evidence:[{kind:'uploaded_photo',ref:ids[2],note:'합성 카드'}]};
+  const output=clone(fixture.output);output.slots[2]={...output.slots[2],caption_state:'seed',text:'단색 카드',evidence:[{kind:'uploaded_photo',ref:ids[2],note:'합성 카드'}]};
   validateGenerateResponse({output},all);
   assert.throws(()=>validateGenerateResponse({output:fixture.output},all),/user edit/);
   const request=generate('slot');validateGenerateRequest(request);

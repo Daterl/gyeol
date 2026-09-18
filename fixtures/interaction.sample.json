@@ -309,7 +309,7 @@
       {
         "photo_id": "ph_01",
         "position": 1,
-        "caption_state": "filled",
+        "caption_state": "seed",
         "text": "쓸 거리: 단색 카드\n이 중 기억에 남은 건?",
         "omit_reason": null,
         "evidence": [
@@ -356,7 +356,7 @@
       {
         "photo_id": "ph_01",
         "position": 3,
-        "caption_state": "filled",
+        "caption_state": "seed",
         "text": "쓸 거리: 단색 카드\n이 중 기억에 남은 건?",
         "omit_reason": null,
         "evidence": [

@@ -48,10 +48,10 @@ delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0
 
 ## F3 export (별도 출력, OrderedFeed에 섞지 않음)
 
-`{title:string, slots:[{position:integer,photo_id:string,omit_reason:string|null,caption_state:"filled"|"omitted"|"user",text:string|null,evidence:Evidence[1..]}]}`.
+`{title:string, slots:[{position:integer,photo_id:string,omit_reason:string|null,caption_state:"seed"|"omitted"|"user",text:string|null,evidence:Evidence[1..]}]}`.
 title은 공백만인 값·배열·개행을 허용하지 않는 단일 문자열 하나이며 titles 배열을 함께 보내지 않는다.
 export positions도 1..N을 한 번씩 가진다. 각 position의 photo_id는 전달받은 OrderedFeed와 일치해야 한다.
-omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. filled/user의 omit_reason은 null이다. omitted이면 text=null, filled/user이면 nonempty string이다.
+omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. seed/user의 omit_reason은 null이다. omitted이면 text=null, seed/user이면 nonempty string이다. seed는 `쓸 거리: …\n이 중 기억에 남은 건?` 두 줄이며 완성 캡션으로 내보내지 않는다.
 비움의 evidence도 보존하며 사용자가 쓴 문장의 evidence는 사용자 입력 출처로 연결한다.
 `caption_state="user"`는 유효한 `kind="user_text"` Evidence를 최소 1개 포함해야 한다. 사진 근거를 함께 넣을 수 있지만 사진 근거만으로 user 상태를 허용하지 않는다. ref/note의 형식을 검사하며 실제 사용자 입력의 진위 인증은 이 계약의 범위가 아니다.
 서버 export slots는 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다. 사용자 draft는 validateEditedExport로 같은 사진 집합의 재정렬을 허용하며 원본 근거를 photo_id에 보존한다.

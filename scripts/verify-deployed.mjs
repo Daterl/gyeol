@@ -103,11 +103,11 @@ async function generation(feedResponse) {
     nonempty(title) && !/[\r\n\u2028\u2029]/u.test(title),
     `title=${JSON.stringify(title ?? null)}`);
   const slots = Array.isArray(output?.slots) ? output.slots : [];
-  const filled = slots.filter(s => s?.caption_state === 'filled' && nonempty(s.text));
+  const seeded = slots.filter(s => s?.caption_state === 'seed' && nonempty(s.text));
   const empty = slots.filter(s => s?.caption_state === 'omitted');
   const emptyWithReason = empty.filter(s => nonempty(s.omit_reason));
-  record('D5', '일부는 채우고 일부는 비운다', filled.length > 0 && empty.length > 0,
-    `채움 ${filled.length} / 비움 ${empty.length}`);
+  record('D5', '일부에는 쓸 거리를 제안하고 일부는 비운다', seeded.length > 0 && empty.length > 0,
+    `쓸 거리 ${seeded.length} / 비움 ${empty.length}`);
   record('D5', '비운 자리에 모두 omit_reason 이 붙는다',
     empty.length > 0 && emptyWithReason.length === empty.length,
     `${emptyWithReason.length}/${empty.length} 비움 슬롯에 이유`);

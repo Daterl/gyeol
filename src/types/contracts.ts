@@ -144,7 +144,7 @@ export type CaptionSlot = {
   photo_id: string;
   position: number;
 } & (
-  | { caption_state: 'filled' | 'user'; omit_reason: null; text: string }
+  | { caption_state: 'seed' | 'user'; omit_reason: null; text: string }
   | { caption_state: 'omitted'; omit_reason: string; text: null }
 );
 export type F3Export = { slots: CaptionSlot[]; title: string };

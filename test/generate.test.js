@@ -11,10 +11,10 @@ const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.
 const referenceFixture=JSON.parse(await readFile(new URL('../fixtures/ref_snapshot.sample.json',import.meta.url),'utf8'));
 const input=(mode='all',source=fixture)=>({schema_version:'1.0',mode,feed:structuredClone(source.feed),context:structuredClone(source.context),...(mode==='slot'?{photo_id:'ph_01'}:{})});
 const output=()=>({output:structuredClone(fixture.all_omitted)});
-// filled 은 완성 캡션이 아니라 사용자가 채우는 단서 형식이며, 사진 근거 note 는 관측 사실 원문이다 (#101).
+// seed 는 완성 캡션이 아니라 사용자가 채우는 단서 형식이며, 사진 근거 note 는 관측 사실 원문이다 (#101).
 const hint=fact=>`쓸 거리: ${fact}\n이 중 기억에 남은 건?`;
-const filledOutput=(feed=fixture.feed)=>({output:{title:'세 장의 기록',slots:feed.slots.map(slot=>({
-  photo_id:slot.photo_id,position:slot.position,caption_state:'filled',text:hint(slot.caption_inputs.describable_facts[0]),omit_reason:null,
+const seedOutput=(feed=fixture.feed)=>({output:{title:'세 장의 기록',slots:feed.slots.map(slot=>({
+  photo_id:slot.photo_id,position:slot.position,caption_state:'seed',text:hint(slot.caption_inputs.describable_facts[0]),omit_reason:null,
   evidence:[{kind:'uploaded_photo',ref:slot.photo_id,note:slot.caption_inputs.describable_facts[0]}]
 }))}});
 const orderInput=(target,current={kind:'none'},photos=fixture.context.photos)=>({
@@ -62,7 +62,7 @@ test('target-only current profiles stay traceable in the feed but produce byte-i
     currentIds.push(built.feed.applied_profile.current_profile_id);
     assert.equal(built.feed.applied_profile.disclosure,'target_only');
     const seen=[];
-    await generateOutput(generatedInput(built),{apiKey:'fake-key',fetchImpl:transport(filledOutput(built.feed),seen)});
+    await generateOutput(generatedInput(built),{apiKey:'fake-key',fetchImpl:transport(seedOutput(built.feed),seen)});
     assert.equal(built.feed.applied_profile.current_profile_id,currentIds.at(-1));
     bodies.push(seen[1].options.body);
     const sent=JSON.parse(JSON.parse(seen[1].options.body).messages[0].content[0].text);
@@ -78,7 +78,7 @@ test('model request whitelists photo facts and applied language values in all an
   const rationale=structuredClone(built.feed.slots[0].rationale);
   for(const mode of ['all','slot']) {
     const seen=[];
-    const provider=mode==='all'?filledOutput(built.feed):{slot:filledOutput(built.feed).output.slots[0]};
+    const provider=mode==='all'?seedOutput(built.feed):{slot:seedOutput(built.feed).output.slots[0]};
     const requested={schema_version:'1.0',mode,feed:structuredClone(built.feed),context:structuredClone(built.context),
       ...(mode==='slot'?{photo_id:built.feed.slots[0].photo_id}:{})};
     await generateOutput(requested,{apiKey:'fake-key',fetchImpl:transport(provider,seen)});
@@ -96,12 +96,12 @@ test('model request whitelists photo facts and applied language values in all an
 
 test('internal ordering details fail closed in every public model field for all and slot modes',async()=>{
   const allCases=[];
-  const title=filledOutput();title.output.title='밝기와 채도로 연결한 세 장';allCases.push(['title',title]);
-  const text=filledOutput();text.output.slots[0].text='밝기 0.712인 단색 카드';allCases.push(['text',text]);
+  const title=seedOutput();title.output.title='밝기와 채도로 연결한 세 장';allCases.push(['title',title]);
+  const text=seedOutput();text.output.slots[0].text='밝기 0.712인 단색 카드';allCases.push(['text',text]);
   const reason=output();reason.output.slots[0].omit_reason='앞자리 사진과 측정 색 거리로 이 자리에 뒀다';allCases.push(['omit_reason',reason]);
-  const note=filledOutput();note.output.slots[0].evidence[0].note='is_visual_peak=true라 선택했다';allCases.push(['evidence.note',note]);
+  const note=seedOutput();note.output.slots[0].evidence[0].note='is_visual_peak=true라 선택했다';allCases.push(['evidence.note',note]);
   // 필드명을 안 부르고 값만 옮겨 적는 경로. 위 네 건은 전부 내부 이름이 같이 나와서 잡힌다.
-  const bare=filledOutput();bare.output.slots[0].evidence[0].note='앞 사진과의 겹침이 0.786 이라 이 자리를 골랐다';allCases.push(['bare decimal',bare]);
+  const bare=seedOutput();bare.output.slots[0].evidence[0].note='앞 사진과의 겹침이 0.786 이라 이 자리를 골랐다';allCases.push(['bare decimal',bare]);
   for(const [field,response] of allCases) {
     await assert.rejects(generateOutput(input('all'),options(response)),{code:'MODEL_CONTRACT'},`all ${field}`);
   }
@@ -126,7 +126,7 @@ test('every model-input field name is rejected when echoed into public evidence'
 });
 
 test('model-visible disclosure values are rejected in both output modes',async()=>{
-  const all=filledOutput();all.output.title='target_only로 만든 세 장';
+  const all=seedOutput();all.output.title='target_only로 만든 세 장';
   await assert.rejects(generateOutput(input('all'),options(all)),{code:'MODEL_CONTRACT'});
   const slot=structuredClone(fixture.output.slots[0]);slot.evidence[0].note='corrected를 적용했다';
   await assert.rejects(generateOutput(input('slot'),options({slot})),{code:'MODEL_CONTRACT'});
@@ -137,7 +137,7 @@ test('the original brightness and saturation ordering title is rejected even whe
   const facts=['평균 밝기 0.712','평균 채도 0.671'];
   req.feed.slots[0].caption_inputs.describable_facts=facts;
   req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=facts;
-  const provider=filledOutput(req.feed);provider.output.title='밝기와 채도로 연결한 세 장';
+  const provider=seedOutput(req.feed);provider.output.title='밝기와 채도로 연결한 세 장';
   await assert.rejects(generateOutput(req,options(provider)),{code:'MODEL_CONTRACT'});
 });
 
@@ -148,6 +148,18 @@ test('an internal-looking literal remains usable when it is visibly grounded in 
   req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
   const response=structuredClone(fixture.output.slots[0]);response.text=hint('caption_state라는 글자');response.evidence[0].note=fact;
   assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
+});
+
+test('a seed must quote one fact from its own photo',async()=>{
+  const cases=[
+    response=>{response.text=hint('컬러 카드');},
+    response=>{response.evidence.push({...response.evidence[0]});},
+    response=>{response.evidence[0].ref='ph_02';}
+  ];
+  for(const mutate of cases) {
+    const response=structuredClone(fixture.output.slots[0]); mutate(response);
+    await assert.rejects(generateOutput(input('slot'),options({slot:response})),{code:'MODEL_CONTRACT'});
+  }
 });
 
 test('a longer photographed word cannot ground an internal identifier substring',async()=>{
@@ -172,7 +184,7 @@ test('single slot sends only its photo and rejects other photo, position, user s
 test('all generation stabilizes one evidence-backed omission without forcing other contexts',async()=>{
   const built=await buildFeed(orderInput({kind:'text',text:'사진만 두고 싶어요'},currentPosts(['','기록'])));
   const requestInput=generatedInput(built);
-  const provider=filledOutput(built.feed);
+  const provider=seedOutput(built.feed);
   const actual=await generateOutput(requestInput,options(provider));
   const omitted=actual.output.slots.filter(slot=>slot.caption_state==='omitted');
   assert.equal(omitted.length,1);
@@ -180,7 +192,7 @@ test('all generation stabilizes one evidence-backed omission without forcing oth
   assert.match(omitted[0].omit_reason,/겹침 신호/);
   assert.doesNotMatch(omitted[0].omit_reason,/측정 색|설명/);
   assert.ok(omitted[0].evidence.some(e=>e.kind==='rule' && e.ref==='gyeol.omit.overlap'));
-  assert.deepEqual(actual.output.slots.filter(slot=>slot.caption_state==='filled'),provider.output.slots.filter(slot=>slot.position!==2));
+  assert.deepEqual(actual.output.slots.filter(slot=>slot.caption_state==='seed'),provider.output.slots.filter(slot=>slot.position!==2));
 
   for(const preserve of ['weak signal','first slot only']) {
     const current=input();
@@ -189,7 +201,7 @@ test('all generation stabilizes one evidence-backed omission without forcing oth
       current.feed.slots[0].caption_inputs.adjacent_overlap=0.96;
       current.feed.slots[1].caption_inputs.adjacent_overlap=0.89;
     }
-    const fixtureProvider=filledOutput();
+    const fixtureProvider=seedOutput();
     assert.deepEqual(slotsOnly(await generateOutput(current,options(fixtureProvider))),fixtureProvider,preserve);
   }
 });
@@ -202,7 +214,7 @@ test('explicit sparse coverage survives buildFeed and deterministically stabiliz
   assert.equal(built.feed.applied_profile.language.caption_coverage.value,'sparse');
   assert.equal(built.context.target.language.empty_caption_ratio,undefined);
   assert.equal(built.context.current.language.empty_caption_ratio.value,0);
-  const provider=filledOutput(built.feed);
+  const provider=seedOutput(built.feed);
   const first=await generateOutput(generatedInput(built),options(provider));
   const second=await generateOutput(generatedInput(built),options(provider));
   assert.deepEqual(first,second);
@@ -211,7 +223,7 @@ test('explicit sparse coverage survives buildFeed and deterministically stabiliz
   const detailed=await buildFeed(orderInput({kind:'text',text:'몇 장만 자세히 써 줘'},currentNoOmit));
   assert.equal(detailed.context.target.language.caption_coverage.value,'sparse');
   assert.equal(detailed.context.target.language.caption_len.value.p50,90);
-  assert.equal((await generateOutput(generatedInput(detailed),options(filledOutput(detailed.feed))))
+  assert.equal((await generateOutput(generatedInput(detailed),options(seedOutput(detailed.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 });
 
@@ -228,7 +240,7 @@ test('reference observations keep the existing numeric ratio fallback',async()=>
   assert.equal(built.context.target.source,'ig_reference');
   assert.equal(built.context.target.language.caption_coverage,undefined);
   assert.equal(built.context.target.language.empty_caption_ratio.value,0.5);
-  const actual=await generateOutput(generatedInput(built),options(filledOutput(built.feed)));
+  const actual=await generateOutput(generatedInput(built),options(seedOutput(built.feed)));
   assert.equal(actual.output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 });
 
@@ -252,7 +264,7 @@ test('negated or non-caption coverage wording stays unset through generation',as
   for(const text of cases) {
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
     assert.equal(built.context.target.language?.caption_coverage,undefined,text);
-    const provider=filledOutput(built.feed);
+    const provider=seedOutput(built.feed);
     assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider,text);
   }
 });
@@ -260,17 +272,17 @@ test('negated or non-caption coverage wording stays unset through generation',as
 test('an unrelated contrast clause preserves the earlier explicit coverage request',async()=>{
   const sparse=await buildFeed(orderInput({kind:'text',text:'몇 장에만 문장을 써 줘, 하지만 사진 순서는 그대로'}));
   assert.equal(sparse.context.target.language.caption_coverage.value,'sparse');
-  assert.equal((await generateOutput(generatedInput(sparse),options(filledOutput(sparse.feed))))
+  assert.equal((await generateOutput(generatedInput(sparse),options(seedOutput(sparse.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 
   const all=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘, 하지만 색감은 차분하게'}));
   assert.equal(all.context.target.language.caption_coverage.value,'all');
-  const provider=filledOutput(all.feed);
+  const provider=seedOutput(all.feed);
   assert.deepEqual(slotsOnly(await generateOutput(generatedInput(all),options(provider))),provider);
 
   const sentenceScoped=await buildFeed(orderInput({kind:'text',text:'과한 색감은 싫어요. 말수가 적고 여백이 많은 기록.'}));
   assert.equal(sentenceScoped.context.target.language.caption_coverage.value,'sparse');
-  assert.equal((await generateOutput(generatedInput(sentenceScoped),options(filledOutput(sentenceScoped.feed))))
+  assert.equal((await generateOutput(generatedInput(sentenceScoped),options(seedOutput(sentenceScoped.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 
   for(const text of [
@@ -279,25 +291,25 @@ test('an unrelated contrast clause preserves the earlier explicit coverage reque
   ]) {
     const corrected=await buildFeed(orderInput({kind:'text',text}));
     assert.equal(corrected.context.target.language.caption_coverage.value,'all',text);
-    const correctedProvider=filledOutput(corrected.feed);
+    const correctedProvider=seedOutput(corrected.feed);
     assert.deepEqual(slotsOnly(await generateOutput(generatedInput(corrected),options(correctedProvider))),correctedProvider,text);
   }
 
   const correctedSparse=await buildFeed(orderInput({kind:'text',text:'모든 사진에 써 줘, 아니 몇 장에만 써 줘'}));
   assert.equal(correctedSparse.context.target.language.caption_coverage.value,'sparse');
-  assert.equal((await generateOutput(generatedInput(correctedSparse),options(filledOutput(correctedSparse.feed))))
+  assert.equal((await generateOutput(generatedInput(correctedSparse),options(seedOutput(correctedSparse.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 
   for(const text of ['캡션 없이, 하지만 몇 장에만 써 줘','전부 사진만, 하지만 몇 장에만 써 줘','캡션 없이. 아니 몇 장에만 써 줘']) {
     const corrected=await buildFeed(orderInput({kind:'text',text}));
     assert.equal(corrected.context.target.language.caption_coverage.value,'sparse',text);
-    assert.equal((await generateOutput(generatedInput(corrected),options(filledOutput(corrected.feed))))
+    assert.equal((await generateOutput(generatedInput(corrected),options(seedOutput(corrected.feed))))
       .output.slots.filter(slot=>slot.caption_state==='omitted').length,1,text);
   }
 
   const correctedAll=await buildFeed(orderInput({kind:'text',text:'캡션 없이, 하지만 모든 사진에 써 줘'}));
   assert.equal(correctedAll.context.target.language.caption_coverage.value,'all');
-  const correctedAllProvider=filledOutput(correctedAll.feed);
+  const correctedAllProvider=seedOutput(correctedAll.feed);
   assert.deepEqual(slotsOnly(await generateOutput(generatedInput(correctedAll),options(correctedAllProvider))),correctedAllProvider);
 });
 
@@ -310,7 +322,7 @@ test('client cannot forge matching context and applied coverage from unrelated f
   ]};
   built.context.target.language.caption_coverage=structuredClone(claim);
   built.feed.applied_profile.language.caption_coverage=structuredClone(claim);
-  await assert.rejects(generateOutput(generatedInput(built),options(filledOutput(built.feed))),/canonical freetext extraction/);
+  await assert.rejects(generateOutput(generatedInput(built),options(seedOutput(built.feed))),/canonical freetext extraction/);
 });
 
 test('real feed context blocks stabilization without affirmative omission evidence',async()=>{
@@ -354,7 +366,7 @@ test('real feed context blocks stabilization without affirmative omission eviden
   assert.equal(ignoredCurrent.feed.applied_profile.disclosure,'target_only');
 
   for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['less than one expected omission',smallRatio],['target-only ignores current omission ratio',ignoredCurrent]]) {
-    const provider=filledOutput(built.feed);
+    const provider=seedOutput(built.feed);
     assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider,label);
   }
 });
@@ -369,7 +381,7 @@ test('client overlap cannot replace the canonical color measurement',async()=>{
   const built=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록']),photos));
   assert.deepEqual([...built.feed.slots].sort((a,b)=>a.position-b.position).map(slot=>slot.caption_inputs.adjacent_overlap),[0,0.533,0.667]);
   built.feed.slots.find(slot=>slot.position===2).caption_inputs.adjacent_overlap=1;
-  const provider=filledOutput(built.feed);
+  const provider=seedOutput(built.feed);
   assert.deepEqual(slotsOnly(await generateOutput(generatedInput(built),options(provider))),provider);
 });
 
@@ -429,7 +441,7 @@ test('timeout, malformed provider JSON and model contract violations use honest 
 
 test('mode=all discloses the counted omissions, including zero, and never on a single slot',async()=>{
   // 비움 0개 — 모델이 전부 채운 회차. "못 했다"가 아니라 "판단했다"로 읽혀야 한다.
-  const none=await generateOutput(input(),options(filledOutput()));
+  const none=await generateOutput(input(),options(seedOutput()));
   assert.equal(none.output.slots.filter(slot=>slot.caption_state==='omitted').length,0);
   assert.deepEqual(none.omission,{
     omitted:0,total:3,note_key:'omission.none',
@@ -455,7 +467,7 @@ test('caption_coverage=all keeps its own behaviour and still gets an accurate ze
   // #87 의 coverage 의도(입력)와 #80 의 비움 고지(출력)는 서로 다른 것이다.
   const all=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘'},currentPosts(['','기록'])));
   assert.equal(all.context.target.language.caption_coverage.value,'all');
-  const disclosed=await generateOutput(generatedInput(all),options(filledOutput(all.feed)));
+  const disclosed=await generateOutput(generatedInput(all),options(seedOutput(all.feed)));
   assert.equal(disclosed.output.slots.filter(slot=>slot.caption_state==='omitted').length,0);
   assert.equal(disclosed.omission.note_key,'omission.none');
   assert.equal(disclosed.omission.omitted,0);
@@ -464,7 +476,7 @@ test('caption_coverage=all keeps its own behaviour and still gets an accurate ze
   // sparse 는 안정화로 한 자리가 비고, 고지도 그 실측을 따라간다.
   const sparse=await buildFeed(orderInput({kind:'text',text:'몇 장에만 문장을 써 줘'}));
   assert.equal(sparse.context.target.language.caption_coverage.value,'sparse');
-  const sparseDisclosed=await generateOutput(generatedInput(sparse),options(filledOutput(sparse.feed)));
+  const sparseDisclosed=await generateOutput(generatedInput(sparse),options(seedOutput(sparse.feed)));
   // 모델은 전부 채워 보냈다. 안정화 규칙이 만든 비움까지 센 뒤의 개수여야 한다.
   assert.equal(sparseDisclosed.output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
   assert.equal(sparseDisclosed.omission.omitted,1);
@@ -475,7 +487,7 @@ test('caption_coverage=all keeps its own behaviour and still gets an accurate ze
 test('a generation response cannot claim an omission count it did not measure',async()=>{
   const {validateGenerateResponse}=await import('../lib/interaction.js');
   const req=input();
-  const honest=await generateOutput(req,options(filledOutput()));
+  const honest=await generateOutput(req,options(seedOutput()));
   validateGenerateResponse(honest,req);
   for(const patch of [{omitted:1},{total:15},{note_key:'omission.some'},{note:''},{evidence:[]},
     {evidence:[{kind:'rule',ref:'gyeol.omit.overlap',note:'wrong rule'}]}]) {
@@ -488,33 +500,33 @@ test('a generation response cannot claim an omission count it did not measure',a
 // #101 리뷰 회귀: 규칙이 프롬프트에만 있으면 아래 세 응답이 전부 성공으로 통과했다.
 // 이제는 결과 경계에서 MODEL_CONTRACT 로 거부되어야 한다.
 test('the result boundary rejects banned style words, ungrounded notes and caption-shaped text',async()=>{
-  const banned=filledOutput();
+  const banned=seedOutput();
   banned.output.slots[0].text='쓸 거리: 단색 카드 · synthetic 1 표기\n이 중 기억에 남은 건?'.replace('단색 카드','단색 카드, 또한 표기');
   await assert.rejects(generateOutput(input(),options(banned)),{code:'MODEL_CONTRACT'},'금지어 또한');
 
-  const superlative=filledOutput();
+  const superlative=seedOutput();
   superlative.output.title='가을 브랜드 25곳, 최고의 추천';
   await assert.rejects(generateOutput(input(),options(superlative)),{code:'MODEL_CONTRACT'},'단정·최상급 제목');
 
-  const note=filledOutput();
+  const note=seedOutput();
   note.output.slots[0].evidence[0].note='가을 감정과 방문 의도';
   await assert.rejects(generateOutput(input(),options(note)),{code:'MODEL_CONTRACT'},'사진 사실에 없는 근거 note');
 
-  const summarized=filledOutput();
+  const summarized=seedOutput();
   summarized.output.slots[0].evidence[0].note='단색';
   await assert.rejects(generateOutput(input(),options(summarized)),{code:'MODEL_CONTRACT'},'요약된 근거 note');
 });
 
-test('filled text must stay a short hint the user finishes, never a finished caption',async()=>{
-  const described=filledOutput();
+test('seed text must stay a short hint the user finishes, never a finished caption',async()=>{
+  const described=seedOutput();
   described.output.slots[0].text='단색 카드가 화면 가운데에 놓여 있다';
   await assert.rejects(generateOutput(input(),options(described)),{code:'MODEL_CONTRACT'},'설명문');
 
-  const crowded=filledOutput();
+  const crowded=seedOutput();
   crowded.output.slots[0].text='쓸 거리: 단색 카드 · synthetic 1 표기 · 단색\n이 중 기억에 남은 건?';
   await assert.rejects(generateOutput(input(),options(crowded)),{code:'MODEL_CONTRACT'},'소재 3개');
 
-  const blank=filledOutput();
+  const blank=seedOutput();
   blank.output.slots[0].text='쓸 거리:  · 단색 카드\n이 중 기억에 남은 건?';
   await assert.rejects(generateOutput(input(),options(blank)),{code:'MODEL_CONTRACT'},'빈 소재');
 });
@@ -537,7 +549,7 @@ test('an empty fact list uses one fixed note instead of an invented limitation s
   invented.output.slots[0].evidence[0].note='사진 속 묘사 가능한 사실이 부족합니다';
   await assert.rejects(generateOutput(blank(),options(invented)),{code:'MODEL_CONTRACT'});
 
-  const stillFilled=filledOutput();
-  stillFilled.output.slots[0].evidence[0].note=NO_FACTS_NOTE;
-  await assert.rejects(generateOutput(input(),options(stillFilled)),{code:'MODEL_CONTRACT'},'사실이 있는데 한계 문구');
+  const stillSeed=seedOutput();
+  stillSeed.output.slots[0].evidence[0].note=NO_FACTS_NOTE;
+  await assert.rejects(generateOutput(input(),options(stillSeed)),{code:'MODEL_CONTRACT'},'사실이 있는데 한계 문구');
 });

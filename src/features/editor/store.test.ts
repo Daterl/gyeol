@@ -108,11 +108,11 @@ test('reorder and direct edits preserve source evidence and export the same phot
 
 test('single-slot fill follows reordered photo IDs and preserves edits made while pending', async () => {
   const store = await ready();
-  const filled = {
+  const seed = {
     ...fixture.output.slots[0],
-    caption_state: 'filled',
+    caption_state: 'seed',
     omit_reason: null,
-    text: '단색 카드',
+    text: '쓸 거리: 단색 카드\n이 중 기억에 남은 건?',
   };
   let deferred = Promise.withResolvers<Response>();
   vi.stubGlobal(
@@ -121,17 +121,17 @@ test('single-slot fill follows reordered photo IDs and preserves edits made whil
   );
   let pending = store.getState().generate('ph_01');
   store.getState().movePhoto('ph_01', 2);
-  deferred.resolve(Response.json({ slot: filled }));
+  deferred.resolve(Response.json({ slot: seed }));
   await pending;
   expect(store.getState().draft?.slots[2]).toMatchObject({
     photo_id: 'ph_01',
     position: 3,
-    text: '단색 카드',
+    text: '쓸 거리: 단색 카드\n이 중 기억에 남은 건?',
   });
   deferred = Promise.withResolvers<Response>();
   pending = store.getState().generate('ph_01');
   store.getState().editCaption('ph_01', '기다리는 동안 내가 수정');
-  deferred.resolve(Response.json({ slot: filled }));
+  deferred.resolve(Response.json({ slot: seed }));
   await pending;
   expect(store.getState().draft?.slots[2].text).toBe('기다리는 동안 내가 수정');
 });
