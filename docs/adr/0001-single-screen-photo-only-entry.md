@@ -6,6 +6,8 @@
 - 협업자 / 입력 이해 담당: **enzo.cho** (`@onejaejae`)
 - 관련: [개발 범위](../intent.md), [#14 입력 화면](https://github.com/Daterl/gyeol/issues/14), [#15 결과 화면](https://github.com/Daterl/gyeol/issues/15), [PR #21 계약 초안](https://github.com/Daterl/gyeol/pull/21)
 
+> 2026-09-18 후속 결정: [ADR-0006](0006-apify-public-instagram.md)에 따라 Instagram 조회는 Apify의 공개 계정·게시물만 대상으로 한다. 아래 “비공개 계정용 업로드”는 계정 조회가 아닌 일반 수동 자료 입력으로 대체한다. 앱 전체 화면은 [ADR-0007](0007-mobile-first-experience.md)의 모바일 우선 기준을 따른다.
+
 ## 배경
 
 `gyeol-plan.html`과 `gyeol-prototype.html`은 한 화면에서 입력을 받지만, #14는 사진과 아이덴티티 입력을 두 단계로 나눈다. 프로토타입은 아이덴티티 입력이 전부 비어 있으면 진행을 막지만, #14는 건너뛰기를 허용한다.
