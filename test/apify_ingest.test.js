@@ -1,11 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ACTOR, createInstagramIngest, instagramAccount, normalizeInstagram } from '../lib/apify_ingest.js';
+import { readFileSync } from 'node:fs';
+import { ACTOR, createInstagramIngest, instagramAccount, normalizeInstagram, privacyFromHtml } from '../lib/apify_ingest.js';
 import { handleIngest } from '../lib/ingest_api.js';
 import { validateProfile } from '../lib/contracts.js';
 import { buildCurrentProfile } from '../lib/current_profile.js';
 import { extractFromReference } from '../lib/target_profile.js';
 const secret = 'test-ingest-access-key-32-characters-long';
+// Captured from real provider runs and real logged-out profile pages; see each fixture's _source.
+const real = JSON.parse(readFileSync(new URL('../fixtures/apify_real_responses.json', import.meta.url), 'utf8'));
+const markers = JSON.parse(readFileSync(new URL('../fixtures/instagram_profile_markers.json', import.meta.url), 'utf8'));
 const url = 'https://www.instagram.com/public_account/';
 const post = { id: '1001', shortCode: 'post1', caption: '작은 순간을 기록해요. 🍂\n오늘도 맑아요.', url: 'https://www.instagram.com/p/post1/', type: 'Sidecar', ownerUsername: 'public_account', timestamp: '2026-09-18T00:00:00Z',
   childPosts: [{ id: 'child1', type: 'Image', displayUrl: 'https://cdn.example/1.jpg' }, { id: 'child2', type: 'Video', videoUrl: 'https://cdn.example/2.mp4' }],
@@ -14,7 +18,7 @@ const options = { url, runId: 'run1', datasetId: 'data1' };
 const run = { id: 'run1', status: 'SUCCEEDED', defaultDatasetId: 'data1', buildId: 'build1', startedAt: '2026-09-18T00:00:00Z', finishedAt: '2026-09-18T00:00:04Z', stats: { runTimeSecs: 4 }, usageTotalUsd: 0.0081 };
 const mock = (responses) => {
   const calls = [];
-  const client = createInstagramIngest({ token: 'server-secret-token', secret, fetchImpl: async (u, init) => {
+  const client = createInstagramIngest({ token: 'server-secret-token', secret, checkPublic: async () => 'public', fetchImpl: async (u, init) => {
     calls.push({ url: u, ...init });
     const next = responses.shift();
     if (next instanceof Error) throw next;
@@ -48,13 +52,18 @@ test('both existing extractors consume same snapshot and every observation refer
     walk(profile);
   }
 });
-test('confirmed private, nonexistent, access unavailable and unknown responses are distinct', () => {
-  for (const [row, expected] of [[{ isPrivate: true }, 'PRIVATE_ACCOUNT'], [{ error: 'private_account' }, 'PRIVATE_ACCOUNT'], [{ error: 'account_not_found' }, 'ACCOUNT_NOT_FOUND'], [{ error: 'login_required' }, 'ACCESS_UNAVAILABLE'], [{ error: 'no_items' }, 'ACCOUNT_UNCONFIRMED']]) assert.throws(() => normalizeInstagram([row], options), code(expected));
+test("a missing account is named as missing and the provider's own wording survives", () => {
+  const [row] = real.missing_account_run.items;
+  assert.deepEqual(row, { url: real.missing_account_run._input_url, username: 'gyeol68nonexistentaccount9z', error: 'not_found', errorDescription: 'Post does not exist' });
+  assert.throws(() => normalizeInstagram([row], { ...options, url: row.url }), e => e.code === 'ACCOUNT_NOT_FOUND' && e.details.provider_error === 'not_found' && e.details.provider_message === 'Post does not exist');
+  // An error code nobody has observed must not be guessed into a specific verdict.
+  assert.throws(() => normalizeInstagram([{ error: 'something_new' }], options), e => e.code === 'ACCOUNT_UNCONFIRMED' && e.details.provider_error === 'something_new');
   assert.throws(() => normalizeInstagram([], options), code('ACCOUNT_UNCONFIRMED'));
 });
 test('missing observations, mixed errors, duplicate posts or wrong accounts cannot become success', () => {
   for (const rows of [[{ ...post, caption: undefined }], [{ ...post, childPosts: [] }], [{ ...post, ownerUsername: 'other' }], [post, { error: 'no_items' }], [post, post], [{ ...post, inputUrl: 'https://instagram.com/other/' }]]) assert.throws(() => normalizeInstagram(rows, options));
-  assert.equal(normalizeInstagram([{ ...post, ownerUsername: 'coauthor', coauthorProducers: [{ username: 'public_account' }], inputUrl: url }], options).posts[0].owner_username, 'coauthor');
+  // A co-author credit is not authorship: nothing is left to attribute, so this is a failure, not an empty success.
+  assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'coauthor', coauthorProducers: [{ username: 'public_account' }], inputUrl: url }], options), e => e.code === 'ACCOUNT_UNCONFIRMED' && e.details.excluded_owners.includes('coauthor'));
 });
 test('start pins actor/posts mode and hard limits; known private and invalid limits perform zero calls', async () => {
   const { client, calls } = mock([{ data: { id: 'run1' } }]);
@@ -152,7 +161,7 @@ test('malformed or unsupported carousel media cannot become successful observati
 test('completed-run billing remains provisional until re-observed after ten seconds', async () => {
   let clock = Date.parse(run.finishedAt) + 500;
   const responses = [{ data: { id: 'run1' } }, { data: run }, [post], { data: { ...run, usageTotalUsd: 0.009 } }, [post]];
-  const client = createInstagramIngest({ token: 'token', secret, now: () => clock, fetchImpl: async () => Response.json(responses.shift()) });
+  const client = createInstagramIngest({ token: 'token', secret, now: () => clock, checkPublic: async () => 'public', fetchImpl: async () => Response.json(responses.shift()) });
   const job = await client.start({ url });
   assert.equal((await client.inspect(job.receipt)).metrics.provisional, true);
   clock += 10000;
@@ -163,7 +172,7 @@ test('completed-run billing remains provisional until re-observed after ten seco
 test('API access key alone cannot forge receipts signed with separate server secret', async () => {
   const signingSecret = 'separate-private-receipt-secret-32-characters';
   const responses = [{ data: { id: 'run1' } }];
-  const server = createInstagramIngest({ token: 'token', secret: signingSecret, fetchImpl: async () => Response.json(responses.shift()) });
+  const server = createInstagramIngest({ token: 'token', secret: signingSecret, checkPublic: async () => 'public', fetchImpl: async () => Response.json(responses.shift()) });
   const job = await server.start({ url });
   const other = mock([]);
   await assert.rejects(other.client.inspect(job.receipt), code('INVALID_RECEIPT'));
@@ -171,12 +180,13 @@ test('API access key alone cannot forge receipts signed with separate server sec
 });
 
 test('requested URL alone cannot attribute a foreign owner post to the requested account', () => {
-  assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'foreign', inputUrl: url }], options), code('INVALID_DATA'));
+  assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'foreign', inputUrl: url }], options), code('ACCOUNT_UNCONFIRMED'));
+  assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: undefined }], options), code('INVALID_DATA'));
 });
 test('provider hidden errors are preserved through dataset retrieval and classified', async () => {
-  const { client, calls } = mock([{ data: { id: 'run1' } }, { data: run }, [{ '#error': 'private_account' }]]);
+  const { client, calls } = mock([{ data: { id: 'run1' } }, { data: run }, [{ '#error': 'not_found', errorDescription: 'Post does not exist' }]]);
   const job = await client.start({ url });
-  await assert.rejects(client.inspect(job.receipt), code('PRIVATE_ACCOUNT'));
+  await assert.rejects(client.inspect(job.receipt), e => e.code === 'ACCOUNT_NOT_FOUND' && e.details.provider_message === 'Post does not exist' && e.details.metrics.run_id === 'run1');
   assert.equal(new URL(calls[2].url).searchParams.has('clean'), false);
 });
 test('post IDs and shortcodes have independent duplicate namespaces', () => {
@@ -210,4 +220,73 @@ test('HTTP status/cancel/method and streamed input bound are enforced without pa
   assert.equal((await handleIngest(req(null, 'GET'), { accessKey: secret, ingest })).status, 405);
   assert.equal((await handleIngest(req('x'.repeat(8193)), { accessKey: secret, ingest })).status, 400);
   assert.equal((await handleIngest(req('{broken'), { accessKey: secret, ingest })).status, 400);
+});
+
+// --- Collection must not start unless the account itself is public (PR #84 review, BLOCKER-1/2) ---
+
+test('the real profile pages decide public, private and undecidable without any paid call', () => {
+  assert.equal(privacyFromHtml(markers.private.html, markers.private.handle), 'private');
+  assert.equal(privacyFromHtml(markers.public.html, markers.public.handle), 'public');
+  // A page that does not state it for this account is never read as public.
+  assert.equal(privacyFromHtml(markers.missing.html, markers.missing.handle), null);
+  assert.equal(privacyFromHtml(markers.public.html, markers.private.handle), null);
+  for (const html of ['', null, '"username":"hauny_bee"', '"is_private":true']) assert.equal(privacyFromHtml(html, 'hauny_bee'), null);
+});
+
+test('a private account is refused before the provider is paid, and is told what to do instead', async () => {
+  for (const [visibility, expected] of [['private', 'PRIVATE_ACCOUNT'], [null, 'ACCOUNT_UNCONFIRMED'], ['unexpected', 'ACCOUNT_UNCONFIRMED']]) {
+    const calls = [];
+    const client = createInstagramIngest({ token: 'server-secret-token', secret, checkPublic: async () => visibility, fetchImpl: async u => { calls.push(u); return Response.json({ data: { id: 'run1' } }); } });
+    await assert.rejects(client.start({ url: 'https://www.instagram.com/hauny_bee/' }), e => e.code === expected && e.details.stage === 'precheck' && e.details.account === 'hauny_bee' && /사진을 직접 올려/.test(e.message));
+    assert.equal(calls.length, 0);
+  }
+});
+
+test('the visibility check reads the profile page anonymously and never carries the provider token', async () => {
+  const calls = [];
+  const client = createInstagramIngest({ token: 'apify_api_SECRET', secret, fetchImpl: async (u, init) => {
+    calls.push({ url: String(u), init });
+    return String(u).startsWith('https://www.instagram.com/') ? new Response(markers.public.html) : Response.json({ data: { id: 'run1' } });
+  } });
+  assert.equal((await client.start({ url: `https://www.instagram.com/${markers.public.handle}/` })).status, 'RUNNING');
+  assert.equal(calls[0].url, `https://www.instagram.com/${markers.public.handle}/`);
+  assert.equal('Authorization' in calls[0].init.headers, false);
+  assert.equal(JSON.stringify(calls[0]).includes('apify_api_SECRET'), false);
+  assert.match(calls[1].url, /apify~instagram-scraper\/runs/);
+});
+
+test("the real private-account run cannot become that account's profile", () => {
+  const { items, _input_url: inputUrl } = real.private_account_run;
+  // What the provider actually returned: no error, and someone else's post with the input account credited as co-author.
+  assert.equal(items.length, 1);
+  assert.equal(items[0].error ?? items[0]['#error'] ?? null, null);
+  assert.equal(items[0].ownerUsername, 'hong_a1302');
+  assert.deepEqual(items[0].coauthorProducers.map(x => String(x.id)), ['6024842245']);
+  assert.equal(instagramAccount(inputUrl).account, 'hauny_bee');
+  assert.throws(() => normalizeInstagram(items, { ...options, url: inputUrl }), e => e.code === 'ACCOUNT_UNCONFIRMED' && e.details.excluded_post_count === 1 && e.details.excluded_owners.join() === 'hong_a1302');
+});
+
+test('every observation a snapshot carries belongs to the account the provenance names', () => {
+  const snapshot = normalizeInstagram([post, { ...post, id: '1002', shortCode: 'post2', url: 'https://www.instagram.com/p/post2/' }], options);
+  for (const p of snapshot.posts) assert.equal(p.owner_username, snapshot.provenance.account);
+  const owned = new Set(snapshot.posts.map(p => p.url));
+  for (const [ref, target] of Object.entries(snapshot.provenance.evidence_refs)) {
+    assert.ok(owned.has(target) || target === snapshot.provenance.source_url, `${ref} points outside the account`);
+  }
+});
+
+test('a real public account still collects, minus the posts other people wrote', async () => {
+  const { items, _input_url: inputUrl } = JSON.parse(readFileSync(new URL('../fixtures/apify_public_account_run.json', import.meta.url), 'utf8'));
+  const snapshot = normalizeInstagram(items, { ...options, url: inputUrl });
+  assert.equal(items.length, 30);
+  assert.equal(snapshot.posts.length, 26);
+  assert.deepEqual(snapshot.provenance.coauthored_excluded.owners, ['kkyeongeun_', 'ko_ng__e', 'mapogu_won', 'yeoreum829']);
+  assert.equal(snapshot.provenance.coauthored_excluded.count, 4);
+  for (const p of snapshot.posts) assert.equal(p.owner_username, '29cm.official');
+  assert.deepEqual(snapshot.posts.map(p => p.index), [...snapshot.posts.keys()]);
+  const profile = validateProfile(buildCurrentProfile({ snapshot }), 'current');
+  assert.equal(profile.sample_size, 26);
+  const walk = x => { if (!x || typeof x !== 'object') return; if (x.kind && x.ref && x.kind !== 'rule') assert.ok(snapshot.provenance.evidence_refs[x.ref], `${x.ref} unresolved`); Object.values(x).forEach(walk); };
+  walk(profile);
+  walk(await extractFromReference(inputUrl, { registry: { [snapshot.handle]: snapshot } }));
 });
