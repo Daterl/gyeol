@@ -36,8 +36,10 @@ try{
  await page.getByRole('textbox',{name:/번 사진에 내가 쓸 문장/}).fill('preserved edit');
  await page.getByLabel('기록의 제목').fill('persisted edited title');
  await page.getByRole('button',{name:'뒤로',exact:true}).click();
- await page.getByRole('slider',{name:/가로 중심/}).focus(); await page.keyboard.press('End');
- await page.getByRole('slider',{name:/세로 중심/}).focus(); await page.keyboard.press('Home');
+ await page.getByRole('group',{name:'2번 사진 편집',exact:true}).waitFor();
+ await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+ await page.getByRole('slider',{name:/가로 중심/}).focus(); await page.keyboard.press('End'); await page.getByRole('slider',{name:'가로 중심 100%',exact:true}).waitFor();
+ await page.getByRole('slider',{name:/세로 중심/}).focus(); await page.keyboard.press('Home'); await page.getByRole('slider',{name:'세로 중심 0%',exact:true}).waitFor();
  await page.getByRole('button',{name:'사진 제외',exact:true}).click();
  await page.getByLabel('공유에 공개 프로필 정보 포함 (기본 꺼짐)').check();
  await page.getByRole('button',{name:'큐레이션 확정',exact:true}).click();
