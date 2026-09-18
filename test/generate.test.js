@@ -133,7 +133,8 @@ test('negated or non-caption coverage wording stays unset through generation',as
     '몇 장에만 문장을 써 줘, 하지만 몇 장에만 문장을 쓰지는 마',
     '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요','몇 장에만 문장을 써 줘. 아니요, 그건 원하지 않아요.',
     '사진 속 글자를 전부 써 줘','사진 속 문장을 전부 써 주세요','사진 속 캡션을 전부 써 주세요',
-    '배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘'
+    '배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘',
+    '몇 장에만 써 줘, 하지만 캡션 없이','모든 사진에 써 줘, 아니 전부 사진만'
   ];
   for(const text of cases) {
     const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
@@ -173,6 +174,18 @@ test('an unrelated contrast clause preserves the earlier explicit coverage reque
   assert.equal(correctedSparse.context.target.language.caption_coverage.value,'sparse');
   assert.equal((await generateOutput(generatedInput(correctedSparse),options(filledOutput(correctedSparse.feed))))
     .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  for(const text of ['캡션 없이, 하지만 몇 장에만 써 줘','전부 사진만, 하지만 몇 장에만 써 줘','캡션 없이. 아니 몇 장에만 써 줘']) {
+    const corrected=await buildFeed(orderInput({kind:'text',text}));
+    assert.equal(corrected.context.target.language.caption_coverage.value,'sparse',text);
+    assert.equal((await generateOutput(generatedInput(corrected),options(filledOutput(corrected.feed))))
+      .output.slots.filter(slot=>slot.caption_state==='omitted').length,1,text);
+  }
+
+  const correctedAll=await buildFeed(orderInput({kind:'text',text:'캡션 없이, 하지만 모든 사진에 써 줘'}));
+  assert.equal(correctedAll.context.target.language.caption_coverage.value,'all');
+  const correctedAllProvider=filledOutput(correctedAll.feed);
+  assert.deepEqual(await generateOutput(generatedInput(correctedAll),options(correctedAllProvider)),correctedAllProvider);
 });
 
 test('client cannot forge matching context and applied coverage from unrelated freetext',async()=>{
