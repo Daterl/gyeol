@@ -25,7 +25,10 @@ export default async function HomePage({
           </span>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-5 pb-16" id="main">
+      <main
+        className="mx-auto max-w-6xl px-5 pb-[calc(4rem+env(safe-area-inset-bottom))]"
+        id="main"
+      >
         <PhotoInput mock={mock} />
         <p className="mt-7 text-center text-sm leading-7 text-muted-foreground">
           말을 덜어내도 괜찮아요.
