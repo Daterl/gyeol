@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-09-18T01:27:27.229Z",
+  "checked_at": "2026-09-18T01:32:24.216Z",
   "http_status": 200,
   "status": "SUCCEEDED",
   "metrics": {
-    "observed_at": "2026-09-18T01:27:26.550Z",
+    "observed_at": "2026-09-18T01:32:23.531Z",
     "provisional": false,
     "run_id": "h9dl4E9wmvW8wYaUa",
     "build_id": "HFnaHhQGkDXjgZHDp",
@@ -79,8 +79,9 @@
           "type": "Image"
         }
       ],
-      "caption_length": 187,
-      "published_at": "2026-09-17T10:16:01.000Z"
+      "published_at": "2026-09-17T10:16:01.000Z",
+      "caption_utf16_length": 187,
+      "caption_trimmed_codepoint_length": 184
     },
     {
       "id": "3984494392971903644",
@@ -140,8 +141,9 @@
           "type": "Image"
         }
       ],
-      "caption_length": 892,
-      "published_at": "2026-09-12T10:27:11.000Z"
+      "published_at": "2026-09-12T10:27:11.000Z",
+      "caption_utf16_length": 892,
+      "caption_trimmed_codepoint_length": 883
     },
     {
       "id": "3988558267872791723",
@@ -186,8 +188,9 @@
           "type": "Image"
         }
       ],
-      "caption_length": 639,
-      "published_at": "2026-09-18T01:00:19.000Z"
+      "published_at": "2026-09-18T01:00:19.000Z",
+      "caption_utf16_length": 639,
+      "caption_trimmed_codepoint_length": 585
     }
   ],
   "currentProfile": {
@@ -321,7 +324,7 @@
       "carousel_count": 3
     },
     "raw_freetext": null,
-    "created_at": "2026-09-18T01:27:27.007Z"
+    "created_at": "2026-09-18T01:32:23.989Z"
   },
   "targetProfile": {
     "schema_version": "1.0",
@@ -449,7 +452,7 @@
       "carousel_count": 3
     },
     "raw_freetext": null,
-    "created_at": "2026-09-18T01:27:27.010Z"
+    "created_at": "2026-09-18T01:32:23.991Z"
   },
   "fixture": {
     "source": "pivot/apify-check/fixtures/ig_feed_29cm.json",
@@ -459,5 +462,9 @@
     "target_sample_size": 30,
     "caption_exact": true,
     "child_order_exact": true
+  },
+  "caption_length_units": {
+    "currentProfile": "trimmed Unicode code points (existing current_profile.js)",
+    "targetProfile": "UTF-16 code units (existing target_profile.js)"
   }
 }

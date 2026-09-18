@@ -1,6 +1,6 @@
 // Explicit paid start: node scripts/ingest-instagram.js start <public URL> <output directory>
 // Resume without starting a new paid run: node scripts/ingest-instagram.js status <output directory>
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, unlink } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { createInstagramIngest, instagramAccount } from '../lib/apify_ingest.js';
 const [action, argument, output] = process.argv.slice(2);
@@ -15,7 +15,11 @@ try {
   if (action === 'start') {
     // Reserve the output before charging; never overwrite the only receipt of an earlier run.
     await writeFile(receiptFile, JSON.stringify({ status: 'START_PENDING' }), { flag: 'wx', mode: 0o600 });
-    job = await client.start({ url: argument, limit: 3 });
+    try { job = await client.start({ url: argument, limit: 3 }); }
+    catch (error) {
+      if (['INVALID_URL', 'INVALID_INPUT', 'PRIVATE_ACCOUNT', 'NOT_CONFIGURED', 'UNAUTHORIZED', 'COST_LIMIT'].includes(error.code)) await unlink(receiptFile);
+      throw error;
+    }
     await writeFile(receiptFile, JSON.stringify(job, null, 2), { mode: 0o600 });
     console.log(JSON.stringify({ status: job.status, run_id: job.run_id, receipt_file: receiptFile }));
   } else {

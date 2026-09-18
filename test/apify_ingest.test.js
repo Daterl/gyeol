@@ -54,7 +54,7 @@ test('confirmed private, nonexistent, access unavailable and unknown responses a
 });
 test('missing observations, mixed errors, duplicate posts or wrong accounts cannot become success', () => {
   for (const rows of [[{ ...post, caption: undefined }], [{ ...post, childPosts: [] }], [{ ...post, ownerUsername: 'other' }], [post, { error: 'no_items' }], [post, post], [{ ...post, inputUrl: 'https://instagram.com/other/' }]]) assert.throws(() => normalizeInstagram(rows, options));
-  assert.equal(normalizeInstagram([{ ...post, ownerUsername: 'coauthor', inputUrl: url }], options).posts[0].owner_username, 'coauthor');
+  assert.equal(normalizeInstagram([{ ...post, ownerUsername: 'coauthor', coauthorProducers: [{ username: 'public_account' }], inputUrl: url }], options).posts[0].owner_username, 'coauthor');
 });
 test('start pins actor/posts mode and hard limits; known private and invalid limits perform zero calls', async () => {
   const { client, calls } = mock([{ data: { id: 'run1' } }]);
@@ -168,4 +168,46 @@ test('API access key alone cannot forge receipts signed with separate server sec
   const other = mock([]);
   await assert.rejects(other.client.inspect(job.receipt), code('INVALID_RECEIPT'));
   assert.equal(other.calls.length, 0);
+});
+
+test('requested URL alone cannot attribute a foreign owner post to the requested account', () => {
+  assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'foreign', inputUrl: url }], options), code('INVALID_DATA'));
+});
+test('provider hidden errors are preserved through dataset retrieval and classified', async () => {
+  const { client, calls } = mock([{ data: { id: 'run1' } }, { data: run }, [{ '#error': 'private_account' }]]);
+  const job = await client.start({ url });
+  await assert.rejects(client.inspect(job.receipt), code('PRIVATE_ACCOUNT'));
+  assert.equal(new URL(calls[2].url).searchParams.has('clean'), false);
+});
+test('post IDs and shortcodes have independent duplicate namespaces', () => {
+  const second = { ...post, id: post.shortCode, shortCode: 'post2' };
+  assert.equal(normalizeInstagram([post, second], options).posts.length, 2);
+});
+test('abort failure preserves the valid receipt for later inspection', async () => {
+  const { client } = mock([{ data: { id: 'run1' } }, { data: { ...run, status: 'RUNNING' } }, new Response('', { status: 503 }), { data: { ...run, status: 'RUNNING' } }]);
+  const job = await client.start({ url });
+  await assert.rejects(client.cancel(job.receipt), e => e.code === 'PROVIDER_ERROR' && e.details.receipt === job.receipt);
+});
+test('provider 429 does not trigger a second request or lose its budget classification', async () => {
+  const { client, calls } = mock([{ data: { id: 'run1' } }, new Response('', { status: 429 })]);
+  const job = await client.start({ url });
+  await assert.rejects(client.inspect(job.receipt), code('COST_LIMIT'));
+  assert.equal(calls.length, 2);
+});
+test('missing run completion time stays unknown rather than becoming collection time now', async () => {
+  const { client } = mock([{ data: { id: 'run1' } }, { data: { ...run, finishedAt: undefined } }, [post]]);
+  const job = await client.start({ url });
+  const result = await client.inspect(job.receipt);
+  assert.equal(result.snapshot.provenance.collected_at, null);
+  assert.equal(result.metrics.provisional, true);
+});
+test('HTTP status/cancel/method and streamed input bound are enforced without paid calls', async () => {
+  const received = [];
+  const ingest = { inspect: async r => { received.push(['status', r]); return { status: 'SUCCEEDED' }; }, cancel: async r => { received.push(['cancel', r]); return { status: 'CANCELLED' }; } };
+  const req = (body, method = 'POST') => new Request('http://localhost/api/ingest', { method, headers: { authorization: `Bearer ${secret}` }, ...(method === 'POST' ? { body: typeof body === 'string' ? body : JSON.stringify(body) } : {}) });
+  for (const action of ['status', 'cancel']) assert.equal((await handleIngest(req({ action, receipt: 'signed' }), { accessKey: secret, ingest })).status, 200);
+  assert.deepEqual(received, [['status', 'signed'], ['cancel', 'signed']]);
+  assert.equal((await handleIngest(req(null, 'GET'), { accessKey: secret, ingest })).status, 405);
+  assert.equal((await handleIngest(req('x'.repeat(8193)), { accessKey: secret, ingest })).status, 400);
+  assert.equal((await handleIngest(req('{broken'), { accessKey: secret, ingest })).status, 400);
 });
