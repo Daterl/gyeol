@@ -10,7 +10,7 @@ The same-color fallback now quotes the current and adjacent photos' model observ
 - Same-color synthetic 3/15 fixtures check own/adjacent verbatim references, unchanged selection decisions, photo IDs, caption facts and source metadata. Shared/missing/heuristic observations check honest limits. Repetition follows repeated observations, never random or index-based phrase variation.
 - Archived model replay: 3/15 photos through buildFeed with a text target; no model/network calls. Sources: ../101-caption-quality/audit-analyses.json and recovered-analysis.json. The recovered p05 file used another session's ph_15 ID; only its fixture ID is restored to ph_05 after filename matching. Observations/source/model metadata remain unchanged.
 - Independent baseline comparison against git bcc541a: all 15 archived slots and feed fields excluding rationale are identical; original R1–R4 selection/decision evidence is identical.
-- CodeRabbit initial uncommitted review: zero findings across four implementation/test files; free CLI allowance, no usage credits. Final patch review tracked separately below.
+- CodeRabbit initial review: zero findings across four implementation/test files. Final patch review also completed with zero findings across all five changed files, including this report; free CLI allowance, no usage credits.
 
 ## Limits and integration
 
