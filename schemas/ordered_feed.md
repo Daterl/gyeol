@@ -19,7 +19,7 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 | applied_profile.corrected | boolean, disclosure=corrected와 동치 |
 | applied_profile.disclosure | "corrected" 또는 "target_only" |
 | applied_profile.deltas | 아래 delta[0..1] |
-| applied_profile.visual/language/sequence | TargetProfile의 같은 필드 계약; 합성 결과 |
+| applied_profile.visual/language/sequence | TargetProfile의 같은 필드 계약; 합성 결과. freetext target의 선택 `caption_coverage: Claim<all|sparse>`를 그대로 보존 |
 | slots[].position | 정수 1..N, 빠짐없이 한 번씩 |
 | slots[].photo_id | 실제 입력 ID를 중복·누락·외부 ID 없이 한 번씩 |
 | slots[].narrative_role | opener / sustain / turn / closer |
@@ -102,17 +102,6 @@ mock 없음 → 501 LIVE_NOT_IMPLEMENTED, 잘못된 mock/resource → 400, GET �
           "p90": 18,
           "unit": "자"
         },
-        "confidence": 1,
-        "evidence": [
-          {
-            "kind": "user_text",
-            "ref": "tgt_synthetic_quiet:input",
-            "note": "수동 작성 합성 예시; 실제 사용자 관측 아님"
-          }
-        ]
-      },
-      "empty_caption_ratio": {
-        "value": 0.5,
         "confidence": 1,
         "evidence": [
           {

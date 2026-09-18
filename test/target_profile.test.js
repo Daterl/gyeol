@@ -60,6 +60,49 @@ test('a free text mapping cites the matched phrase and the mapping row separatel
   assert.match(free.language.caption_len.evidence[0].ref,/짧게$/);
 });
 
+test('free text preserves explicit caption coverage as a claim without inventing a ratio', () => {
+  const cases = [
+    ['말수가 적고 여백이 많은 기록','sparse'],
+    ['일부는 비워 주세요','sparse'],
+    ['사진만 두고 싶어요','sparse'],
+    ['몇 장만 자세히 써 줘','sparse'],
+    ['몇 장에만 문장을 써 줘','sparse'],
+    ['말수 적게 기록해 줘','sparse'],
+    ['모든 사진에 문장을 써 줘','all'],
+    ['모든 사진에 짧게 써 줘','all'],
+    ['사진마다 한 줄씩 써 줘','all'],
+    ['전부 채워 주세요','all'],
+    ['한 장도 비우지 않았으면 해요','all'],
+    ['전부 써 주세요','all']
+  ];
+  for (const [text,value] of cases) {
+    const profile=extractFromFreetext(text,{createdAt:at});
+    assert.equal(profile.language.caption_coverage.value,value,text);
+    assert.equal(profile.language.empty_caption_ratio,undefined,text);
+    assert.deepEqual(profile.language.caption_coverage.evidence.map(e=>e.kind),['user_text','rule']);
+    assert.ok(text.includes(profile.language.caption_coverage.evidence[0].ref.split(':').at(-1)));
+  }
+});
+
+test('negated, conflicting, or unsupported coverage cues never become an affirmative claim', () => {
+  for (const text of [
+    '사진만 두지 마','모든 사진에 문장 쓰는 건 싫어요','일부는 비워, 전부 써','캡션 없이 전부 사진만 보여 줘',
+    '말수가 적지 않게 써 줘','말수가 적고 싶지 않아','모든 사진에 문장 쓰지 않아'
+  ]) {
+    const profile=extractFromFreetext(text,{createdAt:at});
+    assert.equal(profile.language?.caption_coverage,undefined,text);
+  }
+  assert.equal(extractFromFreetext('가끔은 알아서 써 줘',{createdAt:at}).language,null);
+  for (const text of ['여백이 많은 기록','미니멀하게','짧게 써 줘'])
+    assert.equal(extractFromFreetext(text,{createdAt:at}).language?.caption_coverage,undefined,text);
+});
+
+test('coverage contrast keeps the final affirmative wish without reversing a negation', () => {
+  for (const text of ['말수 적게 하지 말고 모든 사진에 써 줘','말수는 적게, 하지만 사진마다 한 줄씩','한 장도 비우지 말고 전부 써 줘'])
+    assert.equal(extractFromFreetext(text,{createdAt:at}).language.caption_coverage.value,'all',text);
+  assert.equal(extractFromFreetext('한 장도 비우지 않았으면 해요',{createdAt:at}).language.caption_coverage.value,'all');
+});
+
 test('an aggregate value can be traced back to the posts it was read from', () => {
   const ev=ref.language.caption_len.evidence;
   assert.equal(ev[0].kind,'aggregate');
@@ -76,6 +119,22 @@ test('free text never invents an empty caption ratio and never rounds up to a de
   assert.equal(bare.language,null);
   assert.equal(bare.completeness.language,0);
   assert.deepEqual(bare.visual.tone_words.value,['그냥 나답게']);
+});
+
+test('the runtime contract reserves coverage intent for freetext targets', () => {
+  const coverage=extractFromFreetext('사진만 두고 싶어요',{createdAt:at});
+  const numeric=structuredClone(coverage);
+  numeric.language.empty_caption_ratio={value:0.5,confidence:1,evidence:[{kind:'user_text',ref:`${numeric.profile_id}:raw`,note:'forged ratio'}]};
+  assert.throws(()=>validateProfile(numeric,'target'),ContractError);
+
+  const reference=structuredClone(ref);
+  reference.language.caption_coverage=structuredClone(coverage.language.caption_coverage);
+  assert.throws(()=>validateProfile(reference,'target'),ContractError);
+
+  const current=structuredClone(ref);
+  current.axis='current';current.source='cached';current.account_scope='main';
+  current.language.caption_coverage=structuredClone(coverage.language.caption_coverage);
+  assert.throws(()=>validateProfile(current,'current'),ContractError);
 });
 
 test('free text is the floor that always succeeds, but blank input is not natural language', () => {

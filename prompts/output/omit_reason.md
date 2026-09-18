@@ -13,4 +13,6 @@ omitted 슬롯은 `caption_state:"omitted", text:null, omit_reason:"구체적인
 - 모두 비워도 성공 결과다. mode=all에서는 중립적인 타이틀 한 줄과 N개 omitted 슬롯을 유지한다. 빈 slots 배열로 대신하지 않는다.
 - 단일 슬롯 채우기 요청이라도 관측 사실은 늘어나지 않는다. filled로 쓸 근거가 있으면 쓰고, 없으면 비움 이유를 유지한다. 임의로 새로운 사물·장소를 만들지 않는다.
 
-서버는 mode=all 결과가 모두 filled이고, 적용 언어가 있으며, 실제 target/current 프로필에 관측된 `empty_caption_ratio`와 슬롯 수를 곱한 기대 비움 수가 1 이상일 때만 제한적인 안정화 규칙을 적용할 수 있다. 어느 축이든 비움 비율 0을 관측했거나 상세 캡션 의도이면 적용하지 않는다. 이 조건을 만족한 뒤 context.photos에서 다시 계산한 값과 feed 값이 일치하는 2번 이후 슬롯 중 가장 높은 adjacent_overlap이 0.9 이상일 때만 그 한 자리를 omitted로 바꾼다. photo plan, mode=slot, 이미 omitted가 있는 결과에는 적용하지 않는다. 이 기준값은 사용자 취향이나 모델 관측이 아니라 제품 규칙이며 gyeol.omit.overlap 근거로 드러낸다.
+caption_coverage가 `all`이면 서버가 새 omitted를 만들지 않는다. `sparse`이면 캡션 길이와 독립된 현재 의도로 보고, context.photos에서 다시 계산한 값과 feed 값이 일치하는 2번 이후 슬롯 중 가장 높은 adjacent_overlap이 0.9 이상일 때 그 한 자리만 omitted로 안정화할 수 있다.
+
+caption_coverage가 없는 freetext는 모호하거나 부정·충돌·지원 불가인 요청일 수 있으므로 current의 과거 비움 비율로 덮지 않는다. ig_reference에는 기존 관측 규칙을 유지한다. 실제 target/current의 `empty_caption_ratio`와 슬롯 수를 곱한 기대 비움 수가 1 이상이어야 하고, 어느 축이든 0이거나 상세 캡션 의도이면 적용하지 않는다. photo plan, mode=slot, 이미 omitted가 있는 결과에는 적용하지 않는다. 0.9는 사용자 취향이나 모델 관측이 아니라 제품 규칙이며 `gyeol.omit.overlap` 근거로 드러낸다.
