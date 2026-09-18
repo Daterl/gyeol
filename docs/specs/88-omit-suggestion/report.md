@@ -292,6 +292,8 @@ Generating route types...
 ✓ Types generated successfully
 ```
 
+로그의 줄 끝 공백과 빌드 진행용 CR은 제거했고 내용은 보존했다.
+
 추가 검사: [권고 테스트 5개](targeted.txt), [UI 테스트 31개](test-ui.txt), [Next 로컬 빌드](build.txt) 모두 PASS. lint는 설정상 src/와 설정 파일 40개를 검사하고, 변경한 서버 JS는 check의 구문 검사와 Node 테스트로 확인했다.
 
 ## DoD별 판정
