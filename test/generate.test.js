@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {generateOutput,handleGenerate} from '../lib/output-generation.js';
+import {generateOutput,handleGenerate,NO_FACTS_NOTE} from '../lib/output-generation.js';
 import {validateErrorResponse} from '../lib/interaction.js';
 import {buildFeed} from '../lib/pipeline.js';
 import {extractFromReference} from '../lib/target_profile.js';
@@ -11,9 +11,11 @@ const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.
 const referenceFixture=JSON.parse(await readFile(new URL('../fixtures/ref_snapshot.sample.json',import.meta.url),'utf8'));
 const input=(mode='all',source=fixture)=>({schema_version:'1.0',mode,feed:structuredClone(source.feed),context:structuredClone(source.context),...(mode==='slot'?{photo_id:'ph_01'}:{})});
 const output=()=>({output:structuredClone(fixture.all_omitted)});
+// filled 은 완성 캡션이 아니라 사용자가 채우는 단서 형식이며, 사진 근거 note 는 관측 사실 원문이다 (#101).
+const hint=fact=>`쓸 거리: ${fact}\n이 중 기억에 남은 건?`;
 const filledOutput=(feed=fixture.feed)=>({output:{title:'세 장의 기록',slots:feed.slots.map(slot=>({
-  photo_id:slot.photo_id,position:slot.position,caption_state:'filled',text:slot.caption_inputs.describable_facts[0],omit_reason:null,
-  evidence:[{kind:'uploaded_photo',ref:slot.photo_id,note:'합성 fixture의 해당 카드'}]
+  photo_id:slot.photo_id,position:slot.position,caption_state:'filled',text:hint(slot.caption_inputs.describable_facts[0]),omit_reason:null,
+  evidence:[{kind:'uploaded_photo',ref:slot.photo_id,note:slot.caption_inputs.describable_facts[0]}]
 }))}});
 const orderInput=(target,current={kind:'none'},photos=fixture.context.photos)=>({
   schema_version:'1.0',session_id:'generate-test',photos:photos.map((photo,index)=>({...structuredClone(photo),photo_id:`new_${index}`,input_index:index})),
@@ -144,7 +146,7 @@ test('an internal-looking literal remains usable when it is visibly grounded in 
   const fact='화면에 caption_state라는 글자가 보인다';
   req.feed.slots[0].caption_inputs.describable_facts=[fact];
   req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
-  const response=structuredClone(fixture.output.slots[0]);response.text=fact;response.evidence[0].note=fact;
+  const response=structuredClone(fixture.output.slots[0]);response.text=hint('caption_state라는 글자');response.evidence[0].note=fact;
   assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
 });
 
@@ -431,7 +433,7 @@ test('mode=all discloses the counted omissions, including zero, and never on a s
   assert.equal(none.output.slots.filter(slot=>slot.caption_state==='omitted').length,0);
   assert.deepEqual(none.omission,{
     omitted:0,total:3,note_key:'omission.none',
-    note:'이번에는 3자리 모두에 문장을 두는 편이 낫다고 봤어요.',
+    note:'이번에는 3자리 모두에 쓸 거리를 제안했어요.',
     evidence:[{kind:'rule',ref:'gyeol.omit.disclosure',note:'생성 결과의 omitted 슬롯을 세어 0/3로 적었다'}]
   });
   for(const word of ['미완성','채워','아직','못']) assert.ok(!none.omission.note.includes(word),word);
@@ -481,4 +483,61 @@ test('a generation response cannot claim an omission count it did not measure',a
       /omission/,JSON.stringify(patch));
   }
   assert.throws(()=>validateGenerateResponse({...honest,omission:{...honest.omission,extra:1}},req),/omission.extra/);
+});
+
+// #101 리뷰 회귀: 규칙이 프롬프트에만 있으면 아래 세 응답이 전부 성공으로 통과했다.
+// 이제는 결과 경계에서 MODEL_CONTRACT 로 거부되어야 한다.
+test('the result boundary rejects banned style words, ungrounded notes and caption-shaped text',async()=>{
+  const banned=filledOutput();
+  banned.output.slots[0].text='쓸 거리: 단색 카드 · synthetic 1 표기\n이 중 기억에 남은 건?'.replace('단색 카드','단색 카드, 또한 표기');
+  await assert.rejects(generateOutput(input(),options(banned)),{code:'MODEL_CONTRACT'},'금지어 또한');
+
+  const superlative=filledOutput();
+  superlative.output.title='가을 브랜드 25곳, 최고의 추천';
+  await assert.rejects(generateOutput(input(),options(superlative)),{code:'MODEL_CONTRACT'},'단정·최상급 제목');
+
+  const note=filledOutput();
+  note.output.slots[0].evidence[0].note='가을 감정과 방문 의도';
+  await assert.rejects(generateOutput(input(),options(note)),{code:'MODEL_CONTRACT'},'사진 사실에 없는 근거 note');
+
+  const summarized=filledOutput();
+  summarized.output.slots[0].evidence[0].note='단색';
+  await assert.rejects(generateOutput(input(),options(summarized)),{code:'MODEL_CONTRACT'},'요약된 근거 note');
+});
+
+test('filled text must stay a short hint the user finishes, never a finished caption',async()=>{
+  const described=filledOutput();
+  described.output.slots[0].text='단색 카드가 화면 가운데에 놓여 있다';
+  await assert.rejects(generateOutput(input(),options(described)),{code:'MODEL_CONTRACT'},'설명문');
+
+  const crowded=filledOutput();
+  crowded.output.slots[0].text='쓸 거리: 단색 카드 · synthetic 1 표기 · 단색\n이 중 기억에 남은 건?';
+  await assert.rejects(generateOutput(input(),options(crowded)),{code:'MODEL_CONTRACT'},'소재 3개');
+
+  const blank=filledOutput();
+  blank.output.slots[0].text='쓸 거리:  · 단색 카드\n이 중 기억에 남은 건?';
+  await assert.rejects(generateOutput(input(),options(blank)),{code:'MODEL_CONTRACT'},'빈 소재');
+});
+
+test('an empty fact list uses one fixed note instead of an invented limitation sentence',async()=>{
+  const blank=()=>{
+    const value=input();
+    value.feed.slots[0].caption_inputs.describable_facts=[];
+    value.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[];
+    return value;
+  };
+  const omitted=()=>{
+    const value=output();
+    value.output.slots[0].evidence=[{kind:'uploaded_photo',ref:'ph_01',note:NO_FACTS_NOTE}];
+    return value;
+  };
+  assert.equal((await generateOutput(blank(),options(omitted()))).output.slots[0].evidence[0].note,NO_FACTS_NOTE);
+
+  const invented=omitted();
+  invented.output.slots[0].evidence[0].note='사진 속 묘사 가능한 사실이 부족합니다';
+  await assert.rejects(generateOutput(blank(),options(invented)),{code:'MODEL_CONTRACT'});
+
+  const stillFilled=filledOutput();
+  stillFilled.output.slots[0].evidence[0].note=NO_FACTS_NOTE;
+  await assert.rejects(generateOutput(input(),options(stillFilled)),{code:'MODEL_CONTRACT'},'사실이 있는데 한계 문구');
 });

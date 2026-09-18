@@ -1,0 +1,967 @@
+[
+  {
+    "run": 1,
+    "scenario": "reference",
+    "input_sha256": "f3fe8e9819949a1ce6bd04a8872a780e81ad32ac622b7c7faae836438d1d4967",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:09.299Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2094,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"분식과 음식, 의류와 소품으로 꾼 계절 기록\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 떡\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 회색 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은색 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 연한 녹색 민소매 상의 · 크림색 케이블 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"글씨와 스티커가 주된 요소여서 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"노트 표지는 흰색에 가까운 크림색이다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 하늘색 니트 상의 · 은색 체인 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 반려동물 피사체라 설명이 겹칠 수 있어, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"같은 종류 피사체의 반복\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 테마가 첫 슬롯과 겹쳐 새로운 관점을 더하기 어려워, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"음식 피사체의 반복\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크무늬 셔츠 · 흰색 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터와 봉제 인형이 주된 시각 요소여서 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 니트 카디건 · 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"첫 번째 슬롯과 배경, 의류 구성이 같아 설명을 반복할 수 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"구성과 배경의 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 15268
+  },
+  {
+    "run": 2,
+    "scenario": "freetext",
+    "input_sha256": "6ae0b0772acb50f130bafd3364ef818a19d35ad052ebaf3e7a43a7314ce86d51",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:09.304Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2516,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"물건과 옷, 사람으로 채운 열다섯 장\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 검은 스프링\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 회색 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 흰색 유선 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"입과 턱만 보여 관측할 사실이 제한적이고, 광고 글이 주된 내용이라 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"얼굴 윗부분이 화면 밖으로 잘려 입과 턱 아래만 보인다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"주로 광고 문구와 상품 정보가 포함된 이미지\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"두 장의 사진을 합친 구성이고 글씨 정보가 주요 소재라, 각 사진의 옷을 단서로 삼기보다 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"구성 형식과 텍스트 오버레이가 주된 요소\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 분홍색 니트 옷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"얼굴이 보이지 않고 상반신 의류만 보여 관측할 내용이 제한적이며, 광고 글이 겹쳐 있어 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"얼굴 부재와 텍스트 오버레이로 설명 근거 제한\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식과 소품 사진이며 글씨와 자막이 겹쳐 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"주로 상품 정보와 자막이 포함된 구성\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"두 장의 음식 사진을 합친 구성이고 질문 글이 주요 요소라, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"상호작용형 질문 텍스트가 중심인 구성\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"얼굴이 보이지 않고 의류와 가방만 보여 고를 소재가 제한적이며, 광고 글이 있어 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"얼굴 부재와 광고 텍스트 오버레이\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"텍스트 정보와 캐릭터 이미지가 주요 요소이며, 광고나 정보 제공 성격이 강해 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"텍스트 오버레이와 캐릭터 요소가 주된 구성\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캡션용 글이 겹쳐 있고 구성이 정보 제공 성격이라, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"광고 또는 정보성 자막이 포함된 구성\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"얼굴이 보이지 않고 의류 자수와 무늬만 관측되며, 광고 글이 있어 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"얼굴 부재와 광고 텍스트\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 회색 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 23485
+  },
+  {
+    "run": 3,
+    "scenario": "photos_only",
+    "input_sha256": "f3d6ffc67d0c8d13e67db9717c2cdf09bf9aa6bf4465d65dd951b447b8ad9237",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:24.571Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2226,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"옷과 소품으로 담은 일상\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 회색 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":2,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 꽃 자수 · 체크 무늬 하의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"카디건 앞면 오른쪽에 흰색 실로 꽃 자수가 놓여 있다\"}]},{\"position\":3,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_04\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진이 주제인 광고 이미지로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"광고 문구와 음식 배치가 중심인 콘텐츠\"}]},{\"position\":5,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진이 광고 이미지로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"광고성 자막이 포함된 음식 사진\"}]},{\"position\":6,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":8,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크무늬 셔츠 · 흰색 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"반려동물 사진에 제품 광고가 얹혀 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"광고 라벨이 포함된 반려동물 사진\"}]},{\"position\":10,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고성 자막이 포함된 사진으로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"'쇼핑 카드값' 등 광고 문구 자막\"}]},{\"position\":11,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터 광고와 콘텐츠 자막이 주된 요소로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"캐릭터 홍보와 퀴즈 형식의 광고 콘텐츠\"}]},{\"position\":12,\"photo_id\":\"cq_12\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"반려동물 사진에 제품 광고가 얹혀 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 먹이 제품 광고\"}]},{\"position\":13,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"첫 번째 사진과 같은 피사체와 배경으로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"aggregate\",\"ref\":\"cq_01\",\"note\":\"cq_01과 동일한 의상 및 배경\"}]},{\"position\":14,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 크림색 노트 · 캐릭터 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":15,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 연한 녹색 민소매 상의 · 크림색 케이블 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 15504
+  },
+  {
+    "run": 4,
+    "scenario": "corrected",
+    "input_sha256": "089ee4d4e75cccaded15dd20f9f0a6963fbb0453feb1c167f49749c704ada54a",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:32.793Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2127,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"음식과 옷, 일상의 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 치즈\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"파란색과 흰색 줄무늬 종이컵 두 개에 튀김이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 크림색 소파 · 흰 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 초록색 잎 · 크림색 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물의 뒤로 짙은 초록색 잎이 무성하게 보인다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"글씨와 스티커 외 관측한 사실이 주로 제품이나 표기라, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"관측 범위가 제품 디자인에 한정됨\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 하늘색 니트 · 반지\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 비슷한 소재(동물 의류)가 반복돼, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"개는 분홍색 니트 옷을 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 의류 소재 중복\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"화면 대부분이 글씨 자막으로 덮혀 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"화면 위쪽에 검은 배경의 자막 상자가 겹쳐져 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"관측 사실이 글씨에 의해 가려짐\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크무늬 셔츠 · 흰색 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"글씨와 캐릭터 요소가 사진 내용과 섞여 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"글자와 그림이 관측 내용을 방해함\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 니트 카디건 · 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"15번 사진이 13번 사진과 옷과 배경이 거의 같아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"전체 구성 및 의류 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 15279
+  },
+  {
+    "run": 5,
+    "scenario": "reference",
+    "input_sha256": "f3fe8e9819949a1ce6bd04a8872a780e81ad32ac622b7c7faae836438d1d4967",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:40.076Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2079,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"음식과 패션, 반려동물을 담은 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 떡\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 줄무늬 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 크림색 소파 · 검은색 핸드백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 초록색 잎 · 크림색 케이블 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물의 뒤로 짙은 초록색 잎이 무성하게 보인다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"글씨와 스티커가 레이아웃의 중심이라, 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.visual_peak\",\"note\":\"텍스트 기반 구성\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 은색 체인 목걸이 · 반지\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"여러 손가락에 반지를 끼고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯과 반려동물 소재가 겹쳐, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 반복\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 유리 접시 · 과자\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"의류 소재가 여러 슬롯에서 반복되어, 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의류 반복\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터와 글씨가 구성의 주요소라, 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.visual_peak\",\"note\":\"텍스트와 캐릭터 중심\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 카디건 · 흰색 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯(position 4)과 같은 의류 구성이라, 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"한쪽 팔을 머리 위로 올리고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의류 및 포즈 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 14724
+  },
+  {
+    "run": 6,
+    "scenario": "freetext",
+    "input_sha256": "6ae0b0772acb50f130bafd3364ef818a19d35ad052ebaf3e7a43a7314ce86d51",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:48.074Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2335,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"사진 묶음을 이으며 기록하기\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 모자 · 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고 문구와 상품 리뷰가 주요 내용이라, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"광고 및 상품 소개 성격의 문구가 주를 이루어 개인의 기억과 경험을 담기 어려움\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 소파 · 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"사람 한 명이 크림색 소파에 앉아 정면을 보고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"위아래 두 장의 사진에서 반복된 옷과 배경 요소가 있어, 한 장만 남기고 사진으로 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 병\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고 문구와 상품 소개가 주를 이루어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"광고 및 상품 추천 성격의 자막이 주를 이루어 개인의 경험 기록에 맞지 않음\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진이지만 광고 성격의 자막이 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"상품 홍보 목적의 자막이 있어 개인의 기억을 담기 어려움\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진에 선택을 묻는 질문이 오버레이되어 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"설문 형식의 자막과 음식 이미지가 주이므로 개인 기록에 최적화하기 어려움\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 셔츠 · 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터 소개 문구와 퀴즈 성격의 자막이 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"캐릭터 상품 소개와 퀴즈 형식의 자막이 주이므로 개인 기억 기록에 맞지 않음\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고 성격의 자막이 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"광고 목적의 문구가 있어 개인의 경험과 기억을 담기 어려움\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 카디건 · 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"cq_13과 같은 배경과 옷, 자세가 반복되어 있어, 한 장만 남기고 사진으로 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"cq_13 사진과 배경, 의복, 자세가 동일하여 반복 설명을 피하기 위함\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "result": {
+      "output": {
+        "title": "사진 묶음을 이으며 기록하기",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "쓸 거리: 노트 · 스티커\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "쓸 거리: 모자 · 가방\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "쓸 거리: 개 · 이어폰\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "광고 문구와 상품 리뷰가 주요 내용이라, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "광고 및 상품 소개 성격의 문구가 주를 이루어 개인의 기억과 경험을 담기 어려움"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "쓸 거리: 소파 · 목걸이\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "위아래 두 장의 사진에서 반복된 옷과 배경 요소가 있어, 한 장만 남기고 사진으로 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "filled",
+            "text": "쓸 거리: 개 · 병\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "광고 문구와 상품 소개가 주를 이루어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "광고 및 상품 추천 성격의 자막이 주를 이루어 개인의 경험 기록에 맞지 않음"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "음식 사진이지만 광고 성격의 자막이 있어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "상품 홍보 목적의 자막이 있어 개인의 기억을 담기 어려움"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "음식 사진에 선택을 묻는 질문이 오버레이되어 있어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 붙어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "설문 형식의 자막과 음식 이미지가 주이므로 개인 기록에 최적화하기 어려움"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "쓸 거리: 셔츠 · 가방\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "캐릭터 소개 문구와 퀴즈 성격의 자막이 있어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "캐릭터 상품 소개와 퀴즈 형식의 자막이 주이므로 개인 기억 기록에 맞지 않음"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "광고 성격의 자막이 있어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.insufficient_facts",
+                "note": "광고 목적의 문구가 있어 개인의 경험과 기억을 담기 어려움"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "쓸 거리: 카디건 · 자수\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "cq_13과 같은 배경과 옷, 자세가 반복되어 있어, 한 장만 남기고 사진으로 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "cq_13 사진과 배경, 의복, 자세가 동일하여 반복 설명을 피하기 위함"
+              }
+            ]
+          }
+        ]
+      },
+      "omission": {
+        "omitted": 8,
+        "total": 15,
+        "note_key": "omission.some",
+        "note": "15자리 중 8자리는 사진만 두는 편이 낫다고 봤어요.",
+        "evidence": [
+          {
+            "kind": "rule",
+            "ref": "gyeol.omit.disclosure",
+            "note": "생성 결과의 omitted 슬롯을 세어 8/15로 적었다"
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 16674
+  },
+  {
+    "run": 7,
+    "scenario": "photos_only",
+    "input_sha256": "f3d6ffc67d0c8d13e67db9717c2cdf09bf9aa6bf4465d65dd951b447b8ad9237",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:10:54.810Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2171,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"옷과 소품을 입은 모습들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_01\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬가 있는 회색 니트 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":2,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 니트 카디건 · 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":3,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 질감의 오버사이즈 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 초록색 접시 · 튀김\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":5,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 투명한 유리 접시 · 갈색 계열 과자\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":6,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은색 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":8,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크무늬 셔츠 · 흰색 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"같은 종류의 반려동물 소재가 반복되어, 대표 사진에만 단서를 제공해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 반복\"}]},{\"position\":10,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"옷과 소품 구성이 비슷해, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의류 및 악세서리 반복\"}]},{\"position\":11,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"사람과 반려동물이 함께 있는 구성이 앞서 나타났으므로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"인물과 반려동물 구성 반복\"}]},{\"position\":12,\"photo_id\":\"cq_12\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"반려동물 중심의 사진이 이미 제안되었으므로, 이 자리는 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 중심 반복\"}]},{\"position\":13,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"첫 번째 사진과 동일한 구성이므로, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"동일 구도 반복\"}]},{\"position\":14,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 크림색 노트 · 검은 스프링 제본\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":15,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 흰 반팔 티셔츠 · 연한 녹색 민소매 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 15566
+  },
+  {
+    "run": 8,
+    "scenario": "corrected",
+    "input_sha256": "089ee4d4e75cccaded15dd20f9f0a6963fbb0453feb1c167f49749c704ada54a",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:11:04.751Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2214,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"음식과 옷, 소품으로 골라본 취향\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 떡\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"파란색과 흰색 줄무늬 종이컵 두 개에 튀김이 담겨 있다\"},{\"kind\":\"aggregate\",\"ref\":\"cq_04\",\"note\":\"분식 음식 관련 선택지 제시 이미지\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"목에 흰색 스카프를 여러 번 감고 있어 입과 코 아래가 가려져 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 줄무늬 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 진주 목걸이 · 검은 핸드백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"진주 형태의 흰 목걸이를 착용하고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"위아래 사진이 각각 다른 브랜드의 스타일 제안이라 캡션 단서 없이 이미지만으로도 충분해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.visual_peak\",\"note\":\"브랜드 협력 콘텐츠로 구성된 슬롯\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 캐릭터 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"인물 스타일이 앞서 보인 의류 조합과 유사해, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의류 소재 반복\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"반려동물 소품 소재가 이미 제시되어 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"반려동물 소재 반복\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 소재가 처음 슬롯에 이미 담겨 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"음식 소재 반복\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란 체크무늬 셔츠 · 흰 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터와 봉제 인형 같은 소품이 앞 슬롯들에 제시된 것과 유사해, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"소품 소재 반복\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리 카디건 · 흰 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"같은 구성의 의상이 4번 슬롯에 이미 제시되어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의상 구성 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 16435
+  },
+  {
+    "run": 9,
+    "scenario": "reference",
+    "input_sha256": "f3fe8e9819949a1ce6bd04a8872a780e81ad32ac622b7c7faae836438d1d4967",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:11:10.379Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2098,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"간식과 옷, 그리고 소품들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 떡\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 줄무늬 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은색 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 흰 반팔 티셔츠 · 초록색 민소매 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 캐릭터 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"라벨 아래에 얼굴과 팔다리가 그려진 펼친 책 모양 캐릭터 스티커 두 개가 나란히 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯과의 상황 반복이 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"유사한 상의 착용 장면의 반복\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 분홍색 니트 옷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"개는 분홍색 니트 옷을 입고 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯과의 소재 반복이 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"재킷 착용 장면의 반복\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 과자 · 초록 잎 식물\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯들과의 의류 소재 반복이 높아, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의류 조합 제시 장면의 반복\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 봉제 인형 · 파란 하트 무늬 바지\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 카디건 · 흰색 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"위치 4번과 동일한 장면이라, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"동일 구도 및 의류 장면의 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 14947
+  },
+  {
+    "run": 10,
+    "scenario": "freetext",
+    "input_sha256": "6ae0b0772acb50f130bafd3364ef818a19d35ad052ebaf3e7a43a7314ce86d51",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:11:21.189Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 1927,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"함께하는 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 니트 모자 · 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고 문구가 주를 이루어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 핸드백 · 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 민소매 상의 · 케이블 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진들과 반려동물 소재가 반복되어, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"동일 종류 소재 반복\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고와 음식 이미지가 겹쳐, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진에 직접적인 질문 문구가 있어, 사진에 맡기는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 체크무늬 셔츠 · 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터 관련 질문 문구가 주를 이루어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 하늘색 니트 · 반지\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"밝은 하늘색 니트 상의를 입고 있다\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 카디건 · 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"2번 사진과 거의 동일한 구성이라, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"연속 사진 중복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "result": {
+      "output": {
+        "title": "함께하는 순간들",
+        "slots": [
+          {
+            "position": 1,
+            "photo_id": "cq_14",
+            "caption_state": "filled",
+            "text": "쓸 거리: 노트 · 스티커\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_14",
+                "note": "검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "photo_id": "cq_13",
+            "caption_state": "filled",
+            "text": "쓸 거리: 니트 모자 · 가방\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_13",
+                "note": "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "photo_id": "cq_12",
+            "caption_state": "filled",
+            "text": "쓸 거리: 개 · 이어폰\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_12",
+                "note": "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 4,
+            "photo_id": "cq_03",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "광고 문구가 주를 이루어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_03",
+                "note": "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 5,
+            "photo_id": "cq_06",
+            "caption_state": "filled",
+            "text": "쓸 거리: 핸드백 · 목걸이\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_06",
+                "note": "검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다"
+              }
+            ]
+          },
+          {
+            "position": 6,
+            "photo_id": "cq_15",
+            "caption_state": "filled",
+            "text": "쓸 거리: 민소매 상의 · 케이블 니트\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_15",
+                "note": "위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 7,
+            "photo_id": "cq_09",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "앞 사진들과 반려동물 소재가 반복되어, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_09",
+                "note": "흰 털의 개 한 마리가 정면을 향해 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "동일 종류 소재 반복"
+              }
+            ]
+          },
+          {
+            "position": 8,
+            "photo_id": "cq_07",
+            "caption_state": "filled",
+            "text": "쓸 거리: 올리브색 재킷 · 스카프\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_07",
+                "note": "올리브색 재킷을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 9,
+            "photo_id": "cq_05",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "광고와 음식 이미지가 겹쳐, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_05",
+                "note": "투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다"
+              }
+            ]
+          },
+          {
+            "position": 10,
+            "photo_id": "cq_04",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "음식 사진에 직접적인 질문 문구가 있어, 사진에 맡기는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_04",
+                "note": "위아래 두 장의 사진이 하나의 이미지로 붙어 있다"
+              }
+            ]
+          },
+          {
+            "position": 11,
+            "photo_id": "cq_08",
+            "caption_state": "filled",
+            "text": "쓸 거리: 체크무늬 셔츠 · 천 가방\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_08",
+                "note": "파란색 체크무늬 셔츠를 앞을 열어 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 12,
+            "photo_id": "cq_11",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "캐릭터 관련 질문 문구가 주를 이루어, 사진만 두는 편을 제안해요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_11",
+                "note": "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다"
+              }
+            ]
+          },
+          {
+            "position": 13,
+            "photo_id": "cq_10",
+            "caption_state": "filled",
+            "text": "쓸 거리: 하늘색 니트 · 반지\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_10",
+                "note": "밝은 하늘색 니트 상의를 입고 있다"
+              }
+            ]
+          },
+          {
+            "position": 14,
+            "photo_id": "cq_02",
+            "caption_state": "filled",
+            "text": "쓸 거리: 카디건 · 꽃 자수\n이 중 기억에 남은 건?",
+            "omit_reason": null,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_02",
+                "note": "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다"
+              }
+            ]
+          },
+          {
+            "position": 15,
+            "photo_id": "cq_01",
+            "caption_state": "omitted",
+            "text": null,
+            "omit_reason": "2번 사진과 거의 동일한 구성이라, 이 자리는 사진만 두어도 좋아요.",
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "cq_01",
+                "note": "사람 한 명이 측면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.overlap",
+                "note": "연속 사진 중복"
+              }
+            ]
+          }
+        ]
+      },
+      "omission": {
+        "omitted": 6,
+        "total": 15,
+        "note_key": "omission.some",
+        "note": "15자리 중 6자리는 사진만 두는 편이 낫다고 봤어요.",
+        "evidence": [
+          {
+            "kind": "rule",
+            "ref": "gyeol.omit.disclosure",
+            "note": "생성 결과의 omitted 슬롯을 세어 6/15로 적었다"
+          }
+        ]
+      }
+    },
+    "ok": true,
+    "elapsed_ms": 13685
+  },
+  {
+    "run": 11,
+    "scenario": "reference",
+    "input_sha256": "f3fe8e9819949a1ce6bd04a8872a780e81ad32ac622b7c7faae836438d1d4967",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:11:25.329Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11355,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2080,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"음식·옷·소품으로 채운 일상\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_04\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 튀김 · 떡\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다\"}]},{\"position\":2,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다\"}]},{\"position\":4,\"photo_id\":\"cq_13\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 줄무늬 모자 · 황록색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 검은 핸드백 · 진주 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 흰 반팔 티셔츠 · 검은 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 캐릭터 스티커\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"라벨 아래에 얼굴과 팔다리가 그려진 펼친 책 모양 캐릭터 스티커 두 개가 나란히 붙어 있다\"}]},{\"position\":8,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯들과 반복되는 악세사리(반지·목걸이)가 주요 소재라, 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"여러 손가락에 반지를 끼고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"악세사리 반복\"}]},{\"position\":9,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"확인한 관측 사실이 적어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"개는 분홍색 니트 옷을 입고 있다\"}]},{\"position\":10,\"photo_id\":\"cq_03\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 갈색 스웨이드 재킷 · 하늘색 주름 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다\"}]},{\"position\":11,\"photo_id\":\"cq_05\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 과자 · 초록 잎 식물\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"}]},{\"position\":12,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크 셔츠 · 흰색 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":13,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 슬롯과 같은 배경의 침실 장면이라, 설명 반복을 줄이기 위해 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"검은색과 흰색이 섞인 털 재질 겉옷을 입고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"침실 배경·소품 반복\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 니트 카디건 · 흰색 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"4번 슬롯과 같은 의상 구성(줄무늬 모자·황록색 가방·초록색 옷)이라, 중복을 피해 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.overlap\",\"note\":\"의상 전체 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 15112
+  },
+  {
+    "run": 12,
+    "scenario": "freetext",
+    "input_sha256": "6ae0b0772acb50f130bafd3364ef818a19d35ad052ebaf3e7a43a7314ce86d51",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "started_at": "2026-09-18T06:11:34.877Z",
+    "calls": [
+      {
+        "status": 200,
+        "model": "claude-haiku-4-5-20251001",
+        "usage": {
+          "input_tokens": 11284,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+          },
+          "output_tokens": 2393,
+          "service_tier": "standard",
+          "inference_geo": "not_available"
+        },
+        "stop_reason": "end_turn",
+        "raw_content": [
+          {
+            "type": "text",
+            "text": "{\"output\":{\"title\":\"물건과 순간을 담은 일상\",\"slots\":[{\"position\":1,\"photo_id\":\"cq_14\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 노트 · 라벨\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_14\",\"note\":\"검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다\"}]},{\"position\":2,\"photo_id\":\"cq_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진의 인물 복장과 배경이 반복되어, 이 자리는 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_13\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"aggregate\",\"ref\":\"cq_01,cq_13\",\"note\":\"동일한 의류 구성(회색 소매 상의, 남색 조끼형 상의, 황록색 가방, 회색 니트 모자)과 야외 배경\"}]},{\"position\":3,\"photo_id\":\"cq_12\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 개 · 이어폰\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_12\",\"note\":\"흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다\"}]},{\"position\":4,\"photo_id\":\"cq_03\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"광고 문구가 주요 내용이어서, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_03\",\"note\":\"사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"관측 가능한 의류 세부사항은 있으나 광고 성격의 오버레이 텍스트가 사진의 주요 구성\"}]},{\"position\":5,\"photo_id\":\"cq_06\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 핸드백 · 목걸이\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_06\",\"note\":\"검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다\"}]},{\"position\":6,\"photo_id\":\"cq_15\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 민소매 상의 · 케이블 니트\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_15\",\"note\":\"위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다\"}]},{\"position\":7,\"photo_id\":\"cq_09\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"개의 의류와 함께 제품 패키지가 보이는데, 광고 요소가 강해 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_09\",\"note\":\"흰 털의 개 한 마리가 정면을 향해 앉아 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"제품명·용량 등 상세 텍스트가 오버레이되어 있음\"}]},{\"position\":8,\"photo_id\":\"cq_07\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 올리브색 재킷 · 흰색 스카프\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_07\",\"note\":\"올리브색 재킷을 열어 입고 있다\"}]},{\"position\":9,\"photo_id\":\"cq_05\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"과자와 선물 포장물이 있지만 광고성 자막이 겹쳐 있어, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_05\",\"note\":\"투명한 유리 접시 위에 갈색 계열 과자 여러 개가 원형으로 둘러 놓여 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"화면 상단과 하단에 검은 배경의 자막 상자와 텍스트 오버레이\"}]},{\"position\":10,\"photo_id\":\"cq_04\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"음식 사진에 선택지 형식의 텍스트가 주요 구성이어서, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_04\",\"note\":\"위아래 두 장의 사진이 하나의 이미지로 붙어 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"사진이 질문/선택지 형식의 게시물 구성\"}]},{\"position\":11,\"photo_id\":\"cq_08\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 파란색 체크무늬 셔츠 · 하얀 천 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_08\",\"note\":\"파란색 체크무늬 셔츠를 앞을 열어 입고 있다\"}]},{\"position\":12,\"photo_id\":\"cq_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"캐릭터 정보 퀴즈 형식의 게시물로, 광고성 텍스트와 그림이 주요 구성이어서 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_11\",\"note\":\"사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"손글씨체 질문 텍스트와 캐릭터 인형이 사진의 주요 내용\"}]},{\"position\":13,\"photo_id\":\"cq_10\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"직업 관련 유머 자막이 사진의 주요 구성이어서, 사진만 두는 편을 제안해요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_10\",\"note\":\"사람 한 명이 화면 상단을 차지하며 정면을 향해 있다\"},{\"kind\":\"rule\",\"ref\":\"gyeol.omit.insufficient_facts\",\"note\":\"검은 배경의 흰 글자 자막이 주요 내용\"}]},{\"position\":14,\"photo_id\":\"cq_02\",\"caption_state\":\"filled\",\"text\":\"쓸 거리: 아이보리색 카디건 · 꽃 자수\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_02\",\"note\":\"아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다\"}]},{\"position\":15,\"photo_id\":\"cq_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"2번 사진과 동일한 인물, 의류, 배경으로 이미 담은 내용이어서 사진만 두어도 좋아요.\",\"evidence\":[{\"kind\":\"uploaded_photo\",\"ref\":\"cq_01\",\"note\":\"사람 한 명이 측면을 향해 서 있다\"},{\"kind\":\"aggregate\",\"ref\":\"cq_01,cq_13\",\"note\":\"동일한 의류 구성과 야외 배경의 반복\"}]}]}}"
+          }
+        ]
+      }
+    ],
+    "prompt_sha256": "209a4cd6b3844f0647822b0fd7213a8f0df4aa010dc73c5aa08367f7551ae1c0",
+    "ok": false,
+    "error": {
+      "code": "MODEL_CONTRACT",
+      "message": "Model output does not match the requested photo contract."
+    },
+    "elapsed_ms": 18147
+  }
+]
