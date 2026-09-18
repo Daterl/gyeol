@@ -23,12 +23,38 @@ const sourceUrl = (value: unknown) => {
     return false;
   }
 };
+const onlyKeys = (value: Record<string, unknown>, keys: string[]) =>
+  Object.keys(value).every((key) => keys.includes(key));
+const displayName = (value: unknown) =>
+  typeof value === 'string' &&
+  value.trim().length > 0 &&
+  value.length <= 100 &&
+  [...value].every((character) => {
+    const code = character.charCodeAt(0);
+    return code >= 32 && (code < 127 || code > 159);
+  });
+const usernameMatches = (value: unknown, url: string) =>
+  typeof value === 'string' &&
+  /^[a-z0-9_.]{1,30}$/.test(value) &&
+  value === new URL(url).pathname.replace(/^\/|\/$/g, '').toLowerCase();
+function validateDisplay(value: unknown, url: string) {
+  if (
+    !record(value) ||
+    !onlyKeys(value, ['username', 'display_name', 'name_source']) ||
+    !usernameMatches(value.username, url) ||
+    (value.display_name !== undefined && !displayName(value.display_name)) ||
+    (value.name_source !== undefined &&
+      value.name_source !== 'apify.ownerFullName')
+  )
+    throw new Error('Invalid saved profile display');
+}
 const cropsValid = (value: unknown, photoIds: string[]) =>
   record(value) &&
   Object.entries(value).every(
     ([id, crop]) =>
       photoIds.includes(id) &&
       record(crop) &&
+      onlyKeys(crop, ['x', 'y']) &&
       ['x', 'y'].every(
         (axis) =>
           typeof crop[axis] === 'number' &&
@@ -73,6 +99,11 @@ export function validateCurationState(
       curation.slots.length !== photoIds.length
     )
       throw new Error('Invalid saved curation');
+    if (curation.profile.display !== undefined)
+      validateDisplay(
+        curation.profile.display,
+        curation.profile.source_url as string,
+      );
     if (
       curation.slots.some(
         (slot, index) =>
@@ -101,7 +132,15 @@ export function validateCurationState(
   if (confirmed === null) return;
   if (
     !record(confirmed) ||
+    !onlyKeys(confirmed, [
+      'output',
+      'crops',
+      'excluded',
+      'profileSharing',
+      'profile',
+    ]) ||
     !record(confirmed.output) ||
+    !onlyKeys(confirmed.output, ['title', 'slots']) ||
     typeof confirmed.output.title !== 'string' ||
     !confirmed.output.title.trim() ||
     !Array.isArray(confirmed.output.slots) ||
@@ -120,6 +159,13 @@ export function validateCurationState(
     confirmed.output.slots.some(
       (slot, index) =>
         !record(slot) ||
+        !onlyKeys(slot, [
+          'photo_id',
+          'position',
+          'caption_state',
+          'text',
+          'omit_reason',
+        ]) ||
         slot.position !== index + 1 ||
         !['user', 'seed', 'omitted'].includes(String(slot.caption_state)) ||
         !(slot.text === null || typeof slot.text === 'string') ||
@@ -132,7 +178,19 @@ export function validateCurationState(
     confirmed.profile !== undefined &&
     (!confirmed.profileSharing ||
       !record(confirmed.profile) ||
-      !sourceUrl(confirmed.profile.source_url))
+      !sourceUrl(confirmed.profile.source_url) ||
+      !onlyKeys(confirmed.profile, [
+        'source_url',
+        'username',
+        'display_name',
+      ]) ||
+      (confirmed.profile.username !== undefined &&
+        !usernameMatches(
+          confirmed.profile.username,
+          confirmed.profile.source_url as string,
+        )) ||
+      (confirmed.profile.display_name !== undefined &&
+        !displayName(confirmed.profile.display_name)))
   )
     throw new Error('Invalid confirmed profile');
 }

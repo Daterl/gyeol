@@ -54,11 +54,9 @@ async function ready(storage: ReturnType<typeof memoryStorage>['storage']) {
     })),
   });
   await store.getState().loadCuration(async () => curationFixture());
-  await store
-    .getState()
-    .generate(undefined, async () => ({
-      output: structuredClone(fixture.all_omitted) as F3Export,
-    }));
+  await store.getState().generate(undefined, async () => ({
+    output: structuredClone(fixture.all_omitted) as F3Export,
+  }));
   return store;
 }
 const persist = (store: ReturnType<typeof createCurationEditorStore>) =>
@@ -75,13 +73,11 @@ test('G3 round trip restores all curation edits, normalized photos and detached 
   const store = await ready(storage);
   const [first, second] = store.getState().order;
   store.getState().setPrompt('saved prompt');
-  store
-    .getState()
-    .setProfileReference({
-      username: 'public_example',
-      displayName: 'public_example',
-      profileImageUrl: null,
-    });
+  store.getState().setProfileReference({
+    username: 'public_example',
+    displayName: 'public_example',
+    profileImageUrl: null,
+  });
   store.getState().editTitle('edited title');
   store.getState().editCaption(first, 'edited caption');
   store.getState().movePhoto(first, 1);
@@ -174,4 +170,79 @@ test('a late restore after reset cannot restore curation metadata or confirmatio
   expect(restored.getState().confirmed).toBeNull();
   expect(restored.getState().curation).toBeNull();
   expect(restored.getState().photos).toEqual([]);
+});
+
+test('optional display fields validate before restore and public confirmation rejects internal metadata', async () => {
+  const { validateCurationState } = await import('./curation-persistence');
+  const store = await ready(memoryStorage().storage);
+  store.getState().setProfileSharing(true);
+  store.getState().confirmCuration();
+  const {
+    curation,
+    crops,
+    excluded,
+    confirmed,
+    profileSharing,
+    original,
+    photos,
+  } = store.getState();
+  const metadata = { curation, crops, excluded, confirmed, profileSharing };
+  const photoIds = photos.map((photo) => photo.photo_id);
+  const valid = JSON.parse(JSON.stringify(metadata));
+  valid.curation.profile.display = {
+    username: 'public_example',
+    display_name: 'Public Name',
+    name_source: 'apify.ownerFullName',
+  };
+  valid.confirmed.profile = {
+    source_url: curation?.profile.source_url,
+    username: 'public_example',
+    display_name: 'Public Name',
+  };
+  expect(() => validateCurationState(valid, photoIds, original)).not.toThrow();
+  for (const mutate of [
+    (value: typeof valid) => {
+      value.curation.profile.display.display_name = { bad: 'React child' };
+    },
+    (value: typeof valid) => {
+      value.curation.profile.display.username = 'different_account';
+    },
+    (value: typeof valid) => {
+      value.curation.profile.display.name_source = 'guessed';
+    },
+    (value: typeof valid) => {
+      value.confirmed.profile.display_name = 'x'.repeat(101);
+    },
+    (value: typeof valid) => {
+      value.confirmed.profile.display_name = 'control\u0000';
+    },
+    (value: typeof valid) => {
+      value.confirmed.profile.username = {};
+    },
+    (value: typeof valid) => {
+      value.confirmed.profile.snapshot_id = 'signed-internal-reference';
+    },
+    (value: typeof valid) => {
+      value.confirmed.evidence = ['internal'];
+    },
+    (value: typeof valid) => {
+      value.confirmed.output.slots[0].signed_ref = 'internal';
+    },
+    (value: typeof valid) => {
+      value.confirmed.crops[photoIds[0]].evidence = 'internal';
+    },
+  ]) {
+    const invalid = structuredClone(valid);
+    mutate(invalid);
+    expect(() => validateCurationState(invalid, photoIds, original)).toThrow();
+  }
+  const historical = structuredClone(valid);
+  const previousId = historical.confirmed.output.slots[0].photo_id;
+  historical.confirmed.output.slots[0].photo_id = 'older-photo';
+  historical.confirmed.crops['older-photo'] =
+    historical.confirmed.crops[previousId];
+  delete historical.confirmed.crops[previousId];
+  expect(() =>
+    validateCurationState(historical, photoIds, original),
+  ).not.toThrow();
 });

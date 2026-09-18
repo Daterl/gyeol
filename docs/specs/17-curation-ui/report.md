@@ -1,49 +1,45 @@
-# Public-profile input and G5 editor
+# Public-profile curation and recoverable editing
 
-Refs #68, #17, #139. ADR-0008 is the product contract. The change is stacked on PR153; no server or G3 store file is edited.
+Refs #68, #17, #139. [ADR-0008](../../adr/0008-public-profile-curation-and-sharing.md) is the product contract. PR158 remains a draft stacked on PR153. Develop is merged through `99842bf360f2a20f05e42e182d6157c736709037`, including Diego's G3 persistence and G6 storage boundary; their history and implementations are retained.
 
-## Implemented
+## Behavior
 
-The browser obtains an in-memory CSRF token from `/api/profile/session`, sends same-origin credentials to `/api/profile`, and never receives an ingest credential. Connect requires explicit paid-collection confirmation. Status polling is bounded at ten requests, stops on terminal status/error/cancel, and honors rate-limit waiting. Session expiry permits one bootstrap retry; private, missing, provider-failure and expired states remain distinct. Connection loss invalidates generation access while preserving photos, captions and confirmation.
+Public-profile connection uses same-origin sessions and in-memory CSRF, explicit collection consent, bounded polling and distinct private/missing/expired/provider-error states. The input retains PR154 normalization to 1440px WebP, failed-photo disclosure, 3–15 photos, optional prompt and a separate paid-start choice. Rejected file selections preserve an existing draft.
 
-The input requires a public profile, retains PR154's 1440px WebP normalization and explicit failed-photo handling, and accepts 3–15 photos with an optional prompt. A second explicit paid-start choice precedes analyze → curation feed → caption generation. The strict legacy editor receives only `{feed, context}`; curation metadata stays in the new adapter. Individual and whole-caption regeneration also require paid-call confirmation.
+Regeneration requires a live connection matching both the loaded curation's account and `profile_snapshot_id`. Connecting B after creating A, or refreshing A to a different snapshot, preserves photos, edits and the prior confirmation but requires a new curation before regeneration. Reconnecting the same account/reference may resume. Reload restores a profile reference for convenience, never live authorization or paid consent; the user must reconnect.
 
-The 480px editor uses a three-column square preview, draggable and keyboard/button movement, explicit exclusion/restoration, candidate rationale, caption editing/emptying, percentage crop centers and actual omitted-caption counts. All photos start included. Confirmation clones and deeply freezes the current included order, captions, crop centers and profile choice; subsequent edits or regenerated feeds leave the previous confirmation intact. Empty selection cannot be confirmed. Profile sharing defaults off; opting in includes only the available source URL. Internal source evidence, signed references and cache metadata are absent from the confirmation DTO.
+The preview supports keyboard/button/drag order, exclusion/restoration, candidate rationale, editable or empty captions, crop centers and omission counts. Profile sharing defaults off. Confirmation contains a detached, recursively frozen snapshot of included order, captions, crops and the sharing choice. It excludes internal evidence and signed references; later editing or generation leaves it unchanged until reconfirmed. The current public profile DTO contains only `source_url`; optional display metadata belongs to the separate #160 integration.
 
-## G3 adapter contract
+## G3 integration
 
-`src/features/editor/curation-store.ts` wraps the existing store without editing it. `CurationEdits` adds:
+[The G3 contract](../139-draft-persistence/spec.md) owns revisioned localStorage metadata and IndexedDB WebP blobs. No second persistence engine is introduced. `createEditorStore` accepts an optional metadata save/restore hook; the curation adapter uses the optional `DraftMetadata.curationState` extension:
 
-- `curation`: internal response metadata for the current preview; never serialize directly as public sharing data.
-- `excluded`: photo IDs; order remains the base store's `order`.
-- `crops`: photo ID → `{x,y}` in 0–100 percent; missing value means `{x:50,y:50}`.
-- `profileSharing`: boolean, initially false.
-- `confirmed`: detached frozen output containing title, ordered captions without internal evidence, crops, excluded IDs, sharing choice and optional `{source_url}`.
+- `curation`: internal response metadata for the loaded preview, including account/snapshot binding and exclusion recommendations.
+- `excluded`, `crops`, `profileSharing`: current curation edits.
+- `confirmed`: detached confirmation, frozen again on recovery.
 
-Actions are `loadCuration` (returns true only for an accepted, uncancelled feed), `setIncluded`, `setCrop`, `setProfileSharing`, `confirmCuration`; base actions continue to own order/title/caption/file changes. G3 must persist both these fields and the base draft/order plus profile reference/prompt and normalized IndexedDB blobs, reconstruct the adapter, and freeze recovered confirmations. `src/features/editor/store.ts` and Diego's draft-storage files were intentionally not changed. Reload acceptance is not implemented by this PR.
+The existing base metadata holds draft, title/captions, order, original responses, prompt and profile reference. Adapter data is validated in the existing storage transaction, including optional display field types/provenance and a strict public confirmation allowlist; legacy records without the extension remain readable. Web Locks, revision pairing and binary storage remain G3's implementation. Metadata edits reuse the saved image revision. Restore runs before subscriptions and input unlock; reset calls `clearDraft`. Late restore after reset is rejected. Transient storage read failures preserve valid saved data for retry; invalid save attempts leave the prior revision intact.
 
 ## Verification
 
-Node 24; base `16d9222b28d311f102357d8f40df9da5edd189ae` (PR153).
+Node 24.21.0; all browser API calls intercepted, with no provider or paid calls.
 
-| Command | Result |
+| Check | Result |
 | --- | --- |
-| `npm run test:ui` | 58 tests / 17 files pass |
-| `npm test` | 363 tests pass |
-| `npm run build` | Production build passes, including profile/session route |
-| `npm run typecheck` | Route generation and TypeScript pass |
-| `npm run lint` | 56 files, no fixes needed |
-| `npm run eval` | Synthetic invariants and expected-negative cases pass; manual quality gates remain pending |
-| `npm run check` | 95 JS/JSON files and four schema fixtures pass |
-| `git diff --check` | Pass |
-| Browser bundle identifier scan | No APIFY ingest-key or browser-session-secret identifier in `.next/static` JS |
+| Editor-focused Vitest | 28 tests pass |
+| Full UI suite | 77 tests / 20 files pass |
+| Node suite | 375 tests pass |
+| Production build and typecheck | Pass |
+| Lint | 65 files pass |
+| Static check | 99 JS/JSON files and four schema fixtures pass |
+| Browser binding, reload and reset | Pass; normalized IndexedDB blobs and full saved metadata compared across actual reload |
 
-## Verification scope
+[The browser persistence regression](browser-persistence.mjs) uses the existing Playwright installation through `PLAYWRIGHT_MODULE`, accepts `UI_BASE_URL`, and writes screenshots to `UI_EVIDENCE_DIR`. It verifies changed-account and fresh-snapshot blocking, same-reference resume, unverified/expired restoration, prompt/title/caption/order/exclusion/crop/sharing/confirmation recovery, normalized image blobs, and reset of both stores, and recovery after a simulated transient IndexedDB read failure. Tests also verify restored recursive freezing, failed reads/saves preserving valid data, and late-restore rejection.
 
-The executable `browser.mjs` uses an existing Playwright installation specified by `PLAYWRIGHT_MODULE`, not a new project dependency. It intercepts every API request. Chromium checks cover 360/390/430 widths, mandatory profile, private recovery, explicit paid confirmations, feed→generate, keyboard movement, exclusion/restoration, empty caption count, crop keyboard input, profile on/off, immutable confirmation, 44px buttons and horizontal overflow. A 390px clock-advanced expiry and provider-failure retry verifies preservation and disabled generation. Focused tests cover 2/16 rejection, 3/15 acceptance with blank/written prompt, and two authenticated equal digests among three photos yielding one recommendation versus zero for distinct digests.
+The original independent A→B reproduction at `cce95c86588941b01673a7f9010c30e02247814e` was rerun before the fix. Its captured requests prove that B formerly authorized an identical generation from A's context. Original author and independent-review evidence remain under `.orca-specs/remaining-20260918/ui-evidence/` and `ui-review-evidence/`; new logs are in `ui-integration-evidence/`. The coordinator report `ui-integration-fix.md` records the exact final tested SHA.
 
-These are offline wiring and regression checks. They do not establish live model quality, real Apify access, real browser HTTPS Secure-cookie operation, private Blob sharing, physical-device behavior, external-user acceptance or G3 persistence. The author reviewed screenshots using visual-verdict; independent code/design review belongs to the coordinator. The sip/ssotize audit found the old photo-only APIs retained for compatibility/tests and the G3-owned base store's legacy selection contract; the new product path uses ADR-0008 bounds. The mandela audit flags designer/verifier overlap: reproducible fixture checks support behavior only, not independent product quality. A fresh shower subagent is deferred because this dispatch prohibits recursive agents.
+The sip pass used mandela to limit these fixture-driven results to deterministic wiring and invariants, ssotize in read-only mode to identify stale G3 statements, and re0 to refresh this report and its plan. The restored 390px screenshot passes visual-verdict against the reviewed layout. A fresh shower review is deferred to the coordinator because this dispatch prohibits recursive agents. These checks do not establish independent model quality or external-user acceptance.
 
 ## Remaining gates
 
-G3 reload/recovery integration; G6/G7 actual shared-link publication and management; backend profile avatar/display-name availability (current contract provides neither); independent review; deployed HTTPS cookie/origin checks; authorized live provider receipt and real-device/external-user evidence. No paid call, merge to develop/main, Production change or issue closure is performed by this worker.
+Independent fixed-head review; sequential #160 display-name integration and avatar availability; G6/G7 shared-link UI integration and deployment acceptance; real HTTPS session/cookie checks; authorized live provider receipts; physical devices and external users. G6's merged storage boundary alone does not demonstrate a working publication UI. This worker neither merges PR158 nor changes main, deploys, closes issues, or makes paid calls; the coordinator owns the atomic PR153/develop integration.
