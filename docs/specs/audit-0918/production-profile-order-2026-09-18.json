@@ -1,0 +1,96 @@
+{
+  "captured_at": "2026-09-18T03:54:21.434Z",
+  "production_url": "https://project-7klb1.vercel.app",
+  "production_deployment_id": 6517004074,
+  "production_sha": "e8c1d7f5b83469d09c8bb6b00ca5d13d15c4c326",
+  "input": "test/order.real20.json first 15 analyzed fixtures",
+  "checks": [
+    {
+      "text": "짧게, 조용하게",
+      "status": 200,
+      "target_profile_id": "tgt_ft_bc9ca72a",
+      "photo_ids": [
+        "ph_11",
+        "ph_02",
+        "ph_09",
+        "ph_01",
+        "ph_03",
+        "ph_06",
+        "ph_13",
+        "ph_14",
+        "ph_04",
+        "ph_07",
+        "ph_08",
+        "ph_15",
+        "ph_12",
+        "ph_10",
+        "ph_05"
+      ],
+      "first_rationale": {
+        "value": "밝기 0.808 · 채도 0.086 인 사진이라 지향 방향(조용한 쪽) 점수가 입력 15장 중 가장 높아 1번에 뒀다",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_11",
+            "note": "측정값 — 밝기 0.808 · 채도 0.086 · 주요 색 #fcfcfc"
+          },
+          {
+            "kind": "user_text",
+            "ref": "tgt_ft_bc9ca72a:raw",
+            "note": "사용자가 쓴 표현을 그대로 옮겼다"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R1",
+            "note": "서사 규칙 R1 — 첫 자리는 지향 방향 점수가 가장 높은 사진. 지향 문구 \"짧게 조용하게\" 를 조용한 쪽으로 읽었다 (측정이 아니라 해석이다)"
+          }
+        ]
+      }
+    },
+    {
+      "text": "자세하게, 기록하듯",
+      "status": 200,
+      "target_profile_id": "tgt_ft_541aaa73",
+      "photo_ids": [
+        "ph_07",
+        "ph_11",
+        "ph_02",
+        "ph_09",
+        "ph_01",
+        "ph_03",
+        "ph_06",
+        "ph_13",
+        "ph_14",
+        "ph_04",
+        "ph_15",
+        "ph_12",
+        "ph_10",
+        "ph_08",
+        "ph_05"
+      ],
+      "first_rationale": {
+        "value": "밝기 0.512 · 채도 0.399 인 사진이라 지향 방향(빼곡한 쪽) 점수가 입력 15장 중 가장 높아 1번에 뒀다",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_07",
+            "note": "측정값 — 밝기 0.512 · 채도 0.399 · 주요 색 #060e1b"
+          },
+          {
+            "kind": "user_text",
+            "ref": "tgt_ft_541aaa73:raw",
+            "note": "사용자가 쓴 표현을 그대로 옮겼다"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.R1",
+            "note": "서사 규칙 R1 — 첫 자리는 지향 방향 점수가 가장 높은 사진. 지향 문구 \"자세하게 기록하듯\" 를 빼곡한 쪽으로 읽었다 (측정이 아니라 해석이다)"
+          }
+        ]
+      }
+    }
+  ],
+  "orders_differ": true
+}

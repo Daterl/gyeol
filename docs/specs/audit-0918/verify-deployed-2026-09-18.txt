@@ -1,0 +1,26 @@
+> node scripts/verify-deployed.mjs
+대상: https://project-7klb1.vercel.app
+PASS D1    공개 URL 이 로그인 없이 열린다
+      status=200 (1055ms)
+PASS D2    첫 화면 응답이 30초 안
+      234ms
+PASS D3    POST 피드 응답이 JSON·계약을 만족한다
+      status=200 (17626ms)
+PASS D3    position 이 1..N 을 한 번씩
+      슬롯 3개
+PASS D3    자리마다 근거가 있다
+      3/3 슬롯에 근거
+SKIP D4    문장 생성 판정
+      배포 환경에 API 키가 없다 (ANTHROPIC_API_KEY 미설정). 기능 검증 미실행.
+status=503 (1122ms)
+{"error":{"code":"GENERATION_UNAVAILABLE","message":"문장 생성이 아직 연결되지 않았어요. 나중에 다시 시도해 주세요.","retryable":false}}
+SKIP D5    문장 생성 판정
+      배포 환경에 API 키가 없다 (ANTHROPIC_API_KEY 미설정). 기능 검증 미실행.
+status=503 (1122ms)
+{"error":{"code":"GENERATION_UNAVAILABLE","message":"문장 생성이 아직 연결되지 않았어요. 나중에 다시 시도해 주세요.","retryable":false}}
+PASS ROUTE /api/analyze 라우트가 배포돼 있다
+      status=405
+PASS ROUTE /api/generate 라우트가 배포돼 있다
+      status=405
+7/9 통과, SKIP 2건, FAIL 0건 (20504ms)
+SKIP 은 통과가 아니다. 배포 환경에 API 키를 설정한 뒤 D4·D5 를 다시 검증해야 한다.
