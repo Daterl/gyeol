@@ -18,6 +18,6 @@ CodeRabbit 0.7.6의 무료 CLI 검토는 코드·프롬프트·테스트 세 파
 
 실모델 유료 호출, Preview/Production 검증, 배포는 수행하지 않았다. ADR-0008의 강제 비움 제거는 후속 G4 작업이다.
 
-PR: https://github.com/Daterl/gyeol/pull/148 (`develop` 대상). GitHub Vercel 상태는 `failure`, 설명은 `Deployment rate limited — retry in 24 hours.`이며 로컬 빌드 실패가 아니다. 외부 체크가 실패한 상태에서는 병합하지 않는다.
+PR: https://github.com/Daterl/gyeol/pull/148 (`develop` 대상). 첫 커밋 `eebb50c`의 Vercel 체크는 `Deployment rate limited — retry in 24 hours.`로 실패했으나, 수정 커밋 `72e7b38`의 Vercel 및 Vercel Preview Comments 체크는 모두 성공했다. Preview에서 실모델 요청을 실행한 것은 아니다.
 
 수정 후 CodeRabbit 재검토는 무료 할당량 제한으로 실행되지 않았다 (`Rate limit exceeded`, 당시 재시도 안내 22분). 최종 diff는 코디네이터의 독립 검토 대상으로 전달했으며 무료 제한을 유료 호출로 우회하지 않았다.
