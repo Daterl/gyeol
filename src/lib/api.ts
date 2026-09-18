@@ -1,14 +1,19 @@
 import type {
+  CurationRequest,
+  CurationResponse,
   FeedResponse,
   GenerateRequest,
   GenerateResponse,
   OrderRequest,
   PhotoAnalysis,
+  ProfileConnectionRequest,
+  ProfileConnectionResponse,
   UploadRequest,
 } from '@/types/contracts';
 import { validatePhoto } from '../../lib/contracts.js';
 import {
   REQUEST_TIMEOUT_MS,
+  validateCurationRequest,
   validateErrorResponse,
   validateFeedResponse,
   validateGenerateRequest,
@@ -22,6 +27,7 @@ export class ApiError extends Error {
     message: string,
     public status = 0,
     public retryable = false,
+    public retryAfter?: number,
   ) {
     super(message);
     this.name = 'ApiError';
@@ -32,6 +38,7 @@ async function post(
   body: unknown,
   validate: (value: unknown) => void,
   signal?: AbortSignal,
+  headers: Record<string, string> = {},
 ): Promise<unknown> {
   const controller = new AbortController();
   const timeout = setTimeout(
@@ -44,7 +51,8 @@ async function post(
   try {
     const response = await fetch(path, {
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...headers },
+      credentials: 'same-origin',
       method: 'POST',
       signal: combined,
     });
@@ -85,6 +93,7 @@ async function post(
         error.message,
         response.status,
         error.retryable,
+        Number(response.headers.get('Retry-After')) || undefined,
       );
     }
     try {
@@ -199,4 +208,147 @@ export async function generateOutput(
     },
     signal,
   )) as GenerateResponse;
+}
+
+// Tokens stay in this component-owned client, never localStorage or a URL.
+export function createProfileClient() {
+  let session: { csrfToken: string; expires_at: number } | null = null;
+  return async function profile(
+    request: ProfileConnectionRequest,
+    signal?: AbortSignal,
+  ): Promise<ProfileConnectionResponse> {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      if (!session || session.expires_at <= Date.now()) {
+        session = (await post(
+          '/api/profile/session',
+          {},
+          (value) => {
+            const result = value as {
+              csrfToken?: unknown;
+              expires_at?: unknown;
+            };
+            if (
+              typeof result.csrfToken !== 'string' ||
+              !result.csrfToken ||
+              typeof result.expires_at !== 'number' ||
+              result.expires_at <= Date.now()
+            )
+              throw new Error('Invalid session');
+          },
+          signal,
+        )) as typeof session;
+      }
+      if (!session)
+        throw new ApiError('INVALID_SESSION', '연결 세션을 확인하지 못했어요.');
+      try {
+        return (await post(
+          '/api/profile',
+          request,
+          (value) => {
+            const result = value as ProfileConnectionResponse;
+            if (
+              !result ||
+              ![
+                'missing',
+                'pending',
+                'public',
+                'private',
+                'not_found',
+                'timeout',
+                'cost_limit',
+                'unconfirmed',
+                'provider_error',
+                'expired',
+              ].includes(result.status) ||
+              typeof result.refresh_required !== 'boolean'
+            )
+              throw new Error('Invalid connection');
+            if (
+              result.status === 'public' &&
+              (typeof result.snapshotId !== 'string' ||
+                !result.snapshotId ||
+                typeof result.expires_at !== 'number' ||
+                !Number.isFinite(result.expires_at) ||
+                result.expires_at <= Date.now())
+            )
+              throw new Error('Invalid public reference');
+          },
+          signal,
+          { 'X-Gyeol-CSRF': session.csrfToken },
+        )) as ProfileConnectionResponse;
+      } catch (error) {
+        if (
+          error instanceof ApiError &&
+          error.status === 401 &&
+          attempt === 0
+        ) {
+          session = null;
+          continue;
+        }
+        throw error;
+      }
+    }
+    throw new ApiError('UNAUTHORIZED', '연결 세션을 다시 시작해 주세요.', 401);
+  };
+}
+export async function curatePhotos(
+  request: CurationRequest,
+  signal?: AbortSignal,
+): Promise<CurationResponse> {
+  validateCurationRequest(request);
+  return (await post(
+    '/api/feed',
+    request,
+    (value) => {
+      const result = value as CurationResponse;
+      validateFeedResponse({ feed: result.feed, context: result.context });
+      if (
+        result.feed.session_id !== request.session_id ||
+        result.curation?.profile_snapshot_id !== request.profile_snapshot_id ||
+        result.curation.profile.ownership_verified !== false ||
+        result.curation.prompt.text !== (request.prompt?.trim() || null)
+      )
+        throw new Error('Curation identity differs');
+      const source = new URL(result.curation.profile.source_url);
+      const requested = new URL(request.profile_url);
+      if (
+        source.protocol !== 'https:' ||
+        !['instagram.com', 'www.instagram.com'].includes(source.hostname) ||
+        source.pathname.replace(/\/$/, '').toLowerCase() !==
+          requested.pathname.replace(/\/$/, '').toLowerCase()
+      )
+        throw new Error('Profile source differs');
+      if (
+        result.context.photos.length !== request.photos.length ||
+        result.context.photos.some(
+          (photo, i) =>
+            photo.photo_id !== request.photos[i]?.photo_id ||
+            photo.input_index !== request.photos[i]?.input_index ||
+            photo.file_ref !== request.photos[i]?.file_ref,
+        )
+      )
+        throw new Error('Photo identity differs');
+      if (
+        result.curation.slots.length !== request.photos.length ||
+        result.curation.slots.some(
+          (slot, i) =>
+            slot.included !== true ||
+            slot.position !== i + 1 ||
+            slot.photo_id !== result.feed.slots[i]?.photo_id ||
+            typeof slot.exclusion_candidate?.recommended !== 'boolean' ||
+            !(
+              slot.exclusion_candidate.reason === null ||
+              typeof slot.exclusion_candidate.reason === 'string'
+            ) ||
+            !Array.isArray(slot.exclusion_candidate.evidence) ||
+            slot.exclusion_candidate.evidence.some(
+              (item) =>
+                typeof item?.note !== 'string' || typeof item?.ref !== 'string',
+            ),
+        )
+      )
+        throw new Error('Curation slots differ');
+    },
+    signal,
+  )) as CurationResponse;
 }

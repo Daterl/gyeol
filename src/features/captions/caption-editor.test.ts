@@ -118,7 +118,7 @@ test('caption failure never offers a photo upload retry', async () => {
     createElement(PhotoInput, { mock: true }),
   );
   expect(markup).not.toContain('>다시 시도하기</button>');
-  expect(markup).toContain('>이 사진들로 시작하기</button>');
+  expect(markup).toContain('>큐레이션 만들기</button>');
 });
 
 test('companion follows the actual editor lifecycle and cancellation', async () => {
