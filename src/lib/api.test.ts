@@ -5,6 +5,7 @@ import type {
   UploadRequest,
 } from '@/types/contracts';
 import fixture from '../../fixtures/interaction.sample.json';
+import { REQUEST_TIMEOUT_MS } from '../../lib/interaction.js';
 import { analyzePhoto, generateOutput, orderPhotos } from './api';
 
 const response = (): FeedResponse =>
@@ -123,7 +124,7 @@ test('timeout and caller cancellation abort the request without automatic retry'
   const timed = expect(orderPhotos(order())).rejects.toMatchObject({
     code: 'TIMEOUT',
   });
-  await vi.advanceTimersByTimeAsync(25_000);
+  await vi.advanceTimersByTimeAsync(REQUEST_TIMEOUT_MS);
   await timed;
   const controller = new AbortController();
   const cancelled = expect(

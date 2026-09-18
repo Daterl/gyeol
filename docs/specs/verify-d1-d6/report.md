@@ -1,6 +1,6 @@
 # D1~D6 실측 검증 보고서
 
-- **검증 대상 코드**: `origin/develop` = `531b134`
+- **검증 대상 코드(당시 스냅샷)**: `origin/develop` = `531b134`
 - **검증 브랜치**: `verify/d1-d6`
 - **검증 일시**: 2026-09-18
 - **공개 URL**: https://project-7klb1.vercel.app/
@@ -8,6 +8,7 @@
 
 > 모든 판정은 **실제 조작 결과**다. 추정으로 적은 PASS 는 없다.
 > 통과하지 못한 항목은 원인과 담당자를 명시했다.
+> 이 문서는 `531b134` 검증 당시의 스냅샷이다. 이후 병합된 #79와 Production 상태를 현재 상태로 소급해 해석하지 않는다.
 
 ---
 
@@ -22,9 +23,9 @@ flowchart TB
   A --> F["/api/feed<br/>순서 제안"]
   F --> G["/api/generate<br/>타이틀 + 캡션"]
 
-  A -. "결함 1 · 수정함<br/>maxItems → HTTP 400<br/>전량 heuristic 폴백" .-> A
+  A -. "결함 1 · #79에서 수정<br/>maxItems → provider 400<br/>/api/analyze 502" .-> A
   G -. "결함 2 · 수정함<br/>20s/25s/30s 타임아웃 체인" .-> G
-  G -. "결함 3 · 수정함<br/>opus-5 60~73s → 예산 초과" .-> G
+  G -. "결함 3 · 수정함<br/>opus-5 60~73s → route 예산 초과" .-> G
 
   F --> D3["D3 순서+근거 ✅"]
   F --> D6["D6 프로필 2벌 ✅"]
@@ -104,7 +105,7 @@ output_config.format.schema: For 'array' type, property 'maxItems' is not suppor
 
 `lib/photo_analysis.js` 의 `palette_hex: { type:'array', items:{type:'string'}, maxItems: 3 }` 한 줄.
 
-**영향**: 키가 있어도 모든 사진이 `analysis_source='heuristic'` 로 떨어졌고, `lib/pipeline.js:60` 의 분기 때문에 `preserveOrder` 가 타서 **순서 제안이 입력 순서 그대로**가 됐다. 이슈 #69 가 관측한 증상의 실제 원인이다.
+**영향과 원인 분리**: 이 스키마 결함은 모델의 `ModelError` 로 다시 던져져 `POST /api/analyze` 가 **502** 를 반환했다. heuristic 으로 폴백하거나 `preserveOrder` 로 이어지지 않았으며, #79가 이 분석 실패 원인을 수정했다. `analysis_source='heuristic'` 와 `preserveOrder` 는 **키가 없거나 mock인 분석 경로**에서 발생하며, 그 파이프라인 우회 문제는 #69/#75의 범위다.
 
 **왜 테스트가 못 잡았나**: 테스트는 `ANTHROPIC_API_KEY` 를 지우고 돌아 mock 경로만 탄다. 실 API 스키마를 검증하는 테스트가 없었다.
 
@@ -143,17 +144,19 @@ facts= ["연한 청회색 원 하나가 화면 왼쪽 중간보다 위쪽에 있
 
 모델 < 클라이언트 < 함수 순서를 유지해 실패가 구체적 오류로 드러나게 했다.
 
+여기서 60초는 이 라우트가 설정한 `maxDuration` 실행 예산이다. Vercel Hobby Fluid Compute의 플랫폼 상한은 300초이므로 60초를 요금제 한도로 표현하지 않는다([Vercel Functions limits](https://vercel.com/docs/functions/limitations#max-duration)).
+
 > ⚠️ `REQUEST_TIMEOUT_MS` 는 analyze·feed 와 공유된다. 최악의 경우 대기가 55초로 늘어난다.
 > 더 정확한 대안은 generate 에만 긴 타임아웃을 주는 것이나, 호출부가 `src/lib/api.ts`(화면 범위)라 건드리지 않았다.
 
-### 결함 3 — 출력 모델이 서버리스 예산을 초과
+### 결함 3 — 출력 모델이 라우트의 60초 실행 예산을 초과
 
 타임아웃을 늘려도 `claude-opus-5` 는 예산 안에 못 들어왔다. 동일 페이로드 실측:
 
 | 모델 | 소요 시간 | 판정 |
 |---|---|---|
-| `claude-opus-5` | 60.5 / 65.2 / 73.0초 | ❌ 60초 함수 한도 초과 |
-| `claude-sonnet-5` | 58.9 / 59.6초 | ❌ 경계선 |
+| `claude-opus-5` | 60.5 / 65.2 / 73.0초 | ❌ route `maxDuration=60` 예산 초과 |
+| `claude-sonnet-5` | 58.9 / 59.6초 | ❌ route 실행 예산 경계선 |
 | `claude-haiku-4-5` | 17.9 / 19.0 / 19.3 / 19.5 / 20.0 / 23.4초 | ✅ |
 
 **수정**: `config/models.json` 에 `output_model` 추가 → 출력 생성만 `claude-haiku-4-5`. **비전 분석은 `claude-opus-5` 유지**(관측 품질이 D3 근거의 질을 좌우).
