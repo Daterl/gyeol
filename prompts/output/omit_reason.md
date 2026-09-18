@@ -10,7 +10,6 @@ omitted 슬롯은 `caption_state:"omitted", text:null, omit_reason:"구체적인
 
 - uploaded_photo evidence는 해당 사진 ID를 가리킨다. 필요하면 rule evidence로 `gyeol.omit.overlap`, `gyeol.omit.visual_peak`, `gyeol.omit.insufficient_facts` 중 실제 판단에 쓴 규칙을 추가한다.
 - “미완성”, “채워 주세요”, “몇 개만 더”처럼 비움을 결함으로 표현하지 않는다.
-- 비움을 몇 개 할지는 여전히 근거에 따른 판단이다. 개수를 맞추려고 비우거나 채우지 않는다. 서버가 mode=all 응답의 omitted 슬롯 수를 세서 `omission` 에 적어 보내지만, 그건 결과를 그대로 전하는 것이지 목표치가 아니다. 응답에 이 필드를 직접 넣지 않는다(#80).
 - 모두 비워도 성공 결과다. mode=all에서는 중립적인 타이틀 한 줄과 N개 omitted 슬롯을 유지한다. 빈 slots 배열로 대신하지 않는다.
 - 단일 슬롯 채우기 요청이라도 관측 사실은 늘어나지 않는다. filled로 쓸 근거가 있으면 쓰고, 없으면 비움 이유를 유지한다. 임의로 새로운 사물·장소를 만들지 않는다.
 

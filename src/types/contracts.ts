@@ -171,16 +171,7 @@ export type GenerateRequest = FeedResponse & { schema_version: '1.0' } & (
     | { mode: 'all' }
     | { mode: 'slot'; photo_id: string }
   );
-export type Omission = {
-  evidence: Evidence[];
-  note: string;
-  note_key: 'omission.none' | 'omission.some';
-  omitted: number;
-  total: number;
-};
-export type GenerateResponse =
-  | { omission?: Omission; output: F3Export }
-  | { slot: CaptionSlot };
+export type GenerateResponse = { output: F3Export } | { slot: CaptionSlot };
 export type UploadRequest = {
   file_ref: string;
   image_base64: string;
