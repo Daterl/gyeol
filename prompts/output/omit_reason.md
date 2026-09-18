@@ -12,6 +12,4 @@ omitted 슬롯은 `caption_state:"omitted", text:null, omit_reason:"구체적인
 - 모두 비워도 성공 결과다. mode=all에서는 중립적인 타이틀 한 줄과 N개 omitted 슬롯을 유지한다. 빈 slots 배열로 대신하지 않는다.
 - 단일 슬롯 채우기 요청이라도 관측 사실은 늘어나지 않는다. seed로 쓸 근거가 있으면 쓰고, 없으면 비움 이유를 유지한다. 임의로 새로운 사물·장소를 만들지 않는다.
 
-caption_coverage가 `all`이면 서버가 새 omitted를 만들지 않는다. `sparse`이면 서버가 검증한 사진 근거에 따라 한 자리를 omitted로 안정화할 수 있다.
-
-caption_coverage가 없는 freetext는 모호하거나 부정·충돌·지원 불가인 요청일 수 있으므로 현재 스타일로 덮지 않는다. photo plan, mode=slot, 이미 omitted가 있는 결과에는 서버 안정화를 적용하지 않는다.
+모든 슬롯에 근거 있는 seed가 있어도 유효한 결과다. 서버는 비움 최소 개수나 비율을 맞추기 위해 seed를 바꾸지 않는다. caption_coverage는 제안의 맥락이며 비움 할당량이 아니다. 최종 캡션의 채움·편집·비움은 사용자가 선택한다.
