@@ -44,6 +44,7 @@
   값이 사용자 문장 자체이므로 근거는 `user_text` **단독**이고 confidence 1 이다.
 - 나머지 항목은 아래 3절 어휘표에 걸릴 때만 나온다. **안 걸리면 필드를 생략하고 completeness 를 낮춘다.**
 - `empty_caption_ratio` 는 자연어에서 **만들지 않는다.** "가끔 비워"를 숫자로 바꿀 근거가 없다.
+- 명시적인 캡션 커버리지 문구만 `caption_coverage: Claim<"all"|"sparse">`로 남긴다. 부정 문구는 반대로 해석하지 않고, all/sparse 충돌이나 전체 무캡션 요청은 claim을 생략한다.
 - `sequence.carousel_count = 0`, `opener_tendency` 생략, `completeness.sequence = 0`
 - `raw_freetext` = 원문, `sample_size = 1`
 
@@ -81,6 +82,9 @@
 | | 이모지 많이·이모지 잔뜩 | `1.5` | 0.5 |
 | `ending_style` | 해요·존댓말 → `해요` / 담백·문어체·~다 → `다` / 명사형·단어로 → `명사형` | 해당 enum | 0.6 |
 | `linebreak_habit` | 줄바꿈 없이·한 덩어리 → `없음` / 짧게 자주·행갈이 → `짧게 자주` / 문단·단락 → `문단` | 해당 enum | 0.6 |
+| `caption_coverage` | 말수가 적고·말수 적게 기록해 달라는 요청·일부는 비워 달라는 요청·사진만 두고 싶다는 요청·몇 장만+쓰기 요청 → `sparse` / 모든 사진·사진마다+쓰기 요청·사진마다 한 줄씩·한 장도 비우지 않았으면 한다는 요청·전부 써/채워 달라는 요청 → `all` | 해당 enum | 0.8 |
+
+`사진마다`와 `몇 장만`은 단독 cue가 아니다. 문장·캡션·글·한 줄과 완결된 쓰기 요청이 같은 승인 패턴에 있어야 한다. “적당/적절/적혀/적어도”, 사진 장수, 구도·간판 설명 같은 부분 단어와 서술형은 매치하지 않는다. 절을 원문 순서로 훑어 뒤의 명시 부정이 앞의 같은 값을 지운다. `하지만` 절에 coverage cue가 있으면 기존 선택을 비우고 새 cue를 적용하며, 무관한 사진 순서·색감 절이면 앞 선택을 유지한다. `아니/아니요/아뇨`는 앞 선택을 비우고, 같은 절의 새 cue가 있으면 그 값으로 바꾼다. 마침표·느낌표·물음표는 거절 범위를 끊으므로 뒤 문장의 명시 요청은 보존한다. “싫다/원하지 않는다/말아야 한다/아니다/반대/별로”가 있는 절은 보수적으로 버린다. `한 장도 비우지 않았으면 해요`처럼 승인된 완전 표현만 intrinsic-negative all로 허용한다.
 
 confidence 가 1 이 아닌 이유: 어구 하나에서 숫자를 끌어냈으므로 관측이 아니라 해석이다.
 `p50:15` 같은 숫자는 **출처 없는 수치가 아니라 이 표에 적힌 매핑값**이고, 근거에 `rule` 로 표시된다.
@@ -118,9 +122,11 @@ confidence 가 1 이 아닌 이유: 어구 하나에서 숫자를 끌어냈으�
 
 ```
 visual    = 채운 수 / 5   (palette, tone_words, subjects, composition_mix, scale_mix)
-language  = 채운 수 / 5   (caption_len, emoji_rate, ending_style, linebreak_habit, empty_caption_ratio)
+language  = 채운 수 / 5   (caption_len, emoji_rate, ending_style, linebreak_habit, caption coverage)
 sequence  = opener_tendency 있으면 1, 없으면 0
 ```
+
+caption coverage 차원은 ref 관측의 `empty_caption_ratio` 또는 freetext 의도의 `caption_coverage` 중 해당 경로가 허용하는 하나다. 두 필드를 함께 채우지 않는다.
 
 소수 2자리로 반올림한다. `language === null` 이면 `completeness.language === 0` 이어야 한다(`lib/contracts.js:90` 이 강제).
 
@@ -131,7 +137,7 @@ sequence  = opener_tendency 있으면 1, 없으면 0
 1. 준비되지 않은 URL 에 다른 계정 스냅샷을 붙이면 **틀렸다**. 반드시 실패해야 한다.
 2. 어떤 Claim 이든 `evidence` 가 비거나 `kind:"rule"` 만 있으면 **틀렸다**.
 3. ref 경로가 `completeness.visual > 0` 을 내면 **틀렸다**. ref 이미지를 안 봤다.
-4. 자연어 경로가 `empty_caption_ratio` 를 내면 **틀렸다**. 근거가 없다.
+4. 자연어 경로가 `empty_caption_ratio` 를 내거나, ref/current가 `caption_coverage`를 내면 **틀렸다**. 관측 비율과 현재 의도는 다른 값이다.
 5. 사진만 입력이 `axis`/`present` 를 달고 나오면 **틀렸다**. TargetProfile 이 아니다.
 6. 사진만 입력이 `tone_words`·`language` 를 채우면 **틀렸다**. 사진에 없는 사실이다.
 7. 어구가 하나도 안 걸렸는데 기본값으로 필드를 채우면 **틀렸다**. 비우는 것이 맞다(P3).

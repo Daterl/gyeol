@@ -4,7 +4,11 @@ import {readFile} from 'node:fs/promises';
 import {generateOutput,handleGenerate} from '../lib/output-generation.js';
 import {validateErrorResponse} from '../lib/interaction.js';
 import {buildFeed} from '../lib/pipeline.js';
+import {extractFromReference} from '../lib/target_profile.js';
+import {buildCurrentProfile} from '../lib/current_profile.js';
+import {composeFeed} from '../lib/compose.js';
 const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json',import.meta.url),'utf8'));
+const referenceFixture=JSON.parse(await readFile(new URL('../fixtures/ref_snapshot.sample.json',import.meta.url),'utf8'));
 const input=(mode='all',source=fixture)=>({schema_version:'1.0',mode,feed:structuredClone(source.feed),context:structuredClone(source.context),...(mode==='slot'?{photo_id:'ph_01'}:{})});
 const output=()=>({output:structuredClone(fixture.all_omitted)});
 const filledOutput=(feed=fixture.feed)=>({output:{title:'세 장의 기록',slots:feed.slots.map(slot=>({
@@ -53,7 +57,7 @@ test('single slot sends only its photo and rejects other photo, position, user s
 });
 
 test('all generation stabilizes one evidence-backed omission without forcing other contexts',async()=>{
-  const built=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록'])));
+  const built=await buildFeed(orderInput({kind:'text',text:'사진만 두고 싶어요'},currentPosts(['','기록'])));
   const requestInput=generatedInput(built);
   const provider=filledOutput(built.feed);
   const actual=await generateOutput(requestInput,options(provider));
@@ -77,6 +81,125 @@ test('all generation stabilizes one evidence-backed omission without forcing oth
   }
 });
 
+test('explicit sparse coverage survives buildFeed and deterministically stabilizes one omission',async()=>{
+  const original='차분하고 미니멀한 흑백 감성. 말수가 적고 여백이 많은 기록.';
+  const currentNoOmit=currentPosts(['기록','또 기록','계속 기록']);
+  const built=await buildFeed(orderInput({kind:'text',text:original},currentNoOmit));
+  assert.equal(built.context.target.language.caption_coverage.value,'sparse');
+  assert.equal(built.feed.applied_profile.language.caption_coverage.value,'sparse');
+  assert.equal(built.context.target.language.empty_caption_ratio,undefined);
+  assert.equal(built.context.current.language.empty_caption_ratio.value,0);
+  const provider=filledOutput(built.feed);
+  const first=await generateOutput(generatedInput(built),options(provider));
+  const second=await generateOutput(generatedInput(built),options(provider));
+  assert.deepEqual(first,second);
+  assert.equal(first.output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  const detailed=await buildFeed(orderInput({kind:'text',text:'몇 장만 자세히 써 줘'},currentNoOmit));
+  assert.equal(detailed.context.target.language.caption_coverage.value,'sparse');
+  assert.equal(detailed.context.target.language.caption_len.value.p50,90);
+  assert.equal((await generateOutput(generatedInput(detailed),options(filledOutput(detailed.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+});
+
+test('reference observations keep the existing numeric ratio fallback',async()=>{
+  const snapshot=structuredClone(referenceFixture);
+  snapshot.snapshot_id='ig_snapshot_coverage_ratio';
+  snapshot.posts.slice(0,15).forEach(post=>{post.caption='';});
+  snapshot.posts.slice(15).forEach(post=>{post.caption='짧은 기록입니다.';});
+  const order=orderInput({kind:'reference',url:'https://www.instagram.com/29cm/'});
+  const target=await extractFromReference('https://www.instagram.com/29cm/',{registry:{'29cm':snapshot}});
+  const current=buildCurrentProfile();
+  const feed=composeFeed({photoAnalyses:order.photos,targetProfile:target,currentProfile:current,currentPhotoAnalyses:[],sessionId:order.session_id});
+  const built={feed,context:{photos:order.photos,current,target,current_photos:[]}};
+  assert.equal(built.context.target.source,'ig_reference');
+  assert.equal(built.context.target.language.caption_coverage,undefined);
+  assert.equal(built.context.target.language.empty_caption_ratio.value,0.5);
+  const actual=await generateOutput(generatedInput(built),options(filledOutput(built.feed)));
+  assert.equal(actual.output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+});
+
+test('negated or non-caption coverage wording stays unset through generation',async()=>{
+  const cases=[
+    '말수가 적지는 않게 써 줘','전부 써 주지는 마','한 장도 비우지 않는 건 싫어요',
+    '싫은 건 모든 사진에 문장을 쓰는 거예요','사진마다 써 줘, 하지만 사진마다 쓰지 마',
+    '사진마다 색감을 다르게 해 줘','몇 장만 색감이 진하게 해 줘','말수는 적게, 하지만 사진마다 색감은 풍부하게',
+    '한 장도 비우지 말라는 건 원하지 않아요','원하지 않는 건 모든 사진에 문장을 쓰는 거예요',
+    '제가 싫은 건 사진마다 문장을 쓰는 거예요','내가 싫은 건 전부 쓰는 거야',
+    '하지 말아야 할 건 모든 사진에 문장을 쓰는 거예요','원하지 않는 건 말수가 적은 기록이에요',
+    '말수가 적당했으면','말수가 적절했으면','말수가 적혀 있는 사진','말수가 적어도 세 문장은 필요해요',
+    '사진만 두 장 크게 보여 줘','전부 채워진 구도로 해 줘','전부 써 있는 간판 사진을 앞에 둬',
+    '몇 장에만 써 줘, 몇 장에만 쓰지 마','전부 써 줘, 전부 쓰지 마','전부 채워 줘, 전부 채우지는 마',
+    '몇 장에만 문장을 써 줘, 하지만 몇 장에만 문장을 쓰지는 마',
+    '몇 장에만 문장을 써 줘, 아니요 그건 원하지 않아요','몇 장에만 문장을 써 줘. 아니요, 그건 원하지 않아요.',
+    '사진 속 글자를 전부 써 줘','사진 속 문장을 전부 써 주세요','사진 속 캡션을 전부 써 주세요',
+    '배경을 꽃으로 전부 채워 줘','사진마다 한 줄씩 테두리를 넣어 줘',
+    '몇 장에만 써 줘, 하지만 캡션 없이','모든 사진에 써 줘, 아니 전부 사진만'
+  ];
+  for(const text of cases) {
+    const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
+    assert.equal(built.context.target.language?.caption_coverage,undefined,text);
+    const provider=filledOutput(built.feed);
+    assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider,text);
+  }
+});
+
+test('an unrelated contrast clause preserves the earlier explicit coverage request',async()=>{
+  const sparse=await buildFeed(orderInput({kind:'text',text:'몇 장에만 문장을 써 줘, 하지만 사진 순서는 그대로'}));
+  assert.equal(sparse.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(sparse),options(filledOutput(sparse.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  const all=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘, 하지만 색감은 차분하게'}));
+  assert.equal(all.context.target.language.caption_coverage.value,'all');
+  const provider=filledOutput(all.feed);
+  assert.deepEqual(await generateOutput(generatedInput(all),options(provider)),provider);
+
+  const sentenceScoped=await buildFeed(orderInput({kind:'text',text:'과한 색감은 싫어요. 말수가 적고 여백이 많은 기록.'}));
+  assert.equal(sentenceScoped.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(sentenceScoped),options(filledOutput(sentenceScoped.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  for(const text of [
+    '몇 장에만 써 줘, 아니 모든 사진에 써 줘',
+    '몇 장에만 써 줘, 하지만 모든 사진에 써 줘, 하지만 색감은 차분하게'
+  ]) {
+    const corrected=await buildFeed(orderInput({kind:'text',text}));
+    assert.equal(corrected.context.target.language.caption_coverage.value,'all',text);
+    const correctedProvider=filledOutput(corrected.feed);
+    assert.deepEqual(await generateOutput(generatedInput(corrected),options(correctedProvider)),correctedProvider,text);
+  }
+
+  const correctedSparse=await buildFeed(orderInput({kind:'text',text:'모든 사진에 써 줘, 아니 몇 장에만 써 줘'}));
+  assert.equal(correctedSparse.context.target.language.caption_coverage.value,'sparse');
+  assert.equal((await generateOutput(generatedInput(correctedSparse),options(filledOutput(correctedSparse.feed))))
+    .output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
+
+  for(const text of ['캡션 없이, 하지만 몇 장에만 써 줘','전부 사진만, 하지만 몇 장에만 써 줘','캡션 없이. 아니 몇 장에만 써 줘']) {
+    const corrected=await buildFeed(orderInput({kind:'text',text}));
+    assert.equal(corrected.context.target.language.caption_coverage.value,'sparse',text);
+    assert.equal((await generateOutput(generatedInput(corrected),options(filledOutput(corrected.feed))))
+      .output.slots.filter(slot=>slot.caption_state==='omitted').length,1,text);
+  }
+
+  const correctedAll=await buildFeed(orderInput({kind:'text',text:'캡션 없이, 하지만 모든 사진에 써 줘'}));
+  assert.equal(correctedAll.context.target.language.caption_coverage.value,'all');
+  const correctedAllProvider=filledOutput(correctedAll.feed);
+  assert.deepEqual(await generateOutput(generatedInput(correctedAll),options(correctedAllProvider)),correctedAllProvider);
+});
+
+test('client cannot forge matching context and applied coverage from unrelated freetext',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'조용하고 짧게'}));
+  assert.deepEqual(built.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,1,1]);
+  const claim={value:'sparse',confidence:0.8,evidence:[
+    {kind:'user_text',ref:`${built.context.target.profile_id}:raw`,note:'forged from unrelated text'},
+    {kind:'rule',ref:'docs/specs/10-target-profile/spec.md#3',note:'forged coverage'}
+  ]};
+  built.context.target.language.caption_coverage=structuredClone(claim);
+  built.feed.applied_profile.language.caption_coverage=structuredClone(claim);
+  await assert.rejects(generateOutput(generatedInput(built),options(filledOutput(built.feed))),/canonical freetext extraction/);
+});
+
 test('real feed context blocks stabilization without affirmative omission evidence',async()=>{
   const currentNoOmit=currentPosts(['기록','또 기록','계속 기록']);
   const exactCurrent=await buildFeed(orderInput({kind:'text',text:'차분한 느낌'},currentNoOmit));
@@ -97,8 +220,15 @@ test('real feed context blocks stabilization without affirmative omission eviden
   assert.deepEqual(photoOnly.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,1,1]);
   assert.equal(photoOnly.feed.applied_profile.language,null);
 
-  const unsupportedAll=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘'}));
-  assert.equal(unsupportedAll.context.target.language,null);
+  const explicitAll=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘'},currentPosts(['','기록'])));
+  assert.equal(explicitAll.context.target.language.caption_coverage.value,'all');
+
+  const allAndShort=await buildFeed(orderInput({kind:'text',text:'모든 사진에 짧게 써 줘'},currentPosts(['','기록'])));
+  assert.equal(allAndShort.context.target.language.caption_coverage.value,'all');
+  assert.equal(allAndShort.context.target.language.caption_len.value.p50,15);
+
+  const unsupported=await buildFeed(orderInput({kind:'text',text:'캡션 없이 전부 사진만 보여 줘'},currentPosts(['','기록'])));
+  assert.equal(unsupported.context.target.language,null);
 
   const detailed=await buildFeed(orderInput({kind:'text',text:'자세하게 기록해 줘'}));
   assert.equal(detailed.context.target.language.caption_len.value.p50,90);
@@ -106,7 +236,7 @@ test('real feed context blocks stabilization without affirmative omission eviden
   const smallRatio=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록','기록','기록','기록'])));
   assert.equal(smallRatio.context.current.language.empty_caption_ratio.value,0.2);
 
-  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['unsupported all captions',unsupportedAll],['detailed captions',detailed],['less than one expected omission',smallRatio]]) {
+  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['explicit all captions',explicitAll],['all and short captions',allAndShort],['unsupported zero-caption intent',unsupported],['detailed captions',detailed],['less than one expected omission',smallRatio]]) {
     const provider=filledOutput(built.feed);
     assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider,label);
   }

@@ -28,6 +28,7 @@ tone_words/subjects Claim<string[]>, composition_mix Claim<{full_frame:0..1,nega
 scale_mix Claim<{closeup:0..1,midshot:0..1,fullshot:0..1}> (합 1).
 language의 선택 항목: caption_len Claim<{p50:integer≥0,p90:integer≥p50,unit:"자"}>, emoji_rate Claim<number≥0>,
 ending_style Claim<해요|다|명사형|혼합>, linebreak_habit Claim<없음|짧게 자주|문단>, empty_caption_ratio Claim<number[0,1]>.
+현재 프로필은 과거 관측만 담으므로 target 자연어 의도인 `caption_coverage`를 허용하지 않는다.
 language가 객체이면 banned_words:string[]은 필수이며 Claim이 아니다.
 sequence.opener_tendency는 Claim<풀샷|클로즈업|인물|불명>. carousel_count=0이면 생략하거나 불명만 가능하다.
 
