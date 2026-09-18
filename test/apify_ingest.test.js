@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHmac } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { ACTOR, createInstagramIngest, instagramAccount, normalizeInstagram, privacyFromHtml } from '../lib/apify_ingest.js';
-import { handleIngest } from '../lib/ingest_api.js';
+import { ACTOR, createInstagramIngest, IngestError, instagramAccount, normalizeInstagram, privacyFromHtml } from '../lib/apify_ingest.js';
+import { createIngestSession, handleIngest } from '../lib/ingest_api.js';
 import { validateProfile } from '../lib/contracts.js';
 import { buildCurrentProfile } from '../lib/current_profile.js';
 import { extractFromReference } from '../lib/target_profile.js';
@@ -63,7 +64,7 @@ test("a missing account is named as missing and the provider's own wording survi
   assert.throws(() => normalizeInstagram([], options), code('ACCOUNT_UNCONFIRMED'));
 });
 test('missing observations, mixed errors, duplicate posts or wrong accounts cannot become success', () => {
-  for (const rows of [[{ ...post, caption: undefined }], [{ ...post, childPosts: [] }], [{ ...post, ownerUsername: 'other' }], [post, { error: 'no_items' }], [post, post], [{ ...post, inputUrl: 'https://instagram.com/other/' }]]) assert.throws(() => normalizeInstagram(rows, options));
+  for (const rows of [[{ ...post, caption: undefined }], [{ ...post, childPosts: [] }], [{ ...post, ownerUsername: 'other' }], [post, { error: 'no_items' }], [post, post], [{ ...post, inputUrl: 'https://instagram.com/other/' }], [{ ...post, url: 'https://evil.example/p/post1/' }], [{ ...post, url: 'javascript:alert(1)' }], [{ ...post, url: 'https://instagram.com/p/different/' }]]) assert.throws(() => normalizeInstagram(rows, options));
   // A co-author credit is not authorship: nothing is left to attribute, so this is a failure, not an empty success.
   assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'coauthor', coauthorProducers: [{ username: 'public_account' }], inputUrl: url }], options), e => e.code === 'ACCOUNT_UNCONFIRMED' && e.details.excluded_owners.includes('coauthor'));
 });
@@ -125,13 +126,44 @@ test('cancel preserves receipt; late completed run is not discarded', async () =
 test('HTTP requires server access key and explicit paid acknowledgement; never silently starts by default', async () => {
   let starts = 0;
   const ingest = { start: async () => { starts++; return { status: 'RUNNING' }; } };
-  const request = (body, auth = `Bearer ${secret}`) => new Request('http://localhost/api/ingest', { method: 'POST', headers: { authorization: auth }, body: JSON.stringify(body) });
+  const session = createIngestSession();
+  const request = (body, auth = `Bearer ${secret}`) => new Request('http://localhost/api/ingest', { method: 'POST', headers: { authorization: auth, 'idempotency-key': 'test-start-request-0001' }, body: JSON.stringify(body) });
   assert.equal((await handleIngest(request({ action: 'start', confirmLive: true }), { accessKey: '', ingest })).status, 503);
   assert.equal((await handleIngest(request({ action: 'start', confirmLive: true }, 'bad'), { accessKey: secret, ingest })).status, 401);
   assert.equal((await handleIngest(request({ action: 'start' }), { accessKey: secret, ingest })).status, 400);
   assert.equal(starts, 0);
-  assert.equal((await handleIngest(request({ action: 'start', confirmLive: true }), { accessKey: secret, ingest })).status, 202);
+  assert.equal((await handleIngest(request({ action: 'start', confirmLive: true }), { accessKey: secret, ingest })).status, 503);
+  assert.equal(starts, 0);
+  assert.equal((await handleIngest(request({ action: 'start', confirmLive: true }), { accessKey: secret, ingest, session })).status, 202);
   assert.equal(starts, 1);
+});
+
+test('HTTP paid starts replay one idempotency claim and enforce a cumulative caller budget', async () => {
+  let starts = 0;
+  const ingest = { start: async () => ({ status: 'RUNNING', run_id: `run${++starts}` }) };
+  const session = createIngestSession({ budgetUsd: 0.2 });
+  const request = (key, input = {}) => new Request('http://localhost/api/ingest', { method: 'POST', headers: { authorization: `Bearer ${secret}`, 'idempotency-key': key }, body: JSON.stringify({ action: 'start', confirmLive: true, url, ...input }) });
+  const first = await handleIngest(request('paid-start-request-0001'), { accessKey: secret, ingest, session });
+  const replay = await handleIngest(request('paid-start-request-0001'), { accessKey: secret, ingest, session });
+  assert.deepEqual(await replay.json(), await first.json());
+  assert.equal(starts, 1);
+  assert.equal((await handleIngest(request('paid-start-request-0001', { limit: 2 }), { accessKey: secret, ingest, session })).status, 400);
+  assert.equal((await handleIngest(request('paid-start-request-0002'), { accessKey: secret, ingest, session })).status, 202);
+  assert.equal((await handleIngest(request('paid-start-request-0003'), { accessKey: secret, ingest, session })).status, 429);
+  assert.equal(starts, 2);
+});
+
+test('one failed concurrent claim releases only its own budget reservation', async () => {
+  const session = createIngestSession({ budgetUsd: 0.2 });
+  let rejectFirst;
+  const pending = () => new Promise(() => {});
+  const first = session.run('caller', 'concurrent-start-0001', 'first', () => new Promise((_, reject) => { rejectFirst = reject; }));
+  session.run('caller', 'concurrent-start-0002', 'second', pending);
+  await Promise.resolve();
+  rejectFirst(new IngestError('INVALID_INPUT'));
+  await assert.rejects(first, code('INVALID_INPUT'));
+  session.run('caller', 'concurrent-start-0003', 'third', pending);
+  assert.throws(() => session.run('caller', 'concurrent-start-0004', 'fourth', pending), code('COST_LIMIT'));
 });
 
 test('cancel on an already completed run performs no abort request', async () => {
@@ -181,6 +213,27 @@ test('API access key alone cannot forge receipts signed with separate server sec
   assert.equal(other.calls.length, 0);
 });
 
+test('provider, access and receipt secrets must remain in separate domains', async () => {
+  const shared = 'shared-secret-value-at-least-32-characters';
+  for (const input of [
+    { token: shared, secret: shared },
+    { token: 'provider-secret-value-at-least-32-characters', secret: shared, accessKey: shared },
+    { token: shared, secret: 'receipt-secret-value-at-least-32-characters', accessKey: shared },
+  ]) {
+    let calls = 0;
+    const client = createInstagramIngest({ ...input, checkPublic: async () => 'public', fetchImpl: async () => { calls++; return Response.json({ data: { id: 'run1' } }); } });
+    await assert.rejects(client.start({ url }), code('NOT_CONFIGURED'));
+    assert.equal(calls, 0);
+  }
+});
+
+test('a valid signature cannot turn a malformed payload into a receipt', async () => {
+  const client = createInstagramIngest({ token: 'provider-token', secret, checkPublic: async () => 'public', fetchImpl: async () => { throw new Error('must not fetch'); } });
+  const body = Buffer.from(JSON.stringify({ runId: 'victim-run', url, limit: 3, accountScope: 'n/a' })).toString('base64url');
+  const signature = createHmac('sha256', secret).update(body).digest('base64url');
+  await assert.rejects(client.inspect(`${body}.${signature}`), code('INVALID_RECEIPT'));
+});
+
 test('requested URL alone cannot attribute a foreign owner post to the requested account', () => {
   assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: 'foreign', inputUrl: url }], options), code('ACCOUNT_UNCONFIRMED'));
   assert.throws(() => normalizeInstagram([{ ...post, ownerUsername: undefined }], options), code('INVALID_DATA'));
@@ -192,13 +245,45 @@ test('provider hidden errors are preserved through dataset retrieval and classif
   assert.equal(new URL(calls[2].url).searchParams.has('clean'), false);
 });
 test('post IDs and shortcodes have independent duplicate namespaces', () => {
-  const second = { ...post, id: post.shortCode, shortCode: 'post2' };
+  const second = { ...post, id: post.shortCode, shortCode: 'post2', url: 'https://www.instagram.com/p/post2/' };
   assert.equal(normalizeInstagram([post, second], options).posts.length, 2);
 });
 test('abort failure preserves the valid receipt for later inspection', async () => {
   const { client } = mock([{ data: { id: 'run1' } }, { data: { ...run, status: 'RUNNING' } }, new Response('', { status: 503 }), { data: { ...run, status: 'RUNNING' } }]);
   const job = await client.start({ url });
   await assert.rejects(client.cancel(job.receipt), e => e.code === 'PROVIDER_ERROR' && e.details.receipt === job.receipt);
+});
+test('abort errors never mask the terminal status observed afterwards', async () => {
+  for (const [status, statusMessage, expected] of [['TIMED-OUT', '', 'PROVIDER_TIMEOUT'], ['FAILED', 'cost limit', 'COST_LIMIT'], ['FAILED', 'internal failure', 'PROVIDER_ERROR']]) {
+    const { client } = mock([{ data: { id: 'run1' } }, { data: { ...run, status: 'RUNNING' } }, new Response('', { status: 503 }), { data: { ...run, status, statusMessage } }]);
+    const job = await client.start({ url });
+    await assert.rejects(client.cancel(job.receipt), e => e.code === expected && e.details.receipt === job.receipt && e.details.metrics.run_id === 'run1');
+  }
+});
+test('successful runs still fail closed when actual rows, runtime, cost or options exceed policy', async () => {
+  for (const [runPatch, rows, expected] of [
+    [{ stats: { runTimeSecs: 121 } }, [post], 'PROVIDER_TIMEOUT'],
+    [{ usageTotalUsd: 0.1001 }, [post], 'COST_LIMIT'],
+    [{ usageTotalUsd: '0.0081' }, [post], 'PROVIDER_ERROR'],
+    [{ options: { timeoutSecs: 121, maxItems: 3, maxTotalChargeUsd: 0.1 } }, [post], 'PROVIDER_ERROR'],
+    [{}, [post, { ...post, id: '1002', shortCode: 'post2', url: 'https://www.instagram.com/p/post2/' }, { ...post, id: '1003', shortCode: 'post3', url: 'https://www.instagram.com/p/post3/' }, { ...post, id: '1004', shortCode: 'post4', url: 'https://www.instagram.com/p/post4/' }], 'INVALID_DATA'],
+  ]) {
+    const { client } = mock([{ data: { id: 'run1' } }, { data: { ...run, ...runPatch } }, rows]);
+    const job = await client.start({ url });
+    await assert.rejects(client.inspect(job.receipt), e => e.code === expected && e.details.receipt === job.receipt);
+  }
+});
+test('an over-limit active run is aborted immediately instead of remaining RUNNING', async () => {
+  for (const [patch, expected] of [
+    [{ stats: { runTimeSecs: 121 } }, 'PROVIDER_TIMEOUT'],
+    [{ usageTotalUsd: 0.1001 }, 'COST_LIMIT'],
+    [{ options: { timeoutSecs: 0, maxItems: 3, maxTotalChargeUsd: 0.1 } }, 'PROVIDER_ERROR'],
+  ]) {
+    const { client, calls } = mock([{ data: { id: 'run1' } }, { data: { ...run, status: 'RUNNING', ...patch } }, { data: {} }]);
+    const job = await client.start({ url });
+    await assert.rejects(client.inspect(job.receipt), e => e.code === expected && e.details.receipt === job.receipt && e.details.cancellation_attempted === true);
+    assert.match(calls[2].url, /\/run1\/abort$/);
+  }
 });
 test('provider 429 does not trigger a second request or lose its budget classification', async () => {
   const { client, calls } = mock([{ data: { id: 'run1' } }, new Response('', { status: 429 })]);

@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile, unlink } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { createInstagramIngest, instagramAccount } from '../lib/apify_ingest.js';
 const [action, argument, output] = process.argv.slice(2);
-const client = createInstagramIngest();
+const client = createInstagramIngest({ accessKey: process.env.APIFY_INGEST_ACCESS_KEY });
 try {
   if (!['start', 'status', 'cancel'].includes(action)) throw new Error('start <URL> <directory> | status <directory> | cancel <directory>');
   if (action === 'start') instagramAccount(argument);

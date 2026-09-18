@@ -6,11 +6,13 @@ Actor는 [ADR-0006](../../adr/0006-apify-public-instagram.md)의 `apify/instagra
 
 로그인·쿠키·다른 제공자·댓글 수집은 없다. `knownPrivate=true`로 전달된 확인된 비공개는 외부 호출 전 거부한다. 제공자의 `isPrivate:true`, `private:true`, `error:private_account`도 비공개로 처리한다. 나머지 오류에서 비공개를 추정하지 않는다. 실패 분류 응답은 fixture로 검증하며 실제 비공개 수집은 하지 않는다.
 
-서버 토큰 `APIFY_TOKEN`은 제공자 Authorization 헤더에만 쓴다. 서버 간 진입 키 `APIFY_INGEST_ACCESS_KEY`는 32자 이상으로 별도 생성하고 브라우저에 보내지 않는다. `APIFY_INGEST_RECEIPT_SECRET`은 별도의 서버 전용 32자 이상 서명 키다. 수집 호출자에게도 주지 않는다. 키가 없으면 기능이 비활성이다. 키 비교는 timing-safe다. 이 경로는 인증된 서버 호출자에게만 열며, 사용자별 세션 인증·분산 요청량 제한은 후속 화면 통합의 선행 조건이다. 현재 제한은 실행당 상한이며 여러 실행의 월간 예산을 보장하지 않는다.
+서버 토큰 `APIFY_TOKEN`은 제공자 Authorization 헤더에만 쓴다. 서버 간 진입 키 `APIFY_INGEST_ACCESS_KEY`는 32자 이상으로 별도 생성하고 브라우저에 보내지 않는다. `APIFY_INGEST_RECEIPT_SECRET`은 별도의 서버 전용 32자 이상 서명 키다. 수집 호출자에게도 주지 않는다. 세 값은 서로 달라야 하며 하나라도 겹치면 기능이 비활성이다. 키 비교는 timing-safe다.
+
+이 경로는 인증된 서버 호출자에게만 연다. 유료 start에는 호출자(access key digest)별 claim·result와 누적 예약 비용을 원자적으로 보존하는 durable ledger가 필요하다. 기본 Next route는 이 ledger를 주입하지 않으므로 start를 `NOT_CONFIGURED`로 거부한다. 상태 조회·취소와 명시적 로컬 CLI는 유지한다. `createIngestSession`은 한 persistent process용 reference 구현일 뿐 Vercel route 기본값이 아니다. durable 구현은 같은 `session.run(caller,key,fingerprint,start)` 계약을 따라야 한다.
 
 ## 서버 호출
 
-`POST /api/ingest`, `Authorization: Bearer <서버 간 키>`, JSON 본문 최대 8KiB.
+`POST /api/ingest`, `Authorization: Bearer <서버 간 키>`, JSON 본문 최대 8KiB. start에는 16~128자의 `Idempotency-Key` 헤더와 durable ledger가 필수다. 같은 키·같은 입력은 기존 claim/result를 재사용하고, 같은 키의 다른 입력은 거부한다. 다른 키라도 호출자의 누적 예약 비용이 서버 예산을 넘으면 `COST_LIMIT`이다. 모호한 provider POST는 이미 청구됐을 수 있으므로 claim과 USD 0.10 예약을 유지한다.
 
 | action | 입력 | 출력 |
 |---|---|---|
@@ -18,9 +20,9 @@ Actor는 [ADR-0006](../../adr/0006-apify-public-instagram.md)의 `apify/instagra
 | status | receipt | 202 RUNNING 또는 200 SUCCEEDED/CANCELLED |
 | cancel | receipt | 취소 후 조회 결과. 완료가 먼저 도착하면 SUCCEEDED 보존 |
 
-호출자는 시작 전에 비용과 샘플보다 긴 대기를 고지하고 confirmLive를 명시한다. 폴링은 호출자가 5초 이상의 간격으로 같은 receipt를 조회한다. 서버 내부 대기 루프는 없다. 각 제공자 요청은 5초 제한이며 GET만 네트워크 장애 또는 5xx에 최대 1회 재시도한다. 429는 재시도 없이 한도로 반환한다. 시작 POST는 재시도하지 않고 제공자의 실행 timeout을 120초로 지정한다. 호출자는 150초 후에도 RUNNING이면 같은 receipt를 보존하고 취소/상태 확인으로 전환한다. HTTP start 자체에 중복 키는 없으므로 호출자도 자동 재시작하지 않는다.
+호출자는 시작 전에 비용과 샘플보다 긴 대기를 고지하고 confirmLive를 명시한다. 폴링은 호출자가 5초 이상의 간격으로 같은 receipt를 조회한다. 서버 내부 대기 루프는 없다. 각 제공자 요청은 5초 제한이며 GET만 네트워크 장애 또는 5xx에 최대 1회 재시도한다. 429는 재시도 없이 한도로 반환한다. 시작 POST는 재시도하지 않고 제공자의 실행 timeout을 120초로 지정한다. 호출자는 150초 후에도 RUNNING이면 같은 receipt를 보존하고 취소/상태 확인으로 전환한다.
 
-receipt는 `{runId,url,limit,accountScope}`의 base64url JSON과 HMAC-SHA256 서명이다. 서명 키는 APIFY_INGEST_RECEIPT_SECRET이다. 별도 TTL은 없고 키 교체 시 기존 receipt는 무효화된다. 재조회 결과의 run ID·수집 시각을 보존하므로 이전 실행을 새 라이브 성공으로 표시하지 않는다. receipt가 없거나 변조되면 제공자를 호출하지 않는다. 시작 응답 유실은 START_UNCONFIRMED로 반환하며 제공자 콘솔에서 기존 실행을 확인해야 한다.
+receipt는 `{v:1,aud:"apify/instagram-scraper",runId,url,limit,accountScope}`의 base64url JSON과 HMAC-SHA256 서명이다. 서명뿐 아니라 키 집합·버전·audience·run ID·정규 URL·limit·scope를 다시 검증한다. 서명 키는 APIFY_INGEST_RECEIPT_SECRET이다. 별도 TTL은 없고 키 교체 시 기존 receipt는 무효화된다. 재조회 결과의 run ID·수집 시각을 보존하므로 이전 실행을 새 라이브 성공으로 표시하지 않는다. receipt가 없거나 변조되면 제공자를 호출하지 않는다. 시작 응답 유실은 START_UNCONFIRMED로 반환하며 제공자 콘솔에서 기존 실행을 확인해야 한다.
 
 ## 완료 결과와 출처
 
@@ -30,9 +32,9 @@ receipt는 `{runId,url,limit,accountScope}`의 base64url JSON과 HMAC-SHA256 서
 
 - snapshot: snapshot_id, handle, posts, provenance(account, account_scope, collected_at, method, actor, run_id, dataset_id, source_url, evidence_refs, carousel_order_check).
 - posts: 게시물 id, shortCode와 shortcode(두 기존 추출기 호환), caption, child_count, index, url, published_at, type, owner_id/owner_username, coauthors, photo_tags, mentions, hashtags, location, music, children. 자식 id/index/type/display_url/video_url과 배열 순서를 보존한다.
-- 본문과 댓글을 섞지 않는다. 게시일은 published_at이고 사건일 event_at은 null이다. 공동 작성자·사진 태그·본문 멘션을 분리하며 누락값은 null이다. 소유 또는 공동 작성 계정이 요청 계정과 일치해야 하며 inputUrl이 있으면 이 또한 일치해야 한다. inputUrl만 같은 다른 계정 결과는 거부한다.
-- evidence_refs는 snapshot ID, shortCode, account:shortcode를 실제 원본 URL에 연결한다. 새 실행에 브라우저 대조 증거를 만들지 않으며 사진 모델은 호출하지 않는다.
-- metrics: run_id, build_id, started_at, finished_at, duration_seconds(제공자 stats.runTimeSecs), usage_total_usd(인증된 run.usageTotalUsd). 누락은 null이며 가격으로 환산하지 않는다. observed_at은 조회 시각, provisional은 종료 시각부터 10초가 지나지 않았거나 종료 시각이 없다는 뜻이다. 첫 완료의 비용·통계는 잠정값일 수 있으므로 같은 receipt를 완료 10초 뒤 다시 조회해 provisional=false인 관측을 사용한다.
+- 본문과 댓글을 섞지 않는다. 게시일은 published_at이고 사건일 event_at은 null이다. 공동 작성자·사진 태그·본문 멘션을 분리하며 누락값은 null이다. `ownerUsername`이 요청 계정과 일치해야 하며 inputUrl이 있으면 이 또한 일치해야 한다. 공동 작성 표시는 소유권이 아니다. permalink는 HTTPS Instagram의 `/p|reel|tv/<shortcode>`만 허용하고 URL의 shortcode와 항목 shortCode가 같아야 한다.
+- evidence_refs는 snapshot ID, shortCode, account:shortcode와 SHA-256 캡션 모집단 참조를 실제 원본 URL에 연결한다. 새 실행에 브라우저 대조 증거를 만들지 않으며 사진 모델은 호출하지 않는다.
+- metrics: run_id, build_id, started_at, finished_at, duration_seconds(제공자 stats.runTimeSecs), usage_total_usd(인증된 run.usageTotalUsd). 누락은 null이며 가격으로 환산하지 않는다. observed_at은 조회 시각, provisional은 종료 시각부터 10초가 지나지 않았거나 종료 시각이 없다는 뜻이다. 첫 완료의 비용·통계는 잠정값일 수 있으므로 같은 receipt를 완료 10초 뒤 다시 조회해 provisional=false인 관측을 사용한다. `SUCCEEDED`도 실제 행 수 `<= receipt.limit <= 30`, 실행시간 `<=120`, 비용 `<=0.10`, 반환 run options의 동일 상한을 다시 검사한다.
 
 ## 실패 계약
 
@@ -47,7 +49,7 @@ receipt는 `{runId,url,limit,accountScope}`의 base64url JSON과 HMAC-SHA256 서
 | METHOD_NOT_ALLOWED | 405 | POST 외 메서드 |
 | INVALID_URL / INVALID_INPUT / INVALID_RECEIPT | 400 | 입력·확인 정보 거부 |
 | UNAUTHORIZED | 401 | 서버 진입 또는 제공자 인증 거부 |
-| NOT_CONFIGURED | 503 | 서버 키·토큰 미설정 |
+| NOT_CONFIGURED | 503 | 서버 키·토큰 또는 유료 start용 durable ledger 미설정 |
 | PRIVATE_ACCOUNT | 422 | 명시적 비공개 증거 |
 | ACCOUNT_NOT_FOUND | 422 | 명시적 account_not_found 응답 |
 | ACCESS_UNAVAILABLE | 422 | access_denied/login_required 응답 |
@@ -56,6 +58,8 @@ receipt는 `{runId,url,limit,accountScope}`의 base64url JSON과 HMAC-SHA256 서
 | PROVIDER_TIMEOUT | 504 | 요청 또는 실행 시간초과 |
 | PROVIDER_ERROR / INVALID_DATA | 502 / 400 | 제공자 실패 또는 필수 관측·출처 오류 |
 | START_UNCONFIRMED | 502 | 유료 실행 생성 여부 미확인, 자동 재시작 금지 |
+
+실제 Next route는 GET·PUT·DELETE도 공통 handler로 보내 JSON `METHOD_NOT_ALLOWED`, `Allow: POST`, `Cache-Control: no-store`를 반환한다.
 
 ## 인계와 확인 기준
 
