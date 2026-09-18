@@ -76,7 +76,22 @@ test('invalid or unevidenced profiles are rejected', () => {
   assert.throws(() => composeProfile({ targetProfile: quiet }));
 });
 
+// 지향축이 순서를 가른다는 주장이다. 그래서 보정축을 absent 로 둔다 — #99 이후 보정축도 방향 판단에
+// 관여하므로(lib/order.js resolveDirection), 보정축이 present 인 채로는 지향축만 격리되지 않는다.
+// 이 테스트가 present 를 쓰던 시절에는 보정축이 순서에 닿지 않아 격리가 저절로 됐던 것뿐이다.
+// 주장과 단언은 그대로 두고 격리 조건만 바로잡았다. 보정축이 있는 경우는 바로 아래 테스트가 따로 증명한다.
+const orderIds = options => run(options).slots.sort((a, b) => a.position - b.position).map(s => s.photo_id);
+
 test('same measured photos and different targets change position-sorted photo IDs', () => {
-  const ids = targetProfile => run({ targetProfile, currentProfile: present }).slots.sort((a, b) => a.position - b.position).map(s => s.photo_id);
+  const ids = targetProfile => orderIds({ targetProfile, currentProfile: absent });
+  assert.notDeepEqual(ids(quiet), ids(detail));
+});
+
+// #99: 위 테스트가 보정축을 absent 로 격리했으므로, "보정축이 있어도 지향이 순서를 가른다" 를 여기서 따로 고정한다.
+// 보정축 캡션 120자는 detail(292자)과 합성해도 방향 버킷(>=90자)을 무너뜨리지 않는 값이라
+// 지향축의 효과가 보정축에 삼켜지지 않는다.
+test('different targets still change the order while a current profile is present', () => {
+  const currentProfile = length(present, 120);
+  const ids = targetProfile => orderIds({ targetProfile, currentProfile });
   assert.notDeepEqual(ids(quiet), ids(detail));
 });
