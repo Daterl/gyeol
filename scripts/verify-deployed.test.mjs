@@ -6,7 +6,8 @@ import { readFile } from 'node:fs/promises';
 import { buildFeed } from '../lib/pipeline.js';
 import { validateGenerateRequest } from '../lib/interaction.js';
 
-const fixture = JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json', import.meta.url), 'utf8'));
+const visionCases = JSON.parse(await readFile(new URL('../docs/specs/101-caption-quality/inputs.json', import.meta.url), 'utf8'));
+const photos = visionCases.find(item => item.name === 'photos_only').request.context.photos;
 
 async function run(generation, feedStatus = 200) {
   const calls = [];
@@ -20,7 +21,9 @@ async function run(generation, feedStatus = 200) {
         assert.match(req.headers['content-type'], /application\/json/);
         const body = JSON.parse(raw);
         if (req.url === '/api/feed') {
-          assert.deepEqual(body.photos, fixture.context.photos);
+          assert.equal(body.photos.length, 15);
+          assert.ok(body.photos.every(photo => photo.analysis_source === 'vision_model'));
+          assert.deepEqual(body.photos, photos);
           assert.equal(body.schema_version, '1.0');
           res.writeHead(feedStatus).end(JSON.stringify(await buildFeed(body)));
           return;
