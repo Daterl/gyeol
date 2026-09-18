@@ -119,6 +119,20 @@ test('reference observations keep the existing numeric ratio fallback',async()=>
   assert.equal(actual.output.slots.filter(slot=>slot.caption_state==='omitted').length,1);
 });
 
+test('negated or non-caption coverage wording stays unset through generation',async()=>{
+  const cases=[
+    '말수가 적지는 않게 써 줘','전부 써 주지는 마','한 장도 비우지 않는 건 싫어요',
+    '싫은 건 모든 사진에 문장을 쓰는 거예요','사진마다 써 줘, 하지만 사진마다 쓰지 마',
+    '사진마다 색감을 다르게 해 줘','몇 장만 색감이 진하게 해 줘','말수는 적게, 하지만 사진마다 색감은 풍부하게'
+  ];
+  for(const text of cases) {
+    const built=await buildFeed(orderInput({kind:'text',text},currentPosts(['','기록'])));
+    assert.equal(built.context.target.language?.caption_coverage,undefined,text);
+    const provider=filledOutput(built.feed);
+    assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider,text);
+  }
+});
+
 test('real feed context blocks stabilization without affirmative omission evidence',async()=>{
   const currentNoOmit=currentPosts(['기록','또 기록','계속 기록']);
   const exactCurrent=await buildFeed(orderInput({kind:'text',text:'차분한 느낌'},currentNoOmit));

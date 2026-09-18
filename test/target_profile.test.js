@@ -87,7 +87,10 @@ test('free text preserves explicit caption coverage as a claim without inventing
 test('negated, conflicting, or unsupported coverage cues never become an affirmative claim', () => {
   for (const text of [
     '사진만 두지 마','모든 사진에 문장 쓰는 건 싫어요','일부는 비워, 전부 써','캡션 없이 전부 사진만 보여 줘',
-    '말수가 적지 않게 써 줘','말수가 적고 싶지 않아','모든 사진에 문장 쓰지 않아'
+    '말수가 적지 않게 써 줘','말수가 적고 싶지 않아','모든 사진에 문장 쓰지 않아',
+    '말수가 적지는 않게 써 줘','전부 써 주지는 마','한 장도 비우지 않는 건 싫어요',
+    '싫은 건 모든 사진에 문장을 쓰는 거예요','사진마다 써 줘, 하지만 사진마다 쓰지 마',
+    '사진마다 색감을 다르게 해 줘','몇 장만 색감이 진하게 해 줘','말수는 적게, 하지만 사진마다 색감은 풍부하게'
   ]) {
     const profile=extractFromFreetext(text,{createdAt:at});
     assert.equal(profile.language?.caption_coverage,undefined,text);

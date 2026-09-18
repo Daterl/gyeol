@@ -7,7 +7,7 @@
 - target+freetext만 선택 `language.caption_coverage: Claim<"all"|"sparse">`를 가질 수 있다.
 - `all`은 모든 사진에 문장을 쓰려는 현재 의도, `sparse`는 일부 사진을 비우려는 현재 의도다. `empty_caption_ratio`는 ref/current의 과거 관측값이며 freetext에 금지한다.
 - claim은 매치한 원문 `user_text`와 어휘표 `rule` 근거를 함께 가진다. output 단계는 raw_freetext를 다시 해석하지 않는다.
-- 부정된 cue는 반대로 읽지 않는다. all/sparse가 함께 나온 진짜 충돌, 전체 무캡션 요청, cue가 없는 모호한 표현은 claim을 만들지 않는다. `하지만` 뒤에 하나의 명시 의도만 있으면 그 마지막 의도를 쓴다.
+- 부정된 cue는 반대로 읽지 않는다. all/sparse가 함께 나온 진짜 충돌, 전체 무캡션 요청, cue가 없는 모호한 표현은 claim을 만들지 않는다. `하지만`이 있으면 뒤 절만 평가하며, 뒤 cue가 모두 부정됐으면 비운다. `사진마다`·`몇 장만`은 문장·캡션·글·한 줄·쓰기 문맥이 같은 승인 패턴에 있을 때만 cue다.
 - coverage 없는 freetext는 current ratio fallback을 쓰지 않는다. `all`은 서버 비움 보정을 막고, `sparse`는 canonical overlap 0.9 이상일 때 정확히 한 슬롯만 허용한다. sparse와 caption_len은 독립이다.
 
 ## 검증과 한계

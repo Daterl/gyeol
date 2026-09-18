@@ -30,7 +30,13 @@ test('request boundaries reject foreign IDs, bad versions, false photo targets a
   const target=clone(fixture);target.feed.schema_version='1.1';assert.throws(()=>validateFeedResponse({feed:target.feed,context:target.context}),/1.0/);
   const photo=clone(fixture.photo_only);photo.feed.schema_version='1.0';assert.throws(()=>validateFeedResponse(photo),/1.1/);
   photo.feed.schema_version='1.1';photo.feed.applied_profile.target_profile_id='invented';assert.throws(()=>validateFeedResponse(photo),/photo plan/);
-  const coverage=clone(fixture);coverage.feed.applied_profile.language.caption_coverage={value:'sparse',confidence:1,evidence:[{kind:'user_text',ref:'forged:sparse',note:'client injection'}]};
+  const coverage=clone(fixture);
+  const claim={value:'sparse',confidence:0.8,evidence:[{kind:'user_text',ref:`${coverage.context.target.profile_id}:raw`,note:'explicit coverage'}]};
+  coverage.context.target.language.caption_coverage=claim;
+  coverage.context.target.completeness.language=0.4;
+  coverage.feed.applied_profile.language.caption_coverage={evidence:clone(claim.evidence),confidence:claim.confidence,value:claim.value};
+  validateFeedResponse({feed:coverage.feed,context:coverage.context});
+  coverage.feed.applied_profile.language.caption_coverage.value='all';
   assert.throws(()=>validateFeedResponse({feed:coverage.feed,context:coverage.context}),/caption coverage differs/);
   const draft=clone(fixture.edited);draft.slots[0].photo_id='foreign';assert.throws(()=>validateEditedExport(draft,fixture.feed,ids));
 });
