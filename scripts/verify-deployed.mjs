@@ -75,6 +75,22 @@ export function checkGeneration(value, request) {
   // Zero omissions and all omissions are both legal; validate each returned state/reason.
 }
 
+// Classify only the observed Vercel protection challenge, never follow it.
+// These are diagnostic response signals, not proof that a user authenticated.
+function isVercelSsoChallenge(response, requestedUrl) {
+  if (response.status !== 302 || response.headers.get('server')?.toLowerCase() !== 'vercel') return false;
+  try {
+    const destination = new URL(response.headers.get('location'));
+    return destination.origin === 'https://vercel.com' && destination.pathname === '/sso-api'
+      && !destination.username && !destination.password && !destination.hash
+      && destination.searchParams.getAll('url').length === 1
+      && destination.searchParams.get('url') === requestedUrl.href
+      && destination.searchParams.getAll('nonce').length === 1
+      && !!destination.searchParams.get('nonce')?.trim()
+      && response.headers.getSetCookie().some(cookie => /^_vercel_sso_nonce=[^;\s]+(?:;|$)/.test(cookie));
+  } catch { return false; }
+}
+
 export async function verify({ base, input, live = false, environment = 'local', execution = 'live', fetchImpl = fetch, timeoutMs = 30000, metadata = {}, now = Date.now } = {}) {
   const results = [];
   const record = (id, status, detail) => results.push({ id, status, detail });
@@ -101,15 +117,16 @@ export async function verify({ base, input, live = false, environment = 'local',
   const request = async (path, body) => {
     const start = Date.now();
     try {
-      const response = await fetchImpl(new URL(path, target), { redirect: 'manual', signal: AbortSignal.timeout(timeoutMs),
+      const requestedUrl = new URL(path, target);
+      const response = await fetchImpl(requestedUrl, { redirect: 'manual', signal: AbortSignal.timeout(timeoutMs),
         ...(body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
       let value;
       try { value = await response.json(); } catch { /* Never print raw responses: may contain private input or credentials. */ }
-      return { status: response.status, value, ms: Date.now() - start };
+      return { status: response.status, value, vercelSso: isVercelSsoChallenge(response, requestedUrl), ms: Date.now() - start };
     } catch { return { status: 0, ms: Date.now() - start }; }
   };
-  const statusDetail = response => `HTTP ${response.status}; code=${knownErrors.has(response.value?.error?.code) ? response.value.error.code : 'UNRECOGNIZED_OR_ABSENT'}; ${response.ms}ms`;
-  const blocked = response => [0, 401, 403, 429, 502, 503, 504].includes(response.status)
+  const statusDetail = response => `HTTP ${response.status}; code=${knownErrors.has(response.value?.error?.code) ? response.value.error.code : 'UNRECOGNIZED_OR_ABSENT'}; ${response.ms}ms${response.vercelSso ? '; authentication=VERCEL_SSO_REQUIRED (redirect withheld; not followed)' : ''}`;
+  const blocked = response => response.status >= 300 && response.status < 400 ? response.vercelSso : [0, 401, 403, 429, 502, 503, 504].includes(response.status)
     || ['PROFILE_NOT_VERIFIED', 'PROFILE_SNAPSHOT_EXPIRED', 'PROFILE_RESOLVER_UNAVAILABLE'].includes(response.value?.error?.code);
   const expect = (id, response, check) => {
     try { check(); record(id, 'PASS', statusDetail(response)); return true; }
