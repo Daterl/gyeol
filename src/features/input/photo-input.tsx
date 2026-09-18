@@ -8,7 +8,12 @@ import { Button } from '../../components/ui/button';
 import { createEditorStore, type SelectedPhoto } from '../editor/store';
 import { ResultScreen } from '../result/result-screen';
 import { SamplePreview } from '../sample/sample-preview';
-import { addFiles, type IdentityFields, submitPhotos } from './input';
+import {
+  addFiles,
+  type IdentityFields,
+  MAX_SELECTED_PHOTOS,
+  submitPhotos,
+} from './input';
 import { normalizePhotos } from './photo-normalization';
 import { PhotoPicker } from './photo-picker';
 
@@ -31,6 +36,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [normalizing, setNormalizing] = useState(false);
   const normalizingRef = useRef(false);
+  const mountedRef = useRef(true);
   const identity = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     if (
@@ -42,22 +48,30 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
   }, [request]);
   const form = useRef<HTMLFormElement>(null);
   const loading = request.status === 'loading';
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
       store.getState().reset();
       for (const photo of oldPhotosRef.current) URL.revokeObjectURL(photo.url);
-    },
-    [store],
-  );
+    };
+  }, [store]);
   async function add(incoming: File[], previous = false) {
     if (normalizingRef.current) return;
+    const selected = previous ? oldPhotos : photos;
+    if (selected.length + incoming.length > MAX_SELECTED_PHOTOS) {
+      setErrors([
+        `사진은 최대 ${MAX_SELECTED_PHOTOS}장까지 추가할 수 있어요. 초과한 선택은 추가하지 않았어요.`,
+      ]);
+      return;
+    }
     normalizingRef.current = true;
     setNormalizing(true);
     const normalized = await normalizePhotos(incoming).finally(() => {
       normalizingRef.current = false;
-      setNormalizing(false);
+      if (mountedRef.current) setNormalizing(false);
     });
-    const selected = previous ? oldPhotos : photos;
+    if (!mountedRef.current) return;
     const result = addFiles(
       selected.map((photo) => photo.file),
       normalized.files,

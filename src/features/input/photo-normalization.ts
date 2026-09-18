@@ -9,6 +9,9 @@ const WEBP_QUALITY = 0.82;
 export async function normalizePhoto(file: File): Promise<File> {
   if (!UPLOAD_MEDIA_TYPES.includes(file.type) || !file.size)
     throw new Error('JPEG, PNG, WebP 사진을 골라 주세요.');
+  if (file.size > MAX_UPLOAD_BYTES)
+    throw new Error('한 장에 3MB까지 가능해요.');
+  if (file.name.length > 512) throw new Error('파일 이름이 너무 길어요.');
 
   let bitmap: ImageBitmap;
   try {
@@ -50,22 +53,17 @@ export async function normalizePhoto(file: File): Promise<File> {
 }
 
 export async function normalizePhotos(files: File[]) {
-  const normalized = await Promise.all(
-    files.map(async (file) => {
-      try {
-        return { file: await normalizePhoto(file) };
-      } catch (error) {
-        return {
-          error: `${file.name}: ${error instanceof Error ? error.message : '사진을 준비하지 못했어요.'}`,
-        };
-      }
-    }),
-  );
   const errors: string[] = [];
   const ready: File[] = [];
-  for (const item of normalized) {
-    if (item.file) ready.push(item.file);
-    else if (item.error) errors.push(item.error);
+  // Mobile browsers cannot safely hold 15 decoded camera images at once.
+  for (const file of files) {
+    try {
+      ready.push(await normalizePhoto(file));
+    } catch (error) {
+      errors.push(
+        `${file.name}: ${error instanceof Error ? error.message : '사진을 준비하지 못했어요.'}`,
+      );
+    }
   }
   return { errors, files: ready };
 }

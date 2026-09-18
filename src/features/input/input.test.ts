@@ -29,7 +29,7 @@ test('selection preserves existing files and explains unsupported, empty, oversi
     [],
     Array.from({ length: 16 }, (_, i) => jpeg(`${i}.jpg`)),
   );
-  expect(many.files).toHaveLength(15);
+  expect(many.files).toHaveLength(0);
   expect(many.errors[0]).toContain('15장');
 });
 test('normalization applies decoded orientation, bounds the long edge and returns pixel-only WebP files in order', async () => {
@@ -38,7 +38,11 @@ test('normalization applies decoded orientation, bounds the long edge and return
     { height: 1200, width: 2000 },
     { height: 900, width: 600 },
   ];
-  const close = vi.fn();
+  let activeDecodes = 0;
+  let peakDecodes = 0;
+  const close = vi.fn(() => {
+    activeDecodes--;
+  });
   const drawImage = vi.fn();
   const canvas = {
     height: 0,
@@ -48,7 +52,11 @@ test('normalization applies decoded orientation, bounds the long edge and return
       callback(new Blob(['decoded pixels'], { type: 'image/webp' })),
     ),
   };
-  const decode = vi.fn(async () => ({ ...dimensions.shift(), close }));
+  const decode = vi.fn(async () => {
+    activeDecodes++;
+    peakDecodes = Math.max(peakDecodes, activeDecodes);
+    return { ...dimensions.shift(), close };
+  });
   vi.stubGlobal('createImageBitmap', decode);
   vi.stubGlobal('document', { createElement: vi.fn(() => canvas) });
 
@@ -75,6 +83,16 @@ test('normalization applies decoded orientation, bounds the long edge and return
   });
   expect(await portrait.text()).toBe('decoded pixels');
 
+  decode.mockClear();
+  await expect(
+    normalizePhoto(
+      new File([new Uint8Array(3_000_001)], 'too-large.jpg', {
+        type: 'image/jpeg',
+      }),
+    ),
+  ).rejects.toThrow('3MB');
+  expect(decode).not.toHaveBeenCalled();
+
   const result = await normalizePhotos([
     new File(['wide'], 'wide.png', { type: 'image/png' }),
     new File(['bad'], 'bad.heic', { type: 'image/heic' }),
@@ -87,6 +105,7 @@ test('normalization applies decoded orientation, bounds the long edge and return
   expect(result.errors).toEqual([
     'bad.heic: JPEG, PNG, WebP 사진을 골라 주세요.',
   ]);
+  expect(peakDecodes).toBe(1);
   expect(close).toHaveBeenCalledTimes(3);
 });
 test('blank identity is valid and mutually exclusive or unsupported URLs fail before upload', async () => {
@@ -281,7 +300,7 @@ test('15장 분석은 동시 실행 수 상한을 지키고 전부 처리한다'
   expect(peak).toBeLessThanOrEqual(8); // 상한을 넘지 않는다
 });
 
-test('한 장이 실패해도 나머지는 살고 input_index 를 0..n-1 로 다시 매긴다', async () => {
+test('한 장 분석 실패를 알리고 사용자가 재시도하거나 제외하기 전에는 feed를 만들지 않는다', async () => {
   let sent: { photo_id: string; input_index: number }[] = [];
   vi.stubGlobal(
     'fetch',
@@ -296,16 +315,26 @@ test('한 장이 실패해도 나머지는 살고 input_index 를 0..n-1 로 다
       return Response.json(analysisFor(body));
     }),
   );
+  await expect(
+    submitPhotos(many(15), [], fields, new AbortController().signal, true),
+  ).rejects.toMatchObject({
+    code: 'ANALYSIS_FAILED',
+    message: expect.stringMatching(/p5\.jpg.*ph_5/),
+  });
+  expect(sent).toEqual([]);
+
+  const confirmed = many(15).filter((photo) => photo.photo_id !== 'ph_5');
   const result = await submitPhotos(
-    many(15),
+    confirmed,
     [],
     fields,
     new AbortController().signal,
     true,
   );
-  expect(result.feed.slots).toHaveLength(14);
+  expect(result.context.photos.map((photo) => photo.photo_id)).toEqual(
+    confirmed.map((photo) => photo.photo_id),
+  );
   expect(sent.map((photo) => photo.input_index)).toEqual([...Array(14).keys()]);
-  expect(sent.some((photo) => photo.photo_id === 'ph_5')).toBe(false);
 });
 
 test('남은 사진이 3장보다 적으면 빈 자리를 지어내지 않고 실패를 알린다', async () => {
@@ -324,7 +353,7 @@ test('남은 사진이 3장보다 적으면 빈 자리를 지어내지 않고 �
   ).rejects.toMatchObject({ code: 'ANALYSIS_FAILED' });
 });
 
-test('429·타임아웃은 다시 시도하고 인증 오류는 다시 시도하지 않는다', async () => {
+test('429·타임아웃은 다시 시도하고 인증 오류는 재시도 없이 사용자에게 알린다', async () => {
   const attempts: Record<string, number> = {};
   vi.stubGlobal(
     'fetch',
@@ -340,14 +369,9 @@ test('429·타임아웃은 다시 시도하고 인증 오류는 다시 시도하
       return Response.json(analysisFor(body));
     }),
   );
-  const result = await submitPhotos(
-    many(4),
-    [],
-    fields,
-    new AbortController().signal,
-    true,
-  );
+  await expect(
+    submitPhotos(many(4), [], fields, new AbortController().signal, true),
+  ).rejects.toMatchObject({ code: 'ANALYSIS_FAILED' });
   expect(attempts.ph_0).toBe(2);
   expect(attempts.ph_1).toBe(1);
-  expect(result.feed.slots).toHaveLength(3);
 });
