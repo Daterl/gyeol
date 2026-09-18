@@ -26,7 +26,7 @@
 | 이번 공개 주소 요청 | `curl https://project-7klb1.vercel.app/`: HTTP(웹 응답 상태) **200, 1.060391초**. 첫 문서 응답만 확인했으며 샘플 클릭·생성·공유·실기기 완주가 아님. |
 | Production 기준 | GitHub `main` 조회: `fa586eefc1b85b0873ffe17aef5a2bcfd8434225`. [PR #104](https://github.com/Daterl/gyeol/pull/104) 이후 생성 200과 설정 차단 해소는 [기존 재측정](https://github.com/Daterl/gyeol/issues/76#issuecomment-5725068935)에 기록됨. 이번에는 배포 설정이나 실생성을 다시 확인하지 않음. |
 | 더 늦은 실모델 관측 | [#76 관측](https://github.com/Daterl/gyeol/issues/76#issuecomment-5726383559): Production의 합성 자료 15장은 제목 통과·비움 0, 당시 develop 실사진 15장은 분석 성공 뒤 생성 5/5 실패. 현재 develop 재검증 결과로 확대하지 않음. |
-| 근거 계약 후속 | PR #130 병합 뒤에도 [#123 최신 재현](https://github.com/Daterl/gyeol/issues/123#issuecomment-5726377471)에 다른 실사진의 전체 생성 거부가 남음. 수정 병합만으로 실제 모델 품질을 통과 처리하지 않음. |
+| 근거 계약 후속 | [#123 재현 기록](https://github.com/Daterl/gyeol/issues/123#issuecomment-5726377471)에 다른 실사진의 전체 생성 거부가 보고됨. 재현 SHA가 명시되지 않아 PR #130 이후 회귀라고 단정하지 않음. 후속 [PR #148](https://github.com/Daterl/gyeol/pull/148)의 근거 선택 수정도 실모델 품질 인수를 대신하지 않음. |
 | 이번 검사 범위 | `node scripts/check.js` 통과(79개 JS/JSON 및 예제 스키마). `verify:deployed`는 실제 모델 생성 요청을 보내므로 유료 호출 보류 및 이번 문서 범위에 따라 **미실행**. 과거 7/9·9/11 결과를 최신 결과로 재사용하지 않음. |
 
 구 D1~D6·S1~S4는 [intent의 이력](../../intent.md)이며 ADR-0008과 충돌하는 제출 조건으로 재적용하지 않는다.
@@ -47,6 +47,8 @@
 | **G4·G5 기존 구현 재사용과 잔여 품질** | 원재·디에고 책임 아래 에이전트가 #26·#17 통합. #41·#43·#69·#88·#97·#101·#109·#123·#124·#128·#129는 품질·근거 인수 묶음으로 관리. | 병합된 구 기능을 새 계약 완료로 오인하면 실제 사진 생성 실패·근거 오류·편집 불일치를 놓침. |
 | **G6·G7 공유** | 디에고 실행, 원재 저장·관리 경계 검토. #140 구현·검사 뒤 #141 공유 화면 연결. | 다른 브라우저에서 확정본을 보거나 안전하게 수정·비활성화할 수 있다는 약속 미충족. |
 | **G8 → 공개 릴리스** | 디에고 실제 모바일 실행·원재 공동 인수 → [#77](https://github.com/Daterl/gyeol/issues/77)의 별도 develop→main 릴리스·공개 검증. | Preview 성공만으로 투표자가 보는 Production 완성을 말할 수 없음. |
+
+원재 할당 이슈의 댓글 감사 후 서버 잔여 작업을 [#143 캐시](https://github.com/Daterl/gyeol/issues/143)·[#144 입력 계약](https://github.com/Daterl/gyeol/issues/144)·[#145 순서 설명](https://github.com/Daterl/gyeol/issues/145)·[#146 검증기](https://github.com/Daterl/gyeol/issues/146)·[#147 강제 비움 제거](https://github.com/Daterl/gyeol/issues/147)로 분리했다. 이슈 발행과 세션 시작은 구현 완료 증거가 아니다.
 
 [#65 실행 그래프](https://github.com/Daterl/gyeol/issues/65)는 G1·G2·G3·G6 착수 가능, G4·G5·G7·G8 선행 대기로 기록한다. 예전 보드 건수나 ‘닫힌 이슈 수’를 제품 완료율로 쓰지 않는다. #20·#93·#94 등 구 제출 이슈의 종료도 새 공유 제품 인수나 최종 접수 완료 증거가 아니다.
 
