@@ -6,7 +6,11 @@ import {
   handleShare,
   handleShareUpload,
 } from '../lib/share-api.js';
-import { createShareService, MemoryBlobStore } from '../lib/share-storage.js';
+import {
+  createShareService,
+  MemoryBlobStore,
+  ShareError,
+} from '../lib/share-storage.js';
 
 const body = label => {
   const value = Buffer.alloc(12 + label.length);
@@ -54,6 +58,33 @@ test('upload API is bounded, no-store and explicit when the live adapter is abse
   );
   assert.equal(wrongMethod.status, 405);
   assert.equal(wrongMethod.headers.get('allow'), 'POST');
+});
+
+test('an asynchronous durable rate limiter rejects before share creation', async () => {
+  const service = fixture({
+    rateLimiter: {
+      async check() {
+        await Promise.resolve();
+        throw new ShareError('RATE_LIMITED');
+      },
+    },
+  });
+  const bytes = ['a', 'b', 'c'].map(body);
+  const response = await handleShareUpload(
+    request('http://localhost/api/share-upload', {
+      action: 'start',
+      photos: bytes.map((value, index) => ({
+        id: `p_${index}`,
+        sha256: hash(value),
+      })),
+    }),
+    { service },
+  );
+
+  assert.equal(response.status, 429);
+  assert.deepEqual(await response.json(), {
+    error: { code: 'RATE_LIMITED', details: {} },
+  });
 });
 
 test('HTTP adapters expose start, current share/image, rotation and revoke without caching', async () => {
