@@ -183,6 +183,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": true
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -220,6 +225,11 @@
               ],
               "adjacent_overlap": 0.686,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -255,6 +265,11 @@
               ],
               "adjacent_overlap": 0.839,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -295,6 +310,11 @@
               ],
               "adjacent_overlap": 0.81,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -334,6 +354,11 @@
               ],
               "adjacent_overlap": 0.813,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -373,6 +398,11 @@
               ],
               "adjacent_overlap": 0.841,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -408,6 +438,11 @@
               ],
               "adjacent_overlap": 0.857,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -446,6 +481,11 @@
               ],
               "adjacent_overlap": 0.864,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -481,6 +521,11 @@
               ],
               "adjacent_overlap": 0.866,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -519,6 +564,11 @@
               ],
               "adjacent_overlap": 0.849,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -555,6 +605,11 @@
               ],
               "adjacent_overlap": 0.881,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -592,6 +647,11 @@
               ],
               "adjacent_overlap": 0.882,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -631,6 +691,11 @@
               ],
               "adjacent_overlap": 0.908,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -666,6 +731,11 @@
               ],
               "adjacent_overlap": 0.936,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -706,6 +776,11 @@
               ],
               "adjacent_overlap": 0.923,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           }
         ],
@@ -714,7 +789,11 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-18T04:39:45.820Z"
+        "generated_at": "2026-09-18T06:10:05.713Z",
+        "omit_summary": {
+          "recommended_count": 0,
+          "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
+        }
       },
       "context": {
         "photos": [
@@ -1412,7 +1491,7 @@
           "language": null,
           "sequence": {},
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.818Z"
+          "created_at": "2026-09-18T06:10:05.711Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -1540,7 +1619,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.816Z"
+          "created_at": "2026-09-18T06:10:05.710Z"
         },
         "current_photos": []
       }
@@ -1621,6 +1700,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1661,6 +1745,11 @@
               ],
               "adjacent_overlap": 0.825,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1696,6 +1785,11 @@
               ],
               "adjacent_overlap": 0.81,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1734,6 +1828,11 @@
               ],
               "adjacent_overlap": 0.828,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1773,6 +1872,11 @@
               ],
               "adjacent_overlap": 0.827,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1812,6 +1916,11 @@
               ],
               "adjacent_overlap": 0.841,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1847,6 +1956,11 @@
               ],
               "adjacent_overlap": 0.861,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1884,6 +1998,11 @@
               ],
               "adjacent_overlap": 0.856,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1920,6 +2039,11 @@
               ],
               "adjacent_overlap": 0.859,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1962,6 +2086,11 @@
               ],
               "adjacent_overlap": 0.827,
               "is_visual_peak": true
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -1999,6 +2128,11 @@
               ],
               "adjacent_overlap": 0.709,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -2038,6 +2172,11 @@
               ],
               "adjacent_overlap": 0.908,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -2076,6 +2215,11 @@
               ],
               "adjacent_overlap": 0.895,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -2111,6 +2255,11 @@
               ],
               "adjacent_overlap": 0.932,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -2151,6 +2300,11 @@
               ],
               "adjacent_overlap": 0.923,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           }
         ],
@@ -2159,7 +2313,11 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-18T04:39:45.828Z"
+        "generated_at": "2026-09-18T06:10:05.721Z",
+        "omit_summary": {
+          "recommended_count": 0,
+          "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
+        }
       },
       "context": {
         "photos": [
@@ -2857,7 +3015,7 @@
           "language": null,
           "sequence": {},
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.827Z"
+          "created_at": "2026-09-18T06:10:05.720Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -2893,7 +3051,7 @@
             "carousel_count": 0
           },
           "raw_freetext": "차분하고 여백 많은 느낌으로",
-          "created_at": "2026-09-18T04:39:45.827Z"
+          "created_at": "2026-09-18T06:10:05.720Z"
         },
         "current_photos": []
       }
@@ -2906,7 +3064,7 @@
       "mode": "all",
       "feed": {
         "schema_version": "1.1",
-        "feed_id": "fd_075b26a7-d7b8-459e-857b-223d7984adbe",
+        "feed_id": "fd_74f9a0fd-7e34-4523-9b51-e33078ab0498",
         "session_id": "caption-quality-101",
         "applied_profile": {
           "target_profile_id": null,
@@ -3067,6 +3225,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3102,6 +3265,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3140,6 +3308,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3182,6 +3355,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3218,6 +3396,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3257,6 +3440,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3294,6 +3482,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3331,6 +3524,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3366,6 +3564,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3404,6 +3607,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3443,6 +3651,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3478,6 +3691,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3518,6 +3736,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3553,6 +3776,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -3592,6 +3820,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           }
         ],
@@ -3600,7 +3833,11 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-18T04:39:45.835Z"
+        "generated_at": "2026-09-18T06:10:05.725Z",
+        "omit_summary": {
+          "recommended_count": 0,
+          "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
+        }
       },
       "context": {
         "photos": [
@@ -4298,7 +4535,7 @@
           "language": null,
           "sequence": {},
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.834Z"
+          "created_at": "2026-09-18T06:10:05.724Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -4424,7 +4661,7 @@
             "carousel_count": 0
           },
           "target_profile": null,
-          "created_at": "2026-09-18T04:39:45.834Z",
+          "created_at": "2026-09-18T06:10:05.724Z",
           "disclaimer": "업로드한 사진 15장에서 관측된 값이며 사용자의 취향·과거 습관이 아니다"
         },
         "current_photos": []
@@ -4615,6 +4852,11 @@
               ],
               "adjacent_overlap": 0,
               "is_visual_peak": true
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4652,6 +4894,11 @@
               ],
               "adjacent_overlap": 0.686,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4687,6 +4934,11 @@
               ],
               "adjacent_overlap": 0.839,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4727,6 +4979,11 @@
               ],
               "adjacent_overlap": 0.81,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4766,6 +5023,11 @@
               ],
               "adjacent_overlap": 0.813,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4805,6 +5067,11 @@
               ],
               "adjacent_overlap": 0.841,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4840,6 +5107,11 @@
               ],
               "adjacent_overlap": 0.857,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4878,6 +5150,11 @@
               ],
               "adjacent_overlap": 0.864,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4913,6 +5190,11 @@
               ],
               "adjacent_overlap": 0.866,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4951,6 +5233,11 @@
               ],
               "adjacent_overlap": 0.849,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -4987,6 +5274,11 @@
               ],
               "adjacent_overlap": 0.881,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -5024,6 +5316,11 @@
               ],
               "adjacent_overlap": 0.882,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -5063,6 +5360,11 @@
               ],
               "adjacent_overlap": 0.908,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -5098,6 +5400,11 @@
               ],
               "adjacent_overlap": 0.936,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           },
           {
@@ -5138,6 +5445,11 @@
               ],
               "adjacent_overlap": 0.923,
               "is_visual_peak": false
+            },
+            "omit_suggestion": {
+              "recommended": false,
+              "reason": null,
+              "evidence": []
             }
           }
         ],
@@ -5146,7 +5458,11 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-18T04:39:45.839Z"
+        "generated_at": "2026-09-18T06:10:05.732Z",
+        "omit_summary": {
+          "recommended_count": 0,
+          "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
+        }
       },
       "context": {
         "photos": [
@@ -5950,7 +6266,7 @@
             "carousel_count": 0
           },
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.838Z"
+          "created_at": "2026-09-18T06:10:05.731Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -6078,7 +6394,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-18T04:39:45.838Z"
+          "created_at": "2026-09-18T06:10:05.731Z"
         },
         "current_photos": [
           {

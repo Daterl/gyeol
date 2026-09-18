@@ -40,7 +40,7 @@ if (phase === 'prepare') {
   }
   await save('inputs.json',inputs);
   console.log('Prepared',photos.length,'photos and',inputs.length,'scenarios');
-} else if (['before','after'].includes(phase)) {
+} else if (['before','after','integrated'].includes(phase)) {
   const inputs=await read('inputs.json');
   const schedule=[0,1,2,3,0,1,2,3,0,1,0,1];
   const rows=await read(phase+'.json').catch(() => []);

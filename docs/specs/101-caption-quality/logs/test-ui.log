@@ -1,0 +1,9 @@
+> vitest run
+ RUN  v5.0.1 /Users/chowonjae/Desktop/projects/wanted/.work/gyeol-101
+ Test Files  11 passed (11)
+      Tests  35 passed (35)
+   Start at  15:09:34
+   Duration  936ms (transform 64%, import 27%, tests 8%, worker 1%)
+  Transform  transforming modules took 2.80s · 64% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns

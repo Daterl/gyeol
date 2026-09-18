@@ -54,7 +54,7 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
     renderToStaticMarkup(
       createElement(CaptionEditor, { store, id, mock: true }),
     ),
-  ).toContain('제안됨');
+  ).toContain('쓸 거리 제안');
   store.getState().editCaption(id, '내가 쓴 문장');
   expect(
     renderToStaticMarkup(

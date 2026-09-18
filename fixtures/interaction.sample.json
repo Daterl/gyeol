@@ -310,13 +310,13 @@
         "photo_id": "ph_01",
         "position": 1,
         "caption_state": "filled",
-        "text": "단색 카드",
+        "text": "쓸 거리: 단색 카드\n이 중 기억에 남은 건?",
         "omit_reason": null,
         "evidence": [
           {
             "kind": "uploaded_photo",
             "ref": "ph_01",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -330,7 +330,7 @@
           {
             "kind": "uploaded_photo",
             "ref": "ph_02",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -357,13 +357,13 @@
         "photo_id": "ph_01",
         "position": 3,
         "caption_state": "filled",
-        "text": "단색 카드",
+        "text": "쓸 거리: 단색 카드\n이 중 기억에 남은 건?",
         "omit_reason": null,
         "evidence": [
           {
             "kind": "uploaded_photo",
             "ref": "ph_01",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -377,7 +377,7 @@
           {
             "kind": "uploaded_photo",
             "ref": "ph_02",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -410,7 +410,7 @@
           {
             "kind": "uploaded_photo",
             "ref": "ph_01",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -424,7 +424,7 @@
           {
             "kind": "uploaded_photo",
             "ref": "ph_02",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       },
@@ -438,7 +438,7 @@
           {
             "kind": "uploaded_photo",
             "ref": "ph_03",
-            "note": "합성 fixture의 해당 카드"
+            "note": "단색 카드"
           }
         ]
       }

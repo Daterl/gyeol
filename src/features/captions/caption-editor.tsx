@@ -140,14 +140,14 @@ export function CaptionEditor({
         </p>
       )}
       <label className="mt-3 block text-sm">
-        {slot.position}번 사진의 문장
+        {slot.position}번 사진에 내가 쓸 문장
         <textarea
           rows={3}
           value={slot.text ?? ''}
           onChange={(event) =>
             store.getState().editCaption(id, event.target.value)
           }
-          placeholder="이대로 비워 두어도 괜찮아요."
+          placeholder="제안된 쓸 거리를 지우고 내 말로 써 보세요. 이대로 비워 두어도 괜찮아요."
           className="mt-2 w-full rounded-md border border-line bg-card p-3 text-base"
         />
       </label>
