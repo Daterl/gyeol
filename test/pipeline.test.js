@@ -49,7 +49,7 @@ test('mock upload reads actual JPEG/PNG/WebP pixels, preserving ID and disabling
   try {
     for(const [format,color] of [['jpeg','#ffffff'],['png','#000000'],['webp','#000000']]) {
       const bytes=await sharp({create:{width:16,height:16,channels:3,background:color}}).toFormat(format).toBuffer();
-      const body={schema_version:'1.0',photo_id:'actual_'+format,input_index:0,file_ref:'actual.'+format,media_type:'image/'+format,image_base64:bytes.toString('base64')};
+      const body={schema_version:'1.0',session_id:'pipeline-upload',collection:'selected',photo_id:'actual_'+format,input_index:0,file_ref:'actual.'+format,media_type:'image/'+format,image_base64:bytes.toString('base64')};
       const response=await handleAnalyze(request('/api/analyze?mock=1',body));assert.equal(response.status,200);
       const photo=await response.json();assert.equal(photo.photo_id,body.photo_id);assert.equal(photo.file_ref,body.file_ref);assert.equal(photo.analysis_source,'heuristic');
       assert.equal(response.headers.get('x-gyeol-analysis-reason'),'missing_api_key');

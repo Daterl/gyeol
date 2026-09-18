@@ -6,7 +6,7 @@
 
 ## 업로드 — POST /api/analyze
 
-요청: `{schema_version:"1.0",photo_id,input_index,file_ref,media_type,image_base64}`.
+요청: `{schema_version:"1.0",session_id,collection:"selected"|"current",photo_id,input_index,file_ref,media_type,image_base64}`.
 
 - 세션 시작 시 `crypto.randomUUID()`로 사진별 photo_id를 발급한다. 삭제/재정렬/재시도 동안 같은 파일의 ID를 유지하고 교체된 파일은 새 ID다. 파일명·배열 위치로 사진을 식별하지 않는다.
 - 한 번에 사진 1장. 올릴 사진 집합은 3~20장. input_index는 현재 선택 배열의 0..N-1이며 결과의 position과 별개다.
@@ -14,7 +14,7 @@
 - JPEG/PNG/WebP 정지 사진, **3,000,000 bytes/장**, 긴 변 **8192px**, 전체 **40,000,000 pixels** 이하다. GIF/SVG/애니메이션은 사용자 업로드에서 받지 않는다. 기존 SVG는 합성 fixture 내부 전용이다.
 - image_base64는 data URL 접두어·공백 없이 표준 canonical base64다. JSON 전체 요청은 4,100,000 bytes 이하. 클라이언트에서 원본 파일 크기를 먼저 검사하고 서버는 실제 bytes와 헤더의 형식·해상도를 검사한다.
 - `sharp@0.35.4` metadata를 재사용한다. 이미 Next가 설치하는 버전을 직접 의존성으로 선언했다. 압축 데이터를 전부 디코딩했다거나 모델이 사진을 읽었다는 의미는 아니다.
-- 성공은 `PhotoAnalysis` 한 객체다. 응답 photo_id/input_index/file_ref는 요청과 대조한다. 헤더 `X-Gyeol-Analysis-Source/Reason/Cache`는 #43을 유지한다.
+- 성공은 `PhotoAnalysis` 한 객체다. 응답 photo_id/input_index/file_ref는 요청과 대조한다. 서버 전용 `GYEOL_ANALYSIS_RECEIPT_SECRET`이 설정되면 `analysis_receipt`가 세션·사진 묶음·사진 ID·바이트 해시를 인증한다. 헤더 `X-Gyeol-Analysis-Source/Reason/Cache`는 #43을 유지한다.
 - 클라이언트는 25초에 요청을 취소한다. 모델 내부 제한은 20초다. 자동 재제출은 하지 않고 사용자가 실패한 사진을 다시 시도한다. 서버 안 429/5xx 재시도 1회는 같은 20초 예산이다.
 
 배포 근거: [Vercel Functions 4.5MB 한도](https://vercel.com/docs/functions/limitations), [sharp metadata](https://sharp.pixelplumbing.com/api-input/), 2026-09-17 확인. 플랫폼 자체 413은 JSON이 아닐 수 있어 클라이언트는 status를 먼저 처리한다. 큰 파일을 숨겨서 보내거나 전용 스토리지를 추가하지 않는다.
@@ -32,7 +32,7 @@
 
 성공: `{feed:OrderedFeed,context:{photos,current:CurrentProfile,target:TargetProfile|PhotoPlan,current_photos:PhotoAnalysis[]}}`.
 
-context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_upload일 때만 current_photos가 있고, 그 근거는 실제 기존 사진 ID로 대조한다. 본문 최대 250,000 bytes. context의 검증은 형태·참조 정합성 검증이며 클라이언트가 보낸 관측의 진위를 암호학적으로 인증하는 기능은 아니다.
+context는 다음 생성 단계의 검증 재료다. 현재 출처가 photo_upload일 때만 current_photos가 있고, 그 근거는 실제 기존 사진 ID로 대조한다. 본문 최대 250,000 bytes. `duplicate_of`는 두 사진의 서명된 분석 영수증이 같은 세션·묶음·바이트 해시를 가질 때만 서버가 다시 구성한다. 그 밖의 PhotoAnalysis 필드는 형태·참조 정합성을 검사하며 진위를 인증하지 않는다.
 
 기존 `GET /api/feed?mock=1`은 15장 합성 샘플을 그대로 반환한다. 샘플 모드에서는 **샘플 사진만** ph_01..ph_15에 연결한다. 사용자 사진 3~20장에 샘플 ID/결과를 덮어 붙이지 않는다.
 
