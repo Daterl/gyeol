@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {handleFeed} from '../lib/pipeline.js';
+import {handleProfileConnection} from '../lib/profile-connection.js';
 import {createPhotoReceipt} from '../lib/photo-receipt.js';
 import {validateGenerateRequest} from '../lib/interaction.js';
 const photos=JSON.parse(await readFile(new URL('./order.real20.json',import.meta.url),'utf8'));
@@ -136,4 +137,94 @@ test('URL is a lookup reference, while malformed provenance and time fail closed
   }
   const response=await run({...input(),profile_url:'https://instagram.com/G5_PUBLIC'});
   assert.equal(response.status,200);
+});
+
+async function connectedCache() {
+  const {createProfileCache}=await import('../lib/profile-cache.js');
+  const {buildCurrentProfile}=await import('../lib/current_profile.js');
+  const {extractFromReference}=await import('../lib/target_profile.js');
+  const rows=new Map();let revision=0,starts=0,time=Date.parse(record.collected_at);
+  const secret='fixture-only-profile-cache-secret-32';
+  // Offline CAS adapter: proves integration, not Blob's production consistency.
+  const storage={
+    async read(key) { return structuredClone(rows.get(key)??null); },
+    async write(key,value,{ifMatch}={}) {
+      const prior=rows.get(key);if(ifMatch?prior?.etag!==ifMatch:prior)return null;
+      const row={value:structuredClone(value),etag:String(++revision)};rows.set(key,row);return structuredClone(row);
+    }
+  };
+  const ingest={
+    async start() { starts++;return {status:'RUNNING',receipt:'offline-provider-receipt'}; },
+    async inspect() {return {status:'SUCCEEDED',snapshot:structuredClone(snapshot),
+      currentProfile:buildCurrentProfile({snapshot},fixture.now),
+      targetProfile:await extractFromReference(record.source_url,{registry:{[snapshot.handle]:snapshot},createdAt:fixture.now})};}
+  };
+  const cache=createProfileCache({storage,ingest,secret,now:()=>time});
+  const accessKey='fixture-only-access-key-32-characters';
+  const connectRequest=action=>new Request('http://localhost/api/profile',{method:'POST',headers:{'content-type':'application/json',authorization:`Bearer ${accessKey}`},body:JSON.stringify({schema_version:'1.0',action,profile_url:record.source_url,...(action==='connect'?{confirmLive:true}:{})})});
+  assert.equal((await handleProfileConnection(connectRequest('connect'),{accessKey,cache})).status,202);
+  const inspected=await handleProfileConnection(connectRequest('status'),{accessKey,cache});
+  assert.equal(inspected.status,200);
+  const connection=await inspected.json();
+  assert.equal(connection.status,'public');
+  time=now;
+  return {cache,connection,secret,rows,starts:()=>starts,advance:()=>{time+=86400001;}};
+}
+
+test('real G1 signed resolver feeds curation and rejects tampering, wrong account and expiry without starting ingest',async()=>{
+  const f=await connectedCache();
+  const body={...input(),profile_snapshot_id:f.connection.snapshotId};
+  for(const count of [3,15]) {
+    const response=await run({...body,photos:input(count).photos},{resolveSnapshot:f.cache.resolveSnapshot});
+    assert.equal(response.status,200,JSON.stringify(await response.clone().json()));
+    const result=await response.json();
+    assert.equal(result.curation.profile.expires_at,new Date(f.connection.expires_at).toISOString());
+    assert.equal(result.curation.profile_snapshot_id,f.connection.snapshotId);
+  }
+  for(const rejected of [
+    {...body,profile_snapshot_id:body.profile_snapshot_id+'tampered'},
+    {...body,profile_url:'https://www.instagram.com/other/'},
+    {...body,profile_snapshot_id:JSON.stringify(snapshot)}
+  ]) {
+    const response=await run(rejected,{resolveSnapshot:f.cache.resolveSnapshot});
+    assert.equal(response.status,422);assert.equal((await response.json()).error.code,'PROFILE_NOT_VERIFIED');
+  }
+  f.advance();
+  assert.equal((await run(body,{resolveSnapshot:f.cache.resolveSnapshot})).status,422);
+  assert.equal(f.starts(),1,'curation must never start or refresh ingest');
+});
+
+test('configured default resolver reads private storage with no Apify token; missing configuration fails closed',async()=>{
+  const f=await connectedCache();
+  const previousFetch=globalThis.fetch;
+  const names=['PROFILE_CACHE_SECRET','BLOB_READ_WRITE_TOKEN','APIFY_TOKEN'];
+  const saved=Object.fromEntries(names.map(name=>[name,process.env[name]]));
+  const body={...input(),profile_snapshot_id:f.connection.snapshotId};
+  try {
+    delete process.env.APIFY_TOKEN;
+    process.env.PROFILE_CACHE_SECRET=f.secret;
+    process.env.BLOB_READ_WRITE_TOKEN='vercel_blob_rw_offline_fixture';
+    let reads=0;
+    globalThis.fetch=async(url,options)=>{
+      const parsed=new URL(url);
+      assert.equal(parsed.hostname,'offline.private.blob.vercel-storage.com');
+      assert.equal(options.cache,'no-store');
+      const row=f.rows.get(parsed.pathname.slice(1));assert.ok(row);reads++;
+      return Response.json(row.value,{headers:{etag:row.etag}});
+    };
+    // Deliberately omit resolver injection: this is the production handler path.
+    // Keep Date.now aligned with the fixture inside the real cache resolver.
+    const originalNow=Date.now;Date.now=()=>now;
+    try {
+      const response=await handleFeed(request(body),{now:()=>now});
+      assert.equal(response.status,200,JSON.stringify(await response.clone().json()));assert.equal(reads,1);
+      delete process.env.PROFILE_CACHE_SECRET;
+      const unavailable=await handleFeed(request(body),{now:()=>now});
+      assert.equal(unavailable.status,503);
+      assert.equal((await unavailable.json()).error.code,'PROFILE_RESOLVER_UNAVAILABLE');
+    } finally {Date.now=originalNow;}
+  } finally {
+    globalThis.fetch=previousFetch;
+    for(const name of names) if(saved[name]===undefined)delete process.env[name];else process.env[name]=saved[name];
+  }
 });

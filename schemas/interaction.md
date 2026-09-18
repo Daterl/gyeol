@@ -1,4 +1,4 @@
-# 화면·서버 연결 계약 1.0
+# 화면·서버 연결 계약 1.0 (ADR-0008 큐레이션)
 
 결정자 diego.yoon / 협업 enzo.cho. #24, ADR-0005 위임에 따른 기술 계약. 기존 TargetProfile/CurrentProfile/PhotoAnalysis 1.0을 유지하며 **PhotoPlan을 사용하는 OrderedFeed만 1.1**이다. 기존 1.0 mock을 실사진 결과로 바꿔 표시하지 않는다.
 
@@ -19,11 +19,22 @@
 
 배포 근거: [Vercel Functions 4.5MB 한도](https://vercel.com/docs/functions/limitations), [sharp metadata](https://sharp.pixelplumbing.com/api-input/), 2026-09-17 확인. 플랫폼 자체 413은 JSON이 아닐 수 있어 클라이언트는 status를 먼저 처리한다. 큰 파일을 숨겨서 보내거나 전용 스토리지를 추가하지 않는다.
 
+## 공개 프로필 연결 — POST /api/profile
+
+서버 운영용 연결 경로이며 기존 ingest와 같은 `Authorization: Bearer <APIFY_INGEST_ACCESS_KEY>`를 요구한다. 운영 키를 브라우저 번들이나 공개 설정에 넣지 않는다. 사용자용 자격 증명 전달/UI 연결은 별도 통합이다.
+
+- 연결: `{schema_version:"1.0",action:"connect",profile_url,confirmLive:true,refresh?:boolean}`. 수집을 시작할 수 있으므로 `confirmLive:true`를 명시해야 한다. `refresh` 기본값은 false이며, 24시간 제한과 reservation은 #143 캐시가 적용한다. 이 요청의 동의는 프로필 소유권 확인이나 공유 PII 선택이 아니다.
+- 상태: `{schema_version:"1.0",action:"status",profile_url}`. 저장한 진행 상태를 조회하고 실행 중인 제공자 작업의 결과를 확인한다. 새로운 작업을 시작하지 않는다. 서버의 provider receipt를 요청으로 받지 않는다.
+- 성공: `{status,refresh_required,expires_at?,snapshotId?,error_code?}`. pending은 202, 그 외 확인된 상태는 200이다. `expires_at`은 #143 연결 결과와 동일한 epoch milliseconds다. `snapshotId`는 public일 때만 반환되며 큐레이션 요청의 `profile_snapshot_id`로 전달한다. private/unconfirmed/timeout/not_found/expired 등은 서로 구분하고 공개 성공으로 바꾸지 않는다.
+- 405 METHOD_NOT_ALLOWED, 401 UNAUTHORIZED, 400 INVALID_REQUEST, 413 REQUEST_TOO_LARGE, 503 PROFILE_CONNECTION_UNAVAILABLE, 502 PROFILE_CONNECTION_FAILED. 본문은 8192 bytes 이하, 응답은 no-store다. 스냅샷·provider receipt·비밀 키·저장소 경로·원본 오류 상세는 응답에 넣지 않는다.
+
+배포 전 서버 설정은 `APIFY_INGEST_ACCESS_KEY`, `PROFILE_CACHE_SECRET`, `BLOB_READ_WRITE_TOKEN`이다. 실제 수집에는 `APIFY_TOKEN`과 `APIFY_INGEST_RECEIPT_SECRET`도 필요하다. 보호된 연결 route의 자격 증명·Blob 권한·실제 제공자 동작 검증과 요청 제한 운영은 별도 배포 게이트이며, 이 변경에서 유료 호출이나 배포는 실행하지 않았다.
+
 ## 큐레이션 — POST /api/feed
 
 [ADR-0008](../docs/adr/0008-public-profile-curation-and-sharing.md)의 공개 프로필 필수 계약이다. 요청은 `{schema_version:"1.0",session_id,profile_url,profile_snapshot_id,photos:PhotoAnalysis[3..15],prompt?:string}`다.
 
-- `profile_url`은 공개 Instagram 계정 URL, `profile_snapshot_id`는 #143 연결 API가 발급한 불투명 서명 참조다. URL 자체는 공개 여부나 소유권의 증명이 아니다. 서버는 `createProfileCache(...).resolveSnapshot({url,snapshotId})`로 신선한 공개 스냅샷을 읽는다. 이 읽기는 수집을 시작하거나 새로고침하지 않는다.
+- `profile_url`은 공개 Instagram 계정 URL, `profile_snapshot_id`는 #143 연결 API가 발급한 불투명 서명 참조다. URL 자체는 공개 여부나 소유권의 증명이 아니다. 서버 기본 경로는 `lib/profile-cache.js`의 `resolveSnapshot({url,snapshotId})`로 신선한 공개 스냅샷을 읽는다. `BLOB_READ_WRITE_TOKEN`과 `PROFILE_CACHE_SECRET`이 필요하며 캐시 읽기는 Apify 토큰을 요구하지 않는다. 저장소의 `expires_at`은 epoch milliseconds이고 HTTP 응답에서는 ISO 문자열이다. 이 읽기는 수집을 시작하거나 새로고침하지 않는다.
 - 미연결·비공개·미확인·서명 위조·계정 불일치는 진행하지 못한다. `snapshot`, `profile`, `identity` 같은 추가 필드는 거절한다. 요청의 스냅샷 객체를 프로필 근거로 쓰지 않는다.
 - 사진은 3~15장이고 ID는 누락·중복 없이 유지된다. `input_index`는 선택 배열의 0..N-1이다. 본문 최대 250,000 bytes. `duplicate_of`는 같은 세션·묶음·바이트 해시를 가진 서명된 분석 영수증으로만 복원한다. 나머지 분석 필드의 형태·참조 정합성을 검사하며 진위를 인증하지는 않는다.
 - `prompt`는 생략하거나 빈 문자열로 보낼 수 있고 최대 2000자다. 빈 입력은 연결 스냅샷의 수집 가능한 언어 근거를 기존 reference 추출기로 읽는다. 작성한 입력은 기존 freetext 추출기로 순서·캡션 방향에 반영하며, 연결 프로필 관측과 사용자의 방향을 별도 출처로 유지한다. 지원하지 않는 자유 문장의 의미를 이해했다고 주장하지 않는다.
