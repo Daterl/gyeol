@@ -121,6 +121,13 @@ test('every model-input field name is rejected when echoed into public evidence'
   }
 });
 
+test('model-visible disclosure values are rejected in both output modes',async()=>{
+  const all=filledOutput();all.output.title='target_only로 만든 세 장';
+  await assert.rejects(generateOutput(input('all'),options(all)),{code:'MODEL_CONTRACT'});
+  const slot=structuredClone(fixture.output.slots[0]);slot.evidence[0].note='corrected를 적용했다';
+  await assert.rejects(generateOutput(input('slot'),options({slot})),{code:'MODEL_CONTRACT'});
+});
+
 test('the original brightness and saturation ordering title is rejected even when heuristic facts contain both terms',async()=>{
   const req=input();
   const facts=['평균 밝기 0.712','평균 채도 0.671'];
@@ -137,6 +144,15 @@ test('an internal-looking literal remains usable when it is visibly grounded in 
   req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
   const response=structuredClone(fixture.output.slots[0]);response.text=fact;response.evidence[0].note=fact;
   assert.deepEqual(await generateOutput(req,options({slot:response})),{slot:response});
+});
+
+test('a longer photographed word cannot ground an internal identifier substring',async()=>{
+  const req=input('slot');
+  const fact='balanced composition';
+  req.feed.slots[0].caption_inputs.describable_facts=[fact];
+  req.context.photos.find(photo=>photo.photo_id==='ph_01').describable_facts=[fact];
+  const response=structuredClone(fixture.output.slots[0]);response.text='position=1을 사용했다';
+  await assert.rejects(generateOutput(req,options({slot:response})),{code:'MODEL_CONTRACT'});
 });
 
 test('single slot sends only its photo and rejects other photo, position, user state or foreign evidence',async()=>{
