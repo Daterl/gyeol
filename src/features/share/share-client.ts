@@ -1,10 +1,5 @@
-import { isCollectedAtInstant } from '../editor/curation-persistence';
 import type { ConfirmedCuration } from '../editor/curation-store';
-import {
-  type PublicShare,
-  type PublicShareProfile,
-  parsePublicShare,
-} from './public-share';
+import { type PublicShare, parsePublicShare } from './public-share';
 
 export class ShareApiError extends Error {
   constructor(
@@ -26,19 +21,14 @@ export type ShareCuration =
   | {
       includeProfile: true;
       photos: ShareCurationPhoto[];
-      profile: PublicShareProfile;
+      profileSnapshotId: string;
     };
 
 /**
  * G5 confirmation -> G6 curation payload.
  *
- * The collection time is taken only from the profile evidence frozen into this
- * confirmation, never from the live editor state, so a later reconnection can
- * not backdate or advance an already confirmed share. A confirmation made before
- * that evidence was bound carries no collection time, so it is refused here and
- * has to be confirmed again. No avatar is verified anywhere in the pipeline, so
- * it stays null, and sharing off drops the whole profile rather than emitting
- * empty fields.
+ * The browser sends only the signed server reference. The share service resolves
+ * it after authorization and upload validation, then creates the public profile.
  */
 export function toShareCuration(confirmed: ConfirmedCuration): ShareCuration {
   const photos = confirmed.output.slots.map((slot) => {
@@ -51,22 +41,17 @@ export function toShareCuration(confirmed: ConfirmedCuration): ShareCuration {
       ...(crop ? { focalPoint: { x: crop.x / 100, y: crop.y / 100 } } : {}),
     };
   });
-  if (!confirmed.profileSharing || !confirmed.profile)
-    return { includeProfile: false, photos };
-  const { collected_at, display_name, source_url, username } =
-    confirmed.profile;
-  if (!isCollectedAtInstant(collected_at))
+  if (!confirmed.profileSharing) return { includeProfile: false, photos };
+  if (
+    typeof confirmed.profileSnapshotId !== 'string' ||
+    !confirmed.profileSnapshotId.trim() ||
+    confirmed.profileSnapshotId.length > 2048
+  )
     throw new ShareApiError('INVALID_INPUT');
   return {
     includeProfile: true,
     photos,
-    profile: {
-      avatarUrl: null,
-      collectedAt: collected_at,
-      displayName: display_name ?? null,
-      source: source_url,
-      username,
-    },
+    profileSnapshotId: confirmed.profileSnapshotId,
   };
 }
 

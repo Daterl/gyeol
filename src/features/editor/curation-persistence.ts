@@ -17,21 +17,14 @@ const sourceUrl = (value: unknown) => {
       !url.port &&
       !url.username &&
       !url.password &&
+      !url.search &&
+      !url.hash &&
       /^\/[\w.]{1,30}\/?$/.test(url.pathname)
     );
   } catch {
     return false;
   }
 };
-const isoTime = (value: unknown) =>
-  typeof value === 'string' && !Number.isNaN(Date.parse(value));
-/** A shared collection time must be a full instant, not a bare date. */
-export const isCollectedAtInstant = (value: unknown): value is string =>
-  typeof value === 'string' &&
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/.test(
-    value,
-  ) &&
-  !Number.isNaN(Date.parse(value));
 const onlyKeys = (value: Record<string, unknown>, keys: string[]) =>
   Object.keys(value).every((key) => keys.includes(key));
 const displayName = (value: unknown) =>
@@ -42,6 +35,8 @@ const displayName = (value: unknown) =>
     const code = character.charCodeAt(0);
     return code >= 32 && (code < 127 || code > 159);
   });
+const dateString = (value: unknown) =>
+  typeof value === 'string' && !Number.isNaN(Date.parse(value));
 const usernameMatches = (value: unknown, url: string) =>
   typeof value === 'string' &&
   /^[a-z0-9_.]{1,30}$/.test(value) &&
@@ -51,6 +46,7 @@ function validateDisplay(value: unknown, url: string) {
     !record(value) ||
     !onlyKeys(value, ['username', 'display_name', 'name_source']) ||
     !usernameMatches(value.username, url) ||
+    (value.display_name !== undefined) !== (value.name_source !== undefined) ||
     (value.display_name !== undefined && !displayName(value.display_name)) ||
     (value.name_source !== undefined &&
       value.name_source !== 'apify.ownerFullName')
@@ -73,6 +69,168 @@ const cropsValid = (value: unknown, photoIds: string[]) =>
       ),
   );
 
+const profileSnapshotReference = (value: unknown) =>
+  typeof value === 'string' && value.trim().length > 0 && value.length <= 2048;
+
+const legacyProfileSourceValid = (value: unknown) =>
+  record(value) &&
+  onlyKeys(value, [
+    'username',
+    'displayName',
+    'nameSource',
+    'source',
+    'collectedAt',
+  ]) &&
+  sourceUrl(value.source) &&
+  usernameMatches(value.username, value.source as string) &&
+  (value.displayName === null || displayName(value.displayName)) &&
+  dateString(value.collectedAt) &&
+  (value.displayName === null
+    ? value.nameSource === null
+    : value.nameSource === 'apify.ownerFullName');
+
+const confirmedOutputValid = (
+  value: unknown,
+  minimumPhotos: number,
+  extraKeys: string[],
+) => {
+  if (
+    !record(value) ||
+    !onlyKeys(value, [
+      'output',
+      'crops',
+      'excluded',
+      'profileSharing',
+      ...extraKeys,
+    ]) ||
+    !record(value.output) ||
+    !onlyKeys(value.output, ['title', 'slots']) ||
+    typeof value.output.title !== 'string' ||
+    !value.output.title.trim() ||
+    !Array.isArray(value.output.slots) ||
+    value.output.slots.length < minimumPhotos ||
+    value.output.slots.length > 15 ||
+    !ids(value.excluded) ||
+    typeof value.profileSharing !== 'boolean'
+  )
+    return false;
+  const confirmedIds = value.output.slots.map((slot) =>
+    record(slot) ? slot.photo_id : undefined,
+  );
+  return (
+    ids(confirmedIds) &&
+    cropsValid(value.crops, confirmedIds) &&
+    value.output.slots.every(
+      (slot, index) =>
+        record(slot) &&
+        onlyKeys(slot, [
+          'photo_id',
+          'position',
+          'caption_state',
+          'text',
+          'omit_reason',
+        ]) &&
+        slot.position === index + 1 &&
+        ['user', 'seed', 'omitted'].includes(String(slot.caption_state)) &&
+        (slot.text === null || typeof slot.text === 'string') &&
+        (slot.omit_reason === null || typeof slot.omit_reason === 'string') &&
+        !('evidence' in slot),
+    )
+  );
+};
+
+const publicProfileValid = (value: unknown) =>
+  record(value) &&
+  onlyKeys(value, [
+    'username',
+    'displayName',
+    'avatarUrl',
+    'source',
+    'collectedAt',
+  ]) &&
+  sourceUrl(value.source) &&
+  usernameMatches(value.username, value.source as string) &&
+  (value.displayName === null || displayName(value.displayName)) &&
+  value.avatarUrl === null &&
+  dateString(value.collectedAt);
+
+const oldSnakeCaseProfileValid = (value: unknown) =>
+  record(value) &&
+  onlyKeys(value, ['source_url', 'username', 'display_name', 'collected_at']) &&
+  sourceUrl(value.source_url) &&
+  (value.username === undefined ||
+    usernameMatches(value.username, value.source_url as string)) &&
+  (value.display_name === undefined || displayName(value.display_name)) &&
+  (value.collected_at === undefined || dateString(value.collected_at));
+
+const legacyPublicProfileMatchesSource = (
+  profile: Record<string, unknown>,
+  source: Record<string, unknown>,
+) =>
+  profile.username === source.username &&
+  profile.displayName === source.displayName &&
+  profile.source === source.source &&
+  profile.collectedAt === source.collectedAt;
+
+const withoutLegacySource = (value: Record<string, unknown>) => {
+  const { confirmedProfileSource: _legacy, ...current } = value;
+  return current;
+};
+
+// This is deliberately called only by DraftStorage.load. Save paths remain strict.
+export function migrateCurationStateOnLoad(value: unknown): unknown {
+  if (
+    !record(value) ||
+    !onlyKeys(value, [
+      'curation',
+      'excluded',
+      'crops',
+      'profileSharing',
+      'confirmed',
+      'confirmedProfileSource',
+    ])
+  )
+    return value;
+  const hasLegacySource = 'confirmedProfileSource' in value;
+  const confirmed = value.confirmed;
+  if (confirmed === null) {
+    if (!hasLegacySource) return value;
+    return value.confirmedProfileSource === null
+      ? withoutLegacySource(value)
+      : value;
+  }
+  if (!record(confirmed)) return value;
+  if ('profileSnapshotId' in confirmed) {
+    if (!hasLegacySource) return value;
+    return value.confirmedProfileSource === null
+      ? withoutLegacySource(value)
+      : value;
+  }
+  if (!confirmedOutputValid(confirmed, 1, ['profile'])) return value;
+  const source = value.confirmedProfileSource;
+  const validLegacyProfile =
+    confirmed.profileSharing === true &&
+    (oldSnakeCaseProfileValid(confirmed.profile) ||
+      (publicProfileValid(confirmed.profile) &&
+        (!hasLegacySource ||
+          (legacyProfileSourceValid(source) &&
+            record(confirmed.profile) &&
+            record(source) &&
+            legacyPublicProfileMatchesSource(confirmed.profile, source)))));
+  const validProfileOff =
+    confirmed.profileSharing === false &&
+    confirmed.profile === undefined &&
+    (!hasLegacySource || source === null);
+  if (!validLegacyProfile && !validProfileOff) return value;
+  const slots = record(confirmed.output) ? confirmed.output.slots : undefined;
+  const tooFewPhotos =
+    Array.isArray(slots) && slots.length >= 1 && slots.length < 3;
+  const current = hasLegacySource ? withoutLegacySource(value) : value;
+  return tooFewPhotos || validLegacyProfile
+    ? { ...current, confirmed: null }
+    : current;
+}
+
 // Validate the adapter extension inside G3's existing revision transaction.
 // Absence remains compatible with drafts written before the curation UI.
 export function validateCurationState(
@@ -82,6 +240,13 @@ export function validateCurationState(
 ): asserts value is CurationEdits {
   if (
     !record(value) ||
+    !onlyKeys(value, [
+      'curation',
+      'excluded',
+      'crops',
+      'profileSharing',
+      'confirmed',
+    ]) ||
     !ids(value.excluded) ||
     !value.excluded.every((id) => photoIds.includes(id)) ||
     !cropsValid(value.crops, photoIds) ||
@@ -94,11 +259,10 @@ export function validateCurationState(
       !original ||
       !record(curation) ||
       curation.schema_version !== '1.0' ||
-      typeof curation.profile_snapshot_id !== 'string' ||
-      !curation.profile_snapshot_id ||
+      !profileSnapshotReference(curation.profile_snapshot_id) ||
       !record(curation.profile) ||
       !sourceUrl(curation.profile.source_url) ||
-      !isoTime(curation.profile.collected_at) ||
+      !dateString(curation.profile.collected_at) ||
       curation.profile.ownership_verified !== false ||
       !record(curation.prompt) ||
       !(
@@ -138,72 +302,18 @@ export function validateCurationState(
     )
       throw new Error('Invalid saved candidates');
   }
+  if (value.profileSharing && curation === null)
+    throw new Error('Invalid shared profile state');
   const confirmed = value.confirmed;
   if (confirmed === null) return;
-  if (
-    !record(confirmed) ||
-    !onlyKeys(confirmed, [
-      'output',
-      'crops',
-      'excluded',
-      'profileSharing',
-      'profile',
-    ]) ||
-    !record(confirmed.output) ||
-    !onlyKeys(confirmed.output, ['title', 'slots']) ||
-    typeof confirmed.output.title !== 'string' ||
-    !confirmed.output.title.trim() ||
-    !Array.isArray(confirmed.output.slots) ||
-    confirmed.output.slots.length < 1 ||
-    confirmed.output.slots.length > 15 ||
-    !ids(confirmed.excluded) ||
-    typeof confirmed.profileSharing !== 'boolean'
-  )
+  if (!confirmedOutputValid(confirmed, 3, ['profileSnapshotId']))
     throw new Error('Invalid confirmation');
-  const confirmedIds = confirmed.output.slots.map((slot) =>
-    record(slot) ? slot.photo_id : undefined,
-  );
+  if (!record(confirmed)) throw new Error('Invalid confirmation');
+  const profileReferenceIncluded = 'profileSnapshotId' in confirmed;
   if (
-    !ids(confirmedIds) ||
-    !cropsValid(confirmed.crops, confirmedIds) ||
-    confirmed.output.slots.some(
-      (slot, index) =>
-        !record(slot) ||
-        !onlyKeys(slot, [
-          'photo_id',
-          'position',
-          'caption_state',
-          'text',
-          'omit_reason',
-        ]) ||
-        slot.position !== index + 1 ||
-        !['user', 'seed', 'omitted'].includes(String(slot.caption_state)) ||
-        !(slot.text === null || typeof slot.text === 'string') ||
-        !(slot.omit_reason === null || typeof slot.omit_reason === 'string') ||
-        'evidence' in slot,
-    )
+    confirmed.profileSharing !== profileReferenceIncluded ||
+    (confirmed.profileSharing &&
+      !profileSnapshotReference(confirmed.profileSnapshotId))
   )
-    throw new Error('Invalid confirmed output');
-  if (
-    confirmed.profile !== undefined &&
-    (!confirmed.profileSharing ||
-      !record(confirmed.profile) ||
-      !sourceUrl(confirmed.profile.source_url) ||
-      !onlyKeys(confirmed.profile, [
-        'source_url',
-        'username',
-        'collected_at',
-        'display_name',
-      ]) ||
-      (confirmed.profile.collected_at !== undefined &&
-        !isCollectedAtInstant(confirmed.profile.collected_at)) ||
-      (confirmed.profile.username !== undefined &&
-        !usernameMatches(
-          confirmed.profile.username,
-          confirmed.profile.source_url as string,
-        )) ||
-      (confirmed.profile.display_name !== undefined &&
-        !displayName(confirmed.profile.display_name)))
-  )
-    throw new Error('Invalid confirmed profile');
+    throw new Error('Invalid confirmed profile reference');
 }

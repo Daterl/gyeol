@@ -69,11 +69,17 @@ test('two authenticated equal digests among three photos produce one visible rec
       expect(markup).toContain('사진 3장 포함');
       expect(markup).toContain('사진 제외');
       store.getState().setIncluded(candidate.photo_id, false);
-      expect(
-        renderToStaticMarkup(
-          createElement(CurationPreview, { store, mock: true }),
-        ),
-      ).toContain('사진 복원');
+      const belowMinimum = renderToStaticMarkup(
+        createElement(CurationPreview, { store, mock: true }),
+      );
+      expect(belowMinimum).toContain('사진 복원');
+      expect(belowMinimum).toContain(
+        '큐레이션을 확정하려면 사진을 3장 이상 포함해 주세요.',
+      );
+      expect(belowMinimum).toMatch(
+        /<button[^>]*disabled=""[^>]*>큐레이션 확정<\/button>/,
+      );
+      expect(() => store.getState().confirmCuration()).toThrow('3장 이상');
       store.getState().setIncluded(candidate.photo_id, true);
       expect(store.getState().excluded).toEqual([]);
     }

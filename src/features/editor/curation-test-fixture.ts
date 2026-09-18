@@ -9,6 +9,7 @@ export function curationFixture(): CurationResponse {
       schema_version: '1.0',
       profile_snapshot_id: 'public-reference',
       profile: {
+        display: { username: 'public_example' },
         snapshot_id: 'snapshot',
         source_url: 'https://www.instagram.com/public_example/',
         collected_at: '2026-09-18T10:00:00Z',

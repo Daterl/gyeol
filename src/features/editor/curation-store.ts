@@ -9,16 +9,7 @@ export type ConfirmedCuration = {
   crops: Record<string, CropCenter>;
   excluded: string[];
   profileSharing: boolean;
-  // collected_at binds the confirmation to the snapshot evidence it was made from,
-  // so G6 never reads a collection time from later editor state. It is optional only
-  // because drafts confirmed before this field existed still restore; sharing such a
-  // confirmation is refused until it is confirmed again.
-  profile?: {
-    source_url: string;
-    username: string;
-    collected_at?: string;
-    display_name?: string;
-  };
+  profileSnapshotId?: string;
 };
 export type CurationEdits = {
   curation: CurationResponse['curation'] | null;
@@ -33,6 +24,48 @@ function freeze<T>(value: T): T {
     for (const nested of Object.values(value)) freeze(nested);
   }
   return value;
+}
+function profileSnapshotReference(
+  curation: NonNullable<CurationEdits['curation']>,
+) {
+  const { profile } = curation;
+  try {
+    const url = new URL(profile.source_url);
+    const username = url.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+    const displayName =
+      profile.display?.name_source === 'apify.ownerFullName'
+        ? (profile.display.display_name ?? null)
+        : null;
+    if (
+      url.protocol !== 'https:' ||
+      !['instagram.com', 'www.instagram.com'].includes(url.hostname) ||
+      url.port ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash ||
+      typeof curation.profile_snapshot_id !== 'string' ||
+      curation.profile_snapshot_id.trim().length === 0 ||
+      curation.profile_snapshot_id.length > 2048 ||
+      !/^[a-z0-9_.]{1,30}$/.test(username) ||
+      (profile.display?.username !== undefined &&
+        profile.display.username !== username) ||
+      (profile.display?.display_name !== undefined) !==
+        (profile.display?.name_source === 'apify.ownerFullName') ||
+      (displayName !== null &&
+        (displayName.trim().length === 0 ||
+          displayName.length > 100 ||
+          [...displayName].some((character) => {
+            const code = character.charCodeAt(0);
+            return code < 32 || (code >= 127 && code <= 159);
+          }))) ||
+      Number.isNaN(Date.parse(profile.collected_at))
+    )
+      throw new Error('invalid profile');
+    return curation.profile_snapshot_id;
+  } catch {
+    throw new Error('공유할 공개 프로필 정보를 다시 확인해 주세요.');
+  }
 }
 export function canRegenerateCuration(
   curation: CurationEdits['curation'],
@@ -58,7 +91,13 @@ export function createCurationEditorStore(
       const { curation, excluded, crops, profileSharing, confirmed } =
         store.getState();
       return {
-        curationState: { curation, excluded, crops, profileSharing, confirmed },
+        curationState: {
+          curation,
+          excluded,
+          crops,
+          profileSharing,
+          confirmed,
+        },
       };
     },
     restore: (metadata) =>
@@ -141,8 +180,14 @@ export function createCurationEditorStore(
       output.slots = output.slots
         .filter((slot) => !state.excluded.includes(slot.photo_id))
         .map((slot, index) => ({ ...slot, position: index + 1 }));
-      if (!output.slots.length)
-        throw new Error('공유할 사진을 한 장 이상 포함해 주세요.');
+      if (output.slots.length < 3)
+        throw new Error('큐레이션에는 사진을 3장 이상 포함해 주세요.');
+      let profileSnapshotId: string | undefined;
+      if (state.profileSharing) {
+        if (!state.curation)
+          throw new Error('공유할 공개 프로필 정보를 다시 확인해 주세요.');
+        profileSnapshotId = profileSnapshotReference(state.curation);
+      }
 
       const confirmed = freeze(
         structuredClone({
@@ -158,25 +203,7 @@ export function createCurationEditorStore(
           ),
           excluded: state.excluded,
           profileSharing: state.profileSharing,
-          ...(state.profileSharing && state.curation
-            ? {
-                profile: {
-                  source_url: state.curation.profile.source_url,
-                  username:
-                    state.curation.profile.display?.username ??
-                    new URL(state.curation.profile.source_url).pathname
-                      .split('/')
-                      .filter(Boolean)[0],
-                  collected_at: state.curation.profile.collected_at,
-                  ...(state.curation.profile.display?.display_name
-                    ? {
-                        display_name:
-                          state.curation.profile.display.display_name,
-                      }
-                    : {}),
-                },
-              }
-            : {}),
+          ...(profileSnapshotId ? { profileSnapshotId } : {}),
         }),
       );
       store.setState({ confirmed });

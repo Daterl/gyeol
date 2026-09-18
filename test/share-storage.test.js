@@ -30,8 +30,26 @@ const curation = ids => ({
   })),
   includeProfile: false,
 });
+const resolvedProfile = {
+  source_url: 'https://www.instagram.com/public.profile/',
+  collected_at: '2026-09-18T00:00:00.000Z',
+  snapshot: {
+    handle: 'public.profile',
+    profile_display: {
+      display_name: 'Public Profile',
+      name_source: 'apify.ownerFullName',
+    },
+  },
+};
+const resolveProfile = async snapshotId => {
+  if (snapshotId !== 'signed-profile-reference')
+    throw Object.assign(new Error('invalid reference'), {
+      code: 'INVALID_SNAPSHOT_REFERENCE',
+    });
+  return resolvedProfile;
+};
 
-function fixture() {
+function fixture(options = {}) {
   let time = Date.parse('2026-09-18T00:00:00.000Z');
   let random = 0;
   const now = () => time;
@@ -40,10 +58,12 @@ function fixture() {
     store,
     secret: 'share-test-secret-that-is-at-least-32-bytes',
     now,
+    resolveProfile,
     randomBytes(size) {
       random += 1;
       return Buffer.alloc(size, random);
     },
+    ...options,
   });
   return {
     now,
@@ -224,8 +244,14 @@ test('publish revalidates the bytes written by a direct-upload provider', async 
   );
 });
 
-test('profile data is accepted only after explicit inclusion and exact validation', async () => {
-  const { service } = fixture();
+test('profile publishing resolves only the signed reference and stores no capability', async () => {
+  let resolves = 0;
+  const { service, store } = fixture({
+    resolveProfile: async snapshotId => {
+      resolves += 1;
+      return resolveProfile(snapshotId);
+    },
+  });
   const staged = await stage(service, ['a', 'b', 'c']);
   const base = curation(staged.expected.map(photo => photo.id));
   await throwsCode(
@@ -237,6 +263,16 @@ test('profile data is accepted only after explicit inclusion and exact validatio
     }),
     'INVALID_INPUT',
   );
+  await throwsCode(
+    service.publish({
+      receipt: staged.pending.receipt,
+      uploadToken: staged.session.uploadToken,
+      managementKey: staged.pending.managementKey,
+      curation: { ...base, includeProfile: 'false' },
+    }),
+    'INVALID_INPUT',
+  );
+  assert.equal(resolves, 0);
   const profile = {
     username: 'public.profile',
     displayName: 'Public Profile',
@@ -248,9 +284,90 @@ test('profile data is accepted only after explicit inclusion and exact validatio
     receipt: staged.pending.receipt,
     uploadToken: staged.session.uploadToken,
     managementKey: staged.pending.managementKey,
-    curation: { ...base, includeProfile: true, profile },
+    curation: {
+      ...base,
+      includeProfile: true,
+      profileSnapshotId: 'signed-profile-reference',
+    },
   });
   assert.deepEqual((await service.readShare(staged.pending.shareId)).share.curation.profile, profile);
+  assert.equal(resolves, 1);
+  const stored = JSON.stringify(
+    (await service.readShare(staged.pending.shareId)).share,
+  );
+  assert.doesNotMatch(stored, /signed-profile-reference|profileSnapshotId/);
+  assert.equal(
+    (await store.list(`shares/${staged.pending.shareId}/versions/1/`)).length,
+    4,
+  );
+});
+
+test('invalid profile references fail before immutable writes and stale updates fail before resolution', async () => {
+  let resolves = 0;
+  const invalid = fixture({
+    resolveProfile: async () => {
+      resolves += 1;
+      throw Object.assign(new Error('expired'), { code: 'PROFILE_NOT_READY' });
+    },
+  });
+  const staged = await stage(invalid.service, ['a', 'b', 'c']);
+  const withProfile = {
+    ...curation(staged.expected.map(photo => photo.id)),
+    includeProfile: true,
+    profileSnapshotId: 'expired-reference',
+  };
+  await throwsCode(
+    invalid.service.publish({
+      receipt: staged.pending.receipt,
+      uploadToken: staged.session.uploadToken,
+      managementKey: staged.pending.managementKey,
+      curation: withProfile,
+    }),
+    'INVALID_PROFILE_REFERENCE',
+  );
+  assert.equal(resolves, 1);
+  assert.equal(
+    (await invalid.store.list(`shares/${staged.pending.shareId}/versions/`))
+      .length,
+    0,
+  );
+
+  const current = fixture({
+    resolveProfile: async reference => {
+      resolves += 1;
+      return resolveProfile(reference);
+    },
+  });
+  const first = await stage(current.service, ['a', 'b', 'c']);
+  const published = await current.service.publish({
+    receipt: first.pending.receipt,
+    uploadToken: first.session.uploadToken,
+    managementKey: first.pending.managementKey,
+    curation: curation(first.expected.map(photo => photo.id)),
+  });
+  const update = await current.service.startUpdate({
+    shareId: first.pending.shareId,
+    managementKey: first.pending.managementKey,
+    ifMatch: published.etag,
+    photos: first.expected,
+  });
+  const uploaded = await stage(current.service, ['a', 'b', 'c'], update);
+  const before = resolves;
+  await throwsCode(
+    current.service.publish({
+      receipt: update.receipt,
+      uploadToken: uploaded.session.uploadToken,
+      managementKey: first.pending.managementKey,
+      curation: {
+        ...curation(first.expected.map(photo => photo.id)),
+        includeProfile: true,
+        profileSnapshotId: 'signed-profile-reference',
+      },
+      ifMatch: '"stale"',
+    }),
+    'CONFLICT',
+  );
+  assert.equal(resolves, before);
 });
 
 test('concurrent updates isolate attempts and cleanup removes only the losing immutable objects', async () => {
@@ -385,7 +502,8 @@ test('post-CAS deletion failure still reports committed publish and revoke, then
 
 
 const restart = ({ store, now }) => createShareService({
-  store, now, secret: 'share-test-secret-that-is-at-least-32-bytes',
+  store, now, resolveProfile,
+  secret: 'share-test-secret-that-is-at-least-32-bytes',
 });
 const uploadFirst = staged => ({
   receipt: staged.pending.receipt,
