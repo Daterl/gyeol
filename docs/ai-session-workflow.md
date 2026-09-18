@@ -14,7 +14,7 @@
 ## 세션 시작
 
 1. 해당 이슈의 목표·원천·완료 조건, 선행 노드의 실제 산출물과 인수 증거를 읽는다. 부모 umbrella 종료를 기다리지 않는다.
-2. 기준 SHA, branch/worktree, 실행 담당, Owned·Shared·Forbidden 파일을 기록한다. 공유 파일은 담당자 한 명이 수정하고 인계한다.
+2. 최신 `origin/develop`에서 작업 브랜치를 만들고 PR base를 `develop`으로 정한다. 기준 SHA, branch/worktree, 실행 담당, Owned·Shared·Forbidden 파일을 기록한다. 공유 파일은 담당자 한 명이 수정하고 인계한다.
 3. 선행 계약이 부분 인수됐다면 인수된 산출물만 사용하는 초안을 진행할 수 있다. 계약 확정·merge·완료와 구분한다.
 4. Project를 진행 중으로 옮긴다. M은 spec, L은 spec+plan을 작성하고 해당 노드의 최소 구현·검증을 수행한다.
 
@@ -33,6 +33,10 @@ Verdict: PASS | FAIL | BLOCKED | PENDING
 ```
 
 PASS는 기록한 검증 범위에만 적용한다. 로컬 테스트 성공이나 PR 생성만으로 완료 처리하지 않는다. 해당 이슈의 사람 합의·리뷰·merge·필요한 배포 검증을 확인한 뒤 완료로 옮긴다. 작업 시작·PR 작성·막힘·인수마다 Project를 갱신한다.
+
+## 개발 통합과 Production 릴리스
+
+[ADR-0004](adr/0004-develop-and-production-branches.md)를 따른다. 작업 PR은 `develop`에서 사람 리뷰·squash merge하고 Preview로 검증한다. 공개 배포는 별도 `develop → main` 릴리스 PR을 사람이 merge commit으로 병합할 때 수행한다. Preview 통과를 Production 확인으로 기록하지 않는다. Production 인수가 필요한 leaf는 배포 확인 전까지 완료로 옮기지 않는다.
 
 ## 의존성과 검증의 구분
 

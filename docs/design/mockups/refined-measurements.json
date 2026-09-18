@@ -1,0 +1,56 @@
+[
+  {
+    "photoY": 541.7734375,
+    "photos": true,
+    "scrollWidth": 1440,
+    "small": 0,
+    "width": 1440
+  },
+  {
+    "photoY": 689.15625,
+    "photos": true,
+    "scrollWidth": 390,
+    "small": 0,
+    "width": 390
+  },
+  {
+    "photoY": 661.15625,
+    "photos": true,
+    "scrollWidth": 320,
+    "small": 0,
+    "width": 320
+  },
+  {
+    "before": true,
+    "photoY": 758.7734375,
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "before": true,
+    "photoY": 888.15625,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "imageHeight": 218.328125,
+    "photos": true,
+    "scrollWidth": 1440,
+    "view": "input",
+    "width": 1440
+  },
+  {
+    "imageHeight": 139.15625,
+    "photos": true,
+    "scrollWidth": 390,
+    "view": "input",
+    "width": 390
+  },
+  {
+    "imageHeight": 113.328125,
+    "photos": true,
+    "scrollWidth": 320,
+    "view": "input",
+    "width": 320
+  }
+]

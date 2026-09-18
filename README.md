@@ -33,7 +33,9 @@ npm run format           # 포맷만 적용
 npm run start:mock       # 기존 standalone mock 서버 (기본 3000)
 ```
 
-배포 담당은 **diego.yoon**이다. #6에서 GitHub 연결·main 자동 배포·공개 URL을 검증한다. 현재 배포 완료를 뜻하지 않는다.
+배포 담당은 **diego.yoon**이다. [공개 Production](https://project-7klb1.vercel.app/)의 익명 HTTP·샘플 smoke는 확인했다. 실제 모델 A1 실측 등 남은 배포 인수는 #6에서 관리한다.
+
+작업 브랜치는 최신 `origin/develop`에서 만들고 PR도 **develop**으로 보낸다. 개발 변경은 Preview에서 확인하고, 배포할 때만 **develop → main** 릴리스 PR을 만든다. Vercel Production 추적 브랜치는 **main**이다. [브랜치 운영 ADR](docs/adr/0004-develop-and-production-branches.md).
 
 ## 스택
 

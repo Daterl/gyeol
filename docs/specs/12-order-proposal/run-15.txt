@@ -1,0 +1,60 @@
+[ 1] ph_11 opener  conf=0.5 peak=n ov=0
+     근거: 밝기 0.808 · 채도 0.086 · 한 색이 넓게 깔린 화면이라 지향 방향(조용한 쪽) 점수가 입력 15장 중 가장 높아 1번에 뒀다
+     실제 측정: bright=0.808 sat=0.086 hue=110.5 comp=negative_space 파일=hony_DdJWXXTHCMv_13.jpg
+     evidence: uploaded_photo(ph_11) + user_text(tgt_synthetic_quiet:input) + rule(order.R1)
+[ 2] ph_02 sustain conf=1 peak=n ov=0.704
+     근거: 앞자리 사진과 측정 색 거리 0.296 로 남은 사진 중 가장 멀어 2번에 뒀다 (밝기 0.346 · 채도 0.273)
+     실제 측정: bright=0.346 sat=0.273 hue=207.3 comp=negative_space 파일=c29_Dc-auqBCVXI_09.jpg
+     evidence: uploaded_photo(ph_02) + rule(order.R4)
+[ 3] ph_09 sustain conf=1 peak=n ov=0.795
+     근거: 앞자리 사진과 측정 색 거리 0.205 로 남은 사진 중 가장 멀어 3번에 뒀다 (밝기 0.612 · 채도 0.097)
+     실제 측정: bright=0.612 sat=0.097 hue=24.2 comp=negative_space 파일=c29_DdVDlTviVrG_08.jpg
+     evidence: uploaded_photo(ph_09) + rule(order.R4)
+[ 4] ph_01 sustain conf=1 peak=n ov=0.821
+     근거: 앞자리 사진과 측정 색 거리 0.179 로 남은 사진 중 가장 멀어 4번에 뒀다 (밝기 0.375 · 채도 0.288)
+     실제 측정: bright=0.375 sat=0.288 hue=53 comp=full_frame 파일=c29_Dc-2OOrFBnb_00.jpg
+     evidence: uploaded_photo(ph_01) + rule(order.R4)
+[ 5] ph_03 sustain conf=1 peak=n ov=0.866
+     근거: 앞자리 사진과 측정 색 거리 0.134 로 남은 사진 중 가장 멀어 5번에 뒀다 (밝기 0.589 · 채도 0.343)
+     실제 측정: bright=0.589 sat=0.343 hue=19.3 comp=full_frame 파일=c29_Dc94ZfOD1-q_07.jpg
+     evidence: uploaded_photo(ph_03) + rule(order.R4)
+[ 6] ph_06 sustain conf=1 peak=n ov=0.839
+     근거: 앞자리 사진과 측정 색 거리 0.161 로 남은 사진 중 가장 멀어 6번에 뒀다 (밝기 0.429 · 채도 0.188)
+     실제 측정: bright=0.429 sat=0.188 hue=216.3 comp=full_frame 파일=c29_DdKwYzyFJUS_09.jpg
+     evidence: uploaded_photo(ph_06) + rule(order.R4)
+[ 7] ph_13 sustain conf=1 peak=n ov=0.9
+     근거: 앞자리 사진과 측정 색 거리 0.1 로 남은 사진 중 가장 멀어 7번에 뒀다 (밝기 0.501 · 채도 0.293)
+     실제 측정: bright=0.501 sat=0.293 hue=12.8 comp=full_frame 파일=kr29cm_Dc94ZfOD1-q_00.jpg
+     evidence: uploaded_photo(ph_13) + rule(order.R4)
+[ 8] ph_14 sustain conf=1 peak=n ov=0.936
+     근거: 앞자리 사진과 측정 색 거리 0.064 로 남은 사진 중 가장 멀어 8번에 뒀다 (밝기 0.555 · 채도 0.176)
+     실제 측정: bright=0.555 sat=0.176 hue=1.3 comp=full_frame 파일=kr29cm_DdDCDKgFCLE_09.jpg
+     evidence: uploaded_photo(ph_14) + rule(order.R4)
+[ 9] ph_04 sustain conf=1 peak=n ov=0.884
+     근거: 앞자리 사진과 측정 색 거리 0.116 로 남은 사진 중 가장 멀어 9번에 뒀다 (밝기 0.441 · 채도 0.362)
+     실제 측정: bright=0.441 sat=0.362 hue=19.9 comp=full_frame 파일=c29_DdEAAeHm6u0_01.jpg
+     evidence: uploaded_photo(ph_04) + rule(order.R4)
+[10] ph_07 turn    conf=1 peak=Y ov=0.887
+     근거: 채도 0.399 로 남은 사진 중 가장 진해 10번 전환 자리에 뒀다
+     실제 측정: bright=0.512 sat=0.399 hue=215.5 comp=negative_space 파일=c29_DdOTLpSIBNf_07.jpg
+     evidence: uploaded_photo(ph_07) + rule(order.R3)
+[11] ph_08 sustain conf=1 peak=n ov=0.876
+     근거: 앞자리 사진과 측정 색 거리 0.124 로 남은 사진 중 가장 멀어 11번에 뒀다 (밝기 0.452 · 채도 0.241)
+     실제 측정: bright=0.452 sat=0.241 hue=29.3 comp=full_frame 파일=c29_DdTPMgpiZWR_05.jpg
+     evidence: uploaded_photo(ph_08) + rule(order.R4)
+[12] ph_15 sustain conf=1 peak=n ov=0.947
+     근거: 앞자리 사진과 측정 색 거리 0.053 로 남은 사진 중 가장 멀어 12번에 뒀다 (밝기 0.524 · 채도 0.196)
+     실제 측정: bright=0.524 sat=0.196 hue=12.9 comp=full_frame 파일=kr29cm_DdGkodnCOAZ_03.jpg
+     evidence: uploaded_photo(ph_15) + rule(order.R4)
+[13] ph_12 sustain conf=1 peak=n ov=0.932
+     근거: 앞자리 사진과 측정 색 거리 0.068 로 남은 사진 중 가장 멀어 13번에 뒀다 (밝기 0.472 · 채도 0.322)
+     실제 측정: bright=0.472 sat=0.322 hue=33.7 comp=full_frame 파일=kr29cm_Dc-auqBCVXI_02.jpg
+     evidence: uploaded_photo(ph_12) + rule(order.R4)
+[14] ph_10 sustain conf=1 peak=n ov=0.947
+     근거: 앞자리 사진과 측정 색 거리 0.053 로 남은 사진 중 가장 멀어 14번에 뒀다 (밝기 0.456 · 채도 0.214)
+     실제 측정: bright=0.456 sat=0.214 hue=340.6 comp=full_frame 파일=c29_DdWHSQGlMt4_00.jpg
+     evidence: uploaded_photo(ph_10) + rule(order.R4)
+[15] ph_05 closer  conf=1 peak=n ov=0.881
+     근거: 밝기 0.328 로 남은 사진 중 가장 어두워 마지막 15번에 뒀다
+     실제 측정: bright=0.328 sat=0.301 hue=104.1 comp=negative_space 파일=c29_DdILtQ0CRl8_01.jpg
+     evidence: uploaded_photo(ph_05) + rule(order.R2)

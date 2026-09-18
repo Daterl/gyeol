@@ -1,0 +1,5 @@
+
+> gyeol@0.1.0 check
+> node scripts/check.js
+
+PASS: 65 JS/JSON files checked; four schema examples match fixtures. Foundation JS syntax/JSON parsing; TypeScript is checked separately by npm run typecheck.

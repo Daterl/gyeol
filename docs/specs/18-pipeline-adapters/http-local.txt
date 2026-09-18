@@ -1,0 +1,6 @@
+upload solid_white_baseline.jpg: HTTP 200, ID http_0, source heuristic
+upload solid_black_baseline.jpg: HTTP 200, ID http_1, source heuristic
+upload gradient_baseline.jpg: HTTP 200, ID http_2, source heuristic
+feed none: HTTP 200, 3 IDs preserved, version 1.1
+feed reference: HTTP 200, 3 IDs preserved, version 1.0
+feed text: HTTP 200, 3 IDs preserved, version 1.0

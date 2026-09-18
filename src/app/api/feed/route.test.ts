@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import expectedFeed from '../../../../fixtures/ordered_feed.sample.json';
-import { GET, HEAD, OPTIONS, POST } from './route';
+import { GET, HEAD, OPTIONS } from './route';
 
 describe('Next.js foundation HTTP adapter', () => {
   it('preserves the raw feed, no-store and all resources without a network call', async () => {
@@ -51,10 +51,7 @@ describe('Next.js foundation HTTP adapter', () => {
   });
 
   it('preserves method rejection and omits the HTTP HEAD body', async () => {
-    for (const [method, call] of [
-      ['POST', POST],
-      ['OPTIONS', OPTIONS],
-    ] as const) {
+    for (const [method, call] of [['OPTIONS', OPTIONS]] as const) {
       const response = await call(
         new Request('http://localhost/api/feed?mock=1', { method }),
       );

@@ -1,0 +1,3 @@
+												157 text CSS 미디어 기능 prefers-reduced-motion 에뮬레이션 CSS prefers-reduced-motion 미디어 기능을 강제 실행합니다.
+											158 팝업 버튼 Description: CSS 미디어 기능 prefers-reduced-motion 에뮬레이션, Value: prefers-reduced-motion: reduce
+												159 (selected) prefers-reduced-motion: reduce

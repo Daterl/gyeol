@@ -1,0 +1,14 @@
+✔ contract fixtures cover identities, photo-only, corrected, three states and all omitted (1.898875ms)
+✔ request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities (1.360208ms)
+✔ generation all and single-slot responses keep the requested original photo and position (0.750917ms)
+✔ current post evidence resolves to a separate supplied photo set (1.836084ms)
+✔ actual JPEG/PNG/WebP metadata, MIME and byte/dimension limits are checked (7.14525ms)
+✔ JSON byte limit applies without Content-Length; invalid JSON/errors never become success (8.2295ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.911

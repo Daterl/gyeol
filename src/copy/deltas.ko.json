@@ -1,0 +1,3 @@
+{
+  "caption_len_gap": "기존 글의 중간 길이 {current}자와 원하는 길이 {target}자 사이에서 {resolved}자로 맞춰 봤어요. 직접 고쳐도 괜찮아요."
+}
