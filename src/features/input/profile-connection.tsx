@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ApiError, createProfileClient } from '@/lib/api';
-import type { ProfileConnectionResponse } from '@/types/contracts';
+import type {
+  ProfileConnectionRequest,
+  ProfileConnectionResponse,
+} from '@/types/contracts';
 
 export type ConnectedProfile = {
   url: string;
@@ -28,6 +31,47 @@ export const profileMessage: Record<
   expired: '연결이 만료됐어요. 원할 때 다시 수집할 수 있어요.',
   missing: '저장된 연결이 없어요. 비용 안내를 확인한 뒤 연결해 주세요.',
 };
+const POLL_INTERVAL_MS = 5_000;
+const POLL_ATTEMPTS = 31;
+type ProfileClient = ReturnType<typeof createProfileClient>;
+type PollWait = (milliseconds: number, signal: AbortSignal) => Promise<void>;
+const waitForPoll: PollWait = (milliseconds, signal) => {
+  signal.throwIfAborted();
+  return new Promise<void>((resolve, reject) => {
+    const abort = () => {
+      clearTimeout(timer);
+      reject(signal.reason);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', abort);
+      resolve();
+    }, milliseconds);
+    signal.addEventListener('abort', abort, { once: true });
+  });
+};
+export async function pollProfileConnection(
+  client: ProfileClient,
+  initial: ProfileConnectionRequest,
+  signal: AbortSignal,
+  wait: PollWait = waitForPoll,
+) {
+  for (let attempt = 0; attempt < POLL_ATTEMPTS; attempt++) {
+    const result = await client(
+      attempt === 0
+        ? initial
+        : {
+            schema_version: '1.0',
+            action: 'status',
+            profile_url: initial.profile_url,
+          },
+      signal,
+    );
+    if (result.status !== 'pending' || attempt === POLL_ATTEMPTS - 1)
+      return result;
+    await wait(POLL_INTERVAL_MS, signal);
+  }
+  throw new Error('unreachable');
+}
 export function ProfileConnection({
   onChange,
   disabled = false,
@@ -78,45 +122,31 @@ export function ProfileConnection({
     setError('');
     onChange(null);
     try {
-      let next: ProfileConnectionResponse;
-      for (let attempt = 0; ; attempt++) {
-        next = await client(
-          action === 'connect' && attempt === 0
-            ? {
-                schema_version: '1.0',
-                action,
-                profile_url: url.trim(),
-                confirmLive: true,
-                refresh: result?.refresh_required ?? false,
-              }
-            : {
-                schema_version: '1.0',
-                action: 'status',
-                profile_url: url.trim(),
-              },
-          controller.signal,
-        );
-        if (active.current !== controller) return;
-        setResult(next);
-        if (next.status !== 'pending' || attempt >= 9) break;
-        await new Promise<void>((resolve, reject) => {
-          const abort = () => {
-            clearTimeout(timer);
-            reject(controller.signal.reason);
-          };
-          const timer = setTimeout(() => {
-            controller.signal.removeEventListener('abort', abort);
-            resolve();
-          }, 2000);
-          controller.signal.addEventListener('abort', abort, { once: true });
-        });
-      }
+      const next = await pollProfileConnection(
+        client,
+        action === 'connect'
+          ? {
+              schema_version: '1.0',
+              action,
+              profile_url: url.trim(),
+              confirmLive: true,
+              refresh: result?.refresh_required ?? false,
+            }
+          : {
+              schema_version: '1.0',
+              action,
+              profile_url: url.trim(),
+            },
+        controller.signal,
+      );
+      if (active.current !== controller) return;
       if (next.status === 'public' && typeof next.expires_at === 'number')
         onChange({
           url: url.trim(),
           snapshotId: next.snapshotId,
           expires_at: next.expires_at,
         });
+      setResult(next);
     } catch (failure) {
       if (active.current !== controller || controller.signal.aborted) return;
       const retry =

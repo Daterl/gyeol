@@ -92,6 +92,13 @@ test('durable counters survive instances, window reset and cookie churn; concurr
   await scoped.take('status','same');await scoped.take('status','same');await assert.rejects(scoped.take('status','same'),{status:429});
 });
 
+test('session denials cannot consume the global allowance for another session',async()=>{
+  const limiter=createProfileRequestLimit({storage:memoryStorage(),now:()=>epoch,limits:{connect:5},sessionLimits:{connect:2}});
+  await limiter.take('connect','attacker');await limiter.take('connect','attacker');
+  for(let attempt=0;attempt<20;attempt++) await assert.rejects(limiter.take('connect','attacker'),{status:429});
+  await limiter.take('connect','victim');
+});
+
 test('storage ambiguity, malformed durable state and contention fail closed; limits are isolated from cache',async()=>{
   for(const storage of [
     {read:async()=>{throw new Error(secret);}},
