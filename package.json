@@ -19,7 +19,8 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "test:smoke": "node scripts/smoke-next.js"
+    "test:smoke": "node scripts/smoke-next.js",
+    "verify:deployed": "node scripts/verify-deployed.mjs"
   },
   "dependencies": {
     "cn": "^0.3.0",
