@@ -10,6 +10,12 @@ import {
   validateGenerateResponse,
 } from '../../../lib/interaction.js';
 import { ApiError, generateOutput } from '../../lib/api';
+import {
+  createBrowserDraftStorage,
+  type DraftMetadata,
+  type DraftProfileReference,
+  type DraftStorage,
+} from './draft-storage';
 
 export type SelectedPhoto = { file: File; photo_id: string; url: string };
 type RequestState =
@@ -22,10 +28,13 @@ type EditorState = {
   original: FeedResponse | null;
   originalOutput: F3Export | null;
   photos: SelectedPhoto[];
+  profileReference: DraftProfileReference | null;
+  prompt: string;
   request: RequestState;
 };
 type EditorActions = {
   cancel: () => void;
+  clearDraft: () => Promise<void>;
   editCaption: (id: string, text: string) => void;
   editTitle: (title: string) => void;
   exportDraft: () => F3Export;
@@ -34,8 +43,12 @@ type EditorActions = {
     task: (signal: AbortSignal) => Promise<FeedResponse>,
   ) => Promise<void>;
   movePhoto: (id: string, destination: number) => void;
+  persistDraft: (images: ReadonlyMap<string, Blob>) => Promise<void>;
   reset: () => void;
+  restoreDraft: () => Promise<boolean>;
   selectFiles: (files: File[]) => void;
+  setProfileReference: (reference: DraftProfileReference | null) => void;
+  setPrompt: (prompt: string) => void;
 };
 const initialState: EditorState = {
   draft: null,
@@ -43,6 +56,8 @@ const initialState: EditorState = {
   original: null,
   originalOutput: null,
   photos: [],
+  profileReference: null,
+  prompt: '',
   request: { status: 'idle' },
 };
 const arrange = (output: F3Export, order: string[]): F3Export => ({
@@ -55,9 +70,19 @@ const arrange = (output: F3Export, order: string[]): F3Export => ({
 });
 
 // Instantiate inside the editor Client Component, never as a server/module singleton.
-export function createEditorStore() {
+export function createEditorStore(
+  persistence: DraftStorage | null = createBrowserDraftStorage(),
+) {
   let active: AbortController | null = null;
+  let persistenceQueue = Promise.resolve();
+  let persistedPhotoKey = '';
+  let restoreEpoch = 0;
   return createStore<EditorState & EditorActions>((set, get) => {
+    const enqueuePersistence = (task: () => Promise<void>) => {
+      const pending = persistenceQueue.catch(() => {}).then(task);
+      persistenceQueue = pending;
+      return pending;
+    };
     const stop = () => {
       active?.abort();
       active = null;
@@ -90,11 +115,31 @@ export function createEditorStore() {
         },
       });
     };
+    const resetState = (invalidateRestore = true) => {
+      if (invalidateRestore) restoreEpoch++;
+      stop();
+      for (const photo of get().photos) URL.revokeObjectURL(photo.url);
+      set({ ...initialState });
+    };
+    const metadata = (state: EditorState): DraftMetadata => ({
+      draft: state.draft,
+      order: state.order,
+      original: state.original,
+      originalOutput: state.originalOutput,
+      photoIds: state.photos.map((photo) => photo.photo_id),
+      profileReference: state.profileReference,
+      prompt: state.prompt,
+    });
     return {
       ...initialState,
       cancel: () => {
         stop();
         set({ request: { status: get().original ? 'ready' : 'idle' } });
+      },
+      clearDraft: async () => {
+        persistedPhotoKey = '';
+        resetState();
+        if (persistence) await enqueuePersistence(persistence.clear);
       },
       editCaption: (id, text) => {
         const draft = get().draft;
@@ -234,23 +279,14 @@ export function createEditorStore() {
           validateFeedResponse(response);
           const ids = response.context.photos.map((photo) => photo.photo_id);
           const selected = get().photos;
-          // 분석에 실패한 사진은 빠진 채로 돌아온다(#126). 응답이 선택 목록의 부분집합이기만 하면 정상이다 —
-          // 선택하지 않은 사진이 섞여 들어오는 경우는 여전히 잡는다.
           if (
             selected.length &&
-            (!ids.length ||
+            (ids.length !== selected.length ||
               ids.some(
                 (id) => !selected.some((photo) => photo.photo_id === id),
               ))
           )
             throw new Error('Selected photos differ');
-          // 분석에서 빠진 사진은 화면에서도 내린다. 미리보기 URL 은 여기서 놓아 준다.
-          const survivors = selected.filter((photo) =>
-            ids.includes(photo.photo_id),
-          );
-          if (selected.length && survivors.length !== selected.length)
-            for (const photo of selected)
-              if (!ids.includes(photo.photo_id)) URL.revokeObjectURL(photo.url);
           const original = structuredClone(response);
           const order = original.feed.slots
             .toSorted((a, b) => a.position - b.position)
@@ -269,7 +305,6 @@ export function createEditorStore() {
             order,
             original,
             originalOutput: null,
-            ...(selected.length ? { photos: survivors } : {}),
             request: { status: 'ready' },
           });
         } catch (error) {
@@ -291,18 +326,80 @@ export function createEditorStore() {
         next.splice(destination, 0, id);
         set({ order: next, draft: draft ? arrange(draft, next) : null });
       },
-      reset: () => {
-        stop();
-        for (const photo of get().photos) URL.revokeObjectURL(photo.url);
-        set({ ...initialState });
+      persistDraft: async (images) => {
+        if (!persistence) return;
+        const state = get();
+        if (state.photos.length < 3) {
+          if (!persistedPhotoKey) return;
+          persistedPhotoKey = '';
+          return enqueuePersistence(persistence.clear);
+        }
+        const value = metadata(state);
+        const photoKey = JSON.stringify(value.photoIds);
+        if (photoKey === persistedPhotoKey) {
+          try {
+            persistence.saveMetadata(value);
+            return;
+          } catch {
+            persistedPhotoKey = '';
+          }
+        }
+        await enqueuePersistence(async () => {
+          if (photoKey === persistedPhotoKey) {
+            persistence.saveMetadata(value);
+            return;
+          }
+          await persistence.save(value, images);
+          persistedPhotoKey = photoKey;
+        });
+      },
+      reset: resetState,
+      restoreDraft: async () => {
+        if (!persistence) return false;
+        const epoch = ++restoreEpoch;
+        const restored = await persistence.load();
+        if (!restored || epoch !== restoreEpoch) return false;
+        resetState(false);
+        const photos: SelectedPhoto[] = [];
+        try {
+          for (const photoId of restored.photoIds) {
+            const blob = restored.images.get(photoId);
+            if (!blob) throw new Error(`Missing restored WebP for ${photoId}`);
+            const file = new File([blob], `${photoId}.webp`, {
+              type: 'image/webp',
+            });
+            photos.push({
+              file,
+              photo_id: photoId,
+              url: URL.createObjectURL(file),
+            });
+          }
+        } catch {
+          for (const photo of photos) URL.revokeObjectURL(photo.url);
+          await persistence.clear();
+          return false;
+        }
+        set({
+          draft: restored.draft,
+          order: restored.order,
+          original: restored.original,
+          originalOutput: restored.originalOutput,
+          photos,
+          profileReference: restored.profileReference,
+          prompt: restored.prompt,
+          request: { status: restored.original ? 'ready' : 'idle' },
+        });
+        persistedPhotoKey = JSON.stringify(restored.photoIds);
+        return true;
       },
       selectFiles: (files) => {
-        if (files.length > 20 || new Set(files).size !== files.length)
+        if (files.length > 15 || new Set(files).size !== files.length)
           throw new ApiError(
             'INVALID_SELECTION',
-            '서로 다른 사진을 최대 20장 선택해 주세요.',
+            '서로 다른 사진을 최대 15장 선택해 주세요.',
           );
-        const previous = get().photos;
+        restoreEpoch++;
+        const { photos: previous, profileReference, prompt } = get();
         const photos = files.map(
           (file) =>
             previous.find((photo) => photo.file === file) ?? {
@@ -314,7 +411,21 @@ export function createEditorStore() {
         stop();
         for (const photo of previous)
           if (!photos.includes(photo)) URL.revokeObjectURL(photo.url);
-        set({ ...initialState, photos });
+        set({
+          ...initialState,
+          order: photos.map((photo) => photo.photo_id),
+          photos,
+          profileReference,
+          prompt,
+        });
+      },
+      setProfileReference: (profileReference) => {
+        restoreEpoch++;
+        set({ profileReference });
+      },
+      setPrompt: (prompt) => {
+        restoreEpoch++;
+        set({ prompt });
       },
     };
   });
