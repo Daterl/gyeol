@@ -3,9 +3,22 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {generateOutput,handleGenerate} from '../lib/output-generation.js';
 import {validateErrorResponse} from '../lib/interaction.js';
+import {buildFeed} from '../lib/pipeline.js';
 const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json',import.meta.url),'utf8'));
 const input=(mode='all',source=fixture)=>({schema_version:'1.0',mode,feed:structuredClone(source.feed),context:structuredClone(source.context),...(mode==='slot'?{photo_id:'ph_01'}:{})});
 const output=()=>({output:structuredClone(fixture.all_omitted)});
+const filledOutput=(feed=fixture.feed)=>({output:{title:'세 장의 기록',slots:feed.slots.map(slot=>({
+  photo_id:slot.photo_id,position:slot.position,caption_state:'filled',text:slot.caption_inputs.describable_facts[0],omit_reason:null,
+  evidence:[{kind:'uploaded_photo',ref:slot.photo_id,note:'합성 fixture의 해당 카드'}]
+}))}});
+const orderInput=(target,current={kind:'none'},photos=fixture.context.photos)=>({
+  schema_version:'1.0',session_id:'generate-test',photos:photos.map((photo,index)=>({...structuredClone(photo),photo_id:`new_${index}`,input_index:index})),
+  identity:{target,current}
+});
+const currentPosts=captions=>({kind:'posts',captions,photos:captions.map((_,index)=>({
+  ...structuredClone(fixture.context.photos[index%fixture.context.photos.length]),photo_id:`old_${index}`,input_index:index
+}))});
+const generatedInput=result=>({schema_version:'1.0',mode:'all',feed:result.feed,context:result.context});
 const wire=value=>Response.json({model:'test-text-model',stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(value)}]});
 const transport=(value,seen=[])=>async(url,options)=>{
   seen.push({url,options});
@@ -37,6 +50,92 @@ test('single slot sends only its photo and rejects other photo, position, user s
   for(const patch of [{photo_id:'ph_02'},{position:2},{caption_state:'user'},{evidence:[{kind:'uploaded_photo',ref:'ph_02',note:'other photo'}]}]) {
     await assert.rejects(generateOutput(input('slot'),options({slot:{...valid.slot,...patch}})),{code:'MODEL_CONTRACT'});
   }
+});
+
+test('all generation stabilizes one evidence-backed omission without forcing other contexts',async()=>{
+  const built=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록'])));
+  const requestInput=generatedInput(built);
+  const provider=filledOutput(built.feed);
+  const actual=await generateOutput(requestInput,options(provider));
+  const omitted=actual.output.slots.filter(slot=>slot.caption_state==='omitted');
+  assert.equal(omitted.length,1);
+  assert.equal(omitted[0].photo_id,built.feed.slots.find(slot=>slot.position===2).photo_id);
+  assert.match(omitted[0].omit_reason,/겹침 신호/);
+  assert.doesNotMatch(omitted[0].omit_reason,/측정 색|설명/);
+  assert.ok(omitted[0].evidence.some(e=>e.kind==='rule' && e.ref==='gyeol.omit.overlap'));
+  assert.deepEqual(actual.output.slots.filter(slot=>slot.caption_state==='filled'),provider.output.slots.filter(slot=>slot.position!==2));
+
+  for(const preserve of ['weak signal','first slot only']) {
+    const current=input();
+    current.feed.slots[1].caption_inputs.adjacent_overlap=preserve==='weak signal'?0.89:0.96;
+    if(preserve==='first slot only') {
+      current.feed.slots[0].caption_inputs.adjacent_overlap=0.96;
+      current.feed.slots[1].caption_inputs.adjacent_overlap=0.89;
+    }
+    const fixtureProvider=filledOutput();
+    assert.deepEqual(await generateOutput(current,options(fixtureProvider)),fixtureProvider,preserve);
+  }
+});
+
+test('real feed context blocks stabilization without affirmative omission evidence',async()=>{
+  const currentNoOmit=currentPosts(['기록','또 기록','계속 기록']);
+  const exactCurrent=await buildFeed(orderInput({kind:'text',text:'차분한 느낌'},currentNoOmit));
+  assert.equal(exactCurrent.feed.applied_profile.language,null);
+  assert.equal(exactCurrent.context.current.language.empty_caption_ratio.value,0);
+
+  const supportedCurrent=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentNoOmit));
+  assert.ok(supportedCurrent.feed.applied_profile.language);
+  assert.equal(supportedCurrent.context.current.language.empty_caption_ratio.value,0);
+
+  const colors=[
+    {hue_mean:0,sat_mean:0,bright_mean:0,palette_hex:['#000000']},
+    {hue_mean:0,sat_mean:0,bright_mean:1,palette_hex:['#ffffff']},
+    {hue_mean:300,sat_mean:1,bright_mean:0.5,palette_hex:['#ff00ff']}
+  ];
+  const photoOnlyPhotos=fixture.context.photos.map((photo,index)=>({...structuredClone(photo),color:colors[index],describable_facts:['같은 사실']}));
+  const photoOnly=await buildFeed(orderInput({kind:'none'},{kind:'none'},photoOnlyPhotos));
+  assert.deepEqual(photoOnly.feed.slots.map(slot=>slot.caption_inputs.adjacent_overlap),[0,1,1]);
+  assert.equal(photoOnly.feed.applied_profile.language,null);
+
+  const unsupportedAll=await buildFeed(orderInput({kind:'text',text:'모든 사진에 문장을 써 줘'}));
+  assert.equal(unsupportedAll.context.target.language,null);
+
+  const detailed=await buildFeed(orderInput({kind:'text',text:'자세하게 기록해 줘'}));
+  assert.equal(detailed.context.target.language.caption_len.value.p50,90);
+
+  const smallRatio=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록','기록','기록','기록'])));
+  assert.equal(smallRatio.context.current.language.empty_caption_ratio.value,0.2);
+
+  for(const [label,built] of [['exact current',exactCurrent],['supported current',supportedCurrent],['photo only',photoOnly],['unsupported all captions',unsupportedAll],['detailed captions',detailed],['less than one expected omission',smallRatio]]) {
+    const provider=filledOutput(built.feed);
+    assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider,label);
+  }
+});
+
+test('client overlap cannot replace the canonical color measurement',async()=>{
+  const colors=[
+    {hue_mean:0,sat_mean:0,bright_mean:1,palette_hex:['#ffffff']},
+    {hue_mean:0,sat_mean:0,bright_mean:0.066,palette_hex:['#111111']},
+    {hue_mean:180,sat_mean:1,bright_mean:0,palette_hex:['#000000']}
+  ];
+  const photos=fixture.context.photos.map((photo,index)=>({...structuredClone(photo),color:colors[index]}));
+  const built=await buildFeed(orderInput({kind:'text',text:'짧게 기록해 줘'},currentPosts(['','기록']),photos));
+  assert.deepEqual([...built.feed.slots].sort((a,b)=>a.position-b.position).map(slot=>slot.caption_inputs.adjacent_overlap),[0,0.533,0.667]);
+  built.feed.slots.find(slot=>slot.position===2).caption_inputs.adjacent_overlap=1;
+  const provider=filledOutput(built.feed);
+  assert.deepEqual(await generateOutput(generatedInput(built),options(provider)),provider);
+});
+
+test('existing omissions and single-slot generation are preserved',async()=>{
+  const all=input();
+  all.feed.slots[1].caption_inputs.adjacent_overlap=0.96;
+  const already=output();
+  assert.deepEqual(await generateOutput(all,options(already)),already);
+
+  const single=input('slot');
+  single.feed.slots[0].caption_inputs.adjacent_overlap=0.96;
+  const response={slot:structuredClone(fixture.output.slots[0])};
+  assert.deepEqual(await generateOutput(single,options(response)),response);
 });
 
 test('invalid input, missing key and HTTP method fail without provider calls',async()=>{
