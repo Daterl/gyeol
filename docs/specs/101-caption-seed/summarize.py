@@ -38,7 +38,7 @@ for row in rows:
  lines.append('')
 (root/(label+'-metrics.json')).write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
 (root/(label+'-seeds.json')).write_text(json.dumps(unique,ensure_ascii=False,indent=2)+'\n')
-(root/(label+'-human-review.md')).write_text('\n'.join(lines)+'\n')
+(root/(label+'-human-review.md')).write_text('\n'.join(lines).rstrip()+'\n')
 print(json.dumps({k:v for k,v in metrics.items() if k not in ['runs','note_mismatches','format_errors','nonliteral_seeds','missing_seed_evidence']},ensure_ascii=False))
 for k in ['note_mismatches','format_errors','nonliteral_seeds','missing_seed_evidence']: print(k,len(metrics[k]))
 print([(r['run'],r['omitted']) for r in metrics['runs']])

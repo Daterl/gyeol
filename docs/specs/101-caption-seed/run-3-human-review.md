@@ -267,4 +267,3 @@
 |![cq_10](photos/cq_10.jpg)|쓸 거리: 하늘색 니트 상의 · 반지<br>이 중 기억에 남은 건?|☐ O ☐ X — pending|pending|pending|
 |![cq_02](photos/cq_02.jpg)|쓸 거리: 아이보리색 카디건 · 체크 하의<br>이 중 기억에 남은 건?|☐ O ☐ X — pending|pending|pending|
 |![cq_01](photos/cq_01.jpg)|쓸 거리: 니트 모자 · 울타리<br>이 중 기억에 남은 건?|☐ O ☐ X — pending|pending|pending|
-
