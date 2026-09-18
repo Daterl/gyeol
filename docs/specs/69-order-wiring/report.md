@@ -3,6 +3,8 @@
 브랜치 `feat/69-order-wiring` (base `origin/develop`, 기준 커밋 `531b134`).
 실행 환경: macOS · Node v22.22.3 · Next.js 16.3.5 · 로컬 `npx next start -p 3069` (실제 HTTP 서버).
 
+> **기록 경계:** 이 본문은 `531b134`에서 수행한 최초 측정 스냅샷이다. 최신 인수 판정은 [`fix-report.md`](./fix-report.md)와 PR #75 최종 커밋 `a2c8f43004e18cb65d48f7afc1048e3273de1b47`을 기준으로 한다.
+
 ---
 
 ## 1. 무엇을 바꿨는가
@@ -57,11 +59,11 @@
 
 ## 4. DoD 실행 증거 — 실제 HTTP 서버 · 실제 인스타 사진 15장
 
-입력: `pivot/apify-check/fixtures/images/` 에서 **서로 다른 게시물 15건에서 1장씩**.
+최초 측정은 **서로 다른 게시물 15건에서 1장씩** 고른 미커밋 원본 이미지를 사용했다. 저장소에서 재현 가능한 정규화 입력은 `test/order.real20.json`이다.
 (같은 캐러셀 연속 컷만 쓰면 색이 비슷해 순서 차이가 덜 드러나므로 게시물 단위로 골랐다.)
 
 ```
-# 입력: 서로 다른 게시물 15건에서 1장씩 (/Users/chowonjae/Desktop/projects/wanted/pivot/apify-check/fixtures/images)
+# 입력: 서로 다른 게시물 15건의 미커밋 원본 이미지; 정규화 재현 입력은 test/order.real20.json
 POST /api/analyze?mock=1 -> 200  ph_01  c29_Dc-2OOrFBnb_00.jpg  source=heuristic  composition=full_frame  bright=0.375  sat=0.288
 POST /api/analyze?mock=1 -> 200  ph_02  c29_Dc-GJ-iCezC_00.jpg  source=heuristic  composition=full_frame  bright=0.742  sat=0.161
 POST /api/analyze?mock=1 -> 200  ph_03  c29_Dc-auqBCVXI_00.jpg  source=heuristic  composition=full_frame  bright=0.432  sat=0.195
@@ -140,11 +142,11 @@ A 와 B 는 **1~4번 자리에서만** 갈리고 5~15번은 같다. D6("다른 �
 
 ---
 
-## 6. 스코프 밖에서 발견한 차단 — 실모델 분석이 develop 에서 100% 실패한다
+## 6. 최초 측정에서 발견한 차단 — #79에서 해결됨
 
-**이것은 #69 의 범위가 아니고 고치지 않았다. 그러나 보고한다.**
+**아래는 `531b134`에서 발견한 역사적 증거다.** #69 범위에서는 고치지 않았고, 이후 #79의 `23d5f005a2322c0b15da881fe786ef9d5edd4565`에서 `maxItems`를 제거해 해결했다. 400→502 연쇄는 최초 원인을 보존하기 위해 남긴다.
 
-`.env` 의 실제 키를 넣고 `POST /api/analyze` (mock 없이) 를 부르면 **모든 사진이 502 `MODEL_HTTP` 로 실패한다.**
+당시 `.env` 의 실제 키를 넣고 `POST /api/analyze` (mock 없이) 를 부르면 **모든 사진이 502 `MODEL_HTTP` 로 실패했다.**
 
 ```
 POST https://api.anthropic.com/v1/messages -> 400
@@ -166,13 +168,15 @@ Anthropic structured outputs 가 배열의 `maxItems` 를 받지 않는다.
 확인 후 그 편집은 되돌렸다 — 이 PR 의 diff 에 포함돼 있지 않다.
 
 심각도: `lib/model.js` 는 키가 있으면 휴리스틱으로 **폴백하지 않는다**(의도된 설계, "A selected model must succeed or fail loudly").
-따라서 **키가 설정된 환경에서는 `/api/analyze` 가 아무 결과도 내지 못한다.** 별도 이슈가 필요하다.
+따라서 당시에는 **키가 설정된 환경에서 `/api/analyze` 가 아무 결과도 내지 못했다.** 이 차단은 #79에서 해결됐다.
 
 이 차단 때문에 4절 증거는 `?mock=1`(휴리스틱 픽셀 측정) 경로로 만들었다. `/api/feed` 는 모델을 부르지 않고 `PhotoAnalysis` 를 입력으로 받으므로 DoD 1번의 "실제 HTTP 경로" 요건은 그대로 충족한다. 오히려 **휴리스틱 입력이야말로 이 이슈가 우회를 걷어낸 바로 그 입력**이다.
 
 ---
 
 ## 7. 게이트 실행 출력
+
+아래 192건은 `531b134` 최초 실행 결과다. PR #75 최종 커밋의 최신 인수 결과는 `fix-report.md`의 **195/195 통과**를 따른다.
 
 ```
 ### npm test
@@ -216,6 +220,6 @@ Generating route types...
 | 같은 사진 + 프로필 2벌 → `position` 정렬 `photo_id` 배열이 다르다 | ✅ | 4절 `A 와 B 가 다른가: true`. **함정 회피 확인** — `position` 배열은 A·B 모두 `[1..15]` 로 같다는 것을 같은 출력에 나란히 찍어 뒀다. 다만 차이는 앞 4자리에 한정된다(4-1절) |
 | `preserveOrder` 가 여전히 필요한 경우의 분기 조건이 명시돼 있다 | ✅ | `target.kind==='photo_plan'` 하나. 이유는 `lib/pipeline.js` 주석 6줄 + 2-1절. 4절 C 케이스가 실행으로 확인(`C(사진만) 는 입력 유지: true`) |
 | `visual.palette` 미충족으로 타이브레이크가 꺼지는 문제의 현재 상태를 기록 | ✅ | 5절. 경로 3종 표 + 프로덕션에서 항상 `null` 인 이유 + 실행 증거 |
-| `npm test` / `eval` / `check` / `lint` / `typecheck` 통과 | ✅ | 7절. test 192/192 · eval 전 항목 PASS(broken 변형은 EXPECTED FAIL) · check 65파일 · lint 40파일 0건 · typecheck 0 에러 |
+| `npm test` / `eval` / `check` / `lint` / `typecheck` 통과 | ✅ | 7절 최초 실행은 test 192/192. 최신 인수는 `fix-report.md`의 195/195 · eval 전 항목 PASS(broken 변형은 EXPECTED FAIL) · check 65파일 · lint 40파일 0건 · typecheck 0 에러 |
 
-**이 PR 로 끝나지 않는 것:** 6절의 실모델 분석 차단(별도 이슈 필요), 5절의 `visual.palette` 미충족, 4-1절의 "프로필이 앞 4자리만 바꾼다".
+**이 PR 로 끝나지 않는 것:** 5절의 `visual.palette` 미충족, 4-1절의 "프로필이 앞 4자리만 바꾼다". 6절의 실모델 분석 차단은 이후 #79(`23d5f00`)에서 해결됐다.
