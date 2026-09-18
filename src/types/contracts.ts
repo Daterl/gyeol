@@ -206,9 +206,15 @@ export type CurationRequest = {
   schema_version: '1.0';
   session_id: string;
 };
+export type PublicProfileDisplay = {
+  username: string;
+  display_name?: string;
+  name_source?: 'apify.ownerFullName';
+};
 export type CurationResponse = FeedResponse & {
   curation: {
     profile: {
+      display?: PublicProfileDisplay;
       collected_at: string;
       evidence_refs: Record<string, string>;
       expires_at: string;

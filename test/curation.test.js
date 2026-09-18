@@ -139,7 +139,7 @@ test('URL is a lookup reference, while malformed provenance and time fail closed
   assert.equal(response.status,200);
 });
 
-async function connectedCache() {
+async function connectedCache(cachedSnapshot=snapshot) {
   const {createProfileCache}=await import('../lib/profile-cache.js');
   const {buildCurrentProfile}=await import('../lib/current_profile.js');
   const {extractFromReference}=await import('../lib/target_profile.js');
@@ -155,9 +155,9 @@ async function connectedCache() {
   };
   const ingest={
     async start() { starts++;return {status:'RUNNING',receipt:'offline-provider-receipt'}; },
-    async inspect() {return {status:'SUCCEEDED',snapshot:structuredClone(snapshot),
-      currentProfile:buildCurrentProfile({snapshot},fixture.now),
-      targetProfile:await extractFromReference(record.source_url,{registry:{[snapshot.handle]:snapshot},createdAt:fixture.now})};}
+    async inspect() {return {status:'SUCCEEDED',snapshot:structuredClone(cachedSnapshot),
+      currentProfile:buildCurrentProfile({snapshot:cachedSnapshot},fixture.now),
+      targetProfile:await extractFromReference(record.source_url,{registry:{[cachedSnapshot.handle]:cachedSnapshot},createdAt:fixture.now})};}
   };
   const cache=createProfileCache({storage,ingest,secret,now:()=>time});
   const accessKey='fixture-only-access-key-32-characters';
@@ -227,4 +227,31 @@ test('configured default resolver reads private storage with no Apify token; mis
     globalThis.fetch=previousFetch;
     for(const name of names) if(saved[name]===undefined)delete process.env[name];else process.env[name]=saved[name];
   }
+});
+
+test('curation projects optional display metadata and accepts old name-free snapshots',async()=>{
+  for(const metadata of [undefined,{display_name:'공개 이름',name_source:'apify.ownerFullName',receipt:'do-not-copy'}, {display_name:42,name_source:'apify.ownerFullName'}, {display_name:'Untrusted',name_source:'tags'}]) {
+    const found=structuredClone(record);
+    if(metadata) found.snapshot.profile_display=metadata;
+    const response=await run(input(),{resolveSnapshot:async()=>found});
+    assert.equal(response.status,200);
+    const result=await response.json();
+    assert.deepEqual(result.curation.profile.display,{
+      username:snapshot.handle,
+      ...(metadata?.display_name==='공개 이름'?{display_name:'공개 이름',name_source:'apify.ownerFullName'}:{})
+    });
+    assert.ok(!JSON.stringify(result).includes('do-not-copy'));
+    assert.equal(result.curation.profile.display.avatar,undefined);
+  }
+});
+
+
+test('optional name survives private cache and signed resolver without extra ingest',async()=>{
+  const found=structuredClone(snapshot);
+  found.profile_display={display_name:'공개 이름',name_source:'apify.ownerFullName'};
+  const f=await connectedCache(found);
+  const response=await run({...input(),profile_snapshot_id:f.connection.snapshotId},{resolveSnapshot:f.cache.resolveSnapshot});
+  assert.equal(response.status,200);
+  assert.deepEqual((await response.json()).curation.profile.display,{username:'g5_public',display_name:'공개 이름',name_source:'apify.ownerFullName'});
+  assert.equal(f.starts(),1);
 });

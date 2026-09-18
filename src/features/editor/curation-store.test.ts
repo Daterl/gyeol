@@ -54,6 +54,7 @@ test('confirmation is detached, deeply frozen and omits profile by default; reco
   const next = store.getState().confirmCuration();
   expect(next.profile).toEqual({
     source_url: 'https://www.instagram.com/public_example/',
+    username: 'public_example',
   });
   expect(JSON.stringify(next)).not.toMatch(
     /evidence_refs|snapshot_id|expires_at|collected_at/,
@@ -88,4 +89,36 @@ test('cancelling a new feed with an existing preview does not authorize automati
   expect(store.getState().original).toBe(original);
   expect(store.getState().curation).toBe(curation);
   expect(store.getState().request.status).toBe('ready');
+});
+
+test('profile display is opt-in and confirmation selects only public identity fields', async () => {
+  const store = await ready();
+  const result = curationFixture();
+  result.curation.profile.display = {
+    username: 'public_example',
+    display_name: '공개 이름',
+    name_source: 'apify.ownerFullName',
+  };
+  Object.assign(result.curation.profile.display, {
+    receipt: 'private-receipt',
+    avatar: 'not-an-avatar',
+  });
+  await store.getState().loadCuration(async () => result);
+  await store.getState().generate(undefined, async () => ({
+    output: structuredClone(fixture.all_omitted) as F3Export,
+  }));
+  expect(JSON.stringify(store.getState().confirmCuration())).not.toMatch(
+    /public_example|공개 이름|private-receipt/,
+  );
+  store.getState().setProfileSharing(true);
+  expect(store.getState().confirmCuration().profile).toEqual({
+    source_url: 'https://www.instagram.com/public_example/',
+    username: 'public_example',
+    display_name: '공개 이름',
+  });
+  expect(JSON.stringify(store.getState().confirmed)).not.toMatch(
+    /name_source|receipt|avatar|evidence|snapshot_id/,
+  );
+  store.getState().setProfileSharing(false);
+  expect(store.getState().confirmCuration().profile).toBeUndefined();
 });
