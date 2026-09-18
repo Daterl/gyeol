@@ -12,10 +12,13 @@ const snapshot = JSON.parse(await readFile(new URL('../fixtures/ig_snapshot.json
 const referenceFixture = JSON.parse(await readFile(new URL('../fixtures/ref_snapshot.sample.json', import.meta.url), 'utf8'));
 const input = { session_id: 'offline-verifier', photos, profile_url: `https://www.instagram.com/${snapshot.provenance.account}/`, profile_snapshot_id: 'offline-mock-reference' };
 
-async function run({ changeFeed, changeOutput, status, rejectStatus, raw, execution = 'fixture' } = {}) {
+async function run({ changeFeed, changeOutput, status, rejectStatus, raw, transport, execution = 'fixture' } = {}) {
   const calls = [];
   const result = await verify({ base: 'http://offline.invalid', environment: 'preview', execution, live: true, input, now: () => Date.parse('2026-09-18T12:00:00Z'),
     fetchImpl: async (url, init) => {
+      assert.equal(init.redirect, 'manual');
+      const intercepted = transport?.(url, init);
+      if (intercepted) return intercepted;
       if (!init.body) return new Response('<main>GYEOL</main>');
       const body = JSON.parse(init.body);
       calls.push({ path: url.pathname, body });
@@ -122,4 +125,70 @@ test('HTTP contract success cannot assert live execution provenance or human acc
   assert.equal(result.exitCode, 2);
   assert.equal(result.results.at(-1).id, 'EXECUTION_PROVENANCE');
   assert.ok(Object.values(result.acceptance).every(value => value === 'PENDING'));
+});
+
+// Sanitized shape observed on the protected Preview; values below are synthetic.
+function ssoHeaders(url) {
+  const location = new URL('https://vercel.com/sso-api');
+  location.searchParams.set('url', url.href);
+  location.searchParams.set('nonce', 'SECRET_MUST_NOT_LEAK');
+  return { server: 'Vercel', location: location.href,
+    'set-cookie': '_vercel_sso_nonce=COOKIE_MUST_NOT_LEAK; Path=/; Secure; HttpOnly' };
+}
+for (const execution of ['fixture', 'live']) test(`validated SSO302 is BLOCKED in ${execution} scope without exposing credentials`, async () => {
+  const result = await run({ execution, transport: url => new Response('BODY_MUST_NOT_LEAK', { status: 302, headers: ssoHeaders(url) }) });
+  assert.equal(result.exitCode, 2);
+  assert.equal(result.scope, execution === 'fixture' ? 'offline mock contract only' : 'preview HTTP contract');
+  assert.ok(result.results.filter(r => r.id === 'PUBLIC_PAGE' || r.id.endsWith('_FEED') || ['UNCONNECTED', 'TWO_PHOTOS', 'SIXTEEN_PHOTOS', 'UNVERIFIED_SNAPSHOT'].includes(r.id))
+    .every(r => r.status === 'BLOCKED' && r.detail.includes('VERCEL_SSO_REQUIRED')));
+  assert.ok(result.results.filter(r => r.id.endsWith('_GENERATE')).every(r => r.status === 'PENDING'));
+  assert.ok(Object.values(result.acceptance).every(value => value === 'PENDING'));
+  assert.equal(result.calls.length, 0);
+  assert.doesNotMatch(JSON.stringify(result), /MUST_NOT_LEAK|sso-api|set-cookie/);
+});
+for (const [name, change, status = 302] of [
+  ['missing location', h => { delete h.location; }],
+  ['malformed location', h => { h.location = 'not a URL'; }],
+  ['relative location', h => { h.location = '/sso-api'; }],
+  ['unrelated redirect', h => { h.location = 'https://example.com/login'; }],
+  ['lookalike host', h => { h.location = h.location.replace('vercel.com', 'vercel.com.evil.test'); }],
+  ['HTTP destination', h => { h.location = h.location.replace('https:', 'http:'); }],
+  ['credentialed destination', h => { h.location = h.location.replace('vercel.com', 'user:SECRET_MUST_NOT_LEAK@vercel.com'); }],
+  ['wrong path', h => { h.location = h.location.replace('/sso-api?', '/login?'); }],
+  ['fragment', h => { h.location += '#SECRET_MUST_NOT_LEAK'; }],
+  ['wrong port', h => { h.location = h.location.replace('vercel.com', 'vercel.com:444'); }],
+  ['missing Vercel server', h => { delete h.server; }],
+  ['wrong server', h => { h.server = 'other'; }],
+  ['missing nonce cookie', h => { delete h['set-cookie']; }],
+  ['empty nonce cookie', h => { h['set-cookie'] = '_vercel_sso_nonce=; Path=/'; }],
+  ['lookalike cookie', h => { h['set-cookie'] = 'fake_vercel_sso_nonce=SECRET_MUST_NOT_LEAK'; }],
+  ['missing nonce', h => { const u = new URL(h.location); u.searchParams.delete('nonce'); h.location = u.href; }],
+  ['empty nonce', h => { const u = new URL(h.location); u.searchParams.set('nonce', ''); h.location = u.href; }],
+  ['wrong return URL', h => { const u = new URL(h.location); u.searchParams.set('url', 'https://other.invalid/'); h.location = u.href; }],
+  ['duplicate return URL', h => { h.location += '&url=https://other.invalid/'; }],
+  ['duplicate nonce', h => { h.location += '&nonce=other'; }],
+  ['unobserved redirect status', () => {}, 307],
+]) test(`${name} remains FAIL even with an authentication error body`, async () => {
+  const result = await run({ transport: url => {
+    const headers = ssoHeaders(url); change(headers);
+    return new Response(JSON.stringify({ error: { code: 'PROFILE_NOT_VERIFIED', message: 'SECRET_MUST_NOT_LEAK' } }), { status, headers });
+  } });
+  assert.equal(result.exitCode, 1);
+  assert.ok(result.results.some(r => r.status === 'FAIL'));
+  assert.ok(!result.results.some(r => r.status === 'BLOCKED'));
+  assert.doesNotMatch(JSON.stringify(result), /MUST_NOT_LEAK|sso-api|set-cookie/);
+});
+test('SSO on generation is BLOCKED without changing successful feed assertions', async () => {
+  const result = await run({ transport: url => url.pathname === '/api/generate'
+    ? new Response(null, { status: 302, headers: ssoHeaders(url) }) : null });
+  assert.equal(result.exitCode, 2);
+  assert.equal(result.results.filter(r => r.id.endsWith('_FEED') && r.status === 'PASS').length, 4);
+  assert.equal(result.results.filter(r => r.status === 'BLOCKED').length, 8);
+});
+test('an arbitrary redirect still makes a mixed SSO report fail', async () => {
+  const result = await run({ transport: url => new Response(null, { status: 302,
+    headers: url.pathname === '/' ? { location: 'https://example.com/login' } : ssoHeaders(url) }) });
+  assert.equal(result.exitCode, 1);
+  assert.equal(result.results[0].status, 'FAIL');
+  assert.ok(result.results.some(r => r.status === 'BLOCKED'));
 });
