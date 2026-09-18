@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {buildFeed,handleFeed} from '../lib/pipeline.js';
+import {buildFeed,handleFeed,handleAnalyze} from '../lib/pipeline.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {analyzePhoto,resetAnalysisState} from '../lib/photo_analysis.js';
 import {withOmitSuggestions} from '../lib/omit-suggestion.js';
@@ -60,6 +60,7 @@ test('foreign, self, cyclic, chained and ambiguous duplicate observations abstai
     const value=input();value.photos.forEach((p,i)=>{p.quality_flags=flags[i];});
     const {feed}=await buildFeed(value);
     assert.equal(feed.omit_summary.recommended_count,0);
+    assert.equal(feed.omit_summary.message,'중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다.');
   }
   const chain=input();chain.photos[0].quality_flags=['duplicate_of:ph_02'];chain.photos[1].quality_flags=['duplicate_of:ph_03'];
   const result=suggestions((await buildFeed(chain)).feed);
@@ -103,4 +104,36 @@ test('extension validation rejects forged decisions, evidence, partial fields an
   const extended=withOmitSuggestions(legacy.feed,value.photos);
   assert.deepEqual(legacy.feed,before);
   extended.slots.forEach((s,i)=>{const {omit_suggestion,...existing}=s;assert.deepEqual(existing,before.slots[i]);});
+});
+
+
+test('consecutive upload requests preserve warm-cache observations in the zero-suggestion message',async()=>{
+  resetAnalysisState();
+  const bytes=await readFile(new URL('../fixtures/jpeg/gradient_baseline.jpg',import.meta.url));
+  const observed=[];
+  for(const photo_id of ['previous_request','current_request']) {
+    const response=await handleAnalyze(new Request('http://localhost/api/analyze?mock=1',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({schema_version:'1.0',photo_id,input_index:0,file_ref:'gradient.jpg',
+        media_type:'image/jpeg',image_base64:bytes.toString('base64')})
+    }));
+    assert.equal(response.status,200);
+    assert.equal(response.headers.get('X-Gyeol-Analysis-Cache'),observed.length?'hit':'miss');
+    observed.push(await response.json());
+  }
+  assert.deepEqual(observed[0].quality_flags,[]);
+  assert.deepEqual(observed[1].quality_flags,['duplicate_of:previous_request']);
+  for(const target of [{kind:'none'},{kind:'text',text:'짧게, 조용하게'}]) {
+    for(const [i,photo] of observed.entries()) {
+      const value=input(3,target);value.photos[0]=photo;
+      const response=await post(value);assert.equal(response.status,200);
+      const result=await response.json();validateFeedResponse(result);
+      assert.equal(result.feed.slots.length,3);
+      assert.equal(result.feed.omit_summary.recommended_count,0);
+      assert.equal(result.feed.omit_summary.message,i===0
+        ? '관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다.'
+        : '중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다.');
+      assert.ok(result.feed.slots.every(slot=>!slot.omit_suggestion.recommended));
+    }
+  }
 });

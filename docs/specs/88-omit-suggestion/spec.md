@@ -17,7 +17,8 @@
 `recommended=false`면 reason=null, evidence=[]이다. 이는 품질 보증이나 사용 권장이 아니라 근거 있는 빼기 권고가 없다는 뜻이다.
 `recommended=true`면 한 줄 reason과 두 입력 사진을 가리키는 uploaded_photo evidence가 있다.
 상위 추가 필드는 `omit_summary: {recommended_count:number, message:string}`이다.
-0개 메시지는 `관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다.`로 한다.
+0개이며 duplicate_of 관측이 없으면 `관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다.`로 한다.
+duplicate_of는 관측됐지만 권고 조건을 충족하지 못하면 `중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다.`로 한다. 외부·자기·순환·모호한 참조를 포함하며 관측 자체를 부정하지 않는다.
 1개 이상 메시지는 실제 권고 수와 모든 사진을 유지했다는 사실을 적는다.
 기존 schemas/ 4종은 수정하지 않는다. 추가 필드는 이 문서에서만 초안으로 정의하며 소비자 합의는 PR의 미완료 게이트로 남긴다.
 기존 fixture처럼 확장 전체가 없는 feed는 계속 유효하다. 확장이 있으면 모든 슬롯·요약을 실제 PhotoAnalysis로 재계산해 대조한다.
