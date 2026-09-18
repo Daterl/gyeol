@@ -3,6 +3,7 @@ import fixture from '../../../fixtures/interaction.sample.json';
 import { buildFeed } from '../../../lib/pipeline.js';
 import type { SelectedPhoto } from '../editor/store';
 import { addFiles, identityInput, submitPhotos } from './input';
+import { normalizePhoto, normalizePhotos } from './photo-normalization';
 
 const fields = { currentUrl: '', targetText: '', targetUrl: '' };
 const jpeg = (name: string) =>
@@ -15,7 +16,7 @@ const selected = (): SelectedPhoto[] =>
   }));
 afterEach(() => vi.unstubAllGlobals());
 
-test('selection preserves existing files and explains unsupported, empty, oversized and 21st files', () => {
+test('selection preserves existing files and explains unsupported, empty, oversized and 16th files', () => {
   const existing = [jpeg('keep.jpg')];
   const result = addFiles(existing, [
     new File(['svg'], 'bad.svg', { type: 'image/svg+xml' }),
@@ -26,10 +27,67 @@ test('selection preserves existing files and explains unsupported, empty, oversi
   expect(result.errors).toHaveLength(3);
   const many = addFiles(
     [],
-    Array.from({ length: 21 }, (_, i) => jpeg(`${i}.jpg`)),
+    Array.from({ length: 16 }, (_, i) => jpeg(`${i}.jpg`)),
   );
-  expect(many.files).toHaveLength(20);
-  expect(many.errors[0]).toContain('20장');
+  expect(many.files).toHaveLength(15);
+  expect(many.errors[0]).toContain('15장');
+});
+test('normalization applies decoded orientation, bounds the long edge and returns pixel-only WebP files in order', async () => {
+  const dimensions = [
+    { height: 4032, width: 3024 },
+    { height: 1200, width: 2000 },
+    { height: 900, width: 600 },
+  ];
+  const close = vi.fn();
+  const drawImage = vi.fn();
+  const canvas = {
+    height: 0,
+    width: 0,
+    getContext: vi.fn(() => ({ drawImage })),
+    toBlob: vi.fn((callback: BlobCallback) =>
+      callback(new Blob(['decoded pixels'], { type: 'image/webp' })),
+    ),
+  };
+  const decode = vi.fn(async () => ({ ...dimensions.shift(), close }));
+  vi.stubGlobal('createImageBitmap', decode);
+  vi.stubGlobal('document', { createElement: vi.fn(() => canvas) });
+
+  const original = new File(['EXIF GPS original bytes'], 'portrait.jpg', {
+    lastModified: 123,
+    type: 'image/jpeg',
+  });
+  const portrait = await normalizePhoto(original);
+  expect(decode).toHaveBeenCalledWith(original, {
+    imageOrientation: 'from-image',
+  });
+  expect(drawImage).toHaveBeenLastCalledWith(
+    expect.anything(),
+    0,
+    0,
+    1080,
+    1440,
+  );
+  expect(canvas).toMatchObject({ height: 1440, width: 1080 });
+  expect(portrait).toMatchObject({
+    lastModified: 123,
+    name: 'portrait.webp',
+    type: 'image/webp',
+  });
+  expect(await portrait.text()).toBe('decoded pixels');
+
+  const result = await normalizePhotos([
+    new File(['wide'], 'wide.png', { type: 'image/png' }),
+    new File(['bad'], 'bad.heic', { type: 'image/heic' }),
+    new File(['small'], 'small.webp', { type: 'image/webp' }),
+  ]);
+  expect(result.files.map((file) => file.name)).toEqual([
+    'wide.webp',
+    'small.webp',
+  ]);
+  expect(result.errors).toEqual([
+    'bad.heic: JPEG, PNG, WebP 사진을 골라 주세요.',
+  ]);
+  expect(close).toHaveBeenCalledTimes(3);
 });
 test('blank identity is valid and mutually exclusive or unsupported URLs fail before upload', async () => {
   expect(identityInput(fields, [])).toEqual({
@@ -72,7 +130,7 @@ test('blank identity is valid and mutually exclusive or unsupported URLs fail be
   await expect(
     submitPhotos(
       selected(),
-      Array.from({ length: 21 }, () => selected()[0]),
+      Array.from({ length: 16 }, () => selected()[0]),
       fields,
       new AbortController().signal,
       true,
@@ -197,7 +255,7 @@ const errorBody = (code: string, retryable: boolean) =>
     { status: 502 },
   );
 
-test('분석은 동시 실행 수 상한을 지키고, 상한보다 많은 사진도 전부 처리한다', async () => {
+test('15장 분석은 동시 실행 수 상한을 지키고 전부 처리한다', async () => {
   let inFlight = 0;
   let peak = 0;
   vi.stubGlobal(
@@ -212,13 +270,13 @@ test('분석은 동시 실행 수 상한을 지키고, 상한보다 많은 사�
     }),
   );
   const result = await submitPhotos(
-    many(20),
+    many(15),
     [],
     fields,
     new AbortController().signal,
     true,
   );
-  expect(result.feed.slots).toHaveLength(20);
+  expect(result.feed.slots).toHaveLength(15);
   expect(peak).toBeGreaterThan(1); // 순차가 아니다
   expect(peak).toBeLessThanOrEqual(8); // 상한을 넘지 않는다
 });

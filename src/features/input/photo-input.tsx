@@ -9,6 +9,7 @@ import { createEditorStore, type SelectedPhoto } from '../editor/store';
 import { ResultScreen } from '../result/result-screen';
 import { SamplePreview } from '../sample/sample-preview';
 import { addFiles, type IdentityFields, submitPhotos } from './input';
+import { normalizePhotos } from './photo-normalization';
 import { PhotoPicker } from './photo-picker';
 
 const field = tv({
@@ -28,6 +29,8 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
     targetUrl: '',
   });
   const [errors, setErrors] = useState<string[]>([]);
+  const [normalizing, setNormalizing] = useState(false);
+  const normalizingRef = useRef(false);
   const identity = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     if (
@@ -46,13 +49,20 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
     },
     [store],
   );
-  function add(incoming: File[], previous = false) {
+  async function add(incoming: File[], previous = false) {
+    if (normalizingRef.current) return;
+    normalizingRef.current = true;
+    setNormalizing(true);
+    const normalized = await normalizePhotos(incoming).finally(() => {
+      normalizingRef.current = false;
+      setNormalizing(false);
+    });
     const selected = previous ? oldPhotos : photos;
     const result = addFiles(
       selected.map((photo) => photo.file),
-      incoming,
+      normalized.files,
     );
-    setErrors(result.errors);
+    setErrors([...normalized.errors, ...result.errors]);
     if (
       result.files.length === selected.length &&
       result.files.every((file, index) => file === selected[index].file)
@@ -154,9 +164,9 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
         <PhotoPicker
           label="올릴 사진"
           photos={photos}
-          onAdd={(files) => add(files)}
+          onAdd={(files) => void add(files)}
           onRemove={(id) => remove(id)}
-          disabled={loading}
+          disabled={loading || normalizing}
         />
         {errors.length > 0 && (
           <div
@@ -182,16 +192,18 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <div className="flex flex-wrap gap-3">
             <Button
               type="submit"
-              disabled={photos.length < 3 || loading}
+              disabled={photos.length < 3 || loading || normalizing}
               className="min-h-12 px-6"
             >
-              {loading
-                ? request.operation === 'feed'
-                  ? '사진을 살펴보는 중…'
-                  : '문장 요청 중…'
-                : request.status === 'error' && request.operation === 'feed'
-                  ? '다시 시도하기'
-                  : '이 사진들로 시작하기'}
+              {normalizing
+                ? '사진을 준비하는 중…'
+                : loading
+                  ? request.operation === 'feed'
+                    ? '사진을 살펴보는 중…'
+                    : '문장 요청 중…'
+                  : request.status === 'error' && request.operation === 'feed'
+                    ? '다시 시도하기'
+                    : '이 사진들로 시작하기'}
             </Button>
             {loading && (
               <Button
@@ -215,13 +227,15 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           </p>
         )}
         <p role="status" className="sr-only">
-          {loading
-            ? request.operation === 'feed'
-              ? '사진을 분석하고 있어요. 취소할 수 있어요.'
-              : '문장을 준비하고 있어요. 취소할 수 있어요.'
-            : request.status === 'ready'
-              ? '요청을 마쳤어요.'
-              : null}
+          {normalizing
+            ? '사진의 방향과 크기를 정리하고 있어요.'
+            : loading
+              ? request.operation === 'feed'
+                ? '사진을 분석하고 있어요. 취소할 수 있어요.'
+                : '문장을 준비하고 있어요. 취소할 수 있어요.'
+              : request.status === 'ready'
+                ? '요청을 마쳤어요.'
+                : null}
         </p>
         <details ref={identity} className="border-b border-line pb-5">
           <summary className="min-h-11 py-2 font-medium">
@@ -291,10 +305,10 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
                 않아요.
               </p>
               <PhotoPicker
-                disabled={loading}
+                disabled={loading || normalizing}
                 label="기존 게시물 사진"
                 photos={oldPhotos}
-                onAdd={(files) => add(files, true)}
+                onAdd={(files) => void add(files, true)}
                 onRemove={(id) => remove(id, true)}
               />
             </details>
@@ -304,6 +318,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           <button
             type="button"
             className="min-h-11 text-sm underline underline-offset-4"
+            disabled={normalizing}
             onClick={reset}
           >
             입력 초기화

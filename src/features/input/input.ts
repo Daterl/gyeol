@@ -16,6 +16,7 @@ export type IdentityFields = {
   targetText: string;
   targetUrl: string;
 };
+export const MAX_SELECTED_PHOTOS = 15;
 export function addFiles(existing: File[], incoming: File[]) {
   const files = [...existing];
   const errors: string[] = [];
@@ -26,8 +27,8 @@ export function addFiles(existing: File[], incoming: File[]) {
       errors.push(`${file.name}: 한 장에 3MB까지 가능해요.`);
     else if (file.name.length > 512)
       errors.push('파일 이름이 너무 길어요. 이름을 줄여 주세요.');
-    else if (files.length === 20) {
-      errors.push('사진은 최대 20장까지 추가할 수 있어요.');
+    else if (files.length === MAX_SELECTED_PHOTOS) {
+      errors.push(`사진은 최대 ${MAX_SELECTED_PHOTOS}장까지 추가할 수 있어요.`);
       break;
     } else if (!files.includes(file)) files.push(file);
   }
@@ -177,12 +178,12 @@ export async function submitPhotos(
   signal: AbortSignal,
   mock = false,
 ) {
-  if (photos.length < 3 || photos.length > 20)
-    throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~20장 골라 주세요.');
-  if (oldPhotos.length > 20)
+  if (photos.length < 3 || photos.length > MAX_SELECTED_PHOTOS)
+    throw new ApiError('INVALID_SELECTION', '올릴 사진을 3~15장 골라 주세요.');
+  if (oldPhotos.length > MAX_SELECTED_PHOTOS)
     throw new ApiError(
       'INVALID_SELECTION',
-      '기존 게시물 사진은 20장까지 골라 주세요.',
+      '기존 게시물 사진은 15장까지 골라 주세요.',
     );
   // Validate identity conflicts before any file leaves the browser; full posts identity is checked after analysis.
   if (fields.currentUrl.trim() && oldPhotos.length)
