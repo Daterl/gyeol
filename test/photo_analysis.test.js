@@ -325,3 +325,31 @@ test('the heuristic path makes zero outbound attempts with the network disabled'
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /outbound attempts: 0/);
 });
+
+// The structured-output API rejects these array keywords outright (maxItems, uniqueItems)
+// or for values other than 0/1 (minItems). A schema carrying one makes every real
+// vision call fail with HTTP 400 while every mock-path test still passes, so assert on
+// the schema actually handed to the model client rather than on a copy.
+test('W5: the observation schema sent to the model uses no rejected array keywords', async () => {
+  let sent = null;
+  await analyzePhoto({
+    ...card,
+    apiKey: 'test-key-not-used-for-network',
+    client: async ({ schema }) => { sent = schema; throw new Error('captured'); }
+  }).catch(() => {});
+  assert.ok(sent, 'the model client was never called, so no schema was captured');
+
+  const offenders = [];
+  (function walk(node, path) {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) return node.forEach((v, i) => walk(v, `${path}[${i}]`));
+    if (Object.hasOwn(node, 'maxItems')) offenders.push(`${path}.maxItems`);
+    if (Object.hasOwn(node, 'uniqueItems')) offenders.push(`${path}.uniqueItems`);
+    if (Object.hasOwn(node, 'minItems') && node.minItems !== 0 && node.minItems !== 1) {
+      offenders.push(`${path}.minItems=${node.minItems}`);
+    }
+    for (const [key, value] of Object.entries(node)) walk(value, `${path}.${key}`);
+  })(sent, 'schema');
+
+  assert.deepEqual(offenders, [], `schema carries keywords the model API rejects: ${offenders.join(', ')}`);
+});

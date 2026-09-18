@@ -1,7 +1,9 @@
 {
   "vision_model": "claude-opus-5",
+  "output_model": "claude-haiku-4-5-20251001",
   "documentation_checked_at": "2026-09-17",
   "source": "https://platform.claude.com/docs/en/api/models/list",
   "account_access": "PENDING: verified via Models API at call time",
-  "live_quality_latency_cost": "PENDING"
+  "live_quality_latency_cost": "PENDING",
+  "output_model_note": "Title+caption generation for 15 slots measured 60-73s on claude-opus-5 and 59s on claude-sonnet-5, both over the serverless ceiling; claude-haiku-4-5 runs 19-23s. Vision stays on vision_model."
 }
