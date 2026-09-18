@@ -51,6 +51,6 @@ test('sample photos, observations and output match and local replay makes no net
       .getState()
       .draft?.slots.find((slot) => slot.photo_id === omitted?.photo_id)
       ?.caption_state,
-  ).toBe('filled');
+  ).toBe('seed');
   expect(fetcher).not.toHaveBeenCalled();
 });

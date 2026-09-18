@@ -6,11 +6,11 @@ mode=all의 응답은 `{ "output": { "title": "한 줄", "slots": [...] } }`이�
 
 각 슬롯은 정확히 position, photo_id, caption_state, text, omit_reason, evidence를 가진다. 받은 feed의 photo_id와 원래 position을 유지한다. 사진 추가·삭제·재정렬은 하지 않는다.
 
-- filled: text는 **사용자가 자기 캡션을 쓰기 위한 단서**다. 완성된 캡션을 대필하지 않는다. omit_reason=null.
+- seed: text는 **사용자가 자기 캡션을 쓰기 위한 단서**다. 완성된 캡션을 대필하지 않는다. omit_reason=null.
 - omitted: text=null, omit_reason은 구체적인 한 줄 이유, evidence는 보존한다. 단서나 질문도 주지 않는다.
 - user는 사용자가 편집했을 때 클라이언트가 만드는 상태다. 서버는 user 상태나 사용자 발언을 만들어 내지 않는다.
 
-## filled의 작성 방식
+## seed의 작성 방식
 
 text는 두 줄이다. 첫 줄은 `쓸 거리: ` 뒤에 **해당 슬롯** describable_facts에서 고른 소재 1~2개를 ` · `로 연결한다. 둘째 줄은 정확히 `이 중 기억에 남은 건?`이다. 사용자가 소재 하나를 골라 자신의 기억을 붙이도록 돕는다. 질문은 답이나 경험을 단정하지 않는다.
 
@@ -29,7 +29,7 @@ caption_len과 문체는 완성 문장의 목표 길이가 아니다. 긴 캡션
 
 ## 근거
 
-evidence에는 해당 photo_id를 ref로 하는 uploaded_photo 근거를 포함한다. filled의 note는 **선택한 소재가 들어 있는 describable_facts 문자열 하나를 처음부터 끝까지 그대로 복사**한다. 한 슬롯에서 선택한 사실은 하나이므로 uploaded_photo 근거도 하나만 둔다. 요약하거나 기호로 합치거나 감정·계절·의도를 보태지 않는다.
+evidence에는 해당 photo_id를 ref로 하는 uploaded_photo 근거를 포함한다. seed의 note는 **선택한 소재가 들어 있는 describable_facts 문자열 하나를 처음부터 끝까지 그대로 복사**한다. 한 슬롯에서 선택한 사실은 하나이므로 uploaded_photo 근거도 하나만 둔다. 요약하거나 기호로 합치거나 감정·계절·의도를 보태지 않는다.
 
 omitted의 uploaded_photo note도 실제 관측 문자열 하나를 그대로 복사한다. 단서를 비운다는 것과 관측 사실이 없다는 것은 다르다. 사실이 있는데 비우는 경우에는 첫 번째 사실을 원문 그대로 복사한다. 사실 배열이 비었을 때에만 `확인한 관측 사실이 없음`으로 한계를 밝힌다. rule 근거에는 실제 적용한 비움 규칙을 설명한다. 모든 evidence의 ref와 note는 비우지 않는다. 프로필의 말투를 사진 내용의 증거로 대신하지 않는다.
 

@@ -7,9 +7,9 @@ const input = {schema_version: '1.0', mode: 'all', feed: structuredClone(fixture
 const provider = process.argv[2] === 'some'
   ? {output: structuredClone(fixture.all_omitted)}
   : {output: {title: '세 장의 기록', slots: fixture.feed.slots.map(slot => ({
-      photo_id: slot.photo_id, position: slot.position, caption_state: 'filled',
-      text: slot.caption_inputs.describable_facts[0], omit_reason: null,
-      evidence: [{kind: 'uploaded_photo', ref: slot.photo_id, note: '합성 fixture의 해당 카드'}]
+      photo_id: slot.photo_id, position: slot.position, caption_state: 'seed',
+      text: `쓸 거리: ${slot.caption_inputs.describable_facts[0]}\n이 중 기억에 남은 건?`, omit_reason: null,
+      evidence: [{kind: 'uploaded_photo', ref: slot.photo_id, note: slot.caption_inputs.describable_facts[0]}]
     }))}};
 const fetchImpl = async url => url.includes('/models/')
   ? Response.json({id: 'probe', capabilities: {image_input: {supported: false}, structured_outputs: {supported: true}}})
