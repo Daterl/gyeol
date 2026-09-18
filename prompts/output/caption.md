@@ -4,7 +4,7 @@
 
 mode=all의 응답은 `{ "output": { "title": "한 줄", "slots": [...] } }`이다. mode=slot의 응답은 `{ "slot": {...} }` 하나이며 요청한 photo_id만 다룬다. 나머지 슬롯이나 타이틀을 재생성하지 않는다. 타이틀에는 title.md를 적용하며 아래 단서 형식은 슬롯 text에만 적용한다.
 
-각 슬롯은 정확히 position, photo_id, caption_state, text, omit_reason, evidence를 가진다. 받은 feed의 photo_id와 원래 position을 유지한다. 사진 추가·삭제·재정렬은 하지 않는다.
+각 슬롯은 정확히 position, photo_id, caption_state, text, omit_reason, fact_index, evidence를 가진다. 받은 feed의 photo_id와 원래 position을 유지한다. 사진 추가·삭제·재정렬은 하지 않는다.
 
 - seed: text는 **사용자가 자기 캡션을 쓰기 위한 단서**다. 완성된 캡션을 대필하지 않는다. omit_reason=null.
 - omitted: text=null, omit_reason은 구체적인 한 줄 이유, evidence는 보존한다. 단서나 질문도 주지 않는다.
@@ -29,10 +29,15 @@ caption_len과 문체는 완성 문장의 목표 길이가 아니다. 긴 캡션
 
 ## 근거
 
-evidence에는 해당 photo_id를 ref로 하는 uploaded_photo 근거를 포함한다. seed의 note는 **선택한 소재가 들어 있는 describable_facts 문자열 하나를 처음부터 끝까지 그대로 복사**한다. 한 슬롯에서 선택한 사실은 하나이므로 uploaded_photo 근거도 하나만 둔다. 요약하거나 기호로 합치거나 감정·계절·의도를 보태지 않는다.
+**사진 근거 문장은 쓰지 않는다. 고르기만 한다.** `fact_index`에 그 슬롯 `caption_inputs.describable_facts` 배열에서 근거로 삼은 항목의 **0부터 시작하는 번호**를 넣는다. 서버가 그 항목을 원문 그대로 근거 문장으로 채운다. 요약하거나 기호로 합치거나 감정·계절·의도를 보탤 자리가 없다.
 
-omitted의 uploaded_photo note도 실제 관측 문자열 하나를 그대로 복사한다. 단서를 비운다는 것과 관측 사실이 없다는 것은 다르다. 사실이 있는데 비우는 경우에는 첫 번째 사실을 원문 그대로 복사한다. 사실 배열이 비었을 때에만 `확인한 관측 사실이 없음`으로 한계를 밝힌다. rule 근거에는 실제 적용한 비움 규칙을 설명한다. 모든 evidence의 ref와 note는 비우지 않는다. 프로필의 말투를 사진 내용의 증거로 대신하지 않는다.
+- seed: 단서로 뽑은 소재가 들어 있는 항목의 번호를 고른다. 단서의 각 소재는 그 항목 안에 글자 그대로 들어 있어야 한다.
+- omitted: 비우더라도 번호는 고른다. 단서를 비운다는 것과 관측 사실이 없다는 것은 다르다. 마땅한 것이 없으면 0을 고른다.
+- `describable_facts`가 빈 배열이면 omitted와 번호 0을 보내고 서버가 `확인한 관측 사실이 없음`으로 한계를 밝힌다.
+- 범위 밖 번호는 거부된다.
+
+`evidence`에는 **uploaded_photo를 직접 넣지 않는다.** 서버가 맨 앞에 넣는다. 여기에는 rule처럼 실제 적용한 규칙 근거만 담고, ref와 note를 비우지 않는다. 프로필의 말투를 사진 내용의 증거로 대신하지 않는다.
 
 단일 슬롯 채우기도 같은 단서 형식과 사실 경계를 지킨다. 쓸 소재가 없으면 근거 있는 omitted를 반환한다. 이미 사용자가 쓴 다른 슬롯을 바꾸지 않는다.
 
-응답 전 슬롯별로 점검한다. text의 각 소재가 실제 입력 사실의 연속 문자열인가? uploaded_photo note는 해당 슬롯 사실 배열의 한 요소와 글자 단위로 같은가? 쉼표·접속사·조사도 바꾸지 않았는가? note가 빈 배열에만 쓰는 한계 문구로 대체되지 않았는가? 고른 소재를 뒷받침하지 않는 다른 사실을 근거로 보내지 않았는가? 어긋나면 원문으로 고쳐 반환한다.
+응답 전 슬롯별로 점검한다. fact_index가 해당 슬롯 사실 배열 안의 번호인가? text의 각 소재가 선택한 사실의 연속 문자열인가? 사실 배열이 비었으면 omitted와 번호 0인가? evidence에는 직접 쓴 uploaded_photo 없이 실제 적용한 규칙만 있는가? 어긋나면 선택한 번호와 단서를 고쳐 반환한다.

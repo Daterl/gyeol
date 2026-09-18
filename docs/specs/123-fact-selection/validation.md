@@ -1,0 +1,19 @@
+# #123 검증 기록
+
+2026-09-18, 격리 체크아웃에서 Node 24.21.0으로 확인했다. 원본 vdev의 세 파일 미커밋 diff와 이 디렉터리의 명세만 이식했으며 원본은 수정하지 않았다.
+
+- `node --test test/generate.test.js`: 43/43 통과.
+- `npm test`: 299/299 통과.
+- `npm run check`: JS/JSON 79개, 문서 예제 4개 일치.
+- `npm run eval`: quiet/detail 및 주입 모델 계약 검사 통과. 의도적으로 주입한 foreign fact는 예상대로 실패했다.
+- `npm run lint`: 42개 파일 통과. 설정상 lib/test JavaScript는 lint 대상이 아니며 check와 Node 테스트로 검증했다.
+- `npm run test:ui`: 11개 파일, 42/42 통과.
+- `npm run typecheck`, `npm run build`: 통과.
+- 잘못된 사진 note 타입을 정규화가 숨기는 회귀는 이식 직후 실패하고 수정 뒤 통과했다.
+- mocked 3장·15장 HTTP 생성은 200이며 사진 ID/순서와 자기 사진의 원문 근거를 보존했다. 실제 모델이나 실제 사진의 반복 성공 증거가 아니다.
+
+`npm run test:smoke`는 기존 홈페이지 문구 `샘플 순서 살펴보기`를 기대하여 실패했다. 메모리에서 문구 검사만 현재 `GYEOL`로 맞춰 추가 확인했을 때 페이지와 네 fixture의 정확한 응답은 통과했으나, `POST /api/feed?mock=1`은 기존 기대 405 대신 현행 POST 처리 경로의 400을 반환했다. smoke 파일과 route는 이 PR에서 수정하지 않았다.
+
+CodeRabbit 0.7.6의 무료 CLI 검토는 코드·프롬프트·테스트 세 파일을 검토하고 major 1건을 반환했다: 선택한 사실에 없는 단서를 관측 문장 전체로 대체하는 기존 패치의 동작이 짧은 단서 요구와 충돌한다. 이 항목의 독립 검토와 해결 전에는 병합하지 않는다.
+
+실모델 유료 호출, Preview/Production 검증, 배포는 수행하지 않았다. ADR-0008의 강제 비움 제거는 후속 G4 작업이다.
