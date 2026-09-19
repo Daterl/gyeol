@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-09-18T03:26:50.563Z",
+  "verified_at": "2026-09-19T04:44:31.639Z",
   "runs": [
     {
       "scenario": "서로 다른 실사진 15장",
@@ -35,7 +35,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.619Z"
+          "analyzed_at": "2026-09-19T04:44:30.668Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMzU3MmUzOGQ5NjQ4NTY0MDljMTQ5ZTE5YzNmYjJkOTMzZGM5NzM2NWQ4NzZjYWU1ZDJhNGY4NmUxYTdhYmNmMyIsInBob3RvSWQiOiJwaF8wMSIsImlucHV0SW5kZXgiOjB9.d3GGOjTvJeXcNZkdM0S_HuqSKCMh0UWcte71tBdJhJ4"
         },
         {
           "schema_version": "1.0",
@@ -68,7 +69,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.655Z"
+          "analyzed_at": "2026-09-19T04:44:30.689Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNmZkYmQ1Yzg1MzAzYWUyNTU2Zjk2YThhZmU1OGQ2ZDAzOGFmOGI3NTE1M2ZmNWQyMTVmZTU0NWNjYjEyYzI1NiIsInBob3RvSWQiOiJwaF8wMiIsImlucHV0SW5kZXgiOjF9.HfBuypl4pG92KuZRN79R0WYC9fC7Ek3mbutAqDoZMpc"
         },
         {
           "schema_version": "1.0",
@@ -101,7 +103,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.682Z"
+          "analyzed_at": "2026-09-19T04:44:30.702Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiZGYxZjNmNDg5MGQ4Y2NlNGNjMTRmNWUwNzQ3ODE4NWE0OGUzMjVkYzMwMWNiZWEzOGZmOTNjZGI5Yjc0MzU3OCIsInBob3RvSWQiOiJwaF8wMyIsImlucHV0SW5kZXgiOjJ9.UIIGwrHVsbLj-owk24lJG1iMOmdrgU00-FHP4TSE-uU"
         },
         {
           "schema_version": "1.0",
@@ -134,7 +137,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.730Z"
+          "analyzed_at": "2026-09-19T04:44:30.720Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNDk4ZDQ0ZWNjMjE5YzVmYTRhN2VmNDU4ZmY4ZGRhNTI1NzFlZTYxMGQ0NWM2ZWE1NTE0YzFlNTI3YzM2MDk3NCIsInBob3RvSWQiOiJwaF8wNCIsImlucHV0SW5kZXgiOjN9.6PJmhHDd2mrSdCkC5qWeGQDdQepYZ87PQnbfCWS_oMc"
         },
         {
           "schema_version": "1.0",
@@ -167,7 +171,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.746Z"
+          "analyzed_at": "2026-09-19T04:44:30.732Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMzM1YWE3Y2FiNDAxMWM2MTM2MmRkMDJjZjEyOGYxZjQzOTk3YTVhNDkxMmFlMzM1MmZhNTJkMGYwYWI4NTNhZCIsInBob3RvSWQiOiJwaF8wNSIsImlucHV0SW5kZXgiOjR9.JBNA33S60F9nj6J05zOwfIg3fzFdafrofjlMSjMQmxM"
         },
         {
           "schema_version": "1.0",
@@ -200,7 +205,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.758Z"
+          "analyzed_at": "2026-09-19T04:44:30.739Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMmNjOTRkMDI5NjIzMmQzZmFhMTYzZGMyNDExYzAwMDc1OTNhYjUzM2VmZjI1M2JiOWI0ZjAzNGExOTY5NGM5NCIsInBob3RvSWQiOiJwaF8wNiIsImlucHV0SW5kZXgiOjV9.d98jlEK7pi5lREEblbLApQ1gCrWWOll8E2tgxQQ1VIs"
         },
         {
           "schema_version": "1.0",
@@ -233,7 +239,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.771Z"
+          "analyzed_at": "2026-09-19T04:44:30.747Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiODBhNTFhNzExZjQ0MDI0NmNmMzQ4OTUyZWVlOTA2OTZlNjY4MWViMzFlZWRhNTJhOTBlYmQ2MWVkZmZlN2MyYSIsInBob3RvSWQiOiJwaF8wNyIsImlucHV0SW5kZXgiOjZ9.UyhTuUUGheT1nbqbqpPchQei7S7Qme4QwuSmX-YhdcI"
         },
         {
           "schema_version": "1.0",
@@ -266,7 +273,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.845Z"
+          "analyzed_at": "2026-09-19T04:44:30.782Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMGMwMGY1ZDc1YzRmMDc2YmRjZWI0Y2U4MjM0ZTQ0YzNlNDc1ZjA0ZGRmMDA3NzcxMTZjYjYyZTBjYjYzYTg3YyIsInBob3RvSWQiOiJwaF8wOCIsImlucHV0SW5kZXgiOjd9.QsEy6MScmMCDiI9PRbQA5RDRfugiM4BhxsrAYOFqdqE"
         },
         {
           "schema_version": "1.0",
@@ -299,7 +307,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.858Z"
+          "analyzed_at": "2026-09-19T04:44:30.789Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiODc5MTYzMmI0MTljZDdmODE1NDdhN2ZmMWI4OThjNjczMTM3ZGE5MDdhZWMyM2Q0ZDAzOGQ2NmI3NmNiNWRmZiIsInBob3RvSWQiOiJwaF8wOSIsImlucHV0SW5kZXgiOjh9.RDmnQtFrT-d-dy44vimw3AG0UO-Vw403hS77nogWySU"
         },
         {
           "schema_version": "1.0",
@@ -332,7 +341,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.887Z"
+          "analyzed_at": "2026-09-19T04:44:30.805Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNWEwNzE4ZDE1Yzk4OGZlOWYxZWU5MjBjZDRlMmNjZTU4NmU4MWM2MmQxZjViZjE3OTA4N2EzMzM4YjQ4NmM0YSIsInBob3RvSWQiOiJwaF8xMCIsImlucHV0SW5kZXgiOjl9.dBvyDaHj6GkEuX-pWtG-yTlsOgTJ4pEIFpQMwmUGXH4"
         },
         {
           "schema_version": "1.0",
@@ -365,7 +375,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:45.984Z"
+          "analyzed_at": "2026-09-19T04:44:30.813Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiYTQwN2VlN2Q0OWE3MzY4ZWU0NjQ1MWVkNjg1NGNlM2ZlN2U0OTUxMDRlOGQ2YzUxOGNhZTA3MTQ2NjM3YTI1YSIsInBob3RvSWQiOiJwaF8xMSIsImlucHV0SW5kZXgiOjEwfQ._bTHj5Fwb6xDeBgNVPtudaOS3Wd-TqnIaYyPCz2pJfE"
         },
         {
           "schema_version": "1.0",
@@ -398,7 +409,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:46.024Z"
+          "analyzed_at": "2026-09-19T04:44:30.823Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNzA1Y2U5ZTYzYWE2OTdkOTM4N2YxNjI2YzVlODNlZmE1YTY0NmI3MGM0NjQ3MWQ4YWViOTBlZGJlZTcyNTUzNyIsInBob3RvSWQiOiJwaF8xMiIsImlucHV0SW5kZXgiOjExfQ.YnaEvzzKaS7Kgj_pxo3dJAJXEiuxLtTCwCMvoNLuuOw"
         },
         {
           "schema_version": "1.0",
@@ -431,7 +443,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:46.038Z"
+          "analyzed_at": "2026-09-19T04:44:30.832Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiM2E4NWNiZmViNWUxODQ0ZWU3NTQ5ODdiMGZmODBkMTk4MjRkOTg0YWI3M2RkNTBhY2QxMmIyNDY2YTIyM2NkMyIsInBob3RvSWQiOiJwaF8xMyIsImlucHV0SW5kZXgiOjEyfQ.5JY8mVRbY0Y5PicQy5leaJrt5V9MYNywQ-BatuASlaw"
         },
         {
           "schema_version": "1.0",
@@ -464,7 +477,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:46.116Z"
+          "analyzed_at": "2026-09-19T04:44:30.838Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiYTJlNjlkMmM0NjY4YTNhMTMwNWZjZGFhMzhlZmNkYWNjYTFmY2M1YmVjOGQxYTE4NDRlODk2ZTA4YzJhMWZjZCIsInBob3RvSWQiOiJwaF8xNCIsImlucHV0SW5kZXgiOjEzfQ.UgSGG_kaHQEJAzBzOMB9MpgwOBsulYgnun_4wMD8SY8"
         },
         {
           "schema_version": "1.0",
@@ -497,7 +511,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:46.387Z"
+          "analyzed_at": "2026-09-19T04:44:30.872Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNjU2NjlhYmY3ZTkwNWQyNmMxNDI5ZmUwZDVmZjRiYWY1YWRhNTFlMjIzYmQyZjc3MjA1NDQwNDJiNmY2MDU3ZSIsInBob3RvSWQiOiJwaF8xNSIsImlucHV0SW5kZXgiOjE0fQ._ClcTMmDmv7oIlm9OLC-rt1nO5JRnWvneMNym_DNe1s"
         }
       ],
       "digests": [
@@ -526,14 +541,13 @@
       },
       "outputs": [
         {
-          "target": {
-            "kind": "none"
-          },
+          "prompt": null,
           "slots": [
             {
               "position": 1,
-              "photo_id": "ph_01",
-              "omit_suggestion": {
+              "photo_id": "ph_11",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -542,7 +556,8 @@
             {
               "position": 2,
               "photo_id": "ph_02",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -550,8 +565,9 @@
             },
             {
               "position": 3,
-              "photo_id": "ph_03",
-              "omit_suggestion": {
+              "photo_id": "ph_09",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -559,8 +575,9 @@
             },
             {
               "position": 4,
-              "photo_id": "ph_04",
-              "omit_suggestion": {
+              "photo_id": "ph_01",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -568,8 +585,9 @@
             },
             {
               "position": 5,
-              "photo_id": "ph_05",
-              "omit_suggestion": {
+              "photo_id": "ph_03",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -578,7 +596,8 @@
             {
               "position": 6,
               "photo_id": "ph_06",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -586,8 +605,9 @@
             },
             {
               "position": 7,
-              "photo_id": "ph_07",
-              "omit_suggestion": {
+              "photo_id": "ph_13",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -595,8 +615,9 @@
             },
             {
               "position": 8,
-              "photo_id": "ph_08",
-              "omit_suggestion": {
+              "photo_id": "ph_14",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -604,8 +625,9 @@
             },
             {
               "position": 9,
-              "photo_id": "ph_09",
-              "omit_suggestion": {
+              "photo_id": "ph_04",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -613,8 +635,9 @@
             },
             {
               "position": 10,
-              "photo_id": "ph_10",
-              "omit_suggestion": {
+              "photo_id": "ph_07",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -622,8 +645,9 @@
             },
             {
               "position": 11,
-              "photo_id": "ph_11",
-              "omit_suggestion": {
+              "photo_id": "ph_08",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -631,8 +655,9 @@
             },
             {
               "position": 12,
-              "photo_id": "ph_12",
-              "omit_suggestion": {
+              "photo_id": "ph_15",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -640,8 +665,9 @@
             },
             {
               "position": 13,
-              "photo_id": "ph_13",
-              "omit_suggestion": {
+              "photo_id": "ph_12",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -649,8 +675,9 @@
             },
             {
               "position": 14,
-              "photo_id": "ph_14",
-              "omit_suggestion": {
+              "photo_id": "ph_10",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -658,8 +685,9 @@
             },
             {
               "position": 15,
-              "photo_id": "ph_15",
-              "omit_suggestion": {
+              "photo_id": "ph_05",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -674,15 +702,13 @@
           "E10": "PASS: all uploaded_photo refs resolve"
         },
         {
-          "target": {
-            "kind": "text",
-            "text": "짧게, 조용하게"
-          },
+          "prompt": "짧게, 조용하게",
           "slots": [
             {
               "position": 1,
               "photo_id": "ph_11",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -691,7 +717,8 @@
             {
               "position": 2,
               "photo_id": "ph_02",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -700,7 +727,8 @@
             {
               "position": 3,
               "photo_id": "ph_09",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -709,7 +737,8 @@
             {
               "position": 4,
               "photo_id": "ph_01",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -718,7 +747,8 @@
             {
               "position": 5,
               "photo_id": "ph_03",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -727,7 +757,8 @@
             {
               "position": 6,
               "photo_id": "ph_06",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -736,7 +767,8 @@
             {
               "position": 7,
               "photo_id": "ph_13",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -745,7 +777,8 @@
             {
               "position": 8,
               "photo_id": "ph_14",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -754,7 +787,8 @@
             {
               "position": 9,
               "photo_id": "ph_04",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -763,7 +797,8 @@
             {
               "position": 10,
               "photo_id": "ph_07",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -772,7 +807,8 @@
             {
               "position": 11,
               "photo_id": "ph_08",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -781,7 +817,8 @@
             {
               "position": 12,
               "photo_id": "ph_15",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -790,7 +827,8 @@
             {
               "position": 13,
               "photo_id": "ph_12",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -799,7 +837,8 @@
             {
               "position": 14,
               "photo_id": "ph_10",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -808,7 +847,8 @@
             {
               "position": 15,
               "photo_id": "ph_05",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -858,7 +898,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.165Z"
+          "analyzed_at": "2026-09-19T04:44:31.210Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMzU3MmUzOGQ5NjQ4NTY0MDljMTQ5ZTE5YzNmYjJkOTMzZGM5NzM2NWQ4NzZjYWU1ZDJhNGY4NmUxYTdhYmNmMyIsInBob3RvSWQiOiJwaF8wMSIsImlucHV0SW5kZXgiOjB9.d3GGOjTvJeXcNZkdM0S_HuqSKCMh0UWcte71tBdJhJ4"
         },
         {
           "schema_version": "1.0",
@@ -891,7 +932,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.448Z"
+          "analyzed_at": "2026-09-19T04:44:31.218Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNmZkYmQ1Yzg1MzAzYWUyNTU2Zjk2YThhZmU1OGQ2ZDAzOGFmOGI3NTE1M2ZmNWQyMTVmZTU0NWNjYjEyYzI1NiIsInBob3RvSWQiOiJwaF8wMiIsImlucHV0SW5kZXgiOjF9.HfBuypl4pG92KuZRN79R0WYC9fC7Ek3mbutAqDoZMpc"
         },
         {
           "schema_version": "1.0",
@@ -924,7 +966,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.481Z"
+          "analyzed_at": "2026-09-19T04:44:31.226Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiZGYxZjNmNDg5MGQ4Y2NlNGNjMTRmNWUwNzQ3ODE4NWE0OGUzMjVkYzMwMWNiZWEzOGZmOTNjZGI5Yjc0MzU3OCIsInBob3RvSWQiOiJwaF8wMyIsImlucHV0SW5kZXgiOjJ9.UIIGwrHVsbLj-owk24lJG1iMOmdrgU00-FHP4TSE-uU"
         },
         {
           "schema_version": "1.0",
@@ -957,7 +1000,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.499Z"
+          "analyzed_at": "2026-09-19T04:44:31.236Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNDk4ZDQ0ZWNjMjE5YzVmYTRhN2VmNDU4ZmY4ZGRhNTI1NzFlZTYxMGQ0NWM2ZWE1NTE0YzFlNTI3YzM2MDk3NCIsInBob3RvSWQiOiJwaF8wNCIsImlucHV0SW5kZXgiOjN9.6PJmhHDd2mrSdCkC5qWeGQDdQepYZ87PQnbfCWS_oMc"
         },
         {
           "schema_version": "1.0",
@@ -990,7 +1034,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.531Z"
+          "analyzed_at": "2026-09-19T04:44:31.248Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMzM1YWE3Y2FiNDAxMWM2MTM2MmRkMDJjZjEyOGYxZjQzOTk3YTVhNDkxMmFlMzM1MmZhNTJkMGYwYWI4NTNhZCIsInBob3RvSWQiOiJwaF8wNSIsImlucHV0SW5kZXgiOjR9.JBNA33S60F9nj6J05zOwfIg3fzFdafrofjlMSjMQmxM"
         },
         {
           "schema_version": "1.0",
@@ -1023,7 +1068,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.543Z"
+          "analyzed_at": "2026-09-19T04:44:31.254Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMmNjOTRkMDI5NjIzMmQzZmFhMTYzZGMyNDExYzAwMDc1OTNhYjUzM2VmZjI1M2JiOWI0ZjAzNGExOTY5NGM5NCIsInBob3RvSWQiOiJwaF8wNiIsImlucHV0SW5kZXgiOjV9.d98jlEK7pi5lREEblbLApQ1gCrWWOll8E2tgxQQ1VIs"
         },
         {
           "schema_version": "1.0",
@@ -1056,7 +1102,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.556Z"
+          "analyzed_at": "2026-09-19T04:44:31.262Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiODBhNTFhNzExZjQ0MDI0NmNmMzQ4OTUyZWVlOTA2OTZlNjY4MWViMzFlZWRhNTJhOTBlYmQ2MWVkZmZlN2MyYSIsInBob3RvSWQiOiJwaF8wNyIsImlucHV0SW5kZXgiOjZ9.UyhTuUUGheT1nbqbqpPchQei7S7Qme4QwuSmX-YhdcI"
         },
         {
           "schema_version": "1.0",
@@ -1089,7 +1136,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.990Z"
+          "analyzed_at": "2026-09-19T04:44:31.295Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMGMwMGY1ZDc1YzRmMDc2YmRjZWI0Y2U4MjM0ZTQ0YzNlNDc1ZjA0ZGRmMDA3NzcxMTZjYjYyZTBjYjYzYTg3YyIsInBob3RvSWQiOiJwaF8wOCIsImlucHV0SW5kZXgiOjd9.QsEy6MScmMCDiI9PRbQA5RDRfugiM4BhxsrAYOFqdqE"
         },
         {
           "schema_version": "1.0",
@@ -1122,7 +1170,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.009Z"
+          "analyzed_at": "2026-09-19T04:44:31.301Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiODc5MTYzMmI0MTljZDdmODE1NDdhN2ZmMWI4OThjNjczMTM3ZGE5MDdhZWMyM2Q0ZDAzOGQ2NmI3NmNiNWRmZiIsInBob3RvSWQiOiJwaF8wOSIsImlucHV0SW5kZXgiOjh9.RDmnQtFrT-d-dy44vimw3AG0UO-Vw403hS77nogWySU"
         },
         {
           "schema_version": "1.0",
@@ -1155,7 +1204,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.049Z"
+          "analyzed_at": "2026-09-19T04:44:31.315Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNWEwNzE4ZDE1Yzk4OGZlOWYxZWU5MjBjZDRlMmNjZTU4NmU4MWM2MmQxZjViZjE3OTA4N2EzMzM4YjQ4NmM0YSIsInBob3RvSWQiOiJwaF8xMCIsImlucHV0SW5kZXgiOjl9.dBvyDaHj6GkEuX-pWtG-yTlsOgTJ4pEIFpQMwmUGXH4"
         },
         {
           "schema_version": "1.0",
@@ -1188,7 +1238,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.200Z"
+          "analyzed_at": "2026-09-19T04:44:31.322Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiYTQwN2VlN2Q0OWE3MzY4ZWU0NjQ1MWVkNjg1NGNlM2ZlN2U0OTUxMDRlOGQ2YzUxOGNhZTA3MTQ2NjM3YTI1YSIsInBob3RvSWQiOiJwaF8xMSIsImlucHV0SW5kZXgiOjEwfQ._bTHj5Fwb6xDeBgNVPtudaOS3Wd-TqnIaYyPCz2pJfE"
         },
         {
           "schema_version": "1.0",
@@ -1221,7 +1272,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.259Z"
+          "analyzed_at": "2026-09-19T04:44:31.331Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiNzA1Y2U5ZTYzYWE2OTdkOTM4N2YxNjI2YzVlODNlZmE1YTY0NmI3MGM0NjQ3MWQ4YWViOTBlZGJlZTcyNTUzNyIsInBob3RvSWQiOiJwaF8xMiIsImlucHV0SW5kZXgiOjExfQ.YnaEvzzKaS7Kgj_pxo3dJAJXEiuxLtTCwCMvoNLuuOw"
         },
         {
           "schema_version": "1.0",
@@ -1254,7 +1306,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.277Z"
+          "analyzed_at": "2026-09-19T04:44:31.338Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiM2E4NWNiZmViNWUxODQ0ZWU3NTQ5ODdiMGZmODBkMTk4MjRkOTg0YWI3M2RkNTBhY2QxMmIyNDY2YTIyM2NkMyIsInBob3RvSWQiOiJwaF8xMyIsImlucHV0SW5kZXgiOjEyfQ.5JY8mVRbY0Y5PicQy5leaJrt5V9MYNywQ-BatuASlaw"
         },
         {
           "schema_version": "1.0",
@@ -1287,7 +1340,8 @@
           "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:49.290Z"
+          "analyzed_at": "2026-09-19T04:44:31.344Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiYTJlNjlkMmM0NjY4YTNhMTMwNWZjZGFhMzhlZmNkYWNjYTFmY2M1YmVjOGQxYTE4NDRlODk2ZTA4YzJhMWZjZCIsInBob3RvSWQiOiJwaF8xNCIsImlucHV0SW5kZXgiOjEzfQ.UgSGG_kaHQEJAzBzOMB9MpgwOBsulYgnun_4wMD8SY8"
         },
         {
           "schema_version": "1.0",
@@ -1317,12 +1371,11 @@
             "주요 색 #434040 (점유 14%)",
             "주요 색 #6b6765 (점유 10%)"
           ],
-          "quality_flags": [
-            "duplicate_of:ph_01"
-          ],
+          "quality_flags": [],
           "analysis_source": "heuristic",
           "model": "heuristic-jpeg-dc@1",
-          "analyzed_at": "2026-09-18T03:26:48.165Z"
+          "analyzed_at": "2026-09-19T04:44:31.210Z",
+          "analysis_receipt": "eyJ2IjoxLCJzZXNzaW9uSWQiOiJ2ZXJpZnktb21pdC1zdWdnZXN0aW9uIiwiY29sbGVjdGlvbiI6InNlbGVjdGVkIiwiZGlnZXN0IjoiMzU3MmUzOGQ5NjQ4NTY0MDljMTQ5ZTE5YzNmYjJkOTMzZGM5NzM2NWQ4NzZjYWU1ZDJhNGY4NmUxYTdhYmNmMyIsInBob3RvSWQiOiJwaF8xNSIsImlucHV0SW5kZXgiOjE0fQ.rAzAUTwAF87qZgoaqdcEn7lgA1hroYZgq4u5852P3vw"
         }
       ],
       "digests": [
@@ -1351,14 +1404,13 @@
       },
       "outputs": [
         {
-          "target": {
-            "kind": "none"
-          },
+          "prompt": null,
           "slots": [
             {
               "position": 1,
-              "photo_id": "ph_01",
-              "omit_suggestion": {
+              "photo_id": "ph_11",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1367,7 +1419,8 @@
             {
               "position": 2,
               "photo_id": "ph_02",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1375,8 +1428,9 @@
             },
             {
               "position": 3,
-              "photo_id": "ph_03",
-              "omit_suggestion": {
+              "photo_id": "ph_09",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1384,8 +1438,9 @@
             },
             {
               "position": 4,
-              "photo_id": "ph_04",
-              "omit_suggestion": {
+              "photo_id": "ph_01",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1393,8 +1448,9 @@
             },
             {
               "position": 5,
-              "photo_id": "ph_05",
-              "omit_suggestion": {
+              "photo_id": "ph_03",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1403,7 +1459,8 @@
             {
               "position": 6,
               "photo_id": "ph_06",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1411,8 +1468,9 @@
             },
             {
               "position": 7,
-              "photo_id": "ph_07",
-              "omit_suggestion": {
+              "photo_id": "ph_13",
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1420,71 +1478,9 @@
             },
             {
               "position": 8,
-              "photo_id": "ph_08",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 9,
-              "photo_id": "ph_09",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 10,
-              "photo_id": "ph_10",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 11,
-              "photo_id": "ph_11",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 12,
-              "photo_id": "ph_12",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 13,
-              "photo_id": "ph_13",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 14,
-              "photo_id": "ph_14",
-              "omit_suggestion": {
-                "recommended": false,
-                "reason": null,
-                "evidence": []
-              }
-            },
-            {
-              "position": 15,
               "photo_id": "ph_15",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": true,
                 "reason": "ph_01와 동일 바이트 중복으로 관측되어 이 사진은 빼는 것을 권합니다.",
                 "evidence": [
@@ -1499,6 +1495,76 @@
                     "note": "ph_15의 duplicate_of가 가리키는 현재 입력 사진입니다."
                   }
                 ]
+              }
+            },
+            {
+              "position": 9,
+              "photo_id": "ph_14",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 10,
+              "photo_id": "ph_07",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 11,
+              "photo_id": "ph_08",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 12,
+              "photo_id": "ph_04",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 13,
+              "photo_id": "ph_10",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 14,
+              "photo_id": "ph_12",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
+              }
+            },
+            {
+              "position": 15,
+              "photo_id": "ph_05",
+              "included": true,
+              "exclusion_candidate": {
+                "recommended": false,
+                "reason": null,
+                "evidence": []
               }
             }
           ],
@@ -1510,15 +1576,13 @@
           "E10": "PASS: all uploaded_photo refs resolve"
         },
         {
-          "target": {
-            "kind": "text",
-            "text": "짧게, 조용하게"
-          },
+          "prompt": "짧게, 조용하게",
           "slots": [
             {
               "position": 1,
               "photo_id": "ph_11",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1527,7 +1591,8 @@
             {
               "position": 2,
               "photo_id": "ph_02",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1536,7 +1601,8 @@
             {
               "position": 3,
               "photo_id": "ph_09",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1545,7 +1611,8 @@
             {
               "position": 4,
               "photo_id": "ph_01",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1554,7 +1621,8 @@
             {
               "position": 5,
               "photo_id": "ph_03",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1563,7 +1631,8 @@
             {
               "position": 6,
               "photo_id": "ph_06",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1572,7 +1641,8 @@
             {
               "position": 7,
               "photo_id": "ph_13",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1581,7 +1651,8 @@
             {
               "position": 8,
               "photo_id": "ph_15",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": true,
                 "reason": "ph_01와 동일 바이트 중복으로 관측되어 이 사진은 빼는 것을 권합니다.",
                 "evidence": [
@@ -1601,7 +1672,8 @@
             {
               "position": 9,
               "photo_id": "ph_14",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1610,7 +1682,8 @@
             {
               "position": 10,
               "photo_id": "ph_07",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1619,7 +1692,8 @@
             {
               "position": 11,
               "photo_id": "ph_08",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1628,7 +1702,8 @@
             {
               "position": 12,
               "photo_id": "ph_04",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1637,7 +1712,8 @@
             {
               "position": 13,
               "photo_id": "ph_10",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1646,7 +1722,8 @@
             {
               "position": 14,
               "photo_id": "ph_12",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1655,7 +1732,8 @@
             {
               "position": 15,
               "photo_id": "ph_05",
-              "omit_suggestion": {
+              "included": true,
+              "exclusion_candidate": {
                 "recommended": false,
                 "reason": null,
                 "evidence": []
@@ -1688,7 +1766,8 @@
   "limitations": [
     "실제 픽셀 분석이며 외부 모델 호출은 0회",
     "mock=1은 키 사용을 끄며 사진 바이트는 실제로 분석한다",
+    "프로필 스냅샷은 fixtures/curation.sample.json 주입이며 Apify 실수집이 아니다",
     "HTTP Request/Response 핸들러 실행이며 배포 네트워크 검증은 아니다",
-    "중복 플래그는 프로세스 캐시에 의존하며 미관측 중복은 권고하지 않는다"
+    "중복은 같은 요청 안의 서명된 동일 바이트 해시에 한정하며 미관측 중복은 권고하지 않는다"
   ]
 }

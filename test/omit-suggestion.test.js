@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {buildFeed,handleLegacyFeed as handleFeed,handleAnalyze} from '../lib/pipeline.js';
+import {buildFeed,handleLegacyFeed as handleFeed,handleFeed as handleFeedProduction,handleAnalyze} from '../lib/pipeline.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {resetAnalysisState} from '../lib/photo_analysis.js';
 import {withOmitSuggestions} from '../lib/omit-suggestion.js';
@@ -177,4 +177,38 @@ test('warm cache never exposes another session photo id',async()=>{
       assert.ok(result.feed.slots.every(slot=>!slot.omit_suggestion.recommended));
     }
   }
+});
+
+// 제품이 실제로 서빙하는 경로는 handleFeed → buildCuration 이고, 사용자가 보는 필드는
+// curation.slots[].exclusion_candidate 다. 위 검사들은 legacy 경로만 본다 — #68·#69 가 "조각은
+// 옳은데 이어지지 않은" 것으로 실패한 자리라 연결 자체를 검사한다.
+test('production curation path carries the observed candidate and still includes every photo',async()=>{
+  resetAnalysisState();
+  const record=JSON.parse(await readFile(new URL('../fixtures/curation.sample.json',import.meta.url),'utf8'));
+  const bytes=await readFile(new URL('../fixtures/jpeg/gradient_baseline.jpg',import.meta.url));
+  const session_id='g5-omit-curation';
+  const photos=structuredClone(real.slice(0,3)).map((p,i)=>({...p,input_index:i}));
+  for(const i of [0,1]) {
+    const response=await analyze({schema_version:'1.0',session_id,collection:'selected',photo_id:photos[i].photo_id,
+      input_index:i,file_ref:'same.jpg',media_type:'image/jpeg',image_base64:bytes.toString('base64')});
+    assert.equal(response.status,200);photos[i]=await response.json();
+  }
+  const response=await handleFeedProduction(new Request('http://localhost/api/feed',{method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({schema_version:'1.0',session_id,profile_snapshot_id:'g5-public-snapshot',
+      profile_url:record.resolution.source_url,photos})}),
+    {resolveSnapshot:async()=>structuredClone(record.resolution),now:()=>Date.parse(record.now),receiptSecret:SECRET});
+  assert.equal(response.status,200,await response.clone().text());
+  const {curation,...feedResponse}=await response.json();validateFeedResponse(feedResponse);
+  const result={...feedResponse,curation};
+  const ids=photos.map(p=>p.photo_id);
+  assert.deepEqual(result.curation.slots.map(s=>s.photo_id).sort(),[...ids].sort());
+  assert.ok(result.curation.slots.every(s=>s.included===true),'자동 제외는 하지 않는다');
+  const candidates=Object.fromEntries(result.curation.slots.map(s=>[s.photo_id,s.exclusion_candidate]));
+  assert.equal(candidates.ph_02.recommended,true);
+  assert.equal(candidates.ph_01.recommended,false);
+  assert.equal(candidates.ph_03.recommended,false);
+  assert.deepEqual(candidates.ph_02.evidence.map(e=>e.ref),['ph_02','ph_01']);
+  assert.ok(candidates.ph_02.evidence.every(e=>e.kind==='uploaded_photo' && ids.includes(e.ref)),'E10');
+  assert.equal(result.feed.omit_summary.recommended_count,1);
 });

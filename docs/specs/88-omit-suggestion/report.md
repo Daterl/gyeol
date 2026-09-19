@@ -329,3 +329,56 @@ ssotize는 읽기 전용으로 필드명 검색과 한글 권고 문구 검색�
 - OrderedFeed 추가 필드는 초안이다. schemas/ 4종은 그대로이며 **원재·디에고가 소비 계약을 합의할 것**이 남았다. 기존 필드를 다른 의미로 사용하거나 스키마가 합의됐다고 주장하지 않는다.
 - 서로 다른 모델 식별자를 확인한 동일 diff 교차 리뷰, UI 표시 구현, 배포 네트워크 검증은 미실행이다. CodeRabbit의 모델 식별자는 공개되지 않아 교차 모델 게이트 통과로 세지 않는다.
 - merge·배포하지 않았다. 보드는 Draft PR 작성 뒤 실제 칸 이름인 검토·인수 대기로 갱신한다.
+
+---
+
+## 2026-09-19 재검증 — 제품 경로로 옮김 (기준 `a4110c1`)
+
+### 무엇이 구멍이었나
+
+`/api/feed`의 제품 진입점이 `handleFeed → buildCuration`으로 바뀌었고(#144 계열), 사용자가 보는 필드는
+`curation.slots[].exclusion_candidate`가 됐다. 그런데 #88의 증거는 둘 다 예전 `identity` 요청 형태(현 `handleLegacyFeed`)만 봤다.
+
+- `test/omit-suggestion.test.js` 8개 검사 전부 legacy 경로. 제품 응답의 `exclusion_candidate`를 확인하는 검사는 **0건**이었다.
+  `test/curation.test.js`는 중복이 없는 입력에서 `included===true`만 보므로 권고가 실려 오는지는 검사하지 않는다.
+- `scripts/verify-omit-suggestion.js`(DoD 증거 스크립트)는 현재 develop에서 **400 INVALID_REQUEST**로 죽는다.
+
+즉 `lib/`의 규칙은 옳았지만 **제품 경로에 붙어 있다는 증거가 없었다.** #68·#69가 실패한 것과 같은 형태다.
+
+### 고친 것
+
+1. `test/omit-suggestion.test.js`에 제품 큐레이션 경로 검사 1개 추가 — 서명된 동일 바이트 중복 1쌍을 넣고
+   `curation.slots[].exclusion_candidate`의 권고·근거 ref·`included===true`(자동 제외 금지)·슬롯 수 보존을 본다.
+   **고치기 전 실패 → 고친 뒤 통과** 확인: `lib/curation.js`의 `exclusion_candidate`를 상수로 바꾸면 9개 중 1 FAIL,
+   되돌리면 9 PASS.
+2. `scripts/verify-omit-suggestion.js`를 제품 경로(`handleFeed` + 주입 스냅샷 + 영수증 키)로 다시 썼다.
+   분석 응답이 스스로 `duplicate_of`를 주장하지 않는다는 것(#120 신뢰 경계)도 함께 확인한다.
+
+제품 코드(`lib/`, `src/`, `schemas/`)는 바꾸지 않았다. 검사와 증거 스크립트만 현재 경로에 맞췄다.
+
+### 실사진 15장 재실행
+
+```sh
+node scripts/verify-omit-suggestion.js /Users/chowonjae/Desktop/projects/wanted/pivot/apify-check/fixtures/images
+# exit 0 → docs/specs/88-omit-suggestion/real15-output.json
+```
+
+| 입력 | 권고 수 | 결과 |
+|---|---|---|
+| 서로 다른 실사진 15장 (prompt 없음 / "짧게, 조용하게") | 0 | `관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다.` · 15슬롯 · 전부 included |
+| 14종 + 첫 사진 동일 바이트 재입력 (같은 2벌) | 1 | ph_15 권고, 근거 ref `["ph_15","ph_01"]` 둘 다 실제 입력으로 해소(E10) · **ph_15 included=true** · 15슬롯 |
+
+미관측 값 변조 검사: composition·scale·has_face·subjects·text_in_image·dark·blurry를 사진별로 1개씩 바꿔
+**420회 비교, 판단이 달라진 경우 0건.** 외부 모델 호출 0회(`modelCalls: 0`).
+
+### 게이트
+
+`npm test` 401 PASS / 0 FAIL · `npm run eval` exit 0 (의도된 broken 케이스만 EXPECTED FAIL) ·
+`npm run check` PASS · `npm run lint` PASS · `npm run typecheck` PASS · `npm run test:ui` 110/110 (28파일).
+실행 Node는 v22.22.3이며 `engines`의 24.x 재검증은 남는다.
+
+### 여전히 남는 것
+
+- `GYEOL_ANALYSIS_RECEIPT_SECRET` 미설정이면 중복 권고는 0개로 fail-closed다. Preview/Production 설정과
+  실제 UI에서 동일 사진 2장 넣어 1건, 다른 사진 0건 확인은 **배포 책임자(디에고) 몫**으로 남는다.
+- 권고 범위는 여전히 **완전히 동일한 바이트**뿐이다. 서로 다른 실사진에서는 0건이 정상이다.
