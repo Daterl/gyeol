@@ -30,7 +30,13 @@ ref와 note는 비어 있지 않은 문자열이다. Claim<T> = `{value:T, confi
 구조가 없으므로 필드를 내지 않는다. 공개 `/api/feed`는 `analysis_receipt`가 이 값을 서명한 경우에만
 관측값으로 쓰고, 그 외에는 지운다 — 호출자가 보낸 서명은 서버의 측정이 아니다.
 
-초안 대비 필드 변경 없음. F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
+초안 대비 변경: `structure_signature` **선택 필드 하나를 더했다**(#97). 기존 필드는 그대로이고 없어도
+계약을 만족하므로 기존 fixture 는 수정 없이 통과한다. 아래 예시 15장은 단색 SVG 카드라 구조가 없어 이 필드를 내지 않는다 — 없는 것이 정상 상태다.
+필드가 **있는** 계약 예시는 `fixtures/photo_analysis.signature.sample.json` 에 따로 뒀다.
+실사진 fixture(`fixtures/jpeg/gradient_baseline.jpg`)를 휴리스틱 경로로 실제 분석한 출력이며
+손으로 채운 값이 아니다.
+`schema_version` 은 아직 `1.0` 이며, 올릴지 유지할지는 **사람 결정 pending** 이다 (CLAUDE.md 4-2).
+F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
 샘플 모음은 독립 입력 ID 대조를 위해 3장이 아닌 15장이다. 합성 SVG 카드이며 실사진 분석이 아니다.
 
 ```json

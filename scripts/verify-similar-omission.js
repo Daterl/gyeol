@@ -8,9 +8,15 @@ import {createHash} from 'node:crypto';
 import {readFile,readdir} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {handleAnalyze,handleFeed} from '../lib/pipeline.js';
-import {resetAnalysisState,analysisCounters} from '../lib/photo_analysis.js';
+import {resetAnalysisState,analysisCounters,measureJpeg} from '../lib/photo_analysis.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {SIMILAR_DISTANCE} from '../lib/omit-suggestion.js';
+import {signatureDistance} from '../lib/photo_signature.js';
+
+// 규칙이 통째로 꺼진 채 "권고 0건" 으로 성공 종료하는 것을 막는다. 비밀값이 없으면 서버가 서명을
+// 지우므로(fail closed) 유사 판정은 절대 뜨지 않고, 그 0건은 발화율 측정이 아니라 미실행이다.
+assert.ok(process.argv.includes('--pairs') || (process.env.GYEOL_ANALYSIS_RECEIPT_SECRET ?? '').length >= 32,
+  'GYEOL_ANALYSIS_RECEIPT_SECRET(32자 이상)이 없으면 서명이 지워져 이 검증은 규칙을 실행하지 않는다.');
 
 const profile=JSON.parse(await readFile(new URL('../fixtures/curation.sample.json',import.meta.url),'utf8'));
 const NOW=Date.parse('2026-09-18T10:00:00.000Z');
@@ -70,6 +76,32 @@ const mutations={
   blurry:p=>{if(!p.quality_flags.includes('blurry'))p.quality_flags=[...p.quality_flags,'blurry'];}
 };
 
+// 3) all-pairs 거리 분포 — 보고서 3절 표(42,195쌍)를 만든 바로 그 계산. `--pairs` 로만 돈다.
+const pct=(sorted,q)=>sorted.length?sorted[Math.min(sorted.length-1,Math.floor(q*sorted.length))]:null;
+async function pairStats() {
+  const signed=[];
+  for(const photo of unique) {
+    const measured=measureJpeg(photo.bytes);
+    if(measured?.structure_signature) signed.push({post:photo.post,file:photo.file,signature:measured.structure_signature});
+  }
+  const same=[],cross=[];
+  for(let i=0;i<signed.length;i++) for(let j=i+1;j<signed.length;j++) {
+    const distance=signatureDistance(signed[i].signature,signed[j].signature);
+    if(distance===null) continue;
+    (signed[i].post===signed[j].post?same:cross).push(distance);
+  }
+  same.sort((a,b)=>a-b); cross.sort((a,b)=>a-b);
+  const row=list=>({n:list.length,p1:pct(list,0.01),p5:pct(list,0.05),p25:pct(list,0.25),p50:pct(list,0.50),min:list[0]??null});
+  return {photos_with_signature:signed.length,pairs:same.length+cross.length,same_post:row(same),cross_post:row(cross),
+    cross_post_below_threshold:cross.filter(d=>d<SIMILAR_DISTANCE).length,
+    note:'탐색 표본 한 벌의 관측이다. 독립 holdout 검증이 아니며 신뢰 구간도 아니다.'};
+}
+if(process.argv.includes('--pairs')) {
+  console.log(JSON.stringify({verified_at:new Date().toISOString(),threshold:SIMILAR_DISTANCE,
+    corpus:{files:files.length,unique_bytes:unique.length,posts:byPost.size},distribution:await pairStats()},null,2));
+  process.exit(0);
+}
+
 const suggestions=feed=>Object.fromEntries(feed.slots.map(s=>[s.photo_id,s.omit_suggestion]));
 const scenarios=[];
 let comparisons=0,changedDecisions=0;
@@ -115,6 +147,11 @@ for(const [label,bundles,tamper] of [['같은 게시물 묶음',sameBundles,true
 }
 assert.equal(analysisCounters().modelCalls,0,'제품 AI 호출 0회');
 assert.equal(changedDecisions,0);
+// 알려진 양성 사례가 실제로 다시 뜨는지 본다. 규칙이 꺼졌거나 서명이 사라졌으면 여기서 실패한다.
+const samePost=scenarios.find(s=>s.scenario==='같은 게시물 묶음');
+assert.ok(samePost.recommended>=1,`같은 게시물 묶음에서 알려진 유사 양성이 0건이다(기대 >=1). 규칙이 실행되지 않았을 수 있다.`);
+assert.ok(samePost.samples.some(sample=>sample.hits.some(hit=>
+  /구조 거리 [0-9.]+/.test(hit.omit_suggestion.reason))),'유사 권고 문장에 측정 거리가 들어 있어야 한다');
 console.log(JSON.stringify({verified_at:new Date().toISOString(),threshold:SIMILAR_DISTANCE,
   corpus:{files:files.length,unique_bytes:unique.length,posts:byPost.size},scenarios,
   mutationCheck:{fields:Object.keys(mutations),comparisons,changedDecisions},

@@ -2,13 +2,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {createHmac} from 'node:crypto';
+import sharp from 'sharp';
 import {buildFeed,handleLegacyFeed as handleFeed,handleAnalyze} from '../lib/pipeline.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {resetAnalysisState,measureJpeg} from '../lib/photo_analysis.js';
 import {SIMILAR_DISTANCE,withOmitSuggestions} from '../lib/omit-suggestion.js';
-import {SIGNATURE_SIDE,signatureDistance,structureSignature} from '../lib/photo_signature.js';
+import {SIGNATURE_SIDE,exifOrientation,orientSignature,signatureDistance,structureSignature} from '../lib/photo_signature.js';
 import {validatePhoto,ContractError} from '../lib/contracts.js';
-import {authenticateDuplicateFlags,createPhotoReceipt} from '../lib/photo-receipt.js';
+import {authenticateDuplicateFlags,createPhotoReceipt,readPhotoReceipt} from '../lib/photo-receipt.js';
 import {readJpegBlocks} from '../lib/jpeg_dc.js';
 
 const real=JSON.parse(await readFile(new URL('./order.real20.json',import.meta.url),'utf8'));
@@ -143,4 +145,125 @@ test('recomputation is what validates the extension, so a suggestion never outli
   const widened=structuredClone(list);
   widened[1].structure_signature=shifted(SIMILAR_DISTANCE+0.1);
   assert.equal(withOmitSuggestions(feed,widened).omit_summary.recommended_count,0);
+});
+
+// ── #182 리뷰 Major 1: 제외 후보가 다시 비교 원본이 되면 연쇄 권고가 서로 모순된다 ──────────────
+test('an omitted photo is not a comparison original, so a chain never recommends away its own evidence',async()=>{
+  // A-B, B-C 는 기준 미만이고 A-C 는 기준 밖인 세 벌. 리뷰가 재현한 그 배치다.
+  const wave=t=>Array.from({length:CELLS},(_,i)=>{
+    const a=(2*Math.PI*i)/CELLS;
+    return Number((Math.sin(a)*Math.cos(t)+Math.cos(a)*Math.sin(t)).toFixed(3));
+  });
+  const [a,b,c]=[wave(0),wave(0.35),wave(0.70)];
+  assert.ok(signatureDistance(a,b)<SIMILAR_DISTANCE && signatureDistance(b,c)<SIMILAR_DISTANCE,'연쇄 전제');
+  assert.ok(signatureDistance(a,c)>=SIMILAR_DISTANCE,'양 끝은 기준 밖이어야 이 검사가 의미를 갖는다');
+  const list=photos(3,(photo,index)=>{photo.structure_signature=[a,b,c][index];});
+  const {feed}=await feedOf(list);
+  const choices=byId(feed);
+  assert.equal(choices.ph_01.recommended,false,'첫 장은 남는다');
+  assert.equal(choices.ph_02.recommended,true,'남은 ph_01 과 가까우므로 뺄 후보다');
+  assert.equal(choices.ph_03.recommended,false,'뺄 후보인 ph_02 는 비교 원본이 아니고, 남는 ph_01 과는 기준 밖이다');
+  // 모순 부재: 권고된 사진은 어떤 권고의 근거로도 등장하지 않는다.
+  const omitted=new Set(feed.slots.filter(s=>s.omit_suggestion.recommended).map(s=>s.photo_id));
+  for(const slot of feed.slots) for(const item of slot.omit_suggestion.evidence)
+    if(item.ref!==slot.photo_id) assert.ok(!omitted.has(item.ref),`빼라고 한 ${item.ref} 를 남기라는 근거로 쓰고 있다`);
+});
+
+test('a byte duplicate is omitted too, so it cannot become the original a similar photo points at',async()=>{
+  const near=delta=>baseSignature.map(v=>Number((v+delta).toFixed(3)));
+  // ph_02 는 ph_01 의 동일 바이트 중복이라 빠진다. ph_03 은 ph_02 와만 가깝고 ph_01 과는 기준 밖이다.
+  const list=photos(3,(photo,index)=>{
+    photo.structure_signature=[baseSignature,near(0.5),near(0.51)][index];
+    if(index===1) photo.quality_flags=[...photo.quality_flags,'duplicate_of:ph_01'];
+  });
+  assert.ok(signatureDistance(list[0].structure_signature,list[2].structure_signature)>=SIMILAR_DISTANCE,'양 끝은 기준 밖');
+  assert.ok(signatureDistance(list[1].structure_signature,list[2].structure_signature)<SIMILAR_DISTANCE,'연쇄 전제');
+  const choices=byId((await feedOf(list)).feed);
+  assert.equal(choices.ph_02.recommended,true,'동일 바이트 중복은 그대로 뺄 후보다');
+  assert.ok(choices.ph_02.reason.includes('동일 바이트 중복'));
+  assert.equal(choices.ph_03.recommended,false,'빠지는 ph_02 를 남기라는 근거로 삼지 않는다');
+});
+
+// ── #182 리뷰 Major 2: 서명은 저장 픽셀이 아니라 화면에 보이는 방향으로 잰다 ────────────────────
+test('the signature follows the displayed orientation, so EXIF rotation and a re-encoded rotation agree',async()=>{
+  // 좌우·상하 어느 쪽으로도 대칭이 아닌 그라디언트. 대칭 사진은 방향을 바꿔도 서명이 같아서
+  // 이 검사가 통과해도 아무것도 증명하지 못한다.
+  const W=128,H=96,raw=Buffer.alloc(W*H*3);
+  for(let y=0;y<H;y++) for(let x=0;x<W;x++) {
+    const i=(y*W+x)*3,v=Math.round(20+200*(x/W)**2+30*Math.sin((6*y)/H));
+    raw[i]=v; raw[i+1]=Math.round(v*0.6+40*(y/H)); raw[i+2]=255-v;
+  }
+  const source=await sharp(raw,{raw:{width:W,height:H,channels:3}}).jpeg({quality:95}).toBuffer();
+  const upright=measureJpeg(source).structure_signature;
+  assert.ok(upright,'기준 사진에 구조가 있어야 이 검사가 의미를 갖는다');
+  for(const orientation of [1,2,3,4,5,6,7,8]) {
+    // 같은 저장 픽셀 + EXIF 방향만 다른 파일 vs 그 파일의 픽셀을 실제로 돌린 재인코딩본.
+    // 두 번에 나눠 쓴다 — rotate() 는 같은 파이프라인에서 쓰는 metadata 가 아니라 입력의 EXIF 를 읽는다.
+    const tagged=await sharp(source).withMetadata({orientation}).toBuffer();
+    const rotated=await sharp(tagged).rotate().withMetadata({orientation:1}).jpeg({quality:95}).toBuffer();
+    assert.equal(exifOrientation(tagged),orientation,`EXIF Orientation ${orientation} 을 읽어야 한다`);
+    assert.equal(exifOrientation(rotated),1,'물리 회전본에는 방향 태그가 남지 않는다');
+    const a=measureJpeg(tagged).structure_signature,b=measureJpeg(rotated).structure_signature;
+    assert.ok(a&&b,`방향 ${orientation}: 양쪽 다 서명이 나와야 한다`);
+    // 남는 차이는 재인코딩·리샘플링 오차뿐이다. 방향을 무시하면 여기서 1 이상으로 벌어진다.
+    assert.ok(signatureDistance(a,b)<SIMILAR_DISTANCE,
+      `방향 ${orientation}: 같은 화면 배치인데 거리가 ${signatureDistance(a,b)} 다`);
+    // 반대 방향의 미탐도 막는다 — 돌려서 다르게 보이는 사진은 실제로 멀어야 한다.
+    if([2,3,5,6,7,8].includes(orientation)) assert.ok(signatureDistance(a,upright)>=SIMILAR_DISTANCE,
+      `방향 ${orientation}: 화면에서 다르게 보이는데 거리가 ${signatureDistance(a,upright)} 다`);
+  }
+});
+
+test('orientSignature only moves cells, and an unknown orientation changes nothing',()=>{
+  const cells=Array.from({length:CELLS},(_,i)=>i);
+  for(const orientation of [2,3,4,5,6,7,8])
+    assert.deepEqual([...orientSignature(cells,orientation)].sort((x,y)=>x-y),cells,'값은 보존되고 자리만 바뀐다');
+  assert.deepEqual(orientSignature(cells,1),cells);
+  assert.deepEqual(orientSignature(cells,99),cells,'읽을 수 없는 방향은 회전하지 않는다');
+  assert.equal(exifOrientation(Buffer.from('not a jpeg')),1);
+});
+
+// ── #182 리뷰 Major 3: v1 영수증/구 분석은 바이트 중복까지만 신뢰하고 서명은 지운다 ──────────────
+test('a v1 receipt keeps its byte-duplicate observation and loses only the signature it never signed',()=>{
+  const v1=(photo,digest)=>{
+    const body=Buffer.from(JSON.stringify({v:1,sessionId:'mixed',collection:'selected',digest,
+      photoId:photo.photo_id,inputIndex:photo.input_index})).toString('base64url');
+    return `${body}.${createHmac('sha256',SECRET).update(body).digest('base64url')}`;
+  };
+  const digest='a'.repeat(64);
+  const list=photos(3,(photo,index)=>{
+    photo.structure_signature=index===0?baseSignature:shifted(0.01);
+    photo.analysis_receipt=v1(photo,index<2?digest:'b'.repeat(64));
+  });
+  const authenticated=authenticateDuplicateFlags(list,{collection:'selected',sessionId:'mixed',secret:SECRET});
+  assert.ok(authenticated[1].quality_flags.includes('duplicate_of:ph_01'),
+    'v1 영수증을 전부 거절하면 기존 동일 바이트 중복 권고가 조용히 사라진다');
+  assert.ok(authenticated.every(photo=>photo.structure_signature===undefined),
+    'v1 은 서명을 서명하지 않았으므로 유사 판정 근거로 쓰지 않는다 (fail closed)');
+  const bare={slots:authenticated.map((photo,index)=>({position:index+1,photo_id:photo.photo_id}))};
+  const choices=byId(withOmitSuggestions(bare,authenticated));
+  assert.equal(choices.ph_02.recommended,true,'바이트 중복 권고는 유지된다');
+  assert.ok(choices.ph_02.reason.includes('동일 바이트 중복'));
+  assert.equal(choices.ph_03.recommended,false,'서명이 없으므로 유사 권고는 나오지 않는다');
+});
+
+test('a v2 receipt still authenticates the signature, and a forged version field is rejected',()=>{
+  const forge=payload=>{
+    const body=Buffer.from(JSON.stringify(payload)).toString('base64url');
+    return `${body}.${createHmac('sha256',SECRET).update(body).digest('base64url')}`;
+  };
+  const base={sessionId:'mixed',collection:'selected',digest:'c'.repeat(64),photoId:'ph_01',inputIndex:0};
+  assert.equal(readPhotoReceipt(forge({v:3,...base,sigDigest:null}),SECRET),null,'모르는 버전은 읽지 않는다');
+  assert.equal(readPhotoReceipt(forge({v:1,...base,sigDigest:null}),SECRET),null,'v1 에 v2 키를 섞으면 거부한다');
+  assert.equal(readPhotoReceipt(forge({v:2,...base}),SECRET),null,'v2 에서 sigDigest 를 빼면 거부한다');
+  assert.equal(readPhotoReceipt(forge({v:1,...base}),SECRET).v,1);
+});
+
+test('the optional-field contract fixture is a real measurement that validates on its own',async()=>{
+  const [photo]=JSON.parse(await readFile(new URL('../fixtures/photo_analysis.signature.sample.json',import.meta.url),'utf8'));
+  validatePhoto(photo);
+  assert.equal(photo.structure_signature.length,CELLS);
+  const bytes=await readFile(new URL('../fixtures/jpeg/gradient_baseline.jpg',import.meta.url));
+  assert.deepEqual(photo.structure_signature,measureJpeg(bytes).structure_signature,
+    'fixture 는 손으로 채운 값이 아니라 그 사진을 실제로 잰 값이다');
 });
