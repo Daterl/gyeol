@@ -36,13 +36,14 @@ const slotsOnly=value=>value?.omission?{output:value.output}:value;
 const request=value=>new Request('http://localhost/api/generate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(value)});
 
 test('all generation preserves each contract path and loads actual shared/output prompts',async()=>{
-  const guard=await readFile(new URL('../prompts/shared/style_guard.md',import.meta.url),'utf8');
+  const expectedPrompt=(await Promise.all(['shared/style_guard.md','output/title.md','output/caption.md','output/omit_reason.md']
+    .map(file=>readFile(new URL('../prompts/'+file,import.meta.url),'utf8')))).join('\n\n');
   for(const source of [fixture,fixture.photo_only,fixture.corrected]) {
     const seen=[];const expected=output();
     assert.deepEqual(slotsOnly(await generateOutput(input('all',source),{apiKey:'fake-key',fetchImpl:transport(expected,seen)})),expected);
     assert.equal(seen.length,2);
     const body=JSON.parse(seen[1].options.body);
-    assert.ok(body.system.includes(guard));assert.match(body.system,/정확히.*한/);
+    assert.equal(body.system,expectedPrompt);
     assert.equal(body.output_config.format.type,'json_schema');
     const sent=JSON.parse(body.messages[0].content[0].text);
     assert.equal(sent.slots.length,3);

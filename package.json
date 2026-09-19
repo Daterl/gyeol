@@ -20,6 +20,7 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "test:smoke": "node scripts/smoke-next.js",
+    "test:production": "next build && node scripts/test-production-generation.mjs",
     "verify:deployed": "node scripts/verify-deployed.mjs",
     "verify:profile": "node scripts/verify-profile-live.js"
   },
