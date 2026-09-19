@@ -43,9 +43,16 @@ test('review contains every photo and labels simulated text and unmeasured verdi
   assert.equal(md.split('| □ |').length-1,36);
 });
 
-test('same-observation control abstains instead of manufacturing ten distinct reasons', () => {
+test('same-observation control never manufactures a contrast that the measurements do not show', () => {
+  // 같은 사진을 15번 복제한 대조군이다. 자리마다 문구는 갈릴 수 있지만(자리 자체가 다르다)
+  // **측정된 대비**는 없으므로 어떤 줄도 밝기·채도가 변했다고 말해선 안 된다.
   assert.ok(artifact.same_observation_probe.unique_rationale_count<10);
-  assert.ok(artifact.same_observation_probe.rows.every(r=>r.evidence.some(e=>e.ref==='order.placement_limit')));
+  for (const row of artifact.same_observation_probe.rows) {
+    assert.doesNotMatch(row.value,/환해지|어두워지|색이 짙어지|색이 옅어지/);
+    assert.ok(row.evidence.some(e=>e.kind==='rule'));
+    // 복제된 관측 문장이 화면 문장으로 올라오지 않는다 (#109).
+    assert.doesNotMatch(row.value,/관측: |순서를 정한 근거는 아니/);
+  }
 });
 
 test('checked-in worksheet exactly renders its validated evidence artifact', async () => {
