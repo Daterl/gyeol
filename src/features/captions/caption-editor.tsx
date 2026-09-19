@@ -74,7 +74,11 @@ export function OutputControls({
             disabled={!draft.title.trim()}
             onClick={() => {
               try {
-                downloadOutput(store.getState().exportDraft(), format);
+                const state = store.getState();
+                const output = state.exportDraft();
+                const feed = state.original?.feed;
+                if (!feed) throw new Error('Missing feed');
+                downloadOutput(output, feed, format);
                 setNotice(
                   `${format === 'json' ? 'JSON' : '텍스트'} 파일을 준비했어요.`,
                 );

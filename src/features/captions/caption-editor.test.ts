@@ -1,7 +1,11 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, expect, test, vi } from 'vitest';
-import type { FeedResponse, GenerateRequest } from '@/types/contracts';
+import type {
+  FeedResponse,
+  GenerateRequest,
+  OrderedFeed,
+} from '@/types/contracts';
 import fixture from '../../../fixtures/interaction.sample.json';
 import * as editorModule from '../editor/store';
 import { createEditorStore, type EditorStore } from '../editor/store';
@@ -33,7 +37,12 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
   await store.getState().loadFeed(async () => response());
   await store.getState().generate(undefined, previewOutput);
   expect(store.getState().request.status).toBe('ready');
-  expect(exportText(store.getState().exportDraft())).toContain('[AI 쓸 거리]');
+  expect(
+    exportText(
+      store.getState().exportDraft(),
+      fixture.feed as unknown as OrderedFeed,
+    ),
+  ).toContain('[AI 쓸 거리]');
   const omitted = store
     .getState()
     .draft?.slots.find((slot) => slot.caption_state === 'omitted');
@@ -57,9 +66,12 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
     ),
   ).toContain('쓸 거리 제안');
   store.getState().editCaption(id, '내가 쓴 문장');
-  expect(exportText(store.getState().exportDraft())).toContain(
-    '[내 문장] 내가 쓴 문장',
-  );
+  expect(
+    exportText(
+      store.getState().exportDraft(),
+      fixture.feed as unknown as OrderedFeed,
+    ),
+  ).toContain('[내 문장] 내가 쓴 문장');
   expect(
     renderToStaticMarkup(
       createElement(CaptionEditor, { store, id, mock: true }),
@@ -76,9 +88,12 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
       slot.evidence.some((item) => item.kind === 'uploaded_photo'),
     ),
   ).toBe(true);
-  expect(exportText(exported)).toContain(
-    `01 · ${id}\n[비움] 직접 비워 두었어요.`,
-  );
+  const text = exportText(exported, fixture.feed as unknown as OrderedFeed);
+  expect(text).toContain(`01 · ${id}\n[비움] 직접 비워 두었어요.`);
+  // 재정렬·캡션 편집 뒤에도 처음 제안한 자리의 근거가 photo_id 를 따라온다.
+  const source = fixture.feed.slots.find((slot) => slot.photo_id === id);
+  expect(text).toContain(`처음 제안 ${source?.position}번`);
+  expect(text).toContain(`자리 근거: ${source?.rationale.value}`);
   markup = renderToStaticMarkup(
     createElement(OutputControls, { store, mock: true }),
   );
