@@ -263,6 +263,9 @@ MISMATCH => INVALID_RESPONSE
 ### 절차 게이트
 
 - [ ] **`schemas/` 변경에 대한 양쪽 사람 합의** — CLAUDE.md 4-2. 기록 전까지 pending, merge 하지 않는다.
+      합의의 대상이 문서와 실제로 같은 물건이도록, 선언 버전(`1.0`)·선택 필드의 부재 정상성·호환 협상
+      헤더 이름이 문서와 구현에서 갈라지면 실패하는 계약 검사를 뒀다(`test/similar-omission.test.js`).
+      **이 검사는 합의를 대신하지 않는다** — 합의한 문서와 배포한 코드가 다른 것을 막을 뿐이다.
 - [ ] 다중 모델 교차 리뷰 (L 크기 필수)
 - [ ] 사람 merge
 - [ ] 배포 환경 검증
@@ -271,7 +274,7 @@ MISMATCH => INVALID_RESPONSE
 
 | 명령 | 결과 | 출력 |
 |---|---|---|
-| `npm test` | PASS 420/420 | `test.txt` |
+| `npm test` | PASS 421/421 | `test.txt` |
 | `npm run eval` | PASS | `eval.txt` |
 | `npm run check` | PASS 107 파일 | `check.txt` |
 | `npm run lint` | PASS | `lint.txt` |

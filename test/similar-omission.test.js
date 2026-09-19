@@ -330,3 +330,29 @@ test('the shared validator accepts either side of the window and still refuses a
   forged.omit_summary={...forged.omit_summary,recommended_count:2};
   assert.throws(()=>validateFeedResponse({feed:forged,context}),ContractError);
 });
+
+// ── 계약 문서와 구현이 갈라지면 합의가 무의미해진다 ────────────────────────────
+// schemas/ 변경은 양쪽 사람 합의 대상이다(CLAUDE.md 4-2). 그 합의의 대상은 문서인데 구현이 조용히
+// 달라지면 합의한 것과 배포한 것이 다른 물건이 된다. 아래 세 가지는 조용히 갈라질 수 있는 지점이다.
+test('the PhotoAnalysis contract document and the validator agree on version, optionality and the compat header',async()=>{
+  const doc=await readFile(new URL('../schemas/photo_analysis.md',import.meta.url),'utf8');
+
+  // 1) 선언한 버전과 받아 주는 버전. 한쪽만 올리면 합의 없이 계약이 바뀐 것이다.
+  assert.match(doc,/`schema_version: "1\.0"`/,'문서가 선언한 버전');
+  assert.doesNotThrow(()=>validatePhoto({...structuredClone(real[0]),schema_version:'1.0'}));
+  assert.throws(()=>validatePhoto({...structuredClone(real[0]),schema_version:'1.1'}),ContractError,
+    '문서가 1.0 만 선언하는 동안 구현이 다른 버전을 받아 주면 안 된다');
+
+  // 2) 더한 필드는 선택이다 — 없는 분석(배포 이전에 저장된 것 포함)이 계속 통과해야 한다.
+  const without=structuredClone(real[0]);
+  delete without.structure_signature;
+  assert.ok(!Object.hasOwn(without,'structure_signature'));
+  assert.doesNotThrow(()=>validatePhoto(without),'필드가 없는 것이 정상 상태다');
+  const example=JSON.parse(doc.match(/```json\n([\s\S]*?)\n```/)[1]);
+  assert.ok(example.every(photo=>!Object.hasOwn(photo,'structure_signature')),
+    '문서 예시는 필드가 없는 상태를 보여야 한다 — 없어도 계약을 만족한다는 것이 이 변경의 전부다');
+
+  // 3) 호환 협상 헤더 이름은 문서와 코드가 같은 문자열이어야 한다. 다르면 옛 번들 보호가 꺼진다.
+  assert.ok(doc.includes(OMIT_RULES_HEADER),`문서에 ${OMIT_RULES_HEADER} 가 없다`);
+  assert.ok(doc.includes(`OMIT_RULES`),'문서가 규칙 번호 계약을 가리켜야 한다');
+});

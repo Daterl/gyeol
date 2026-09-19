@@ -1,5 +1,2 @@
-
-> gyeol@0.1.0 lint
 > biome check .
-
-Checked 82 files in 58ms. No fixes applied.
+Checked 82 files in 54ms. No fixes applied.
