@@ -1,0 +1,17 @@
+
+> gyeol@0.1.0 test:ui
+> vitest run
+
+
+ RUN  v5.0.1 /Users/chowonjae/orca/workspaces/gyeol/issue-97-20260919
+
+
+ Test Files  28 passed (28)
+      Tests  110 passed (110)
+   Start at  13:55:38
+   Duration  1.11s (import 45%, transform 41%, tests 13%, worker 1%)
+
+  Transform  transforming modules took 3.17s · 41% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

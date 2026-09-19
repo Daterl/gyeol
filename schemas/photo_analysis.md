@@ -21,7 +21,14 @@ ref와 note는 비어 있지 않은 문자열이다. Claim<T> = `{value:T, confi
 | quality_flags | (blurry / dark / duplicate_of:<id>)[] |
 | analysis_source / model | vision_model 또는 heuristic / nonempty string |
 | analyzed_at | ISO timestamp |
-| analysis_receipt | 선택 opaque string. 서버가 세션·사진 묶음·사진 ID·바이트 해시를 서명한 경우에만 포함 |
+| analysis_receipt | 선택 opaque string. 서버가 세션·사진 묶음·사진 ID·바이트 해시·구조 서명을 서명한 경우에만 포함 |
+| structure_signature | 선택 number[64]. 픽셀에서 잰 대비 정규화 밝기 서명이며, 구조가 관측되지 않으면 필드 자체가 없다 |
+
+`structure_signature`는 #97에서 더한 **선택 관측값**이다. 없는 피드도 계약을 만족하며, 아래 예시들처럼
+필드가 없는 것이 정상 상태다. JPEG DC 블록(`lib/jpeg_dc.js`)의 밝기 격자를 8x8로 줄이고 대비 정규화한
+64칸이며, 모델이 낼 수 있는 값이 아니다(`OBSERVATION_SCHEMA` 밖). 대비가 없는 단색 카드는 배치라고 부를
+구조가 없으므로 필드를 내지 않는다. 공개 `/api/feed`는 `analysis_receipt`가 이 값을 서명한 경우에만
+관측값으로 쓰고, 그 외에는 지운다 — 호출자가 보낸 서명은 서버의 측정이 아니다.
 
 초안 대비 필드 변경 없음. F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
 샘플 모음은 독립 입력 ID 대조를 위해 3장이 아닌 15장이다. 합성 SVG 카드이며 실사진 분석이 아니다.

@@ -1,0 +1,135 @@
+{
+  "verified_at": "2026-09-19T04:53:36.766Z",
+  "threshold": 0.4,
+  "corpus": {
+    "files": 614,
+    "unique_bytes": 291,
+    "posts": 31
+  },
+  "scenarios": [
+    {
+      "scenario": "같은 게시물 묶음",
+      "bundles": 27,
+      "photos": 281,
+      "recommended": 3,
+      "firing_rate_per_photo": 0.0107,
+      "bundles_with_any": 1,
+      "samples": [
+        {
+          "post": "DdJWXXTHCMv",
+          "files": {
+            "ph_01": "hony_DdJWXXTHCMv_00.jpg",
+            "ph_02": "hony_DdJWXXTHCMv_01.jpg",
+            "ph_03": "hony_DdJWXXTHCMv_02.jpg",
+            "ph_04": "hony_DdJWXXTHCMv_03.jpg",
+            "ph_05": "hony_DdJWXXTHCMv_04.jpg",
+            "ph_06": "hony_DdJWXXTHCMv_05.jpg",
+            "ph_07": "hony_DdJWXXTHCMv_06.jpg",
+            "ph_08": "hony_DdJWXXTHCMv_07.jpg",
+            "ph_09": "hony_DdJWXXTHCMv_08.jpg",
+            "ph_10": "hony_DdJWXXTHCMv_09.jpg",
+            "ph_11": "hony_DdJWXXTHCMv_10.jpg",
+            "ph_12": "hony_DdJWXXTHCMv_11.jpg",
+            "ph_13": "hony_DdJWXXTHCMv_12.jpg",
+            "ph_14": "hony_DdJWXXTHCMv_13.jpg",
+            "ph_15": "hony_DdJWXXTHCMv_14.jpg"
+          },
+          "hits": [
+            {
+              "photo_id": "ph_09",
+              "omit_suggestion": {
+                "recommended": true,
+                "reason": "ph_08와 화면 배치가 거의 같게 관측되어(구조 거리 0.2578, 기준 0.4 미만) 이 사진은 빼는 것을 권합니다.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_09",
+                    "note": "PhotoAnalysis.structure_signature로 잰 ph_08와의 구조 거리 0.2578 (기준 0.4 미만일 때만 권합니다)"
+                  },
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_08",
+                    "note": "먼저 올린 사진이라 이 장을 남기고 ph_09를 뺄 후보로 뒀습니다."
+                  }
+                ]
+              }
+            },
+            {
+              "photo_id": "ph_04",
+              "omit_suggestion": {
+                "recommended": true,
+                "reason": "ph_03와 화면 배치가 거의 같게 관측되어(구조 거리 0.1344, 기준 0.4 미만) 이 사진은 빼는 것을 권합니다.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_04",
+                    "note": "PhotoAnalysis.structure_signature로 잰 ph_03와의 구조 거리 0.1344 (기준 0.4 미만일 때만 권합니다)"
+                  },
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "먼저 올린 사진이라 이 장을 남기고 ph_04를 뺄 후보로 뒀습니다."
+                  }
+                ]
+              }
+            },
+            {
+              "photo_id": "ph_15",
+              "omit_suggestion": {
+                "recommended": true,
+                "reason": "ph_12와 화면 배치가 거의 같게 관측되어(구조 거리 0.3883, 기준 0.4 미만) 이 사진은 빼는 것을 권합니다.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_15",
+                    "note": "PhotoAnalysis.structure_signature로 잰 ph_12와의 구조 거리 0.3883 (기준 0.4 미만일 때만 권합니다)"
+                  },
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_12",
+                    "note": "먼저 올린 사진이라 이 장을 남기고 ph_15를 뺄 후보로 뒀습니다."
+                  }
+                ]
+              }
+            }
+          ],
+          "message": "화면 배치가 거의 같게 관측된 3장의 빼기를 권합니다. 사진은 모두 유지했으며 제외 여부는 직접 결정해 주세요."
+        }
+      ]
+    },
+    {
+      "scenario": "서로 다른 게시물 한 장씩",
+      "bundles": 2,
+      "photos": 30,
+      "recommended": 0,
+      "firing_rate_per_photo": 0,
+      "bundles_with_any": 0,
+      "samples": []
+    }
+  ],
+  "mutationCheck": {
+    "fields": [
+      "composition",
+      "scale",
+      "has_face",
+      "subjects",
+      "text_in_image",
+      "describable_facts",
+      "dark",
+      "blurry"
+    ],
+    "comparisons": 2488,
+    "changedDecisions": 0
+  },
+  "invariants": {
+    "E1": "PASS: 모든 묶음에서 입력 N장 = 출력 N칸",
+    "E10": "PASS: 모든 uploaded_photo 근거가 입력 사진으로 해소"
+  },
+  "limitations": [
+    "실제 픽셀 분석이며 외부 모델 호출은 0회",
+    "mock=1은 키 사용을 끄며 사진 바이트는 실제로 분석한다",
+    "HTTP 핸들러 실행이며 배포 네트워크 검증은 아니다",
+    "같은 바이트 쌍은 #88 소관이라 이 코퍼스에서 제거했다",
+    "\"같은 게시물\"은 사람이 고른 유사 라벨이 아니라 수집 당시의 게시물 묶음이다"
+  ]
+}
