@@ -10,7 +10,7 @@ import {resolve} from 'node:path';
 import {handleAnalyze,handleFeed} from '../lib/pipeline.js';
 import {resetAnalysisState,analysisCounters,measureJpeg} from '../lib/photo_analysis.js';
 import {validateFeedResponse} from '../lib/interaction.js';
-import {SIMILAR_DISTANCE} from '../lib/omit-suggestion.js';
+import {LATEST_OMIT_RULES,OMIT_RULES_HEADER,SIMILAR_DISTANCE} from '../lib/omit-suggestion.js';
 import {signatureDistance} from '../lib/photo_signature.js';
 
 // 규칙이 통째로 꺼진 채 "권고 0건" 으로 성공 종료하는 것을 막는다. 비밀값이 없으면 서버가 서명을
@@ -52,7 +52,10 @@ async function analyzed(bundle,sessionId) {
 }
 // 제품 진입점 그대로다. 프로필 스냅샷만 저장본 대신 fixture 로 주입해 네트워크를 쓰지 않는다.
 async function feed(photos,sessionId) {
-  const response=await handleFeed(new Request('https://gyeol.test/api/feed',{method:'POST',headers:{'content-type':'application/json'},
+  // 현재 번들과 같은 규칙 번호를 알린다. 알리지 않으면 서버가 배포 이전 번들로 보고 유사 권고를 빼므로
+  // (lib/omit-suggestion.js OMIT_RULES) 이 검증은 규칙을 실행하지 않은 채 0건으로 끝난다.
+  const response=await handleFeed(new Request('https://gyeol.test/api/feed',{method:'POST',
+    headers:{'content-type':'application/json',[OMIT_RULES_HEADER]:String(LATEST_OMIT_RULES)},
     body:JSON.stringify({...profile.request,session_id:sessionId,photos})}),
     {resolveSnapshot:async()=>structuredClone(profile.resolution),now:()=>NOW});
   if(response.status!==200) throw new Error(`feed ${response.status}: ${await response.text()}`);

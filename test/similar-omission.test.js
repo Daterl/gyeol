@@ -7,7 +7,7 @@ import sharp from 'sharp';
 import {buildFeed,handleLegacyFeed as handleFeed,handleAnalyze} from '../lib/pipeline.js';
 import {validateFeedResponse} from '../lib/interaction.js';
 import {resetAnalysisState,measureJpeg} from '../lib/photo_analysis.js';
-import {SIMILAR_DISTANCE,withOmitSuggestions} from '../lib/omit-suggestion.js';
+import {LATEST_OMIT_RULES,OMIT_RULES_HEADER,SIMILAR_DISTANCE,negotiatedOmitRules,withOmitSuggestions} from '../lib/omit-suggestion.js';
 import {SIGNATURE_SIDE,exifOrientation,orientSignature,signatureDistance,structureSignature} from '../lib/photo_signature.js';
 import {validatePhoto,ContractError} from '../lib/contracts.js';
 import {authenticateDuplicateFlags,createPhotoReceipt,readPhotoReceipt} from '../lib/photo-receipt.js';
@@ -266,4 +266,67 @@ test('the optional-field contract fixture is a real measurement that validates o
   const bytes=await readFile(new URL('../fixtures/jpeg/gradient_baseline.jpg',import.meta.url));
   assert.deepEqual(photo.structure_signature,measureJpeg(bytes).structure_signature,
     'fixture 는 손으로 채운 값이 아니라 그 사진을 실제로 잰 값이다');
+});
+
+// ── 배포 중 혼합 버전 창 (#97 Major 3 후속) ─────────────────────────────────────
+// 브라우저는 서버가 보낸 omit_suggestion 을 **자기 코드로 다시 계산해** 대조한다. 그래서 배포 직후
+// 열려 있던 옛 번들(규칙 1)에 새 서버가 유사 권고(규칙 2)를 주면, 그 번들은 정상 응답을 버린다.
+// 선택 필드를 더한 것만으로는 호환되지 않는다 — 규칙 번호를 협상해야 닫힌다.
+const postWithRules=(body,rules,receiptSecret)=>handleFeed(new Request('http://localhost/api/feed',{method:'POST',
+  headers:{'content-type':'application/json',...(rules===null?{}:{[OMIT_RULES_HEADER]:String(rules)})},
+  body:JSON.stringify(body)}),{receiptSecret});
+const similarPair=()=>{
+  const list=photos(3,(photo,index)=>{if(index<2) photo.structure_signature=index===0?baseSignature:shifted(0.01);});
+  return list.map((photo,index)=>{
+    const receipt=createPhotoReceipt({analysis:photo,collection:'selected',
+      digest:createHmac('sha256',SECRET).update(String(index)).digest('hex'),sessionId:'compat'},SECRET);
+    return {...photo,analysis_receipt:receipt};
+  });
+};
+const request=list=>({schema_version:'1.0',session_id:'compat',photos:list,identity:{target:{kind:'none'},current:{kind:'none'}}});
+
+test('a bundle that predates this deploy sends no rules header and gets exactly the answer it can recompute',async()=>{
+  const list=similarPair();
+  const response=await postWithRules(request(list),null,SECRET);
+  assert.equal(response.status,200);
+  const {feed}=await response.json();
+  assert.equal(feed.slots.length,3,'E1: 입력 3장 = 출력 3칸');
+  // 옛 번들의 재계산이 곧 규칙 1 이다. 그것과 한 글자라도 다르면 그 번들은 INVALID_RESPONSE 를 낸다.
+  assert.deepEqual(feed.slots.map(s=>s.omit_suggestion),
+    withOmitSuggestions(feed,list,{rules:1}).slots.map(s=>s.omit_suggestion));
+  assert.equal(feed.omit_summary.recommended_count,0);
+  // 이 문장은 #88 이 배포한 그대로여야 한다. 옛 번들이 만드는 문자열이기 때문이다.
+  assert.equal(feed.omit_summary.message,'관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다.');
+});
+
+test('a bundle that declares rules 2 gets the similar suggestion; the same server answers both at once',async()=>{
+  const list=similarPair();
+  const {feed}=await (await postWithRules(request(list),2,SECRET)).json();
+  assert.equal(feed.omit_summary.recommended_count,1);
+  assert.match(byId(feed).ph_02.reason,/구조 거리/);
+});
+
+test('rules negotiation never answers above what the caller asked, and clamps an unknown ask down',async()=>{
+  for(const [asked,expected] of [[null,0],['1',0],['2',1],['3',1],['0',0],['','',],['nonsense',0],['2.5',1]]) {
+    if(expected==='') continue;
+    const {feed}=await (await postWithRules(request(similarPair()),asked,SECRET)).json();
+    assert.equal(feed.omit_summary.recommended_count,expected,`header ${asked}`);
+  }
+  assert.equal(negotiatedOmitRules({headers:new Headers()}),1,'헤더가 없으면 배포 이전 번들이다');
+  assert.equal(negotiatedOmitRules({headers:new Headers({[OMIT_RULES_HEADER]:'9'})}),LATEST_OMIT_RULES,'미래 번들에는 서버가 아는 최대치까지만 준다');
+});
+
+test('the shared validator accepts either side of the window and still refuses a fabricated suggestion',async()=>{
+  const list=similarPair();
+  const authenticated=authenticateDuplicateFlags(structuredClone(list),{collection:'selected',sessionId:'compat',secret:SECRET});
+  const {feed,context}=await (await postWithRules(request(list),2,SECRET)).json();
+  // 새 번들 → 옛 서버(롤백)의 규칙 1 응답도 버리지 않는다.
+  assert.doesNotThrow(()=>validateFeedResponse({feed:withOmitSuggestions(feed,authenticated,{rules:1}),context}));
+  assert.doesNotThrow(()=>validateFeedResponse({feed:withOmitSuggestions(feed,authenticated,{rules:2}),context}));
+  // 관용은 "덜 권하는" 방향에만 열려 있다. 없는 근거를 지어내는 방향은 어느 규칙과도 맞지 않는다.
+  const forged=structuredClone(feed);
+  forged.slots[2].omit_suggestion={recommended:true,reason:'ph_01와 화면 배치가 거의 같게 관측되어(구조 거리 0.0001, 기준 0.4 미만) 이 사진은 빼는 것을 권합니다.',
+    evidence:[{kind:'uploaded_photo',ref:'ph_03',note:'지어낸 근거'},{kind:'uploaded_photo',ref:'ph_01',note:'지어낸 근거'}]};
+  forged.omit_summary={...forged.omit_summary,recommended_count:2};
+  assert.throws(()=>validateFeedResponse({feed:forged,context}),ContractError);
 });
