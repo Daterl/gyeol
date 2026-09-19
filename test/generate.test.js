@@ -551,6 +551,53 @@ test('seed text must stay a short hint the user finishes, never a finished capti
   await assert.rejects(generateOutput(input(),options(blank)),{code:'MODEL_CONTRACT'},'빈 소재');
 });
 
+// #101 실측 회귀: haiku 16회 중 4회가 verbatim 거절로 죽었고, 성공한 회차에도 관측문을
+// 그대로 옮긴 홑낱말 소재('접시')가 149개 중 7개 있었다. 아래 네 경우가 그 실패 모양이다.
+test('a bare word is not usable writing material, and a rejected seed comes back with its own words',async()=>{
+  const bare=seedOutput();
+  bare.output.slots[0].text='쓸 거리: 카드\n이 중 기억에 남은 건?';
+  await assert.rejects(generateOutput(input(),options(bare)),{code:'MODEL_CONTRACT'},'수식 없는 홑낱말');
+
+  // 사실 자체가 한 어절이면 더 오려 낼 것이 없다. 그 자리는 막지 않는다.
+  const single=input();
+  for(const slot of single.feed.slots) slot.caption_inputs.describable_facts=['카드'];
+  for(const photo of single.context.photos) photo.describable_facts=['카드'];
+  const oneWord=seedOutput(single.feed);
+  assert.equal((await generateOutput(single,options(oneWord))).output.slots[0].text,'쓸 거리: 카드\n이 중 기억에 남은 건?');
+
+  // mode=all 에서 한 자리가 걸리면 그 자리만 mode=slot 으로 다시 묻는다. 열다섯 자리를 통째로
+  // 다시 생성하면 같은 자리가 또 걸린다 — 실모델 16회 중 7회가 그렇게 죽었다.
+  const sent=[];
+  const repairing=async(url,options)=>{
+    if(url.includes('/models/')) return Response.json({id:'test-text-model',capabilities:{image_input:{supported:false},structured_outputs:{supported:true}}});
+    const body=JSON.parse(options.body);
+    sent.push({system:body.system,ask:JSON.parse(body.messages[0].content[0].text)});
+    if(sent.length===1) return wire(bare);
+    return wire({slot:seedOutput().output.slots[0]});
+  };
+  const ok=await generateOutput(input(),{apiKey:'fake-key',fetchImpl:repairing});
+  assert.equal(ok.output.slots[0].text,'쓸 거리: 단색 카드\n이 중 기억에 남은 건?');
+  assert.deepEqual(ok.output.slots.map(slot=>slot.photo_id),['ph_01','ph_02','ph_03'],'성한 자리는 그대로 둔다');
+  assert.equal(sent.length,2,'걸린 자리 하나만 다시 묻는다');
+  assert.equal(sent[1].ask.mode,'slot');
+  assert.deepEqual(sent[1].ask.slots.map(slot=>slot.photo_id),['ph_01'],'다시 묻는 범위는 걸린 자리뿐이다');
+
+  // mode=slot 은 좁힐 범위가 없으므로 같은 요청을 다시 보내되, 교정에 걸린 소재와 고른 사실을 싣는다.
+  const one=input('slot');
+  const oneBare={slot:{...seedOutput().output.slots[0],text:'쓸 거리: 카드\n이 중 기억에 남은 건?'}};
+  const systems=[];
+  const slotFetch=async(url,options)=>{
+    if(url.includes('/models/')) return Response.json({id:'test-text-model',capabilities:{image_input:{supported:false},structured_outputs:{supported:true}}});
+    systems.push(JSON.parse(options.body).system);
+    return wire(systems.length===1?oneBare:{slot:seedOutput().output.slots[0]});
+  };
+  assert.equal((await generateOutput(one,{apiKey:'fake-key',fetchImpl:slotFetch})).slot.text,'쓸 거리: 단색 카드\n이 중 기억에 남은 건?');
+  assert.equal(systems.length,2);
+  assert.ok(systems[1].includes('"카드"'),'교정이 거절된 소재를 인용해야 한다');
+  assert.ok(systems[1].includes('"단색 카드"'),'교정이 모델이 고른 사실을 인용해야 한다');
+  assert.ok(!systems[0].includes('이전 응답은'),'첫 호출에는 교정이 붙지 않는다');
+});
+
 test('an empty fact list uses one fixed note instead of an invented limitation sentence',async()=>{
   const blank=()=>{
     const value=input();
@@ -841,4 +888,45 @@ test('#123 exhausted shared deadline prevents a second selection request',async(
   };
   await assert.rejects(generateOutput(req,{apiKey:'fake-key',fetchImpl,timeoutMs:100}),{code:'MODEL_TIMEOUT'});
   assert.equal(calls,1);
+});
+
+// #101: 사진 한 장의 글귀를 묶음 전체의 제목으로 올리면 묶음에 대해 거짓이 된다.
+test('#101 a title may not lift a phrase from one photo on-image text',async()=>{
+  const req=input();
+  req.context.photos[0].text_in_image='가을 맛집 브랜드 25곳 모음';
+  const response=seedOutput(req.feed);
+  for(const slot of response.output.slots) { slot.fact_index=0; slot.evidence=[]; }
+  const clean=await generateOutput(req,options(structuredClone(response)));
+  assert.equal(typeof clean.output.title,'string');
+  for(const title of ['가을 맛집 브랜드 25곳','브랜드 25곳 모음이라는 기록']) {
+    const lifted=structuredClone(response);
+    lifted.output.title=title;
+    await assert.rejects(generateOutput(req,options(lifted)),{code:'MODEL_CONTRACT'});
+  }
+});
+
+// #101: 계약 실패의 원인을 로그에 남기지 못하면 실모델 회차를 진단할 수 없다.
+test('#101 a contract failure carries the failed rule as its cause',async()=>{
+  const req=input('slot');
+  await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),text:'완성된 캡션'}})),
+    error=>error.code==='MODEL_CONTRACT' && /hint/i.test(error.cause?.message ?? ''));
+});
+
+// #101 리뷰: 다섯 자 창(window)은 띄어쓰기를 지우거나 숫자만 떼면 뚫린다.
+test('#101 a lifted title survives neither respacing nor a digit-only lift',async()=>{
+  const req=input();
+  req.context.photos[0].text_in_image='가을 맛집 브랜드 25곳 모음';
+  const response=seedOutput(req.feed);
+  for(const slot of response.output.slots) { slot.fact_index=0; slot.evidence=[]; }
+  for(const title of ['가을맛집브랜드','가을·맛집·브랜드','25곳의 기록','브랜드25']) {
+    const lifted=structuredClone(response);
+    lifted.output.title=title;
+    await assert.rejects(generateOutput(req,options(lifted)),{code:'MODEL_CONTRACT'},title);
+  }
+  // 사진 글귀에 없는 숫자와 짧은 낱말 겹침은 계속 통과한다.
+  for(const title of ['사진 3장을 잇는 순서','가을을 잇는 순서']) {
+    const ok=structuredClone(response);
+    ok.output.title=title;
+    assert.equal((await generateOutput(req,options(ok))).output.title,title);
+  }
 });
