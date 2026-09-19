@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "generation": "docs/specs/101-caption-quality/after-v2.json",
+    "observations": "docs/specs/101-caption-quality/inputs.json",
+    "runs": [1, 2],
+    "model": "claude-haiku-4-5-20251001",
+    "generated_at": "2026-09-18T04:45:31.363Z"
+  },
+  "reviewer": {
+    "name": "Claude Opus 5 (claude-opus-5[1m]) — 에이전트 대조",
+    "reviewed_at": "2026-09-19",
+    "human_signoff": null,
+    "human_signoff_at": null,
+    "basis": "describable_facts 텍스트 전수 대조. 원본 사진 이미지는 저장소에 없어 대조하지 않았다."
+  },
+  "verdict_legend": {
+    "supported": "문장의 모든 주장이 해당 사진의 describable_facts 로 역추적된다 (해석적 이름 붙이기는 모순이 아니면 허용)",
+    "distorted": "근거가 되는 사실은 있으나 그 사실과 어긋나게 옮겼다",
+    "absent": "어느 describable_facts 에서도 나오지 않는다"
+  },
+  "rows": [
+    {"kind": "title", "run": 1, "text": "사진으로 잇는 순서", "verdict": "absent", "facts": [], "unsupported_ppt": false, "note": "어느 사진의 describable_facts 에도 근거가 없다. 사진 내용이 아니라 산출물 자체를 가리키는 메타 표현이라 장소·인물·시간 주장은 없다"},
+    {"kind": "caption", "run": 1, "position": 1, "photo_id": "cq_04", "verdict": "supported", "facts": [3, 4], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 2, "photo_id": "cq_07", "verdict": "supported", "facts": [2, 3], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 3, "photo_id": "cq_12", "verdict": "supported", "facts": [2], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 4, "photo_id": "cq_13", "verdict": "supported", "facts": [1, 2], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 5, "photo_id": "cq_06", "verdict": "supported", "facts": [1, 4], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 6, "photo_id": "cq_15", "verdict": "supported", "facts": [2, 3, 8], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 7, "photo_id": "cq_14", "verdict": "distorted", "facts": [2, 3, 4, 7], "unsupported_ppt": false, "note": "분홍색은 라벨 배경(3)이고 사진 배경은 회색 얼룩 어두운 표면(7)인데 \"분홍색 배경의 크림색 노트\"로 붙여 읽었다"},
+    {"kind": "caption", "run": 1, "position": 8, "photo_id": "cq_10", "verdict": "supported", "facts": [2, 4], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 9, "photo_id": "cq_09", "verdict": "supported", "facts": [1, 2, 6], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 10, "photo_id": "cq_03", "verdict": "distorted", "facts": [3, 4, 6], "unsupported_ppt": false, "note": "사실은 \"재킷 안에\" 리본 끈 상의(4)인데 캡션은 \"재킷 위에\"로 겹침 순서를 뒤집었다"},
+    {"kind": "caption", "run": 1, "position": 11, "photo_id": "cq_05", "verdict": "supported", "facts": [1], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 12, "photo_id": "cq_08", "verdict": "supported", "facts": [2, 4], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 13, "photo_id": "cq_11", "verdict": "supported", "facts": [1, 4, 5], "unsupported_ppt": false, "note": "\"갈색 바지\"의 갈색을 뺐으나 사실(5)과 어긋나지는 않는다"},
+    {"kind": "caption", "run": 1, "position": 14, "photo_id": "cq_02", "verdict": "supported", "facts": [2, 3], "unsupported_ppt": false},
+    {"kind": "caption", "run": 1, "position": 15, "photo_id": "cq_01", "verdict": "supported", "facts": [2, 3], "unsupported_ppt": false},
+
+    {"kind": "title", "run": 2, "text": "차분한 색감 아래 모인 사진들", "verdict": "absent", "facts": [], "unsupported_ppt": false, "note": "\"차분한 색감\"은 어느 describable_facts 에도 없다. 밝기·채도 측정값은 rationale 에만 있고 관측 사실 목록에는 없다"},
+    {"kind": "caption", "run": 2, "position": 1, "photo_id": "cq_14", "verdict": "supported", "facts": [1, 2, 3], "unsupported_ppt": false},
+    {"kind": "caption", "run": 2, "position": 2, "photo_id": "cq_13", "verdict": "supported", "facts": [1, 2, 3, 6], "unsupported_ppt": false},
+    {"kind": "caption", "run": 2, "position": 3, "photo_id": "cq_12", "verdict": "supported", "facts": [1, 2], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 4, "photo_id": "cq_03", "verdict": "supported", "facts": [9, 10, 11], "unsupported_ppt": false, "note": "\"광고 문구\"는 해석적 이름이지만 사실(9·11)의 문구와 어긋나지 않는다"},
+    {"kind": "caption", "run": 2, "position": 5, "photo_id": "cq_06", "verdict": "supported", "facts": [1, 4], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 6, "photo_id": "cq_15", "verdict": "supported", "facts": [1, 6, 12], "unsupported_ppt": false},
+    {"kind": "caption", "run": 2, "position": 7, "photo_id": "cq_09", "verdict": "supported", "facts": [1, 2, 3, 6], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 8, "photo_id": "cq_07", "verdict": "supported", "facts": [9, 10], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 9, "photo_id": "cq_05", "verdict": "supported", "facts": [7, 8, 9], "unsupported_ppt": false},
+    {"kind": "caption", "run": 2, "position": 10, "photo_id": "cq_04", "verdict": "distorted", "facts": [2, 10, 15], "unsupported_ppt": false, "note": "\"추억의 분식을 고르는 순간\"은 화면에 얹힌 글자(15)를 사진 속에서 벌어지는 장면처럼 옮겼다. 장소·인물·시간을 새로 지어내지는 않았다"},
+    {"kind": "omit_reason", "run": 2, "position": 11, "photo_id": "cq_08", "verdict": "supported", "facts": [2, 4, 10], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 12, "photo_id": "cq_11", "verdict": "supported", "facts": [8, 9, 10, 11], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 13, "photo_id": "cq_10", "verdict": "supported", "facts": [10, 11], "unsupported_ppt": false},
+    {"kind": "omit_reason", "run": 2, "position": 14, "photo_id": "cq_02", "verdict": "supported", "facts": [6, 7], "unsupported_ppt": false},
+    {"kind": "caption", "run": 2, "position": 15, "photo_id": "cq_01", "verdict": "supported", "facts": [1, 2, 3, 6], "unsupported_ppt": false}
+  ]
+}
