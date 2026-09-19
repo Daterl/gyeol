@@ -45,7 +45,7 @@
     ]
   },
   "acceptance": {
-    "live_model": "PASS",
+    "live_model": "PARTIAL",
     "human": "PENDING"
   },
   "photos": [
@@ -21620,6 +21620,7 @@
       "banned": 0,
       "unsupported_materials": 0,
       "malformed_seeds": 0,
+      "bare_materials": 7,
       "offsource_notes": 0,
       "interpretive_notes": 0,
       "title_digits": 0,

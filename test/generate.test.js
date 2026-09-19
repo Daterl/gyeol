@@ -864,3 +864,22 @@ test('#101 a contract failure carries the failed rule as its cause',async()=>{
   await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),text:'완성된 캡션'}})),
     error=>error.code==='MODEL_CONTRACT' && /hint/i.test(error.cause?.message ?? ''));
 });
+
+// #101 리뷰: 다섯 자 창(window)은 띄어쓰기를 지우거나 숫자만 떼면 뚫린다.
+test('#101 a lifted title survives neither respacing nor a digit-only lift',async()=>{
+  const req=input();
+  req.context.photos[0].text_in_image='가을 맛집 브랜드 25곳 모음';
+  const response=seedOutput(req.feed);
+  for(const slot of response.output.slots) { slot.fact_index=0; slot.evidence=[]; }
+  for(const title of ['가을맛집브랜드','가을·맛집·브랜드','25곳의 기록','브랜드25']) {
+    const lifted=structuredClone(response);
+    lifted.output.title=title;
+    await assert.rejects(generateOutput(req,options(lifted)),{code:'MODEL_CONTRACT'},title);
+  }
+  // 사진 글귀에 없는 숫자와 짧은 낱말 겹침은 계속 통과한다.
+  for(const title of ['사진 3장을 잇는 순서','가을을 잇는 순서']) {
+    const ok=structuredClone(response);
+    ok.output.title=title;
+    assert.equal((await generateOutput(req,options(ok))).output.title,title);
+  }
+});

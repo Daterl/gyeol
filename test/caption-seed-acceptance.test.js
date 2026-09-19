@@ -77,3 +77,36 @@ test('seed and title scoring catch the shapes the audit found', () => {
 test('the checked-in worksheet renders exactly from its validated artifact', async () => {
   assert.equal(await readFile(new URL('../docs/specs/101-caption-seed-acceptance/review.md', import.meta.url), 'utf8'), renderReview(saved));
 });
+
+// #101 리뷰: 같은 사진을 두 번 적어 15장 대조를 채우는 길을 막는다.
+test('duplicate review rows cannot stand in for fifteen distinct photos', () => {
+  for (const edit of [
+    a => { a.review[1] = structuredClone(a.review[0]); },
+    a => { a.review[1].file_ref = a.review[0].file_ref; },
+    a => { a.review[1].file_ref = 'not_a_recorded_file.jpg'; }
+  ]) {
+    const changed = structuredClone(saved);
+    edit(changed);
+    assert.throws(() => validateArtifact(changed));
+  }
+});
+
+// #101 리뷰: 시도 16회 중 4회가 실패한 회차를 PASS 라고 부르지 않는다.
+test('a round with generation failures may not be recorded as a live_model pass', () => {
+  assert.ok(saved.provenance.generate_failures.length > 0);
+  assert.equal(saved.acceptance.live_model, 'PARTIAL');
+  const promoted = structuredClone(saved);
+  promoted.acceptance.live_model = 'PASS';
+  assert.throws(() => validateArtifact(promoted));
+});
+
+// #101 리뷰: 관측 원문 대조는 원본 사진 대조가 아니다. 둘을 같은 칸에 적지 않는다.
+test('source-consistency and original-image factuality are counted apart', () => {
+  const s = scoreArtifact(saved);
+  assert.equal(s.totals.unsupported_materials, 0, '관측 원문 대조');
+  const t = tally(saved.review);
+  assert.ok(t.image_factuality_failures > 0, '원본 사진 대조에서는 실패가 있었다');
+  assert.equal(t.image_factuality_failures, t.not_usable);
+  // 수식 없는 홑낱말 소재는 관측을 그대로 옮긴 것이므로 유용성 근거가 되지 못한다.
+  assert.ok(s.totals.bare_materials > 0);
+});
