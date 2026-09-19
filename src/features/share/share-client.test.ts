@@ -126,8 +126,9 @@ function server() {
     }>;
     uploadPhoto: (input: unknown) => Promise<unknown>;
   };
+  const storage = new MemoryBlobStore({ now });
   const service = create({
-    store: new MemoryBlobStore({ now }),
+    store: storage,
     secret: 'share-client-test-secret-at-least-32-bytes',
     now,
     randomBytes(size: number) {
@@ -159,6 +160,13 @@ function server() {
       return handleShareUpload(request, { service });
     const manage = url.pathname.match(/^\/api\/manage\/([^/]+)$/);
     if (manage) return handleManage(request, { service, shareId: manage[1] });
+    const image = url.pathname.match(/^\/api\/share\/([^/]+)\/image\/([^/]+)$/);
+    if (image)
+      return handleShare(request, {
+        service,
+        shareId: image[1],
+        photoId: image[2],
+      });
     const share = url.pathname.match(/^\/api\/share\/([^/]+)$/);
     if (share) return handleShare(request, { service, shareId: share[1] });
     return new Response(null, { status: 404 });
@@ -176,6 +184,7 @@ function server() {
     client: createShareClient({ fetcher, uploadPhoto }),
     fetcher,
     service,
+    storage,
     uploadPhoto,
   };
 }
@@ -411,3 +420,182 @@ test('uploaded bytes are bound to the receipt hash the client computed', async (
     }),
   ).rejects.toMatchObject({ code: 'HASH_MISMATCH' });
 });
+
+// Contract evidence only: generated metadata and WebP headers are synthetic,
+// the resolver is injected, and MemoryBlobStore does not prove live durability.
+test.each([3, 15])(
+  '%i photos survive confirmation, isolated reader, reconfirmation and revocation',
+  async (count) => {
+    const running = server();
+    const uploadPhoto = vi.fn(running.uploadPhoto);
+    const writer = createShareClient({ fetcher: running.fetcher, uploadPhoto });
+    // A second client has no writer capability or editor state.
+    const reader = createShareClient({
+      fetcher: running.fetcher,
+      uploadPhoto: async () => {
+        throw new Error('A public reader must never upload');
+      },
+    });
+    const store = createCurationEditorStore(null);
+    const response = curationFixture();
+    const ids = Array.from({ length: count }, (_, index) => `ph_${index + 1}`);
+    const cloneFor = <T>(value: T, id: string): T =>
+      JSON.parse(JSON.stringify(value).replaceAll(photoIds[0], id));
+    response.context.photos = ids.map((id, index) => ({
+      ...cloneFor(response.context.photos[0], id),
+      input_index: index,
+    }));
+    response.feed.invariants.input_count = count;
+    response.feed.invariants.output_count = count;
+    response.feed.slots = ids.map((id, index) => ({
+      ...cloneFor(response.feed.slots[0], id),
+      position: index + 1,
+    }));
+    response.curation.slots = ids.map((id, index) => ({
+      ...cloneFor(response.curation.slots[0], id),
+      position: index + 1,
+    }));
+    expect(await store.getState().loadCuration(async () => response)).toBe(
+      true,
+    );
+    await store.getState().generate(undefined, async () => ({
+      output: {
+        ...structuredClone(fixture.all_omitted),
+        slots: ids.map((id, index) => ({
+          ...cloneFor(fixture.all_omitted.slots[0], id),
+          position: index + 1,
+        })),
+      } as F3Export,
+    }));
+    expect(store.getState().request.status).toBe('ready');
+    store.getState().movePhoto(ids[0], count - 1);
+    store.getState().editCaption(ids[1], '확정한 첫 문장');
+    const confirmed = store.getState().confirmCuration();
+    const photos = confirmed.output.slots.map(({ photo_id: id }) => ({
+      id,
+      body: webp(id),
+    }));
+    const published = await writer.publish({ confirmed, photos });
+    expect(uploadPhoto).toHaveBeenCalledTimes(count);
+    expect(uploadPhoto.mock.calls.map(([value]) => value.photo.id)).toEqual(
+      photos.map(({ id }) => id),
+    );
+    const first = await reader.read(published.shareId);
+    expect(first.share.curation.photos.map(({ id }) => id)).toEqual(
+      photos.map(({ id }) => id),
+    );
+    expect(first.share.curation.includeProfile).toBe(false);
+    expect(JSON.stringify(first.share)).not.toMatch(
+      /public_example|profileSnapshotId|managementKey/,
+    );
+    const stored = await running.storage.list(`shares/${published.shareId}/`);
+    for (const { path } of stored) {
+      const value = await running.storage.get(path);
+      expect(value?.body.toString()).not.toContain(published.managementKey);
+      expect(value?.body.toString()).not.toContain('public_example');
+    }
+    const imagePath = `/api/share/${published.shareId}/image/${photos[0].id}`;
+    const image = await running.fetcher(imagePath);
+    expect(image.status).toBe(200);
+    expect(image.headers.get('cache-control')).toBe('no-store');
+    expect(new Uint8Array(await image.arrayBuffer())).toEqual(photos[0].body);
+
+    store.getState().editCaption(ids[1], '아직 공유하지 않은 문장');
+    store.getState().setProfileSharing(true);
+    expect((await reader.read(published.shareId)).share).toEqual(first.share);
+    const next = store.getState().confirmCuration();
+    // Confirmation alone does not change the published link either.
+    expect((await reader.read(published.shareId)).share).toEqual(first.share);
+    const nextPhotos = photos.map(({ id }) => ({
+      id,
+      body: webp(`next-${id}`),
+    }));
+    const updated = await writer.reconfirm({
+      confirmed: next,
+      etag: published.etag,
+      managementKey: published.managementKey,
+      photos: nextPhotos,
+      shareId: published.shareId,
+    });
+    const current = await reader.read(published.shareId);
+    expect(current.share.version).toBe(2);
+    const currentImage = await running.fetcher(imagePath);
+    expect(new Uint8Array(await currentImage.arrayBuffer())).toEqual(
+      nextPhotos[0].body,
+    );
+    expect(current.share.curation.photos[0].caption).toBe(
+      '아직 공유하지 않은 문장',
+    );
+    expect(current.share.curation.includeProfile).toBe(true);
+    expect(JSON.stringify(current.share)).toContain('public_example');
+    expect(JSON.stringify(current.share)).not.toContain('public-reference');
+    const remaining = await running.storage.list(
+      `shares/${published.shareId}/versions/`,
+    );
+    // G6 deliberately retains old immutable objects until its 24-hour cleanup.
+    // The public routes must resolve only the current manifest; revoke removes both.
+    expect(remaining).toHaveLength(2 * (count + 1));
+
+    await expect(
+      writer.reconfirm({
+        confirmed: next,
+        etag: published.etag,
+        managementKey: published.managementKey,
+        photos,
+        shareId: published.shareId,
+      }),
+    ).rejects.toMatchObject({ code: 'CONFLICT' });
+    expect((await reader.read(published.shareId)).etag).toBe(updated.etag);
+    for (const action of ['rotate', 'revoke']) {
+      const denied = await running.fetcher(`/api/manage/${published.shareId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'If-Match': updated.etag,
+        },
+        body: JSON.stringify({
+          action,
+          ...(action === 'rotate'
+            ? { nextManagementKey: createManagementKey() }
+            : {}),
+        }),
+      });
+      expect(denied.status).toBe(401);
+    }
+    const key = createManagementKey();
+    const rotated = await writer.rotateKey({
+      etag: updated.etag,
+      managementKey: published.managementKey,
+      nextManagementKey: key,
+      shareId: published.shareId,
+    });
+    await expect(
+      writer.revoke({
+        etag: rotated.etag,
+        managementKey: published.managementKey,
+        shareId: published.shareId,
+      }),
+    ).rejects.toMatchObject({ code: 'UNAUTHORIZED' });
+    await writer.revoke({
+      etag: rotated.etag,
+      managementKey: key,
+      shareId: published.shareId,
+    });
+    await expect(reader.read(published.shareId)).rejects.toMatchObject({
+      status: 410,
+    });
+    expect((await running.fetcher(imagePath)).status).toBe(410);
+    const after = await running.storage.list(`shares/${published.shareId}/`);
+    expect(after.map(({ path }) => path)).toEqual([
+      `shares/${published.shareId}/manifest.json`,
+    ]);
+    const tombstone = await running.storage.get(after[0].path);
+    for (const forbidden of [
+      key,
+      published.managementKey,
+      'public_example',
+      '문장',
+    ])
+      expect(tombstone?.body.toString()).not.toContain(forbidden);
+  },
+);
