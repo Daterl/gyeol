@@ -124,6 +124,8 @@ test('two profiles that agree on direction collide at R1, and the measured palet
   // 타이브레이크가 걸린 사실과 이유가 근거로 나온다 (P2). 조용히 다른 사진을 고르면 안 된다.
   for (const feed of [warm, cool]) {
     const opener = byPosition(feed)[0];
+    assert.ok(!opener.rationale.evidence.some(e => e.ref === 'order.profile_palette_unavailable'));
+    assert.doesNotMatch(opener.rationale.value, /프로필의 색은 측정하지 않아/);
     assert.match(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /가르지 못해/);
     assert.match(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note, /지향이 잰 색/);
     assert.ok(!/점수가 입력 20장 중 가장 높아/.test(opener.rationale.evidence.find(e => e.ref.endsWith('.decision')).note), '밴드가 갈랐는데 점수 1위였다고 말하면 안 된다');
