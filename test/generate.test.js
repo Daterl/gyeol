@@ -842,3 +842,25 @@ test('#123 exhausted shared deadline prevents a second selection request',async(
   await assert.rejects(generateOutput(req,{apiKey:'fake-key',fetchImpl,timeoutMs:100}),{code:'MODEL_TIMEOUT'});
   assert.equal(calls,1);
 });
+
+// #101: 사진 한 장의 글귀를 묶음 전체의 제목으로 올리면 묶음에 대해 거짓이 된다.
+test('#101 a title may not lift a phrase from one photo on-image text',async()=>{
+  const req=input();
+  req.context.photos[0].text_in_image='가을 맛집 브랜드 25곳 모음';
+  const response=seedOutput(req.feed);
+  for(const slot of response.output.slots) { slot.fact_index=0; slot.evidence=[]; }
+  const clean=await generateOutput(req,options(structuredClone(response)));
+  assert.equal(typeof clean.output.title,'string');
+  for(const title of ['가을 맛집 브랜드 25곳','브랜드 25곳 모음이라는 기록']) {
+    const lifted=structuredClone(response);
+    lifted.output.title=title;
+    await assert.rejects(generateOutput(req,options(lifted)),{code:'MODEL_CONTRACT'});
+  }
+});
+
+// #101: 계약 실패의 원인을 로그에 남기지 못하면 실모델 회차를 진단할 수 없다.
+test('#101 a contract failure carries the failed rule as its cause',async()=>{
+  const req=input('slot');
+  await assert.rejects(generateOutput(req,options({slot:{...indexedSlot(req),text:'완성된 캡션'}})),
+    error=>error.code==='MODEL_CONTRACT' && /hint/i.test(error.cause?.message ?? ''));
+});
