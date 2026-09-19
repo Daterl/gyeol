@@ -67,6 +67,7 @@ export type PhotoPlan = {
   visual: Visual;
 };
 export type PhotoAnalysis = {
+  analysis_receipt?: string;
   analysis_source: 'vision_model' | 'heuristic';
   analyzed_at: string;
   color: Color;
@@ -102,9 +103,21 @@ export type AppliedProfile = {
   target_profile_id: string | null;
   visual: Visual;
 };
+export type OmitSuggestion =
+  | { recommended: false; reason: null; evidence: [] }
+  | { recommended: true; reason: string; evidence: Evidence[] };
+export type OmitSummary = {
+  recommended_count: number;
+  message: string;
+};
 export type OrderedFeed = {
   applied_profile: AppliedProfile;
+  // Feed-level curation concept. Absent when the measured color spread stays below
+  // the design threshold, and never stored on a slot so reordering cannot move it.
+  concept?: Claim<string>;
   feed_id: string;
+  // Optional for legacy feeds without the additive suggestion extension.
+  omit_summary?: OmitSummary;
   generated_at: string;
   invariants: {
     input_count: number;
@@ -120,6 +133,7 @@ export type OrderedFeed = {
       is_visual_peak: boolean;
     };
     narrative_role: 'opener' | 'sustain' | 'turn' | 'closer';
+    omit_suggestion?: OmitSuggestion;
     photo_id: string;
     position: number;
     rationale: Claim<string>;
@@ -130,7 +144,7 @@ export type CaptionSlot = {
   photo_id: string;
   position: number;
 } & (
-  | { caption_state: 'filled' | 'user'; omit_reason: null; text: string }
+  | { caption_state: 'seed' | 'user'; omit_reason: null; text: string }
   | { caption_state: 'omitted'; omit_reason: string; text: null }
 );
 export type F3Export = { slots: CaptionSlot[]; title: string };
@@ -157,16 +171,89 @@ export type OrderRequest = {
   schema_version: '1.0';
   session_id: string;
 };
+export type ProfileConnectionRequest = {
+  profile_url: string;
+  schema_version: '1.0';
+} & (
+  | { action: 'connect'; confirmLive: true; refresh?: boolean }
+  | { action: 'status' }
+);
+export type ProfileConnectionResponse = {
+  error_code?: string;
+  expires_at?: number;
+  refresh_required: boolean;
+} & (
+  | { snapshotId: string; status: 'public' }
+  | {
+      status:
+        | 'missing'
+        | 'pending'
+        | 'private'
+        | 'not_found'
+        | 'timeout'
+        | 'cost_limit'
+        | 'unconfirmed'
+        | 'provider_error'
+        | 'expired';
+    }
+);
+// Production ADR-0008 request; OrderRequest remains a legacy module contract.
+export type CurationRequest = {
+  photos: PhotoAnalysis[];
+  profile_snapshot_id: string;
+  profile_url: string;
+  prompt?: string;
+  schema_version: '1.0';
+  session_id: string;
+};
+export type PublicProfileDisplay = {
+  username: string;
+  display_name?: string;
+  name_source?: 'apify.ownerFullName';
+};
+export type CurationResponse = FeedResponse & {
+  curation: {
+    profile: {
+      display?: PublicProfileDisplay;
+      collected_at: string;
+      evidence_refs: Record<string, string>;
+      expires_at: string;
+      ownership_verified: false;
+      snapshot_id: string;
+      source_url: string;
+    };
+    profile_snapshot_id: string;
+    prompt: { evidence: Evidence[]; text: string | null };
+    schema_version: '1.0';
+    slots: {
+      exclusion_candidate: OmitSuggestion;
+      included: true;
+      photo_id: string;
+      position: number;
+    }[];
+  };
+};
 export type GenerateRequest = FeedResponse & { schema_version: '1.0' } & (
     | { mode: 'all' }
     | { mode: 'slot'; photo_id: string }
   );
-export type GenerateResponse = { output: F3Export } | { slot: CaptionSlot };
+export type Omission = {
+  evidence: Evidence[];
+  note: string;
+  note_key: 'omission.none' | 'omission.some';
+  omitted: number;
+  total: number;
+};
+export type GenerateResponse =
+  | { omission?: Omission; output: F3Export }
+  | { slot: CaptionSlot };
 export type UploadRequest = {
+  collection: 'selected' | 'current';
   file_ref: string;
   image_base64: string;
   input_index: number;
   media_type: 'image/jpeg' | 'image/png' | 'image/webp';
   photo_id: string;
   schema_version: '1.0';
+  session_id: string;
 };

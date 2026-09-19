@@ -1,0 +1,1640 @@
+
+> gyeol@0.1.0 test
+> node --test test/*.test.js
+
+TAP version 13
+# Subtest: GET mock returns 15 slots and all four resources
+ok 1 - GET mock returns 15 slots and all four resources
+  ---
+  duration_ms: 29.383459
+  type: 'test'
+  ...
+# Subtest: live is explicit error, invalid query and method are controlled
+ok 2 - live is explicit error, invalid query and method are controlled
+  ---
+  duration_ms: 0.440292
+  type: 'test'
+  ...
+# Subtest: mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
+ok 3 - mock works with fetch/HTTP/HTTPS/socket/DNS disabled; zero outbound attempts
+  ---
+  duration_ms: 325.761667
+  type: 'test'
+  ...
+# Subtest: strict account URLs only; never arbitrary hosts or post/comment endpoints
+ok 4 - strict account URLs only; never arbitrary hosts or post/comment endpoints
+  ---
+  duration_ms: 0.862541
+  type: 'test'
+  ...
+# Subtest: normalization preserves Unicode, child IDs/order/types, separates comments/tags/dates and leaves unknown fields empty
+ok 5 - normalization preserves Unicode, child IDs/order/types, separates comments/tags/dates and leaves unknown fields empty
+  ---
+  duration_ms: 5.201208
+  type: 'test'
+  ...
+# Subtest: both existing extractors consume same snapshot and every observation reference resolves
+ok 6 - both existing extractors consume same snapshot and every observation reference resolves
+  ---
+  duration_ms: 3.568958
+  type: 'test'
+  ...
+# Subtest: a missing account is named as missing and the provider's own wording survives
+ok 7 - a missing account is named as missing and the provider's own wording survives
+  ---
+  duration_ms: 0.353125
+  type: 'test'
+  ...
+# Subtest: missing observations, mixed errors, duplicate posts or wrong accounts cannot become success
+ok 8 - missing observations, mixed errors, duplicate posts or wrong accounts cannot become success
+  ---
+  duration_ms: 2.653
+  type: 'test'
+  ...
+# Subtest: start pins actor/posts mode and hard limits; known private and invalid limits perform zero calls
+ok 9 - start pins actor/posts mode and hard limits; known private and invalid limits perform zero calls
+  ---
+  duration_ms: 12.377708
+  type: 'test'
+  ...
+# Subtest: asynchronous completion supplies real run metrics and both profiles
+ok 10 - asynchronous completion supplies real run metrics and both profiles
+  ---
+  duration_ms: 1.444666
+  type: 'test'
+  ...
+# Subtest: signed receipts prevent foreign-run requests and survive creating a new client
+ok 11 - signed receipts prevent foreign-run requests and survive creating a new client
+  ---
+  duration_ms: 1.827584
+  type: 'test'
+  ...
+# Subtest: ambiguous paid starts never retry; reads retry at most once
+ok 12 - ambiguous paid starts never retry; reads retry at most once
+  ---
+  duration_ms: 1.482208
+  type: 'test'
+  ...
+# Subtest: provider timeout/budget failure preserve receipt and measurements
+ok 13 - provider timeout/budget failure preserve receipt and measurements
+  ---
+  duration_ms: 1.047125
+  type: 'test'
+  ...
+# Subtest: cancel preserves receipt; late completed run is not discarded
+ok 14 - cancel preserves receipt; late completed run is not discarded
+  ---
+  duration_ms: 1.33325
+  type: 'test'
+  ...
+# Subtest: HTTP requires server access key and explicit paid acknowledgement; never silently starts by default
+ok 15 - HTTP requires server access key and explicit paid acknowledgement; never silently starts by default
+  ---
+  duration_ms: 3.613125
+  type: 'test'
+  ...
+# Subtest: HTTP paid starts replay one idempotency claim and enforce a cumulative caller budget
+ok 16 - HTTP paid starts replay one idempotency claim and enforce a cumulative caller budget
+  ---
+  duration_ms: 1.205417
+  type: 'test'
+  ...
+# Subtest: one failed concurrent claim releases only its own budget reservation
+ok 17 - one failed concurrent claim releases only its own budget reservation
+  ---
+  duration_ms: 0.137917
+  type: 'test'
+  ...
+# Subtest: cancel on an already completed run performs no abort request
+ok 18 - cancel on an already completed run performs no abort request
+  ---
+  duration_ms: 1.593458
+  type: 'test'
+  ...
+# Subtest: failed abort racing completion retains the completed result
+ok 19 - failed abort racing completion retains the completed result
+  ---
+  duration_ms: 1.353625
+  type: 'test'
+  ...
+# Subtest: malformed receipt signatures fail closed even with multibyte characters
+ok 20 - malformed receipt signatures fail closed even with multibyte characters
+  ---
+  duration_ms: 0.18675
+  type: 'test'
+  ...
+# Subtest: unknown costs stay null and empty completed datasets are not live successes
+ok 21 - unknown costs stay null and empty completed datasets are not live successes
+  ---
+  duration_ms: 0.255917
+  type: 'test'
+  ...
+# Subtest: malformed or unsupported carousel media cannot become successful observations
+ok 22 - malformed or unsupported carousel media cannot become successful observations
+  ---
+  duration_ms: 0.176125
+  type: 'test'
+  ...
+# Subtest: completed-run billing remains provisional until re-observed after ten seconds
+ok 23 - completed-run billing remains provisional until re-observed after ten seconds
+  ---
+  duration_ms: 0.878541
+  type: 'test'
+  ...
+# Subtest: API access key alone cannot forge receipts signed with separate server secret
+ok 24 - API access key alone cannot forge receipts signed with separate server secret
+  ---
+  duration_ms: 0.150625
+  type: 'test'
+  ...
+# Subtest: provider, access and receipt secrets must remain in separate domains
+ok 25 - provider, access and receipt secrets must remain in separate domains
+  ---
+  duration_ms: 0.116167
+  type: 'test'
+  ...
+# Subtest: a valid signature cannot turn a malformed payload into a receipt
+ok 26 - a valid signature cannot turn a malformed payload into a receipt
+  ---
+  duration_ms: 0.08575
+  type: 'test'
+  ...
+# Subtest: requested URL alone cannot attribute a foreign owner post to the requested account
+ok 27 - requested URL alone cannot attribute a foreign owner post to the requested account
+  ---
+  duration_ms: 0.081125
+  type: 'test'
+  ...
+# Subtest: provider hidden errors are preserved through dataset retrieval and classified
+ok 28 - provider hidden errors are preserved through dataset retrieval and classified
+  ---
+  duration_ms: 0.285042
+  type: 'test'
+  ...
+# Subtest: post IDs and shortcodes have independent duplicate namespaces
+ok 29 - post IDs and shortcodes have independent duplicate namespaces
+  ---
+  duration_ms: 0.067208
+  type: 'test'
+  ...
+# Subtest: abort failure preserves the valid receipt for later inspection
+ok 30 - abort failure preserves the valid receipt for later inspection
+  ---
+  duration_ms: 0.239709
+  type: 'test'
+  ...
+# Subtest: abort errors never mask the terminal status observed afterwards
+ok 31 - abort errors never mask the terminal status observed afterwards
+  ---
+  duration_ms: 0.632625
+  type: 'test'
+  ...
+# Subtest: successful runs still fail closed when actual rows, runtime, cost or options exceed policy
+ok 32 - successful runs still fail closed when actual rows, runtime, cost or options exceed policy
+  ---
+  duration_ms: 17.652958
+  type: 'test'
+  ...
+# Subtest: an over-limit active run is aborted immediately instead of remaining RUNNING
+ok 33 - an over-limit active run is aborted immediately instead of remaining RUNNING
+  ---
+  duration_ms: 1.311916
+  type: 'test'
+  ...
+# Subtest: provider 429 does not trigger a second request or lose its budget classification
+ok 34 - provider 429 does not trigger a second request or lose its budget classification
+  ---
+  duration_ms: 0.176209
+  type: 'test'
+  ...
+# Subtest: missing run completion time stays unknown rather than becoming collection time now
+ok 35 - missing run completion time stays unknown rather than becoming collection time now
+  ---
+  duration_ms: 0.701083
+  type: 'test'
+  ...
+# Subtest: HTTP status/cancel/method and streamed input bound are enforced without paid calls
+ok 36 - HTTP status/cancel/method and streamed input bound are enforced without paid calls
+  ---
+  duration_ms: 0.683708
+  type: 'test'
+  ...
+# Subtest: the real profile pages decide public, private and undecidable without any paid call
+ok 37 - the real profile pages decide public, private and undecidable without any paid call
+  ---
+  duration_ms: 0.203916
+  type: 'test'
+  ...
+# Subtest: another account's public flag is never read as this account's, so no paid run starts
+ok 38 - another account's public flag is never read as this account's, so no paid run starts
+  ---
+  duration_ms: 0.845458
+  type: 'test'
+  ...
+# Subtest: the account's own flag decides it even when a stranger's contradicting flag shares the page
+ok 39 - the account's own flag decides it even when a stranger's contradicting flag shares the page
+  ---
+  duration_ms: 0.068708
+  type: 'test'
+  ...
+# Subtest: a private account is refused before the provider is paid, and is told what to do instead
+ok 40 - a private account is refused before the provider is paid, and is told what to do instead
+  ---
+  duration_ms: 0.142208
+  type: 'test'
+  ...
+# Subtest: the visibility check reads the profile page anonymously and never carries the provider token
+ok 41 - the visibility check reads the profile page anonymously and never carries the provider token
+  ---
+  duration_ms: 0.208417
+  type: 'test'
+  ...
+# Subtest: the real private-account run cannot become that account's profile
+ok 42 - the real private-account run cannot become that account's profile
+  ---
+  duration_ms: 0.125958
+  type: 'test'
+  ...
+# Subtest: every observation a snapshot carries belongs to the account the provenance names
+ok 43 - every observation a snapshot carries belongs to the account the provenance names
+  ---
+  duration_ms: 0.09625
+  type: 'test'
+  ...
+# Subtest: a real public account still collects, minus the posts other people wrote
+ok 44 - a real public account still collects, minus the posts other people wrote
+  ---
+  duration_ms: 6.59525
+  type: 'test'
+  ...
+# Subtest: present current profiles are traced without claiming an unsupported correction
+ok 45 - present current profiles are traced without claiming an unsupported correction
+  ---
+  duration_ms: 40.096208
+  type: 'test'
+  ...
+# Subtest: absent current completes pipeline and E8 with no delta
+ok 46 - absent current completes pipeline and E8 with no delta
+  ---
+  duration_ms: 5.818667
+  type: 'test'
+  ...
+# Subtest: invalid or unevidenced profiles are rejected
+ok 47 - invalid or unevidenced profiles are rejected
+  ---
+  duration_ms: 3.199541
+  type: 'test'
+  ...
+# Subtest: same target and photos stay identical when only the current profile changes
+ok 48 - same target and photos stay identical when only the current profile changes
+  ---
+  duration_ms: 8.663208
+  type: 'test'
+  ...
+# Subtest: same measured photos and different targets change position-sorted photo IDs
+ok 49 - same measured photos and different targets change position-sorted photo IDs
+  ---
+  duration_ms: 6.339708
+  type: 'test'
+  ...
+# Subtest: four sample types and independent golden input files satisfy contracts
+ok 50 - four sample types and independent golden input files satisfy contracts
+  ---
+  duration_ms: 42.201042
+  type: 'test'
+  ...
+# Subtest: E1: valid input passes and stored broken fixture fails
+ok 51 - E1: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 4.891333
+  type: 'test'
+  ...
+# Subtest: E2: valid input passes and stored broken fixture fails
+ok 52 - E2: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.296
+  type: 'test'
+  ...
+# Subtest: E3: valid input passes and stored broken fixture fails
+ok 53 - E3: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 2.971625
+  type: 'test'
+  ...
+# Subtest: E6: valid input passes and stored broken fixture fails
+ok 54 - E6: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 2.905916
+  type: 'test'
+  ...
+# Subtest: E8: valid input passes and stored broken fixture fails
+ok 55 - E8: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 3.325209
+  type: 'test'
+  ...
+# Subtest: E9: valid input passes and stored broken fixture fails
+ok 56 - E9: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.991083
+  type: 'test'
+  ...
+# Subtest: E10: valid input passes and stored broken fixture fails
+ok 57 - E10: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 2.038625
+  type: 'test'
+  ...
+# Subtest: E11: valid input passes and stored broken fixture fails
+ok 58 - E11: valid input passes and stored broken fixture fails
+  ---
+  duration_ms: 1.328208
+  type: 'test'
+  ...
+# Subtest: 3 photo boundary passes
+ok 59 - 3 photo boundary passes
+  ---
+  duration_ms: 0.572791
+  type: 'test'
+  ...
+# Subtest: 20 photo boundary passes
+ok 60 - 20 photo boundary passes
+  ---
+  duration_ms: 0.531958
+  type: 'test'
+  ...
+# Subtest: 2 input photos rejected
+ok 61 - 2 input photos rejected
+  ---
+  duration_ms: 0.142083
+  type: 'test'
+  ...
+# Subtest: 21 input photos rejected
+ok 62 - 21 input photos rejected
+  ---
+  duration_ms: 0.031
+  type: 'test'
+  ...
+# Subtest: reject duplicate output ID despite true flag
+ok 63 - reject duplicate output ID despite true flag
+  ---
+  duration_ms: 0.105333
+  type: 'test'
+  ...
+# Subtest: reject missing slot despite declared output count
+ok 64 - reject missing slot despite declared output count
+  ---
+  duration_ms: 0.0685
+  type: 'test'
+  ...
+# Subtest: reject foreign replacement ID with same count
+ok 65 - reject foreign replacement ID with same count
+  ---
+  duration_ms: 0.072708
+  type: 'test'
+  ...
+# Subtest: reject lying counts
+ok 66 - reject lying counts
+  ---
+  duration_ms: 0.121833
+  type: 'test'
+  ...
+# Subtest: reject count string
+ok 67 - reject count string
+  ---
+  duration_ms: 0.09925
+  type: 'test'
+  ...
+# Subtest: reject unique flag string
+ok 68 - reject unique flag string
+  ---
+  duration_ms: 0.096542
+  type: 'test'
+  ...
+# Subtest: reject position string
+ok 69 - reject position string
+  ---
+  duration_ms: 0.087917
+  type: 'test'
+  ...
+# Subtest: reject duplicate position
+ok 70 - reject duplicate position
+  ---
+  duration_ms: 0.070875
+  type: 'test'
+  ...
+# Subtest: reject zero position
+ok 71 - reject zero position
+  ---
+  duration_ms: 0.065542
+  type: 'test'
+  ...
+# Subtest: reject fractional position
+ok 72 - reject fractional position
+  ---
+  duration_ms: 0.069875
+  type: 'test'
+  ...
+# Subtest: reject missing rationale Claim
+ok 73 - reject missing rationale Claim
+  ---
+  duration_ms: 0.108125
+  type: 'test'
+  ...
+# Subtest: reject evidence missing
+ok 74 - reject evidence missing
+  ---
+  duration_ms: 0.095709
+  type: 'test'
+  ...
+# Subtest: reject evidence wrong type
+ok 75 - reject evidence wrong type
+  ---
+  duration_ms: 0.083459
+  type: 'test'
+  ...
+# Subtest: reject invalid confidence
+ok 76 - reject invalid confidence
+  ---
+  duration_ms: 0.142333
+  type: 'test'
+  ...
+# Subtest: reject empty evidence reference
+ok 77 - reject empty evidence reference
+  ---
+  duration_ms: 0.111417
+  type: 'test'
+  ...
+# Subtest: reject overlap string
+ok 78 - reject overlap string
+  ---
+  duration_ms: 0.127292
+  type: 'test'
+  ...
+# Subtest: reject invented current input
+ok 79 - reject invented current input
+  ---
+  duration_ms: 0.070458
+  type: 'test'
+  ...
+# Subtest: reject false corrected claim
+ok 80 - reject false corrected claim
+  ---
+  duration_ms: 0.0675
+  type: 'test'
+  ...
+# Subtest: reject unknown delta
+ok 81 - reject unknown delta
+  ---
+  duration_ms: 0.072
+  type: 'test'
+  ...
+# Subtest: duplicate/malformed actual input rejected
+ok 82 - duplicate/malformed actual input rejected
+  ---
+  duration_ms: 0.097375
+  type: 'test'
+  ...
+# Subtest: E2 does not trust output input_count/unique flags as expected input IDs
+ok 83 - E2 does not trust output input_count/unique flags as expected input IDs
+  ---
+  duration_ms: 0.439583
+  type: 'test'
+  ...
+# Subtest: E8 uses actual absent input even if response invents consistent correction
+ok 84 - E8 uses actual absent input even if response invents consistent correction
+  ---
+  duration_ms: 0.73525
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with target-only disclosure
+ok 85 - validateFeed rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.17625
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with target-only disclosure
+ok 86 - E8 rejects missing current context with target-only disclosure
+  ---
+  duration_ms: 0.860833
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with target-only disclosure
+ok 87 - validateFeed rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.049292
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with target-only disclosure
+ok 88 - E8 rejects undefined current context with target-only disclosure
+  ---
+  duration_ms: 0.226333
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects missing current context with invented correction
+ok 89 - validateFeed rejects missing current context with invented correction
+  ---
+  duration_ms: 0.034833
+  type: 'test'
+  ...
+# Subtest: E8 rejects missing current context with invented correction
+ok 90 - E8 rejects missing current context with invented correction
+  ---
+  duration_ms: 0.27975
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects undefined current context with invented correction
+ok 91 - validateFeed rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.051
+  type: 'test'
+  ...
+# Subtest: E8 rejects undefined current context with invented correction
+ok 92 - E8 rejects undefined current context with invented correction
+  ---
+  duration_ms: 0.382833
+  type: 'test'
+  ...
+# Subtest: profile absence/types/rule-only claims are checked
+ok 93 - profile absence/types/rule-only claims are checked
+  ---
+  duration_ms: 0.27375
+  type: 'test'
+  ...
+# Subtest: photo field types are checked
+ok 94 - photo field types are checked
+  ---
+  duration_ms: 0.113
+  type: 'test'
+  ...
+# Subtest: reject title null
+ok 95 - reject title null
+  ---
+  duration_ms: 0.0425
+  type: 'test'
+  ...
+# Subtest: reject title []
+ok 96 - reject title []
+  ---
+  duration_ms: 0.024709
+  type: 'test'
+  ...
+# Subtest: reject title ["one","two"]
+ok 97 - reject title ["one","two"]
+  ---
+  duration_ms: 0.023208
+  type: 'test'
+  ...
+# Subtest: reject title ""
+ok 98 - reject title ""
+  ---
+  duration_ms: 0.042166
+  type: 'test'
+  ...
+# Subtest: reject title " "
+ok 99 - reject title " "
+  ---
+  duration_ms: 0.022375
+  type: 'test'
+  ...
+# Subtest: reject title "one\\ntwo"
+ok 100 - reject title "one\\ntwo"
+  ---
+  duration_ms: 0.052792
+  type: 'test'
+  ...
+# Subtest: reject title "one\\rtwo"
+ok 101 - reject title "one\\rtwo"
+  ---
+  duration_ms: 0.024
+  type: 'test'
+  ...
+# Subtest: reject title 3
+ok 102 - reject title 3
+  ---
+  duration_ms: 0.022
+  type: 'test'
+  ...
+# Subtest: reject title "one two"
+ok 103 - reject title "one two"
+  ---
+  duration_ms: 0.022333
+  type: 'test'
+  ...
+# Subtest: F3 export retains stable identity at every position, including after reorder
+ok 104 - F3 export retains stable identity at every position, including after reorder
+  ---
+  duration_ms: 1.144333
+  type: 'test'
+  ...
+# Subtest: E4/E5/E7 are intentionally not automated quality checks
+ok 105 - E4/E5/E7 are intentionally not automated quality checks
+  ---
+  duration_ms: 0.694208
+  type: 'test'
+  ...
+# Subtest: user caption rejects photo-only evidence
+ok 106 - user caption rejects photo-only evidence
+  ---
+  duration_ms: 0.118208
+  type: 'test'
+  ...
+# Subtest: user caption accepts valid user_text evidence with additional photo evidence
+ok 107 - user caption accepts valid user_text evidence with additional photo evidence
+  ---
+  duration_ms: 0.172791
+  type: 'test'
+  ...
+# Subtest: present current can be honestly corrected with the single supported delta
+ok 108 - present current can be honestly corrected with the single supported delta
+  ---
+  duration_ms: 0.56425
+  type: 'test'
+  ...
+# Subtest: absent account and extra title fields cannot smuggle contradictory states
+ok 109 - absent account and extra title fields cannot smuggle contradictory states
+  ---
+  duration_ms: 0.122833
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects an invented target profile ID
+ok 110 - validateFeed rejects an invented target profile ID
+  ---
+  duration_ms: 0.790083
+  type: 'test'
+  ...
+# Subtest: validateFeed and validateExport reject evidence that resolves to no input photo
+ok 111 - validateFeed and validateExport reject evidence that resolves to no input photo
+  ---
+  duration_ms: 1.340875
+  type: 'test'
+  ...
+# Subtest: validateFeed rejects describable_facts copied from another real photo
+ok 112 - validateFeed rejects describable_facts copied from another real photo
+  ---
+  duration_ms: 0.600083
+  type: 'test'
+  ...
+# Subtest: golden bundle carries its own PhotoAnalysis matching the input manifest
+ok 113 - golden bundle carries its own PhotoAnalysis matching the input manifest
+  ---
+  duration_ms: 11.774833
+  type: 'test'
+  ...
+# Subtest: 아무것도 안 올리면 present:false 로 정상 종료한다 — 에러가 아니다
+ok 114 - 아무것도 안 올리면 present:false 로 정상 종료한다 — 에러가 아니다
+  ---
+  duration_ms: 13.7795
+  type: 'test'
+  ...
+# Subtest: 부재 프로필은 target_only 공개와 정합하다 (E8)
+ok 115 - 부재 프로필은 target_only 공개와 정합하다 (E8)
+  ---
+  duration_ms: 0.19025
+  type: 'test'
+  ...
+# Subtest: 스냅샷 재생 경로가 source:"cached" 프로필을 만든다
+ok 116 - 스냅샷 재생 경로가 source:"cached" 프로필을 만든다
+  ---
+  duration_ms: 1.408
+  type: 'test'
+  ...
+# Subtest: 같은 스냅샷을 두 번 재생하면 완전히 같은 결과가 나온다
+ok 117 - 같은 스냅샷을 두 번 재생하면 완전히 같은 결과가 나온다
+  ---
+  duration_ms: 25.485708
+  type: 'test'
+  ...
+# Subtest: 네트워크를 끊어도 스냅샷 재생 결과가 같고 외부 호출 시도가 0회다
+ok 118 - 네트워크를 끊어도 스냅샷 재생 결과가 같고 외부 호출 시도가 0회다
+  ---
+  duration_ms: 256.567042
+  type: 'test'
+  ...
+# Subtest: empty_caption_ratio 는 캡션 입력이 있을 때만 존재한다
+ok 119 - empty_caption_ratio 는 캡션 입력이 있을 때만 존재한다
+  ---
+  duration_ms: 3.855125
+  type: 'test'
+  ...
+# Subtest: 캡션이 전부 비어 있으면 비율만 남고 나머지 언어 습관은 생략된다
+ok 120 - 캡션이 전부 비어 있으면 비율만 남고 나머지 언어 습관은 생략된다
+  ---
+  duration_ms: 0.279834
+  type: 'test'
+  ...
+# Subtest: 캡션 1건이면 p50 === p90 이고 스키마의 p90 >= p50 이 유지된다
+ok 121 - 캡션 1건이면 p50 === p90 이고 스키마의 p90 >= p50 이 유지된다
+  ---
+  duration_ms: 0.22625
+  type: 'test'
+  ...
+# Subtest: 같은 길이가 여러 건이면 입력 순서의 nearest-rank 게시물을 p50·p90 근거로 고른다 (\#100)
+ok 122 - 같은 길이가 여러 건이면 입력 순서의 nearest-rank 게시물을 p50·p90 근거로 고른다 (\#100)
+  ---
+  duration_ms: 0.322959
+  type: 'test'
+  ...
+# Subtest: opener_tendency 는 캐러셀 1번 분석이 실제로 들어왔을 때만 나온다
+ok 123 - opener_tendency 는 캐러셀 1번 분석이 실제로 들어왔을 때만 나온다
+  ---
+  duration_ms: 0.988667
+  type: 'test'
+  ...
+# Subtest: opener 분류가 동률이거나 스냅샷과 무관하면 opener_tendency 를 생략한다
+ok 124 - opener 분류가 동률이거나 스냅샷과 무관하면 opener_tendency 를 생략한다
+  ---
+  duration_ms: 1.445875
+  type: 'test'
+  ...
+# Subtest: 어떤 경로에서도 문자열 '불명' 이 나오지 않는다
+ok 125 - 어떤 경로에서도 문자열 '불명' 이 나오지 않는다
+  ---
+  duration_ms: 0.856333
+  type: 'test'
+  ...
+# Subtest: 직접 업로드 경로가 사진 분석에서 visual 을 집계한다
+ok 126 - 직접 업로드 경로가 사진 분석에서 visual 을 집계한다
+  ---
+  duration_ms: 0.587417
+  type: 'test'
+  ...
+# Subtest: hue 평균은 원형 평균이라 359도와 1도를 180도로 만들지 않는다
+ok 127 - hue 평균은 원형 평균이라 359도와 1도를 180도로 만들지 않는다
+  ---
+  duration_ms: 0.778625
+  type: 'test'
+  ...
+# Subtest: 모든 프로필 Claim 은 근거를 갖고 rule 만으로 이루어지지 않는다 (E1 · P2)
+ok 128 - 모든 프로필 Claim 은 근거를 갖고 rule 만으로 이루어지지 않는다 (E1 · P2)
+  ---
+  duration_ms: 0.86725
+  type: 'test'
+  ...
+# Subtest: 입력을 섞거나 형식이 어긋나면 거부한다
+ok 129 - 입력을 섞거나 형식이 어긋나면 거부한다
+  ---
+  duration_ms: 0.318791
+  type: 'test'
+  ...
+# Subtest: 스냅샷 fixture 가 A2 판정을 근거와 함께 기록하고 있다
+ok 130 - 스냅샷 fixture 가 A2 판정을 근거와 함께 기록하고 있다
+  ---
+  duration_ms: 0.046292
+  type: 'test'
+  ...
+# Subtest: 같은 사진이라도 캡션 관측 여부가 다르면 다른 프로필 ID 다
+ok 131 - 같은 사진이라도 캡션 관측 여부가 다르면 다른 프로필 ID 다
+  ---
+  duration_ms: 0.213417
+  type: 'test'
+  ...
+# Subtest: A2 판정이 "같다" 가 아닌 스냅샷에서는 opener_tendency 를 내지 않는다 (H1)
+ok 132 - A2 판정이 "같다" 가 아닌 스냅샷에서는 opener_tendency 를 내지 않는다 (H1)
+  ---
+  duration_ms: 2.564583
+  type: 'test'
+  ...
+# Subtest: opener_tendency 의 근거는 그 성향으로 분류된 캐러셀만 가리킨다 (H2)
+ok 133 - opener_tendency 의 근거는 그 성향으로 분류된 캐러셀만 가리킨다 (H2)
+  ---
+  duration_ms: 0.497375
+  type: 'test'
+  ...
+# Subtest: subjects 의 근거는 그 피사체가 실제로 찍힌 사진만 가리킨다 (H2)
+ok 134 - subjects 의 근거는 그 피사체가 실제로 찍힌 사진만 가리킨다 (H2)
+  ---
+  duration_ms: 0.193583
+  type: 'test'
+  ...
+# Subtest: 집계 Claim 의 근거 note 는 어떤 관측 집합에서 계산했는지 밝힌다 (H2)
+ok 135 - 집계 Claim 의 근거 note 는 어떤 관측 집합에서 계산했는지 밝힌다 (H2)
+  ---
+  duration_ms: 0.372375
+  type: 'test'
+  ...
+# Subtest: 실제 30건은 ending_style을 생략하고 측정 가능한 집계 근거만 직접 지지한다 (\#100)
+ok 136 - 실제 30건은 ending_style을 생략하고 측정 가능한 집계 근거만 직접 지지한다 (\#100)
+  ---
+  duration_ms: 0.368917
+  type: 'test'
+  ...
+# Subtest: 정상 문장·명사·브랜드·불릿 메타데이터 모두 ending_style을 만들지 않는다 (\#100)
+ok 137 - 정상 문장·명사·브랜드·불릿 메타데이터 모두 ending_style을 만들지 않는다 (\#100)
+  ---
+  duration_ms: 0.915709
+  type: 'test'
+  ...
+# Subtest: 집계 근거는 같은 source ID 안에서도 실제 캡션 모집단을 구분한다 (\#100)
+ok 138 - 집계 근거는 같은 source ID 안에서도 실제 캡션 모집단을 구분한다 (\#100)
+  ---
+  duration_ms: 4.893458
+  type: 'test'
+  ...
+# Subtest: 캡션 모집단 digest는 구분 문자가 들어간 서로 다른 행 구조도 구별한다 (\#100)
+ok 139 - 캡션 모집단 digest는 구분 문자가 들어간 서로 다른 행 구조도 구별한다 (\#100)
+  ---
+  duration_ms: 0.0605
+  type: 'test'
+  ...
+# Subtest: 줄바꿈 집계 note는 빈 줄이 있는 캡션 건수를 명시한다 (\#100)
+ok 140 - 줄바꿈 집계 note는 빈 줄이 있는 캡션 건수를 명시한다 (\#100)
+  ---
+  duration_ms: 0.111458
+  type: 'test'
+  ...
+# Subtest: all generation preserves each contract path and loads actual shared/output prompts
+ok 141 - all generation preserves each contract path and loads actual shared/output prompts
+  ---
+  duration_ms: 193.876375
+  type: 'test'
+  ...
+# Subtest: target-only current profiles stay traceable in the feed but produce byte-identical model requests
+ok 142 - target-only current profiles stay traceable in the feed but produce byte-identical model requests
+  ---
+  duration_ms: 61.1155
+  type: 'test'
+  ...
+# Subtest: model request whitelists photo facts and applied language values in all and slot modes
+ok 143 - model request whitelists photo facts and applied language values in all and slot modes
+  ---
+  duration_ms: 7.628291
+  type: 'test'
+  ...
+# Subtest: internal ordering details fail closed in every public model field for all and slot modes
+ok 144 - internal ordering details fail closed in every public model field for all and slot modes
+  ---
+  duration_ms: 16.895417
+  type: 'test'
+  ...
+# Subtest: every model-input field name is rejected when echoed into public evidence
+ok 145 - every model-input field name is rejected when echoed into public evidence
+  ---
+  duration_ms: 25.65925
+  type: 'test'
+  ...
+# Subtest: model-visible disclosure values are rejected in both output modes
+ok 146 - model-visible disclosure values are rejected in both output modes
+  ---
+  duration_ms: 3.332167
+  type: 'test'
+  ...
+# Subtest: the original brightness and saturation ordering title is rejected even when heuristic facts contain both terms
+ok 147 - the original brightness and saturation ordering title is rejected even when heuristic facts contain both terms
+  ---
+  duration_ms: 1.359375
+  type: 'test'
+  ...
+# Subtest: an internal-looking literal remains usable when it is visibly grounded in the same photo
+ok 148 - an internal-looking literal remains usable when it is visibly grounded in the same photo
+  ---
+  duration_ms: 0.907334
+  type: 'test'
+  ...
+# Subtest: a longer photographed word cannot ground an internal identifier substring
+ok 149 - a longer photographed word cannot ground an internal identifier substring
+  ---
+  duration_ms: 1.776125
+  type: 'test'
+  ...
+# Subtest: single slot sends only its photo and rejects other photo, position, user state or foreign evidence
+ok 150 - single slot sends only its photo and rejects other photo, position, user state or foreign evidence
+  ---
+  duration_ms: 8.827125
+  type: 'test'
+  ...
+# Subtest: all generation stabilizes one evidence-backed omission without forcing other contexts
+ok 151 - all generation stabilizes one evidence-backed omission without forcing other contexts
+  ---
+  duration_ms: 7.197416
+  type: 'test'
+  ...
+# Subtest: explicit sparse coverage survives buildFeed and deterministically stabilizes one omission
+ok 152 - explicit sparse coverage survives buildFeed and deterministically stabilizes one omission
+  ---
+  duration_ms: 10.724542
+  type: 'test'
+  ...
+# Subtest: reference observations keep the existing numeric ratio fallback
+ok 153 - reference observations keep the existing numeric ratio fallback
+  ---
+  duration_ms: 5.573625
+  type: 'test'
+  ...
+# Subtest: negated or non-caption coverage wording stays unset through generation
+ok 154 - negated or non-caption coverage wording stays unset through generation
+  ---
+  duration_ms: 57.68575
+  type: 'test'
+  ...
+# Subtest: an unrelated contrast clause preserves the earlier explicit coverage request
+ok 155 - an unrelated contrast clause preserves the earlier explicit coverage request
+  ---
+  duration_ms: 15.1535
+  type: 'test'
+  ...
+# Subtest: client cannot forge matching context and applied coverage from unrelated freetext
+ok 156 - client cannot forge matching context and applied coverage from unrelated freetext
+  ---
+  duration_ms: 0.513167
+  type: 'test'
+  ...
+# Subtest: real feed context blocks stabilization without affirmative omission evidence
+ok 157 - real feed context blocks stabilization without affirmative omission evidence
+  ---
+  duration_ms: 14.813125
+  type: 'test'
+  ...
+# Subtest: client overlap cannot replace the canonical color measurement
+ok 158 - client overlap cannot replace the canonical color measurement
+  ---
+  duration_ms: 2.107167
+  type: 'test'
+  ...
+# Subtest: existing omissions and single-slot generation are preserved
+ok 159 - existing omissions and single-slot generation are preserved
+  ---
+  duration_ms: 2.794167
+  type: 'test'
+  ...
+# Subtest: invalid input, missing key and HTTP method fail without provider calls
+ok 160 - invalid input, missing key and HTTP method fail without provider calls
+  ---
+  duration_ms: 3.61025
+  type: 'test'
+  ...
+# Subtest: HTTP full/slot success uses the shared runtime contract without caching
+ok 161 - HTTP full/slot success uses the shared runtime contract without caching
+  ---
+  duration_ms: 6.328791
+  type: 'test'
+  ...
+# Subtest: timeout, malformed provider JSON and model contract violations use honest HTTP errors
+ok 162 - timeout, malformed provider JSON and model contract violations use honest HTTP errors
+  ---
+  duration_ms: 30.712416
+  type: 'test'
+  ...
+# Subtest: mode=all discloses the counted omissions, including zero, and never on a single slot
+ok 163 - mode=all discloses the counted omissions, including zero, and never on a single slot
+  ---
+  duration_ms: 3.633291
+  type: 'test'
+  ...
+# Subtest: caption_coverage=all keeps its own behaviour and still gets an accurate zero disclosure
+ok 164 - caption_coverage=all keeps its own behaviour and still gets an accurate zero disclosure
+  ---
+  duration_ms: 6.568917
+  type: 'test'
+  ...
+# Subtest: a generation response cannot claim an omission count it did not measure
+ok 165 - a generation response cannot claim an omission count it did not measure
+  ---
+  duration_ms: 2.250583
+  type: 'test'
+  ...
+# Subtest: the result boundary rejects banned style words, ungrounded notes and caption-shaped text
+ok 166 - the result boundary rejects banned style words, ungrounded notes and caption-shaped text
+  ---
+  duration_ms: 4.809125
+  type: 'test'
+  ...
+# Subtest: filled text must stay a short hint the user finishes, drawn verbatim from that photo
+ok 167 - filled text must stay a short hint the user finishes, drawn verbatim from that photo
+  ---
+  duration_ms: 4.042375
+  type: 'test'
+  ...
+# Subtest: an empty fact list uses one fixed note instead of an invented limitation sentence
+ok 168 - an empty fact list uses one fixed note instead of an invented limitation sentence
+  ---
+  duration_ms: 6.243625
+  type: 'test'
+  ...
+# Subtest: contract fixtures cover identities, photo-only, corrected, three states and all omitted
+ok 169 - contract fixtures cover identities, photo-only, corrected, three states and all omitted
+  ---
+  duration_ms: 4.3095
+  type: 'test'
+  ...
+# Subtest: request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities
+ok 170 - request boundaries reject foreign IDs, bad versions, false photo targets and mixed identities
+  ---
+  duration_ms: 7.541084
+  type: 'test'
+  ...
+# Subtest: generation all and single-slot responses keep the requested original photo and position
+ok 171 - generation all and single-slot responses keep the requested original photo and position
+  ---
+  duration_ms: 3.476417
+  type: 'test'
+  ...
+# Subtest: current post evidence resolves to a separate supplied photo set
+ok 172 - current post evidence resolves to a separate supplied photo set
+  ---
+  duration_ms: 124.227917
+  type: 'test'
+  ...
+# Subtest: actual JPEG/PNG/WebP metadata, MIME and byte/dimension limits are checked
+ok 173 - actual JPEG/PNG/WebP metadata, MIME and byte/dimension limits are checked
+  ---
+  duration_ms: 88.22925
+  type: 'test'
+  ...
+# Subtest: JSON byte limit applies without Content-Length; invalid JSON/errors never become success
+ok 174 - JSON byte limit applies without Content-Length; invalid JSON/errors never become success
+  ---
+  duration_ms: 10.7625
+  type: 'test'
+  ...
+# Subtest: missing key reports heuristic route and direct model calls fail without network
+ok 175 - missing key reports heuristic route and direct model calls fail without network
+  ---
+  duration_ms: 1.0395
+  type: 'test'
+  ...
+# Subtest: wire format carries exactly one image and returns observed usage/model/time
+ok 176 - wire format carries exactly one image and returns observed usage/model/time
+  ---
+  duration_ms: 47.8805
+  type: 'test'
+  ...
+# Subtest: 429/529 retry once; auth errors never retry or expose provider body
+ok 177 - 429/529 retry once; auth errors never retry or expose provider body
+  ---
+  duration_ms: 314.21975
+  type: 'test'
+  ...
+# Subtest: deadline bounds discovery and stalled response parsing; no network retry
+ok 178 - deadline bounds discovery and stalled response parsing; no network retry
+  ---
+  duration_ms: 21.933167
+  type: 'test'
+  ...
+# Subtest: refusal, truncation, malformed JSON and non-object responses fail explicitly
+ok 179 - refusal, truncation, malformed JSON and non-object responses fail explicitly
+  ---
+  duration_ms: 2.144125
+  type: 'test'
+  ...
+# Subtest: key alone activates production client and loaded prompt; invalid response is not cached
+ok 180 - key alone activates production client and loaded prompt; invalid response is not cached
+  ---
+  duration_ms: 5.547166
+  type: 'test'
+  ...
+# Subtest: HTTP exposes model contract failure instead of returning heuristic success
+ok 181 - HTTP exposes model contract failure instead of returning heuristic success
+  ---
+  duration_ms: 1.415084
+  type: 'test'
+  ...
+# Subtest: key-present SVG is an explicit 415 from the production HTTP client, with no network
+ok 182 - key-present SVG is an explicit 415 from the production HTTP client, with no network
+  ---
+  duration_ms: 1.087583
+  type: 'test'
+  ...
+# Subtest: thinking 블록이 앞에 와도 text 블록 하나를 읽는다
+ok 183 - thinking 블록이 앞에 와도 text 블록 하나를 읽는다
+  ---
+  duration_ms: 0.388583
+  type: 'test'
+  ...
+# Subtest: text 블록이 없거나 둘 이상이면 실패한다
+ok 184 - text 블록이 없거나 둘 이상이면 실패한다
+  ---
+  duration_ms: 1.468959
+  type: 'test'
+  ...
+# Subtest: 워크스페이스 ID 가 있으면 헤더로 보내고 없으면 보내지 않는다
+ok 185 - 워크스페이스 ID 가 있으면 헤더로 보내고 없으면 보내지 않는다
+  ---
+  duration_ms: 0.399667
+  type: 'test'
+  ...
+# Subtest: zero observations means explicit zero suggestions on photo-only and target paths; 3/20 slots conserved
+ok 186 - zero observations means explicit zero suggestions on photo-only and target paths; 3/20 slots conserved
+  ---
+  duration_ms: 205.70675
+  type: 'test'
+  ...
+# Subtest: one-photo analyzer duplicate observation reaches both HTTP feed paths without removing slots
+ok 187 - one-photo analyzer duplicate observation reaches both HTTP feed paths without removing slots
+  ---
+  duration_ms: 6.369375
+  type: 'test'
+  ...
+# Subtest: foreign, self, cyclic, chained and ambiguous duplicate observations abstain
+ok 188 - foreign, self, cyclic, chained and ambiguous duplicate observations abstain
+  ---
+  duration_ms: 1.417709
+  type: 'test'
+  ...
+# Subtest: heuristic defaults, dark/blurry flags, colour, profile and order cannot change omission decisions
+ok 189 - heuristic defaults, dark/blurry flags, colour, profile and order cannot change omission decisions
+  ---
+  duration_ms: 11.001167
+  type: 'test'
+  ...
+# Subtest: extension validation rejects forged decisions, evidence, partial fields and wrong count; legacy feeds survive
+ok 190 - extension validation rejects forged decisions, evidence, partial fields and wrong count; legacy feeds survive
+  ---
+  duration_ms: 16.396917
+  type: 'test'
+  ...
+# Subtest: consecutive upload requests preserve warm-cache observations in the zero-suggestion message
+ok 191 - consecutive upload requests preserve warm-cache observations in the zero-suggestion message
+  ---
+  duration_ms: 17.278208
+  type: 'test'
+  ...
+# Subtest: a tie caused by opener bonus explains total score rather than unequal direction scores
+ok 192 - a tie caused by opener bonus explains total score rather than unequal direction scores
+  ---
+  duration_ms: 7.62125
+  type: 'test'
+  ...
+# Subtest: measured fixture itself satisfies the PhotoAnalysis contract
+ok 193 - measured fixture itself satisfies the PhotoAnalysis contract
+  ---
+  duration_ms: 0.908458
+  type: 'test'
+  ...
+# Subtest: 3 photos produce 3 slots covering positions 1..3 exactly once
+ok 194 - 3 photos produce 3 slots covering positions 1..3 exactly once
+  ---
+  duration_ms: 3.546334
+  type: 'test'
+  ...
+# Subtest: 15 photos produce 15 slots covering positions 1..15 exactly once
+ok 195 - 15 photos produce 15 slots covering positions 1..15 exactly once
+  ---
+  duration_ms: 2.607334
+  type: 'test'
+  ...
+# Subtest: 20 photos produce 20 slots covering positions 1..20 exactly once
+ok 196 - 20 photos produce 20 slots covering positions 1..20 exactly once
+  ---
+  duration_ms: 15.331583
+  type: 'test'
+  ...
+# Subtest: every eval invariant except the F3 export one passes on a generated feed
+ok 197 - every eval invariant except the F3 export one passes on a generated feed
+  ---
+  duration_ms: 11.625208
+  type: 'test'
+  ...
+# Subtest: no slot is justified by rules alone, and every photo evidence resolves to its own slot
+ok 198 - no slot is justified by rules alone, and every photo evidence resolves to its own slot
+  ---
+  duration_ms: 1.983917
+  type: 'test'
+  ...
+# Subtest: rationales never speak of scale, absent faces or "여백"
+ok 199 - rationales never speak of scale, absent faces or "여백"
+  ---
+  duration_ms: 4.790833
+  type: 'test'
+  ...
+# Subtest: two target profiles order the same photos differently
+ok 200 - two target profiles order the same photos differently
+  ---
+  duration_ms: 3.611584
+  type: 'test'
+  ...
+# Subtest: two profiles that agree on direction collide at R1, and the measured palette splits them
+ok 201 - two profiles that agree on direction collide at R1, and the measured palette splits them
+  ---
+  duration_ms: 15.975125
+  type: 'test'
+  ...
+# Subtest: the same input produces byte-identical output
+ok 202 - the same input produces byte-identical output
+  ---
+  duration_ms: 2.436334
+  type: 'test'
+  ...
+# Subtest: an absent current profile ends normally as target_only
+ok 203 - an absent current profile ends normally as target_only
+  ---
+  duration_ms: 1.419959
+  type: 'test'
+  ...
+# Subtest: a present current profile is reported but not yet used to correct
+ok 204 - a present current profile is reported but not yet used to correct
+  ---
+  duration_ms: 2.205542
+  type: 'test'
+  ...
+# Subtest: caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
+ok 205 - caption inputs carry only that photo own facts, one visual peak and no overlap at the first slot
+  ---
+  duration_ms: 0.549541
+  type: 'test'
+  ...
+# Subtest: carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
+ok 206 - carousel opener tendency only nudges when it was actually observed, and cannot outrank a large measured gap
+  ---
+  duration_ms: 6.045541
+  type: 'test'
+  ...
+# Subtest: a bonus that flipped the opener is named as the reason, not hidden behind the measurement
+ok 207 - a bonus that flipped the opener is named as the reason, not hidden behind the measurement
+  ---
+  duration_ms: 1.57075
+  type: 'test'
+  ...
+# Subtest: photo-only input is rejected here; the photo-only DoD belongs to the wiring layer
+ok 208 - photo-only input is rejected here; the photo-only DoD belongs to the wiring layer
+  ---
+  duration_ms: 1.42725
+  type: 'test'
+  ...
+# Subtest: rejects inputs the contract cannot accept instead of guessing
+ok 209 - rejects inputs the contract cannot accept instead of guessing
+  ---
+  duration_ms: 0.253583
+  type: 'test'
+  ...
+# Subtest: output prompts reference one shared style guard without copied banned lists
+ok 210 - output prompts reference one shared style guard without copied banned lists
+  ---
+  duration_ms: 12.592583
+  type: 'test'
+  ...
+# Subtest: manual examples match photo facts and original slots without banned language
+ok 211 - manual examples match photo facts and original slots without banned language
+  ---
+  duration_ms: 5.266333
+  type: 'test'
+  ...
+# Subtest: hidden SVG roots and invalid numeric entities fail without invented observations
+ok 212 - hidden SVG roots and invalid numeric entities fail without invented observations
+  ---
+  duration_ms: 2.06975
+  type: 'test'
+  ...
+# Subtest: JPEG invalid headers are rejected before allocating pixel grids
+ok 213 - JPEG invalid headers are rejected before allocating pixel grids
+  ---
+  duration_ms: 7.861875
+  type: 'test'
+  ...
+# Subtest: returned facts and measurement cannot mutate later cache hits
+ok 214 - returned facts and measurement cannot mutate later cache hits
+  ---
+  duration_ms: 4.387375
+  type: 'test'
+  ...
+# Subtest: heuristic output satisfies the PhotoAnalysis contract and is deterministic
+ok 215 - heuristic output satisfies the PhotoAnalysis contract and is deterministic
+  ---
+  duration_ms: 5.153583
+  type: 'test'
+  ...
+# Subtest: heuristic never reports a subject, place, time or mood — only measured values
+ok 216 - heuristic never reports a subject, place, time or mood — only measured values
+  ---
+  duration_ms: 9.584
+  type: 'test'
+  ...
+# Subtest: selected model failure is explicit and never cached
+ok 217 - selected model failure is explicit and never cached
+  ---
+  duration_ms: 2.662958
+  type: 'test'
+  ...
+# Subtest: model observations are accepted but measured color overrides the model estimate
+ok 218 - model observations are accepted but measured color overrides the model estimate
+  ---
+  duration_ms: 1.913875
+  type: 'test'
+  ...
+# Subtest: model receives a 512px thumbnail instead of the original large raster
+ok 219 - model receives a 512px thumbnail instead of the original large raster
+  ---
+  duration_ms: 43.70475
+  type: 'test'
+  ...
+# Subtest: discarded model color may be invalid only when trusted pixel color replaces it
+ok 220 - discarded model color may be invalid only when trusted pixel color replaces it
+  ---
+  duration_ms: 23.009125
+  type: 'test'
+  ...
+# Subtest: contract violations fail before correction and never enter cache
+ok 221 - contract violations fail before correction and never enter cache
+  ---
+  duration_ms: 10.2725
+  type: 'test'
+  ...
+# Subtest: key/model namespaces separate heuristic and model cache; callers cannot poison cached facts
+ok 222 - key/model namespaces separate heuristic and model cache; callers cannot poison cached facts
+  ---
+  duration_ms: 1.923625
+  type: 'test'
+  ...
+# Subtest: same bytes twice: zero extra model calls, identity re-stamped, duplicate reported
+ok 223 - same bytes twice: zero extra model calls, identity re-stamped, duplicate reported
+  ---
+  duration_ms: 1.424875
+  type: 'test'
+  ...
+# Subtest: cache is bounded and holds no more than CACHE_LIMIT entries
+ok 224 - cache is bounded and holds no more than CACHE_LIMIT entries
+  ---
+  duration_ms: 3.420041
+  type: 'test'
+  ...
+# Subtest: unobservable bytes fail honestly instead of inventing color
+ok 225 - unobservable bytes fail honestly instead of inventing color
+  ---
+  duration_ms: 1.550541
+  type: 'test'
+  ...
+# Subtest: jpeg DC reader returns a real block grid and rejects what it cannot read
+ok 226 - jpeg DC reader returns a real block grid and rejects what it cannot read
+  ---
+  duration_ms: 0.086
+  type: 'test'
+  ...
+# Subtest: baseline JPEG is measured, not mis-read: solid colours are exact
+ok 227 - baseline JPEG is measured, not mis-read: solid colours are exact
+  ---
+  duration_ms: 2.0305
+  type: 'test'
+  ...
+# Subtest: baseline and progressive encodings of the same pixels agree
+ok 228 - baseline and progressive encodings of the same pixels agree
+  ---
+  duration_ms: 2.205041
+  type: 'test'
+  ...
+# Subtest: SVG is measured only as the flat-colour card it claims to support
+ok 229 - SVG is measured only as the flat-colour card it claims to support
+  ---
+  duration_ms: 1.399292
+  type: 'test'
+  ...
+# Subtest: SVG text is reported only when a viewer could see it, and unescaped
+ok 230 - SVG text is reported only when a viewer could see it, and unescaped
+  ---
+  duration_ms: 1.191
+  type: 'test'
+  ...
+# Subtest: composition is a documented constant, not a reading of the colour histogram
+ok 231 - composition is a documented constant, not a reading of the colour histogram
+  ---
+  duration_ms: 2.58925
+  type: 'test'
+  ...
+# Subtest: POST one photo returns one PhotoAnalysis
+ok 232 - POST one photo returns one PhotoAnalysis
+  ---
+  duration_ms: 1.677416
+  type: 'test'
+  ...
+# Subtest: there is no many-photos-per-request path
+ok 233 - there is no many-photos-per-request path
+  ---
+  duration_ms: 0.19725
+  type: 'test'
+  ...
+# Subtest: request validation is explicit at the trust boundary
+ok 234 - request validation is explicit at the trust boundary
+  ---
+  duration_ms: 89.680959
+  type: 'test'
+  ...
+# Subtest: data URL prefixes are accepted, not silently mangled
+ok 235 - data URL prefixes are accepted, not silently mangled
+  ---
+  duration_ms: 0.355042
+  type: 'test'
+  ...
+# Subtest: the heuristic path makes zero outbound attempts with the network disabled
+ok 236 - the heuristic path makes zero outbound attempts with the network disabled
+  ---
+  duration_ms: 91.866542
+  type: 'test'
+  ...
+# Subtest: the folder runner records a model failure and continues with the next photo
+ok 237 - the folder runner records a model failure and continues with the next photo
+  ---
+  duration_ms: 543.248334
+  type: 'test'
+  ...
+# Subtest: W5: the observation schema sent to the model uses no rejected array keywords
+ok 238 - W5: the observation schema sent to the model uses no rejected array keywords
+  ---
+  duration_ms: 1.105625
+  type: 'test'
+  ...
+# Subtest: 3/20 actual input IDs survive photo-only and heuristic target/current paths without invented spatial observations
+ok 239 - 3/20 actual input IDs survive photo-only and heuristic target/current paths without invented spatial observations
+  ---
+  duration_ms: 29.512084
+  type: 'test'
+  ...
+# Subtest: model observations keep target ordering while current stays target-only
+ok 240 - model observations keep target ordering while current stays target-only
+  ---
+  duration_ms: 1.596541
+  type: 'test'
+  ...
+# Subtest: prepared references are exact and unprepared URLs never become another account
+ok 241 - prepared references are exact and unprepared URLs never become another account
+  ---
+  duration_ms: 40.74575
+  type: 'test'
+  ...
+# Subtest: mock upload reads actual JPEG/PNG/WebP pixels, preserving ID and disabling provider even with a key
+ok 242 - mock upload reads actual JPEG/PNG/WebP pixels, preserving ID and disabling provider even with a key
+  ---
+  duration_ms: 17.26075
+  type: 'test'
+  ...
+# Subtest: invalid upload and feed stay errors rather than empty successes
+ok 243 - invalid upload and feed stay errors rather than empty successes
+  ---
+  duration_ms: 1.369792
+  type: 'test'
+  ...
+# Subtest: \#69 real HTTP path reorders 15 heuristic photos once a target exists, and two targets disagree
+ok 244 - \#69 real HTTP path reorders 15 heuristic photos once a target exists, and two targets disagree
+  ---
+  duration_ms: 5.155459
+  type: 'test'
+  ...
+# Subtest: \#69 heuristic photos never have their constant composition reported as an observation
+ok 245 - \#69 heuristic photos never have their constant composition reported as an observation
+  ---
+  duration_ms: 3.236375
+  type: 'test'
+  ...
+# Subtest: \#69 photo-only input still keeps the input order, and the branch is the only one left
+ok 246 - \#69 photo-only input still keeps the input order, and the branch is the only one left
+  ---
+  duration_ms: 1.771208
+  type: 'test'
+  ...
+# Subtest: \#69 P2 an unobserved composition constant must not decide the order in a mixed batch
+ok 247 - \#69 P2 an unobserved composition constant must not decide the order in a mixed batch
+  ---
+  duration_ms: 1.446416
+  type: 'test'
+  ...
+# Subtest: \#69 P2 flipping an unobserved photo’s composition constant changes nothing
+ok 248 - \#69 P2 flipping an unobserved photo’s composition constant changes nothing
+  ---
+  duration_ms: 1.397125
+  type: 'test'
+  ...
+# Subtest: heuristic defaults are not promoted to observed composition, scale or opener habits
+ok 249 - heuristic defaults are not promoted to observed composition, scale or opener habits
+  ---
+  duration_ms: 7.833709
+  type: 'test'
+  ...
+# Subtest: both input paths produce the same TargetProfile schema with their own source
+ok 250 - both input paths produce the same TargetProfile schema with their own source
+  ---
+  duration_ms: 1.804708
+  type: 'test'
+  ...
+# Subtest: what should be empty is empty: free text sees no photo, a reference snapshot sees no user sentence
+ok 251 - what should be empty is empty: free text sees no photo, a reference snapshot sees no user sentence
+  ---
+  duration_ms: 0.706708
+  type: 'test'
+  ...
+# Subtest: E1: every Claim in both profiles and the photo plan carries at least one evidence
+ok 252 - E1: every Claim in both profiles and the photo plan carries at least one evidence
+  ---
+  duration_ms: 0.273292
+  type: 'test'
+  ...
+# Subtest: no profile item is made of rule evidence alone
+ok 253 - no profile item is made of rule evidence alone
+  ---
+  duration_ms: 0.157583
+  type: 'test'
+  ...
+# Subtest: a free text mapping cites the matched phrase and the mapping row separately
+ok 254 - a free text mapping cites the matched phrase and the mapping row separately
+  ---
+  duration_ms: 0.20925
+  type: 'test'
+  ...
+# Subtest: free text preserves explicit caption coverage as a claim without inventing a ratio
+ok 255 - free text preserves explicit caption coverage as a claim without inventing a ratio
+  ---
+  duration_ms: 1.925167
+  type: 'test'
+  ...
+# Subtest: negated, conflicting, or unsupported coverage cues never become an affirmative claim
+ok 256 - negated, conflicting, or unsupported coverage cues never become an affirmative claim
+  ---
+  duration_ms: 3.191125
+  type: 'test'
+  ...
+# Subtest: coverage contrast keeps the final affirmative wish without reversing a negation
+ok 257 - coverage contrast keeps the final affirmative wish without reversing a negation
+  ---
+  duration_ms: 1.587417
+  type: 'test'
+  ...
+# Subtest: an aggregate value can be traced back to the posts it was read from
+ok 258 - an aggregate value can be traced back to the posts it was read from
+  ---
+  duration_ms: 0.334167
+  type: 'test'
+  ...
+# Subtest: free text never invents an empty caption ratio and never rounds up to a default
+ok 259 - free text never invents an empty caption ratio and never rounds up to a default
+  ---
+  duration_ms: 0.332625
+  type: 'test'
+  ...
+# Subtest: the runtime contract reserves coverage intent for freetext targets
+ok 260 - the runtime contract reserves coverage intent for freetext targets
+  ---
+  duration_ms: 1.274292
+  type: 'test'
+  ...
+# Subtest: free text is the floor that always succeeds, but blank input is not natural language
+ok 261 - free text is the floor that always succeeds, but blank input is not natural language
+  ---
+  duration_ms: 0.298875
+  type: 'test'
+  ...
+# Subtest: an unprepared URL fails and names the fallbacks instead of borrowing another account
+ok 262 - an unprepared URL fails and names the fallbacks instead of borrowing another account
+  ---
+  duration_ms: 0.277709
+  type: 'test'
+  ...
+# Subtest: the photo only path returns a plan, never a TargetProfile with an undefined absent state
+ok 263 - the photo only path returns a plan, never a TargetProfile with an undefined absent state
+  ---
+  duration_ms: 0.08725
+  type: 'test'
+  ...
+# Subtest: the photo only path claims no preference and no sentence
+ok 264 - the photo only path claims no preference and no sentence
+  ---
+  duration_ms: 0.067625
+  type: 'test'
+  ...
+# Subtest: the photo plan aggregates only what a photo can show, and the mixes stay exact
+ok 265 - the photo plan aggregates only what a photo can show, and the mixes stay exact
+  ---
+  duration_ms: 1.337083
+  type: 'test'
+  ...
+# Subtest: boundary: an all blank snapshot yields no language and a carousel free one yields no opener
+ok 266 - boundary: an all blank snapshot yields no language and a carousel free one yields no opener
+  ---
+  duration_ms: 0.110125
+  type: 'test'
+  ...
+# Subtest: the two golden profiles differ in a way a reader can see
+ok 267 - the two golden profiles differ in a way a reader can see
+  ---
+  duration_ms: 6.120292
+  type: 'test'
+  ...
+# Subtest: H1: a negated or contrasted wish is left empty, never flipped into a positive one
+ok 268 - H1: a negated or contrasted wish is left empty, never flipped into a positive one
+  ---
+  duration_ms: 0.541042
+  type: 'test'
+  ...
+# Subtest: H1 control: a plainly positive wish still fills the same fields it always did
+ok 269 - H1 control: a plainly positive wish still fills the same fields it always did
+  ---
+  duration_ms: 0.165667
+  type: 'test'
+  ...
+# Subtest: H2: editing a returned profile never changes what the next call returns
+ok 270 - H2: editing a returned profile never changes what the next call returns
+  ---
+  duration_ms: 3.611584
+  type: 'test'
+  ...
+# Subtest: H3: profile evidence must resolve to the actual input, not merely exist
+ok 271 - H3: profile evidence must resolve to the actual input, not merely exist
+  ---
+  duration_ms: 0.664083
+  type: 'test'
+  ...
+1..271
+# tests 271
+# suites 0
+# pass 271
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1275.410792

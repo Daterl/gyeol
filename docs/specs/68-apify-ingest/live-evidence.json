@@ -1,0 +1,470 @@
+{
+  "checked_at": "2026-09-18T01:32:24.216Z",
+  "http_status": 200,
+  "status": "SUCCEEDED",
+  "metrics": {
+    "observed_at": "2026-09-18T01:32:23.531Z",
+    "provisional": false,
+    "run_id": "h9dl4E9wmvW8wYaUa",
+    "build_id": "HFnaHhQGkDXjgZHDp",
+    "started_at": "2026-09-18T01:20:35.213Z",
+    "finished_at": "2026-09-18T01:20:51.119Z",
+    "duration_seconds": 15.74,
+    "usage_total_usd": 0.0081
+  },
+  "provider_options": {
+    "build": "latest",
+    "timeoutSecs": 120,
+    "memoryMbytes": 512,
+    "maxItems": 3,
+    "maxTotalChargeUsd": 0.1,
+    "isMaxTotalChargeUsdSetByUser": true,
+    "diskMbytes": 2048
+  },
+  "pricing_model": "PAY_PER_EVENT",
+  "provenance": {
+    "account": "29cm.official",
+    "account_scope": "n/a",
+    "collected_at": "2026-09-18T01:20:51.119Z",
+    "method": "apify",
+    "actor": "apify/instagram-scraper",
+    "run_id": "h9dl4E9wmvW8wYaUa",
+    "dataset_id": "AWX3KT3eCLRrDQ4B0",
+    "source_url": "https://www.instagram.com/29cm.official/",
+    "carousel_order_check": {
+      "verdict": "확인 불가",
+      "note": "제공자 배열 순서를 보존했으며 이 실행의 브라우저 대조는 하지 않았다"
+    },
+    "evidence_refs": {
+      "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0": "https://www.instagram.com/29cm.official/",
+      "DdYn8mtDYer": "https://www.instagram.com/p/DdYn8mtDYer/",
+      "29cm.official:DdYn8mtDYer": "https://www.instagram.com/p/DdYn8mtDYer/",
+      "DdLxIomoEKc": "https://www.instagram.com/p/DdLxIomoEKc/",
+      "29cm.official:DdLxIomoEKc": "https://www.instagram.com/p/DdLxIomoEKc/",
+      "DdaNJzCgUyr": "https://www.instagram.com/p/DdaNJzCgUyr/",
+      "29cm.official:DdaNJzCgUyr": "https://www.instagram.com/p/DdaNJzCgUyr/"
+    }
+  },
+  "posts": [
+    {
+      "id": "3988113158577162155",
+      "shortcode": "DdYn8mtDYer",
+      "index": 0,
+      "type": "Sidecar",
+      "child_count": 5,
+      "children": [
+        {
+          "id": "3988112922026799272",
+          "index": 0,
+          "type": "Image"
+        },
+        {
+          "id": "3988112960111077845",
+          "index": 1,
+          "type": "Image"
+        },
+        {
+          "id": "3988113037185581317",
+          "index": 2,
+          "type": "Image"
+        },
+        {
+          "id": "3988113075924175628",
+          "index": 3,
+          "type": "Image"
+        },
+        {
+          "id": "3988113110502031238",
+          "index": 4,
+          "type": "Image"
+        }
+      ],
+      "published_at": "2026-09-17T10:16:01.000Z",
+      "caption_utf16_length": 187,
+      "caption_trimmed_codepoint_length": 184
+    },
+    {
+      "id": "3984494392971903644",
+      "shortcode": "DdLxIomoEKc",
+      "index": 1,
+      "type": "Sidecar",
+      "child_count": 10,
+      "children": [
+        {
+          "id": "3984493968567067767",
+          "index": 0,
+          "type": "Image"
+        },
+        {
+          "id": "3984494003304276892",
+          "index": 1,
+          "type": "Image"
+        },
+        {
+          "id": "3984494047604509155",
+          "index": 2,
+          "type": "Image"
+        },
+        {
+          "id": "3984494087551111296",
+          "index": 3,
+          "type": "Image"
+        },
+        {
+          "id": "3984494129829687125",
+          "index": 4,
+          "type": "Image"
+        },
+        {
+          "id": "3984494173718885445",
+          "index": 5,
+          "type": "Image"
+        },
+        {
+          "id": "3984494213271173948",
+          "index": 6,
+          "type": "Image"
+        },
+        {
+          "id": "3984494249006632411",
+          "index": 7,
+          "type": "Image"
+        },
+        {
+          "id": "3984494289095815284",
+          "index": 8,
+          "type": "Image"
+        },
+        {
+          "id": "3984494322239199070",
+          "index": 9,
+          "type": "Image"
+        }
+      ],
+      "published_at": "2026-09-12T10:27:11.000Z",
+      "caption_utf16_length": 892,
+      "caption_trimmed_codepoint_length": 883
+    },
+    {
+      "id": "3988558267872791723",
+      "shortcode": "DdaNJzCgUyr",
+      "index": 2,
+      "type": "Sidecar",
+      "child_count": 7,
+      "children": [
+        {
+          "id": "3988558245114484786",
+          "index": 0,
+          "type": "Image"
+        },
+        {
+          "id": "3988558246255354533",
+          "index": 1,
+          "type": "Image"
+        },
+        {
+          "id": "3988558244493751586",
+          "index": 2,
+          "type": "Image"
+        },
+        {
+          "id": "3988558245299072728",
+          "index": 3,
+          "type": "Image"
+        },
+        {
+          "id": "3988558245592683895",
+          "index": 4,
+          "type": "Image"
+        },
+        {
+          "id": "3988558246414713316",
+          "index": 5,
+          "type": "Image"
+        },
+        {
+          "id": "3988558247077457049",
+          "index": 6,
+          "type": "Image"
+        }
+      ],
+      "published_at": "2026-09-18T01:00:19.000Z",
+      "caption_utf16_length": 639,
+      "caption_trimmed_codepoint_length": 585
+    }
+  ],
+  "currentProfile": {
+    "schema_version": "1.0",
+    "profile_id": "cur_cached_29cm_official",
+    "axis": "current",
+    "present": true,
+    "source": "cached",
+    "account_scope": "n/a",
+    "sample_size": 3,
+    "completeness": {
+      "visual": 0,
+      "language": 1,
+      "sequence": 0.5
+    },
+    "visual": {},
+    "language": {
+      "banned_words": [
+        "이처럼",
+        "또한",
+        "이를 통해",
+        "이러한",
+        "마침내"
+      ],
+      "empty_caption_ratio": {
+        "value": 0,
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdYn8mtDYer",
+            "note": "캡션 3건 전체에서 빈 캡션 수를 세어 나눈 값이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdLxIomoEKc",
+            "note": "캡션 3건 전체에서 빈 캡션 수를 세어 나눈 값이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdaNJzCgUyr",
+            "note": "캡션 3건 전체에서 빈 캡션 수를 세어 나눈 값이다"
+          }
+        ]
+      },
+      "caption_len": {
+        "value": {
+          "p50": 585,
+          "p90": 883,
+          "unit": "자"
+        },
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdYn8mtDYer",
+            "note": "캡션을 쓴 게시물 3건 전체의 글자 수 분포에서 읽은 중앙값과 상위 10% 지점이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdLxIomoEKc",
+            "note": "캡션을 쓴 게시물 3건 전체의 글자 수 분포에서 읽은 중앙값과 상위 10% 지점이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdaNJzCgUyr",
+            "note": "캡션을 쓴 게시물 3건 전체의 글자 수 분포에서 읽은 중앙값과 상위 10% 지점이다"
+          }
+        ]
+      },
+      "emoji_rate": {
+        "value": 6,
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdYn8mtDYer",
+            "note": "캡션을 쓴 게시물 3건 전체의 1건당 이모지 개수 평균이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdLxIomoEKc",
+            "note": "캡션을 쓴 게시물 3건 전체의 1건당 이모지 개수 평균이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdaNJzCgUyr",
+            "note": "캡션을 쓴 게시물 3건 전체의 1건당 이모지 개수 평균이다"
+          }
+        ]
+      },
+      "ending_style": {
+        "value": "다",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdLxIomoEKc",
+            "note": "이 캡션의 끝맺음을 다 으로 분류했고, 분류된 캡션 중 이 끝맺음이 가장 잦았다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdaNJzCgUyr",
+            "note": "이 캡션의 끝맺음을 다 으로 분류했고, 분류된 캡션 중 이 끝맺음이 가장 잦았다"
+          }
+        ]
+      },
+      "linebreak_habit": {
+        "value": "문단",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdYn8mtDYer",
+            "note": "캡션을 쓴 게시물 3건 전체의 빈 줄과 줄바꿈 횟수를 세어 정한 줄바꿈 습관이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdLxIomoEKc",
+            "note": "캡션을 쓴 게시물 3건 전체의 빈 줄과 줄바꿈 횟수를 세어 정한 줄바꿈 습관이다"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "29cm.official:DdaNJzCgUyr",
+            "note": "캡션을 쓴 게시물 3건 전체의 빈 줄과 줄바꿈 횟수를 세어 정한 줄바꿈 습관이다"
+          }
+        ]
+      }
+    },
+    "sequence": {
+      "carousel_count": 3
+    },
+    "raw_freetext": null,
+    "created_at": "2026-09-18T01:32:23.989Z"
+  },
+  "targetProfile": {
+    "schema_version": "1.0",
+    "profile_id": "tgt_ig_0e7fcc8a",
+    "axis": "target",
+    "present": true,
+    "source": "ig_reference",
+    "account_scope": "n/a",
+    "sample_size": 3,
+    "completeness": {
+      "visual": 0,
+      "language": 1,
+      "sequence": 0
+    },
+    "visual": {},
+    "language": {
+      "caption_len": {
+        "value": {
+          "p50": 639,
+          "p90": 892,
+          "unit": "자"
+        },
+        "confidence": 0.9,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0",
+            "note": "비어 있지 않은 캡션 3건의 길이 분포"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdaNJzCgUyr",
+            "note": "캡션 639자"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdLxIomoEKc",
+            "note": "캡션 892자"
+          }
+        ]
+      },
+      "emoji_rate": {
+        "value": 6,
+        "confidence": 0.9,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0",
+            "note": "캡션 3건의 그림문자 코드포인트 평균"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdaNJzCgUyr",
+            "note": "그림문자 4개"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdYn8mtDYer",
+            "note": "그림문자 3개"
+          }
+        ]
+      },
+      "ending_style": {
+        "value": "다",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0",
+            "note": "분류된 캡션 3건 중 \"다\" 2건 (67%)"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdLxIomoEKc",
+            "note": "마지막 문장 \" 취소 시 당첨이 취소될 수 있습니다\""
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdaNJzCgUyr",
+            "note": "마지막 문장 \"(목) 23:59 기간에만 적용됩니다\""
+          }
+        ]
+      },
+      "linebreak_habit": {
+        "value": "문단",
+        "confidence": 0.7,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0",
+            "note": "캡션당 평균 17.33줄, 줄당 평균 44.35자"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdaNJzCgUyr",
+            "note": "15줄"
+          },
+          {
+            "kind": "ig_post",
+            "ref": "DdYn8mtDYer",
+            "note": "7줄"
+          }
+        ]
+      },
+      "empty_caption_ratio": {
+        "value": 0,
+        "confidence": 0.95,
+        "evidence": [
+          {
+            "kind": "aggregate",
+            "ref": "apify:h9dl4E9wmvW8wYaUa:AWX3KT3eCLRrDQ4B0",
+            "note": "게시물 3건 중 빈 캡션 0건"
+          }
+        ]
+      },
+      "banned_words": [
+        "이처럼",
+        "또한",
+        "이를 통해",
+        "이러한",
+        "마침내"
+      ]
+    },
+    "sequence": {
+      "carousel_count": 3
+    },
+    "raw_freetext": null,
+    "created_at": "2026-09-18T01:32:23.991Z"
+  },
+  "fixture": {
+    "source": "pivot/apify-check/fixtures/ig_feed_29cm.json",
+    "posts": 30,
+    "carousels": 26,
+    "current_sample_size": 30,
+    "target_sample_size": 30,
+    "caption_exact": true,
+    "child_order_exact": true
+  },
+  "caption_length_units": {
+    "currentProfile": "trimmed Unicode code points (existing current_profile.js)",
+    "targetProfile": "UTF-16 code units (existing target_profile.js)"
+  }
+}

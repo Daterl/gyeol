@@ -18,7 +18,7 @@ export async function previewOutput(
   validateGenerateRequest(input);
   const slots: CaptionSlot[] = input.feed.slots.map((slot, index) => {
     const fact = slot.caption_inputs.describable_facts[0];
-    const filled = Boolean(fact) && (input.mode === 'slot' || index % 3 !== 1);
+    const hasSeed = Boolean(fact) && (input.mode === 'slot' || index % 3 !== 1);
     return {
       photo_id: slot.photo_id,
       position: slot.position,
@@ -26,11 +26,15 @@ export async function previewOutput(
         {
           kind: 'uploaded_photo',
           ref: slot.photo_id,
-          note: fact || '문장으로 옮길 수 있는 관찰이 없어요.',
+          note: fact || '확인한 관측 사실이 없음',
         },
       ],
-      ...(filled
-        ? { caption_state: 'filled' as const, text: fact, omit_reason: null }
+      ...(hasSeed
+        ? {
+            caption_state: 'seed' as const,
+            text: `쓸 거리: ${fact.split(' · ')[0]}\n이 중 기억에 남은 건?`,
+            omit_reason: null,
+          }
         : {
             caption_state: 'omitted' as const,
             text: null,

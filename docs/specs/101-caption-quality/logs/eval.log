@@ -1,0 +1,45 @@
+> node eval/run.js
+Synthetic manual bootstrap only; no AI quality or human agreement claim.
+┌─────────┬─────────┬───────────┬────────┬────────┐
+│ (index) │ case    │ invariant │ result │ reason │
+├─────────┼─────────┼───────────┼────────┼────────┤
+│ 0       │ 'quiet' │ 'E1'      │ 'PASS' │ ''     │
+│ 1       │ 'quiet' │ 'E2'      │ 'PASS' │ ''     │
+│ 2       │ 'quiet' │ 'E3'      │ 'PASS' │ ''     │
+│ 3       │ 'quiet' │ 'E6'      │ 'PASS' │ ''     │
+│ 4       │ 'quiet' │ 'E8'      │ 'PASS' │ ''     │
+│ 5       │ 'quiet' │ 'E9'      │ 'PASS' │ ''     │
+│ 6       │ 'quiet' │ 'E10'     │ 'PASS' │ ''     │
+│ 7       │ 'quiet' │ 'E11'     │ 'PASS' │ ''     │
+└─────────┴─────────┴───────────┴────────┴────────┘
+quiet broken E1: EXPECTED FAIL — $.feed.slots.0.rationale.evidence: needs at least one evidence
+quiet broken E2: EXPECTED FAIL — E2: duplicate, missing or foreign photo ID
+quiet broken E3: EXPECTED FAIL — E3: positions must cover 1..N exactly once
+quiet broken E6: EXPECTED FAIL — E6.title: expected nonempty string
+quiet broken E8: EXPECTED FAIL — E8: absent current requires honest target-only disclosure
+quiet broken E9: EXPECTED FAIL — E9: target profile ID differs from actual input
+quiet broken E10: EXPECTED FAIL — E10: feed.slots.0.rationale.evidence.0.ref does not resolve to an actual input photo
+quiet broken E11: EXPECTED FAIL — E11: describable fact is not a fact of ph_01
+┌─────────┬──────────┬───────────┬────────┬────────┐
+│ (index) │ case     │ invariant │ result │ reason │
+├─────────┼──────────┼───────────┼────────┼────────┤
+│ 0       │ 'detail' │ 'E1'      │ 'PASS' │ ''     │
+│ 1       │ 'detail' │ 'E2'      │ 'PASS' │ ''     │
+│ 2       │ 'detail' │ 'E3'      │ 'PASS' │ ''     │
+│ 3       │ 'detail' │ 'E6'      │ 'PASS' │ ''     │
+│ 4       │ 'detail' │ 'E8'      │ 'PASS' │ ''     │
+│ 5       │ 'detail' │ 'E9'      │ 'PASS' │ ''     │
+│ 6       │ 'detail' │ 'E10'     │ 'PASS' │ ''     │
+│ 7       │ 'detail' │ 'E11'     │ 'PASS' │ ''     │
+└─────────┴──────────┴───────────┴────────┴────────┘
+detail broken E1: EXPECTED FAIL — $.feed.slots.0.rationale.evidence: needs at least one evidence
+detail broken E2: EXPECTED FAIL — E2: duplicate, missing or foreign photo ID
+detail broken E3: EXPECTED FAIL — E3: positions must cover 1..N exactly once
+detail broken E6: EXPECTED FAIL — E6.title: expected nonempty string
+detail broken E8: EXPECTED FAIL — E8: absent current requires honest target-only disclosure
+detail broken E9: EXPECTED FAIL — E9: target profile ID differs from actual input
+detail broken E10: EXPECTED FAIL — E10: feed.slots.0.rationale.evidence.0.ref does not resolve to an actual input photo
+detail broken E11: EXPECTED FAIL — E11: describable fact is not a fact of ph_15
+E4/E5/E7: manual spot-check only; real demo review pending.
+Injected model variant 0: E1/E2/E3/E8/E9/E10/E11 PASS; foreign fact E11 EXPECTED FAIL (not AI quality).
+Injected model variant 1: E1/E2/E3/E8/E9/E10/E11 PASS; foreign fact E11 EXPECTED FAIL (not AI quality).

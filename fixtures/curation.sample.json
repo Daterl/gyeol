@@ -1,0 +1,166 @@
+{
+  "description": "Offline synthetic public-profile resolver result; photo measurements from test/order.real20.json. Not a valid signed production reference or evidence of live verification.",
+  "now": "2026-09-18T10:00:00.000Z",
+  "request": {
+    "schema_version": "1.0",
+    "session_id": "g5-curation",
+    "profile_url": "https://www.instagram.com/g5_public/",
+    "profile_snapshot_id": "g5-public-snapshot",
+    "photos": [
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_01",
+        "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-2OOrFBnb_00.jpg",
+        "input_index": 0,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [],
+        "has_face": false,
+        "text_in_image": null,
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.375 (다소 어두움)",
+          "평균 채도 0.288 (낮음)",
+          "주요 색 #16150f (점유 26%)",
+          "주요 색 #434040 (점유 14%)",
+          "주요 색 #6b6765 (점유 10%)"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "heuristic-jpeg-dc@1",
+        "analyzed_at": "2026-09-17T07:23:33.087Z"
+      },
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_02",
+        "file_ref": "pivot/apify-check/fixtures/images/c29_Dc-auqBCVXI_09.jpg",
+        "input_index": 1,
+        "color": {
+          "hue_mean": 207.3,
+          "sat_mean": 0.273,
+          "bright_mean": 0.346,
+          "palette_hex": [
+            "#0a1014",
+            "#bdbbba",
+            "#374249"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [],
+        "has_face": false,
+        "text_in_image": null,
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.346 (다소 어두움)",
+          "평균 채도 0.273 (낮음)",
+          "주요 색 #0a1014 (점유 31%)",
+          "주요 색 #bdbbba (점유 12%)",
+          "주요 색 #374249 (점유 11%)"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "heuristic-jpeg-dc@1",
+        "analyzed_at": "2026-09-17T07:23:33.097Z"
+      },
+      {
+        "schema_version": "1.0",
+        "photo_id": "ph_03",
+        "file_ref": "pivot/apify-check/fixtures/images/c29_Dc94ZfOD1-q_07.jpg",
+        "input_index": 2,
+        "color": {
+          "hue_mean": 19.3,
+          "sat_mean": 0.343,
+          "bright_mean": 0.589,
+          "palette_hex": [
+            "#120d0d",
+            "#e0eaeb",
+            "#777366"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [],
+        "has_face": false,
+        "text_in_image": null,
+        "describable_facts": [
+          "1080×1350 세로 이미지",
+          "평균 밝기 0.589 (중간)",
+          "평균 채도 0.343 (중간)",
+          "주요 색 #120d0d (점유 9%)",
+          "주요 색 #e0eaeb (점유 8%)",
+          "주요 색 #777366 (점유 8%)"
+        ],
+        "quality_flags": [],
+        "analysis_source": "heuristic",
+        "model": "heuristic-jpeg-dc@1",
+        "analyzed_at": "2026-09-17T07:23:33.106Z"
+      }
+    ]
+  },
+  "resolution": {
+    "snapshot_id": "g5-public-snapshot",
+    "snapshot": {
+      "snapshot_id": "apify:g5-run:g5-dataset",
+      "handle": "g5_public",
+      "posts": [
+        {
+          "shortcode": "G5a",
+          "shortCode": "G5a",
+          "caption": "오늘의 작은 기록",
+          "child_count": 1,
+          "owner_username": "g5_public"
+        },
+        {
+          "shortcode": "G5b",
+          "shortCode": "G5b",
+          "caption": "천천히 걸었다",
+          "child_count": 1,
+          "owner_username": "g5_public"
+        }
+      ],
+      "provenance": {
+        "account": "g5_public",
+        "account_scope": "n/a",
+        "method": "apify",
+        "actor": "apify/instagram-scraper",
+        "source_url": "https://www.instagram.com/g5_public/",
+        "collected_at": "2026-09-18T09:00:00.000Z",
+        "evidence_refs": {
+          "apify:g5-run:g5-dataset": "https://www.instagram.com/g5_public/",
+          "G5a": "https://www.instagram.com/p/G5a/",
+          "G5b": "https://www.instagram.com/p/G5b/",
+          "apify:g5-run:g5-dataset:caption_population:2bf7d50dc57e6f1214bf35a2fbf82f389483e60f2e3b71c75234210b251f884f": "https://www.instagram.com/g5_public/",
+          "g5_public:G5a": "https://www.instagram.com/p/G5a/",
+          "g5_public:G5b": "https://www.instagram.com/p/G5b/"
+        },
+        "run_id": "g5-run",
+        "dataset_id": "g5-dataset"
+      }
+    },
+    "source_url": "https://www.instagram.com/g5_public/",
+    "collected_at": "2026-09-18T09:00:00.000Z",
+    "expires_at": 1789808400000
+  },
+  "expected": {
+    "photo_ids": [
+      "ph_01",
+      "ph_02",
+      "ph_03"
+    ],
+    "included": true,
+    "blank_prompt_target_source": "ig_reference",
+    "written_prompt_target_source": "freetext",
+    "ownership_verified": false
+  }
+}

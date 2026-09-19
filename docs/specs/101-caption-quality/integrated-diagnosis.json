@@ -1,0 +1,340 @@
+{
+  "rows": [
+    {
+      "run": 1,
+      "scenario": "reference",
+      "ok": false,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [
+        {
+          "check": "hint_shape",
+          "photo_id": "cq_10",
+          "text": "쓰기리: 하늘색 니트 · 은색 목걸이\n이 중 기억에 남은 건?"
+        }
+      ],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_12",
+          "seed": "흰색 이어폰"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_03",
+          "seed": "스웨이드 재킷"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "아이보리색 카디건"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "scenario": "freetext",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": []
+    },
+    {
+      "run": 3,
+      "scenario": "photos_only",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "흰색 실로 놓인 꽃 자수"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_04",
+          "seed": "초록색 접시에 담긴 튀김과 떡"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_04",
+          "seed": "흰색 실로 꽃 자수"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_05",
+          "seed": "투명한 유리 접시 위 원형으로 둘러 놓인 갈색 계열 과자"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_09",
+          "seed": "분홍색 니트 옷을 입은 흰 털의 개"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_09",
+          "seed": "남색 라벨이 붙은 병"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_11",
+          "seed": "주황색 머리의 봉제 인형"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_12",
+          "seed": "개의 양쪽 귀에 걸린 흰색 유선 이어폰"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_14",
+          "seed": "분홍색 배경에 검은 글씨로 적힌 라벨"
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "scenario": "corrected",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_14",
+          "seed": "크림색 노트"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_03",
+          "seed": "갈색 스웨이드 재킷"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "흰색 꽃 자수"
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "scenario": "reference",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "흰색 자수"
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "scenario": "freetext",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_14",
+          "seed": "크림색 노트"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_04",
+          "seed": "귀여운 음식들"
+        }
+      ]
+    },
+    {
+      "run": 7,
+      "scenario": "photos_only",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_03",
+          "seed": "갈색 스웨이드 재킷"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_14",
+          "seed": "검은 스프링 노트"
+        }
+      ]
+    },
+    {
+      "run": 8,
+      "scenario": "corrected",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_13",
+          "seed": "파란색과 노란색 줄무늬 모자"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_09",
+          "seed": "어두운 액체 병"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_05",
+          "seed": "갈색 과자"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_05",
+          "seed": "흰 화분 식물"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "흰색 꽃 자수"
+        }
+      ]
+    },
+    {
+      "run": 9,
+      "scenario": "reference",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_13",
+          "seed": "줄무늬 모자"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_06",
+          "seed": "진주 목걸이"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_14",
+          "seed": "크림색 노트"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_03",
+          "seed": "갈색 스웨이드 재킷"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_05",
+          "seed": "갈색 과자"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "아이보리색 카디건"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_02",
+          "seed": "흰색 꽃 자수"
+        }
+      ]
+    },
+    {
+      "run": 10,
+      "scenario": "freetext",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": []
+    },
+    {
+      "run": 11,
+      "scenario": "reference",
+      "ok": false,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [
+        {
+          "check": "internal_field_leak",
+          "photo_id": "cq_01",
+          "word": "position",
+          "text": "position 4의 cq_13과 같은 장면이므로, 한 장만 두어도 충분해요."
+        }
+      ],
+      "observations": [
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_03",
+          "seed": "갈색 스웨이드 재킷"
+        },
+        {
+          "check": "hint_seed_not_verbatim",
+          "photo_id": "cq_11",
+          "seed": "파란 하트 무늬 바지"
+        }
+      ]
+    },
+    {
+      "run": 12,
+      "scenario": "freetext",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "parsed": true,
+      "findings": [],
+      "observations": []
+    }
+  ],
+  "tally": {
+    "hint_shape": 1,
+    "internal_field_leak": 1
+  },
+  "observed": {
+    "hint_seed_not_verbatim": 39
+  },
+  "failing_run_profile": {
+    "hint_shape": 1,
+    "internal_field_leak": 1
+  }
+}

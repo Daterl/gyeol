@@ -1,0 +1,27 @@
+[
+  {
+    "command": "npm run test",
+    "exit_code": 0,
+    "log": "test.log"
+  },
+  {
+    "command": "npm run eval",
+    "exit_code": 0,
+    "log": "eval.log"
+  },
+  {
+    "command": "npm run check",
+    "exit_code": 0,
+    "log": "check.log"
+  },
+  {
+    "command": "npm run typecheck",
+    "exit_code": 0,
+    "log": "typecheck.log"
+  },
+  {
+    "command": "npm run lint",
+    "exit_code": 0,
+    "log": "lint.log"
+  }
+]

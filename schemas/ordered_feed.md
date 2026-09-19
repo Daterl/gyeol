@@ -25,6 +25,8 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 | slots[].narrative_role | opener / sustain / turn / closer |
 | slots[].rationale | Claim<nonempty string>, F3가 다듬어도 evidence 보존 |
 | slots[].caption_inputs | describable_facts:string[], adjacent_overlap:number 0..1, is_visual_peak:boolean |
+| slots[].omit_suggestion | `{recommended:boolean,reason:string|null,evidence:Evidence[]}`. 자동 제외하지 않으며 서명된 동일 바이트 중복만 true |
+| omit_summary | `{recommended_count:integer,message:string}`. 권고 0개도 명시 |
 | invariants | input_count/output_count:integer N, unique_photo_ids:true |
 | generated_at | ISO timestamp |
 
@@ -33,6 +35,7 @@ current_profile_id=null이면 corrected=false, disclosure=target_only, deltas=[]
 `validateFeed(feed, inputPhotoIds, currentProfile, targetProfile, photoAnalyses)`와 E8 평가에는 실제 CurrentProfile 입력이 필수다. 같은 방식으로 실제 TargetProfile(E9)과 실제 PhotoAnalysis 목록(E11)도 필수 인수다. `validateExport(output, feed, inputPhotoIds)`는 export의 evidence 해소(E10)를 위해 실제 입력 ID를 받는다. 인수/필드 생략과 undefined는 거부한다. 현재 프로필이 없으면 CurrentProfile 계약의 `present:false` 객체를 명시적으로 전달한다. 출력의 current_profile_id로 입력을 추측하거나 생략된 입력을 자동 보정하지 않는다.
 slots 배열의 저장 순서는 의미가 없으며 표시 순서는 position이 결정한다. 소비자는 position 오름차순으로 표시한다.
 사진 목록에서 caption_inputs.describable_facts를 복사한다. 복사원은 **그 슬롯의 photo_id와 같은** PhotoAnalysis이며, 다른 사진의 사실을 섞으면 E11로 거부한다. 비움 후보의 overlap 등은 F3의 재료이며 F2가 캡션 상태를 결정하지 않는다.
+`omit_suggestion`은 입력 N장과 출력 N슬롯을 바꾸지 않는다. 공개 `/api/feed`는 `analysis_receipt` 두 개가 같은 세션·묶음·바이트 해시를 인증할 때만 `duplicate_of`를 관측값으로 사용하며, 호출자가 직접 보낸 중복 플래그는 제거한다.
 
 delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0,resolved:number≥0,rule:"log_midpoint",note_key:"caption_len_gap",evidence:Evidence[1..]}`.
 초안 대비 F3 export에 photo_id와 omit_reason을 추가했다 (아래). delta를 1종·최대 1개로 제한하고 absent 정합성과 입력 ID 대조를 명시했다.
@@ -45,10 +48,10 @@ delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0
 
 ## F3 export (별도 출력, OrderedFeed에 섞지 않음)
 
-`{title:string, slots:[{position:integer,photo_id:string,omit_reason:string|null,caption_state:"filled"|"omitted"|"user",text:string|null,evidence:Evidence[1..]}]}`.
+`{title:string, slots:[{position:integer,photo_id:string,omit_reason:string|null,caption_state:"seed"|"omitted"|"user",text:string|null,evidence:Evidence[1..]}]}`.
 title은 공백만인 값·배열·개행을 허용하지 않는 단일 문자열 하나이며 titles 배열을 함께 보내지 않는다.
 export positions도 1..N을 한 번씩 가진다. 각 position의 photo_id는 전달받은 OrderedFeed와 일치해야 한다.
-omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. filled/user의 omit_reason은 null이다. omitted이면 text=null, filled/user이면 nonempty string이다.
+omitted이면 omit_reason은 nonempty string이고 evidence가 그 이유를 뒷받침한다. seed/user의 omit_reason은 null이다. omitted이면 text=null, seed/user이면 nonempty string이다. seed는 `쓸 거리: …\n이 중 기억에 남은 건?` 두 줄이며 완성 캡션으로 내보내지 않는다.
 비움의 evidence도 보존하며 사용자가 쓴 문장의 evidence는 사용자 입력 출처로 연결한다.
 `caption_state="user"`는 유효한 `kind="user_text"` Evidence를 최소 1개 포함해야 한다. 사진 근거를 함께 넣을 수 있지만 사진 근거만으로 user 상태를 허용하지 않는다. ref/note의 형식을 검사하며 실제 사용자 입력의 진위 인증은 이 계약의 범위가 아니다.
 서버 export slots는 배열의 저장 순서와 무관하게 position으로 순서를 정하고 원본 feed의 photo_id와 대조한다. 사용자 draft는 validateEditedExport로 같은 사진 집합의 재정렬을 허용하며 원본 근거를 photo_id에 보존한다.

@@ -79,7 +79,7 @@ export function ResultScreen({
             : photoOnly
               ? '개인화 정보 없이 사진을 바탕으로 준비했어요. 계정 취향이나 문체를 추측하지 않았어요.'
               : feed.applied_profile.disclosure === 'target_only'
-                ? '기존 계정과 비교한 보정은 없어요. 입력한 지향을 사용했어요.'
+                ? '현재 스타일은 순서와 문장에 반영하지 않았어요. 입력한 지향만 사용했어요.'
                 : '기존 계정과 입력한 지향을 함께 보고 조정했어요.'}
         </p>
         {!sampleImages &&
@@ -104,6 +104,24 @@ export function ResultScreen({
         {announcement}
       </p>
       <OutputControls store={store} mock={mock} />
+      {feed.concept ? (
+        <section className="mb-8 border-t border-line pt-6">
+          <p className="text-sm leading-7">{feed.concept.value}</p>
+          <details className="mt-2 text-sm">
+            <summary className="min-h-11 cursor-pointer py-3 font-medium text-accent">
+              묶음 근거 보기
+            </summary>
+            <ul className="space-y-2 border-l-2 border-accent-line pl-3 text-muted-foreground">
+              {feed.concept.evidence.map((evidence, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: Feed-level evidence never reorders with the photos.
+                <li key={`concept-${evidence.kind}-${evidence.ref}-${i}`}>
+                  {evidence.note}
+                </li>
+              ))}
+            </ul>
+          </details>
+        </section>
+      ) : null}
       <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {order.map((id, index) => {
           const slot = feed.slots.find((item) => item.photo_id === id);
