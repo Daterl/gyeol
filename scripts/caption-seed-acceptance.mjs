@@ -10,7 +10,7 @@ import {composeFeed} from '../lib/compose.js';
 import {buildCurrentProfile} from '../lib/current_profile.js';
 import {extractFromReference, extractFromFreetext, planFromPhotos} from '../lib/target_profile.js';
 import {analyzePhoto} from '../lib/photo_analysis.js';
-import {generateOutput, liftedFromOverlay} from '../lib/output-generation.js';
+import {bareMaterial, generateOutput, liftedFromOverlay} from '../lib/output-generation.js';
 
 export const OUT_DIR = new URL('../docs/specs/101-caption-seed-acceptance/', import.meta.url);
 export const SOURCE = 'docs/specs/101-caption-quality/inputs.json';
@@ -34,7 +34,8 @@ export function scoreSeed(text, facts) {
     // 관측 원문과 글자 단위로 같은지만 본다. 원본 사진과 맞는지는 이 코드가 알 수 없다.
     unsupported: materials.filter(m => !facts.some(f => f.includes(m))),
     // 수식 없는 홑낱말('접시')은 관측을 그대로 옮긴 alt-text 다. 참이지만 쓸 거리로는 약하다.
-    bare: materials.filter(m => !/\s/.test(m)),
+    // 런타임 가드와 같은 판정 함수를 쓴다 — 채점이 더 느슨하면 게이트가 막은 것을 보고서가 통과로 적는다.
+    bare: materials.filter(m => facts.some(f => f.includes(m) && bareMaterial(m, f))),
     // develop #123: 한 슬롯에 소재는 하나다. 서로 다른 사실의 명사를 잇지 않는다.
     over_count: materials.length !== 1
   };
