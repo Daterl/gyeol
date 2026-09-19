@@ -20,6 +20,10 @@ import {
   validateGenerateResponse,
   validateOrderRequest,
 } from '../../lib/interaction.js';
+import {
+  LATEST_OMIT_RULES,
+  OMIT_RULES_HEADER,
+} from '../../lib/omit-suggestion.js';
 
 export class ApiError extends Error {
   constructor(
@@ -51,7 +55,13 @@ async function post(
   try {
     const response = await fetch(path, {
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: {
+        'Content-Type': 'application/json',
+        // 이 번들이 재계산할 수 있는 빼기 권고 규칙의 최대 번호. 서버는 이보다 높게 답하지 않는다.
+        // 헤더를 모르는 옛 서버는 무시하고 규칙 1 로 답하며, 아래 validate 는 그것도 받아들인다.
+        [OMIT_RULES_HEADER]: String(LATEST_OMIT_RULES),
+        ...headers,
+      },
       credentials: 'same-origin',
       method: 'POST',
       signal: combined,

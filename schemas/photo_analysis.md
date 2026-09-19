@@ -21,9 +21,40 @@ ref와 note는 비어 있지 않은 문자열이다. Claim<T> = `{value:T, confi
 | quality_flags | (blurry / dark / duplicate_of:<id>)[] |
 | analysis_source / model | vision_model 또는 heuristic / nonempty string |
 | analyzed_at | ISO timestamp |
-| analysis_receipt | 선택 opaque string. 서버가 세션·사진 묶음·사진 ID·바이트 해시를 서명한 경우에만 포함 |
+| analysis_receipt | 선택 opaque string. 서버가 세션·사진 묶음·사진 ID·바이트 해시·구조 서명을 서명한 경우에만 포함 |
+| structure_signature | 선택 number[64]. 픽셀에서 잰 대비 정규화 밝기 서명이며, 구조가 관측되지 않으면 필드 자체가 없다 |
 
-초안 대비 필드 변경 없음. F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
+`structure_signature`는 #97에서 더한 **선택 관측값**이다. 없는 피드도 계약을 만족하며, 아래 예시들처럼
+필드가 없는 것이 정상 상태다. JPEG DC 블록(`lib/jpeg_dc.js`)의 밝기 격자를 8x8로 줄이고 대비 정규화한
+64칸이며, 모델이 낼 수 있는 값이 아니다(`OBSERVATION_SCHEMA` 밖). 대비가 없는 단색 카드는 배치라고 부를
+구조가 없으므로 필드를 내지 않는다. 공개 `/api/feed`는 `analysis_receipt`가 이 값을 서명한 경우에만
+관측값으로 쓰고, 그 외에는 지운다 — 호출자가 보낸 서명은 서버의 측정이 아니다.
+
+초안 대비 변경: `structure_signature` **선택 필드 하나를 더했다**(#97). 기존 필드는 그대로이고 없어도
+계약을 만족하므로 기존 fixture 는 수정 없이 통과한다. 아래 예시 15장은 단색 SVG 카드라 구조가 없어 이 필드를 내지 않는다 — 없는 것이 정상 상태다.
+필드가 **있는** 계약 예시는 `fixtures/photo_analysis.signature.sample.json` 에 따로 뒀다.
+실사진 fixture(`fixtures/jpeg/gradient_baseline.jpg`)를 휴리스틱 경로로 실제 분석한 출력이며
+손으로 채운 값이 아니다.
+`schema_version` 은 아직 `1.0` 이며, 올릴지 유지할지는 **사람 결정 pending** 이다 (CLAUDE.md 4-2).
+
+**호환 동작 — 선택 필드만으로는 호환되지 않는다.** 브라우저는 응답의 `omit_suggestion` 을 같은
+`PhotoAnalysis` 로 **다시 계산해** 대조하므로(`lib/contracts.js`), 서버가 옛 번들이 모르는 규칙으로
+권고를 내면 그 번들은 정상 응답을 `INVALID_RESPONSE` 로 버린다. 그래서 권고를 만든 규칙 집합에
+번호를 두고 협상한다 (`lib/omit-suggestion.js`, `OMIT_RULES`):
+
+| 번호 | 규칙 | 아는 쪽 |
+|---|---|---|
+| 1 | 동일 바이트 중복만 (#88) | 이 배포 이전 번들 |
+| 2 | 1 + 화면 배치 유사 (#97) | 현재 번들 |
+
+- 요청 헤더 `X-Gyeol-Omit-Rules` 에 클라이언트가 **재계산할 수 있는 최대 번호**를 싣는다.
+- 서버는 그 이하로만 답하고, 헤더가 없으면 규칙 1 로 답한다. 옛 번들에게 유사 권고는 **없는 것**이 되며
+  권고가 없는 것은 정상 상태다(P3).
+- 검증은 지원 규칙을 전부 재계산해 하나라도 맞으면 통과시키므로, 롤백(새 번들 ↔ 옛 서버)도 끊기지 않는다.
+- 이 협상은 필드를 더하거나 빼지 않는다. `PhotoAnalysis` 와 `OrderedFeed` 의 모양은 그대로이므로
+  `schema_version` 결정이 늦어도 배포가 사용자를 깨뜨리지 않는다.
+
+F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
 샘플 모음은 독립 입력 ID 대조를 위해 3장이 아닌 15장이다. 합성 SVG 카드이며 실사진 분석이 아니다.
 
 ```json
