@@ -53,7 +53,20 @@ test('identical multi-fact sets disclose limits regardless of observation order'
     assert.match(voice.value, /구분할 관측이 부족/);
     assert.ok(voice.evidence.some(e => e.ref === 'order.placement_limit'));
     assert.ok(!voice.evidence.some(e => e.ref === 'order.observed_placement'));
+    // 배열 순서만 다른 같은 관측을 서로 다른 관측처럼 인용하면 없는 대비를 지어낸 것이다(S4).
+    assert.doesNotMatch(voice.value, /관측: /);
+    for (const fact of shared) assert.ok(!voice.value.includes(fact), fact);
   }
+});
+
+test('an observation both photos share is never quoted as this photo\u2019s distinguishing one', () => {
+  const [a, b] = fixture(3);
+  const shared = ['물체가 보인다'];
+  const voice = placementVoice({...b, describable_facts: shared}, {...a, describable_facts: shared}, 'opener',
+    {...a, describable_facts: shared});
+  assert.doesNotMatch(voice.value, /관측: /);
+  assert.ok(!voice.value.includes(shared[0]));
+  assert.match(voice.value, /구분할 관측이 부족/);
 });
 
 test('measured contrast cites both photos and does not require model observations', () => {
@@ -91,10 +104,13 @@ for (const count of [3, 15]) test(`${count}-photo fixture preserves order decisi
     const ordered = feed.slots.map(s => photos.find(p => p.photo_id === s.photo_id));
     for (const [i, slot] of feed.slots.entries()) {
       const own = ordered[i], adjacent = ordered[i === 0 ? 1 : i - 1];
+      // 인접 관측이 같으면 인용하지 않고 한계를 고지한다. 인용했다면 그 사진의 실제 관측이어야 한다.
+      const quoted = /관측: /.test(slot.rationale.value);
+      assert.equal(quoted, !/구분할 관측이 부족/.test(slot.rationale.value));
       for (const p of [own, adjacent]) {
         const evidence = slot.rationale.evidence.filter(e => e.kind === 'uploaded_photo' && e.ref === p.photo_id && p.describable_facts.includes(e.note));
-        assert.ok(evidence.length, `missing observation for ${p.photo_id} at ${i + 1}`);
-        assert.ok(evidence.some(e => slot.rationale.value.includes(e.note)));
+        assert.equal(evidence.length > 0, quoted, `observation evidence for ${p.photo_id} at ${i + 1}`);
+        if (quoted) assert.ok(evidence.some(e => slot.rationale.value.includes(e.note)));
       }
       assert.deepEqual(slot.caption_inputs.describable_facts, own.describable_facts);
       // Repetition is legitimate when the same observations recur; never vary by index.
