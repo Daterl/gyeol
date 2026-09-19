@@ -64,6 +64,20 @@ test('measured contrast cites both photos and does not require model observation
   assert.deepEqual(new Set(voice.evidence.filter(e => e.kind === 'uploaded_photo').map(e => e.ref)), new Set([a.photo_id, b.photo_id]));
 });
 
+// #109 감사: 첫 자리는 다음 사진의 측정값을 근거에 담으면서도 문장에서는 그 비교를 말하지 않았다.
+test('opener describes the seam to the next photo it already cites, and abstains when there is none', () => {
+  const [a, b] = real;
+  const next = {...b, color: {...b.color, bright_mean: a.color.bright_mean - .2}};
+  const voice = placementVoice(a, null, 'opener', next);
+  assert.match(voice.value, /다음 장보다 환한 화면으로 묶음을 열어요/);
+  assert.doesNotMatch(voice.value, /구분할 관측이 부족/);
+  assert.ok(voice.evidence.some(e => e.ref === 'order.visible_step'));
+  assert.deepEqual(new Set(voice.evidence.filter(e => e.kind === 'uploaded_photo').map(e => e.ref)), new Set([a.photo_id, next.photo_id]));
+  const alone = placementVoice(a, null, 'opener');
+  assert.match(alone.value, /구분할 관측이 부족/);
+  assert.ok(alone.evidence.some(e => e.ref === 'order.placement_limit'));
+});
+
 for (const count of [3, 15]) test(`${count}-photo fixture preserves order decisions and source while tracing every placement`, () => {
   const photos = fixture(count), before = structuredClone(photos);
   for (const targetProfile of [extractFromFreetext('조용하고 담백하게'), planFromPhotos(photos)]) {
