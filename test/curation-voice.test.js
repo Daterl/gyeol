@@ -11,8 +11,9 @@ const photo = (bright, sat, id='ph_01') => ({...photos[0],photo_id:id,color:{...
 const absentCurrent = buildCurrentProfile();
 const forbidden = /채도|밝기\s*0\.|색 거리|\bR[1-4]\b|측정값|#[0-9a-f]{6}\b/;
 
-test('concept abstains below boundary, derives contrast at boundary, preserves every source', () => {
-  assert.equal(bundleConcept([photo(.5,.2),photo(.5,.449)]),null);
+test('concept reads the even side below the boundary, the contrast at it, and preserves every source', () => {
+  // 임계 미달도 잰 것이다 — 범위가 좁다는 관측을 말한다(#109 실사진 3장 감사). 임계값은 그대로다.
+  assert.match(bundleConcept([photo(.5,.2),photo(.5,.449)]).value,/톤이 고르게/);
   assert.match(bundleConcept([photo(.5,.25),photo(.5,.5)]).value,/옅은 색과 짙은 색/);
   const set = [photo(.25,.2),photo(.5,.2,'ph_02')];
   const concept = bundleConcept(set);
@@ -34,11 +35,11 @@ test('adjacent comparison carries actual previous photo evidence, ignores untrus
   const previous=photo(.2,.2,'ph_02');
   const next={...photo(.5,.2),describable_facts:['제주도에서 행복한 오후 R1 #ffffff']};
   const voice=placementVoice(next,previous,'sustain');
-  assert.match(voice.value,/환한 화면/);
+  assert.match(voice.value,/환해지면서/);
   assert.equal(voice.evidence[0].ref,'ph_02');
   assert.doesNotMatch(voice.value,/제주|행복|오후|R1|#ffffff/);
-  assert.doesNotMatch(placementVoice(photo(.319,.2),previous,'sustain').value,/환한/);
-  assert.match(placementVoice(photo(.32,.2),previous,'sustain').value,/환한/);
+  assert.doesNotMatch(placementVoice(photo(.319,.2),previous,'sustain').value,/환해지/);
+  assert.match(placementVoice(photo(.32,.2),previous,'sustain').value,/환해지/);
 });
 
 test('real buildFeed paths expose concept with evidence without inventing order for photo-only input', async () => {
@@ -78,19 +79,24 @@ test('concept evidence order is fixed by photo_id, so input shuffling yields the
   assert.deepEqual(bundleConcept([...set].reverse()),bundleConcept(set));
 });
 
-test('below the threshold the concept is absent, and no rule note claims otherwise', async () => {
-  assert.equal(bundleConcept([photo(.5,.2),photo(.5,.449,'ph_02')]),null);
-  assert.equal(bundleConcept([photo(.5,.2),photo(.5,.4499,'ph_02')]),null);
+test('below the threshold the concept says the range is narrow, and no rule note claims a contrast', async () => {
+  for (const spread of [.449,.4499]) {
+    const even=bundleConcept([photo(.5,.2),photo(.5,spread,'ph_02')]);
+    assert.match(even.value,/톤이 고르게/);
+    assert.doesNotMatch(even.value,/어우러지는/);
+    assert.doesNotMatch(even.value,forbidden);
+  }
   const atBoundary=bundleConcept([photo(.5,.25,'ph_01'),photo(.5,.5,'ph_02')]);
   assert.equal(atBoundary.confidence,1);
   assert.equal(atBoundary.evidence.at(-1).note,
-    '컨셉은 채도 범위, 밝기 범위 순으로 0.25 이상일 때만 설명한다. 임계값은 설계 상수이며 미달이면 컨셉을 내지 않는다.');
+    '컨셉은 채도 범위, 밝기 범위 순으로 0.25 이상이면 대비를, 둘 다 미만이면 고른 톤을 설명한다. 임계값은 설계 상수이며 범위 자체는 측정값이다.');
   assert.equal(atBoundary.evidence[0].note,`묶음·인접 비교 측정값 — 밝기 0.5 · 채도 0.25`);
   // 어떤 근거도 "비운다" 같은 값 없는 판단을 설명하지 않는다.
   for (const e of atBoundary.evidence) assert.doesNotMatch(e.note,/비운다/);
   const flat=Array.from({length:15},(_,i)=>({...photos[0],photo_id:`fl_${i}`,input_index:i,file_ref:`${i}.jpg`,color:{...photos[0].color,bright_mean:.5,sat_mean:.3}}));
   const {feed}=await buildFeed({schema_version:'1.0',session_id:'voice-absent',photos:flat,identity:{target:{kind:'none'},current:{kind:'none'}}});
-  assert.equal(Object.hasOwn(feed,'concept'),false);
+  assert.match(feed.concept.value,/톤이 고르게/);
+  assert.doesNotMatch(feed.concept.value,/어우러지는/);
   for (const slot of feed.slots) assert.doesNotMatch(slot.rationale.value,/뚜렷하지/);
 });
 
@@ -99,7 +105,7 @@ test('a forged feed-level concept is rejected against the actual photo measureme
   const {feed}=await buildFeed({schema_version:'1.0',session_id:'voice-forge',photos:flat,identity:{target:{kind:'none'},current:{kind:'none'}}});
   const ids=flat.map(p=>p.photo_id), plan=planFromPhotos(flat);
   const check=candidate=>validateFeed({...feed,concept:candidate},ids,absentCurrent,plan,flat);
-  validateFeed(feed,ids,absentCurrent,plan,flat); // 컨셉 없는 피드는 그대로 통과한다
+  validateFeed(feed,ids,absentCurrent,plan,flat); // 실제 재계산과 같은 컨셉은 그대로 통과한다
   // 측정이 미달인데 컨셉을 끼워 넣을 수 없다.
   assert.throws(()=>check({value:'옅은 색과 짙은 색이 어우러지는 흐름으로 엮어요.',confidence:1,
     evidence:[{kind:'rule',ref:'order.bundle_concept',note:'위조'}]}),/concept/);
