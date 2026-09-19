@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useId, useRef } from 'react';
 import { Button } from '../../components/ui/button';
 import type { SelectedPhoto } from '../editor/store';
+import { MAX_SELECTED_PHOTOS } from './input';
 
 export function PhotoPicker({
   label,
@@ -99,7 +100,7 @@ export function PhotoPicker({
               : '사진을 여기에 놓아 주세요.'}
           </p>
           <p className="mt-1 text-sm text-muted-foreground" id={hint}>
-            JPEG·PNG·WebP, 한 장 3MB · 최대 20장
+            JPEG·PNG·WebP · 최대 {MAX_SELECTED_PHOTOS}장
           </p>
         </div>
         <Button
@@ -109,7 +110,7 @@ export function PhotoPicker({
           variant="outline"
           className="min-h-11 px-5"
           onClick={() => input.current?.click()}
-          disabled={photos.length === 20}
+          disabled={photos.length >= MAX_SELECTED_PHOTOS}
           aria-describedby={hint}
         >
           {label === '올릴 사진' ? '사진 고르기' : '기존 사진 고르기'}

@@ -3,7 +3,7 @@ import fixture from '../../../../fixtures/interaction.sample.json';
 import { POST as feed } from '../feed/route';
 import { GET, POST } from './route';
 
-test('Next adapters expose upload validation and the new POST feed without changing GET fixtures', async () => {
+test('Next adapters reject invalid upload and obsolete optional-profile feed requests', async () => {
   expect((await GET(new Request('http://localhost/api/analyze'))).status).toBe(
     405,
   );
@@ -31,8 +31,8 @@ test('Next adapters expose upload validation and the new POST feed without chang
       body: JSON.stringify(body),
     }),
   );
-  expect(response.status).toBe(200);
+  expect(response.status).toBe(400);
   expect(await response.json()).toMatchObject({
-    feed: { schema_version: '1.1', session_id: 'adapter' },
+    error: { code: 'INVALID_REQUEST' },
   });
 });

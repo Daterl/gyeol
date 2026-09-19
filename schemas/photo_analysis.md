@@ -21,6 +21,7 @@ ref와 note는 비어 있지 않은 문자열이다. Claim<T> = `{value:T, confi
 | quality_flags | (blurry / dark / duplicate_of:<id>)[] |
 | analysis_source / model | vision_model 또는 heuristic / nonempty string |
 | analyzed_at | ISO timestamp |
+| analysis_receipt | 선택 opaque string. 서버가 세션·사진 묶음·사진 ID·바이트 해시를 서명한 경우에만 포함 |
 
 초안 대비 필드 변경 없음. F3는 describable_facts 밖의 장소·인물·시간·감정을 만들어내지 않는다.
 샘플 모음은 독립 입력 ID 대조를 위해 3장이 아닌 15장이다. 합성 SVG 카드이며 실사진 분석이 아니다.

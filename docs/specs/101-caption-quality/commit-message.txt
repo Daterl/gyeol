@@ -1,0 +1,13 @@
+게시 가능한 캡션의 조건과 실모델 실패 경계를 드러낸다
+
+관측 나열을 줄이도록 출력 목적을 좁혔지만 세 번의 수정으로도 S4와 근거 note 조건은 충족하지 못했다.
+동일 입력의 기준선과 세 수정본 결과를 보존하고 사람 판정을 분리한다.
+
+Constraint: 사진 사실과 기존 출력 계약을 유지하며 모델·스키마·배포를 변경하지 않는다
+Rejected: 생성 문장을 후처리로 교체하기 | 실패를 숨기고 실제 품질을 증명하지 못한다
+Confidence: medium
+Scope-risk: narrow
+Directive: 품질 막힘 상태이므로 사람 판정과 S4 재검증 전 merge하지 않는다
+Tested: npm test 208개, eval, check, typecheck, lint; 실모델 생성 48시도
+Not-tested: 사람 게시 적합성 판정, Node 24, rationale 입력 축소 통합, 배포
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>

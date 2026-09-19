@@ -20,9 +20,11 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "test:smoke": "node scripts/smoke-next.js",
-    "verify:deployed": "node scripts/verify-deployed.mjs"
+    "verify:deployed": "node scripts/verify-deployed.mjs",
+    "verify:profile": "node scripts/verify-profile-live.js"
   },
   "dependencies": {
+    "@vercel/blob": "2.8.0",
     "cn": "^0.3.0",
     "motion": "13.4.0",
     "next": "16.3.5",

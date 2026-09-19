@@ -8,6 +8,7 @@ import { Console } from 'node:console';
 import { readdir, readFile } from 'node:fs/promises';
 import { relative, join, extname } from 'node:path';
 import { analyzePhoto, analysisCounters, resetAnalysisState, AnalysisUnavailableError } from '../lib/photo_analysis.js';
+import { ModelError } from '../lib/model.js';
 
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']);
 const [folder, limitArg] = process.argv.slice(2);
@@ -33,8 +34,8 @@ async function pass(label) {
   for (const input of inputs) {
     try { results.push(await analyzePhoto({ ...input, onModelError: e => modelErrors.push(`${input.photoId}: ${e.message}`) })); }
     catch (error) {
-      if (!(error instanceof AnalysisUnavailableError)) throw error;
-      failures.push({ photo: input.photoId, file: input.fileRef, reason: error.message });
+      if (!(error instanceof AnalysisUnavailableError) && !(error instanceof ModelError)) throw error;
+      failures.push({ photo: input.photoId, file: input.fileRef, code: error.code, reason: error.message });
     }
   }
   const after = analysisCounters();

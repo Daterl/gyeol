@@ -29,8 +29,13 @@ test('manual examples match photo facts and original slots without banned langua
     validateExport(output,source.feed,ids);
     for(const slot of output.slots) {
       const input=source.feed.slots.find(s=>s.photo_id===slot.photo_id);
-      if(slot.caption_state==='filled') assert.ok(input.caption_inputs.describable_facts.includes(slot.text));
-      else assert.ok(input.caption_inputs.adjacent_overlap>0.5);
+      if(slot.caption_state==='seed') {
+        const match=/^쓸 거리: (.+)\n이 중 기억에 남은 건\?$/.exec(slot.text);
+        const own=slot.evidence.filter(item=>item.kind==='uploaded_photo' && item.ref===slot.photo_id);
+        assert.ok(match); assert.equal(own.length,1);
+        assert.ok(input.caption_inputs.describable_facts.includes(own[0].note));
+        for(const seed of match[1].split(' · ')) assert.ok(own[0].note.includes(seed));
+      } else assert.ok(input.caption_inputs.adjacent_overlap>0.5);
       for(const word of banned) assert.ok(!JSON.stringify([output.title,slot.text,slot.omit_reason]).includes(word));
     }
   }

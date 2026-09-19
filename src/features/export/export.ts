@@ -5,7 +5,7 @@ export function exportText(output: F3Export) {
     output.title,
     ...output.slots.map(
       (slot) =>
-        `${String(slot.position).padStart(2, '0')} · ${slot.photo_id}\n${slot.text ?? `[비움] ${slot.omit_reason}`}\n근거: ${slot.evidence.map((evidence) => evidence.note).join(' / ')}`,
+        `${String(slot.position).padStart(2, '0')} · ${slot.photo_id}\n${slot.caption_state === 'seed' ? `[AI 쓸 거리]\n${slot.text}` : slot.caption_state === 'user' ? `[내 문장] ${slot.text}` : `[비움] ${slot.omit_reason}`}\n근거: ${slot.evidence.map((evidence) => evidence.note).join(' / ')}`,
     ),
   ].join('\n\n');
 }

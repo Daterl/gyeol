@@ -1,0 +1,935 @@
+[
+  {
+    "file": "p01__c29_Dc-2OOrFBnb_00.jpg",
+    "ms": 13478,
+    "bytes": 743673,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_01",
+      "file_ref": "p01__c29_Dc-2OOrFBnb_00.jpg",
+      "input_index": 0,
+      "color": {
+        "hue_mean": 53,
+        "sat_mean": 0.288,
+        "bright_mean": 0.375,
+        "palette_hex": [
+          "#16150f",
+          "#434040",
+          "#6b6765"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "비니",
+        "스마트폰",
+        "숄더백",
+        "재킷",
+        "울타리",
+        "석벽",
+        "관목"
+      ],
+      "has_face": true,
+      "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+      "describable_facts": [
+        "사람 한 명이 측면을 향해 서 있다",
+        "한쪽 팔을 머리 위로 올리고 있다",
+        "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다",
+        "회색 소매의 상의 위에 남색 조끼형 상의를 겹쳐 입고 있다",
+        "한 손에 스마트폰을 들고 있다",
+        "한쪽 어깨에 황록색 가방을 메고 있다",
+        "팔에 초록색 옷을 걸치고 있다",
+        "긴 검은 머리가 어깨 아래로 내려와 있다",
+        "배경에 검은색 금속 울타리와 회색 돌담이 있다",
+        "울타리 뒤로 초록 잎의 관목과 나무가 보인다",
+        "햇빛이 강하게 비쳐 바닥과 벽에 그림자가 생겼다",
+        "화면 하단에 흰색 한글 문구가 두 줄로 얹혀 있다",
+        "문구 끝에 분홍색 하트 이모지가 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:39:20.870Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 534,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p02__c29_Dc94ZfOD1-q_00.jpg",
+    "ms": 27331,
+    "bytes": 387660,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_02",
+      "file_ref": "p02__c29_Dc94ZfOD1-q_00.jpg",
+      "input_index": 1,
+      "color": {
+        "hue_mean": 12.8,
+        "sat_mean": 0.293,
+        "bright_mean": 0.501,
+        "palette_hex": [
+          "#100e0e",
+          "#c3c1bd",
+          "#e8e9e7"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "니트 카디건",
+        "체크 무늬 하의",
+        "벽돌 벽"
+      ],
+      "has_face": false,
+      "text_in_image": "지금부터 겨울까지 입을 카디건 선물로 드려요",
+      "describable_facts": [
+        "사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다",
+        "아이보리색 니트 카디건을 입고 있으며 앞면에 단추가 일렬로 달려 있다",
+        "카디건 앞면 오른쪽에 흰색 실로 꽃 자수가 놓여 있다",
+        "파란색과 검은색 체크 무늬 하의를 입고 있다",
+        "배경에 붉은 갈색 벽돌 벽이 있다",
+        "화면 왼쪽 아래에 주황색 사각형 바탕에 흰 글씨로 'EVENT'가 적혀 있다",
+        "화면 아래쪽에 흰색 한글 문구와 하트 기호가 두 줄로 겹쳐져 있다",
+        "피사체가 화면 대부분을 채우고 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:39:48.203Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 461,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p03__c29_DdEAAeHm6u0_00.jpg",
+    "ms": 14482,
+    "bytes": 465838,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_03",
+      "file_ref": "p03__c29_DdEAAeHm6u0_00.jpg",
+      "input_index": 2,
+      "color": {
+        "hue_mean": 19.9,
+        "sat_mean": 0.362,
+        "bright_mean": 0.441,
+        "palette_hex": [
+          "#17100e",
+          "#362114",
+          "#413d3f"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "갈색 재킷",
+        "검은색 우븐 숄더백",
+        "흰 리본 끈",
+        "휴대폰",
+        "하늘색 치마"
+      ],
+      "has_face": false,
+      "text_in_image": "지금 준비해서 가을 내내 입을 종류별 기본 아우터 모음",
+      "describable_facts": [
+        "사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다",
+        "얼굴 윗부분이 화면 밖으로 잘려 입과 턱 아래만 보인다",
+        "갈색 스웨이드 질감의 오버사이즈 재킷을 입고 있다",
+        "안에 흰색 리본 끈이 달린 상의를 입고 있다",
+        "검은색 우븐(짜임) 패턴의 숄더백을 어깨에 메고 있다",
+        "재킷 아래로 하늘색 주름 치마가 보인다",
+        "휴대폰 케이스에 초록색과 주황색 캐릭터 스티커가 보인다",
+        "화면 왼쪽에 어두운 나무색 가구와 연보라색 면이 있다",
+        "이미지 중앙에 갈색 배경의 흰 글자 띠가 있고 '좋아요 3천 개 이상의 제품들로 모았어요'라고 적혀 있다",
+        "이미지 하단 왼쪽에 흰 박스 안에 검은 글자로 'REVIEW'가 적혀 있다",
+        "하단에 흰 글자로 '지금 준비해서 가을 내내 입을 종류별 기본 아우터 모음'이 두 줄로 적혀 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:40:02.686Z"
+    },
+    "usage": {
+      "input_tokens": 5998,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 624,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p04__c29_DdJNrukFMtV_00.jpg",
+    "ms": 16117,
+    "bytes": 467958,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_04",
+      "file_ref": "p04__c29_DdJNrukFMtV_00.jpg",
+      "input_index": 3,
+      "color": {
+        "hue_mean": 27.9,
+        "sat_mean": 0.671,
+        "bright_mean": 0.712,
+        "palette_hex": [
+          "#c26d19",
+          "#b9753d",
+          "#f39113"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "closeup",
+      "subjects": [
+        "분식 음식",
+        "튀김",
+        "떡볶이",
+        "라면",
+        "식빵",
+        "종이봉투",
+        "초록색 접시",
+        "돌솥 음식",
+        "치즈",
+        "숟가락",
+        "나무 테이블",
+        "손"
+      ],
+      "has_face": false,
+      "text_in_image": "- 이 중 하나만 다시 먹을 수 있다면?",
+      "describable_facts": [
+        "위아래 두 장의 사진이 하나의 이미지로 붙어 있다",
+        "위쪽 사진에는 나무 테이블 위에 여러 가지 음식이 놓여 있다",
+        "초록색 접시에 튀김, 붉은 양념이 묻은 음식, 떡, 식빵이 담겨 있다",
+        "파란색과 흰색 줄무늬 종이컵 두 개에 튀김이 담겨 있다",
+        "붉은색과 흰색 줄무늬 종이봉투가 오른쪽에 세워져 있다",
+        "봉투에 '슈~감자', 'Shake Shake!' 라는 글자가 적혀 있다",
+        "왼쪽에 과자 봉지가 놓여 있고 '피자타임'이라는 글자가 보인다",
+        "작은 검은색 돌그릇에 주황색 음식이 담겨 있다",
+        "붉은 소스가 담긴 초록색 그릇이 아래쪽에 있다",
+        "화면 위쪽에 사람의 두 손이 보이고 얼굴은 보이지 않는다",
+        "위쪽 사진에 '- 이 중 하나만 다시 먹을 수 있다면?' 이라는 흰 글자가 얹혀 있다",
+        "아래쪽 사진에는 검은 돌솥에 주황색 음식과 녹은 치즈가 담겨 있다",
+        "숟가락으로 음식을 들어올려 치즈가 길게 늘어나 있다",
+        "아래쪽 사진 배경은 나무 결이 보이는 갈색 테이블이다",
+        "아래쪽 사진에 '- 추억의 분식 중 최애를 골라주세요' 라는 흰 글자와 오른쪽 화살표 기호가 얹혀 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:40:18.817Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 932,
+      "output_tokens_details": {
+        "thinking_tokens": 134
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p05__c29_DdQ30v-lDhe_00.jpg",
+    "ms": 11839,
+    "bytes": 229829,
+    "ok": false,
+    "err": "MODEL_CONTRACT: PhotoAnalysis.color: expected hex color"
+  },
+  {
+    "file": "p06__c29_DdVDlTviVrG_00.jpg",
+    "ms": 11864,
+    "bytes": 197601,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_06",
+      "file_ref": "p06__c29_DdVDlTviVrG_00.jpg",
+      "input_index": 5,
+      "color": {
+        "hue_mean": 28.2,
+        "sat_mean": 0.182,
+        "bright_mean": 0.676,
+        "palette_hex": [
+          "#c6beb8",
+          "#dcccbd",
+          "#c8b29c"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "검은 핸드백",
+        "소파",
+        "쿠션",
+        "목걸이",
+        "나무 사이드 테이블",
+        "화병"
+      ],
+      "has_face": true,
+      "text_in_image": null,
+      "describable_facts": [
+        "사람 한 명이 크림색 소파에 앉아 정면을 보고 있다",
+        "검은색 긴팔 상의와 흰색 하의를 입고 있다",
+        "진주 형태의 흰 목걸이를 착용하고 있다",
+        "검은색 핸드백이 무릎 앞에 놓여 있고 손으로 손잡이를 잡고 있다",
+        "핸드백에 지퍼와 끈, 금속 장식이 달려 있다",
+        "소파 위에 크림색 쿠션 여러 개가 놓여 있다",
+        "소파 앞쪽 천에 분홍색 꽃 무늬가 있다",
+        "머리는 뒤로 묶여 있고 앞머리 몇 가닥이 얼굴 옆으로 내려와 있다",
+        "오른쪽 배경에 나무 테이블과 흰색 화병이 있다",
+        "화면 상단 중앙에 액자 아래쪽 일부가 보인다",
+        "벽은 밝은 베이지색이며 하단에 흰색 몰딩이 있다",
+        "오른쪽 아래에 나무 바닥이 보인다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:40:42.523Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 532,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p07__c29_DdDCDKgFCLE_00.jpg",
+    "ms": 10874,
+    "bytes": 166315,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_07",
+      "file_ref": "p07__c29_DdDCDKgFCLE_00.jpg",
+      "input_index": 6,
+      "color": {
+        "hue_mean": 40.1,
+        "sat_mean": 0.195,
+        "bright_mean": 0.375,
+        "palette_hex": [
+          "#100f0d",
+          "#433f38",
+          "#6a604c"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "재킷",
+        "스카프",
+        "티셔츠",
+        "벨트",
+        "가방"
+      ],
+      "has_face": false,
+      "text_in_image": "이제 진짜 가을 시작이야",
+      "describable_facts": [
+        "사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다",
+        "올리브색 재킷을 열어 입고 있다",
+        "목에 흰색 스카프를 여러 번 감고 있어 입과 코 아래가 가려져 있다",
+        "재킷 안에 회백색 티셔츠를 입고 있다",
+        "검은색 바지에 은색 버클이 달린 검은 벨트를 하고 있다",
+        "오른쪽 어깨에 검은색 가방 끈이 걸려 있다",
+        "오른손 손가락에 반지가 보인다",
+        "배경은 밝은 회색 벽면과 어두운 창으로 보인다",
+        "화면 왼쪽 아래에 '수요입점회' 라는 흰 박스 안 검은 글자가 있다",
+        "그 아래 흰 글자로 '이제 진짜 가을 시작이야', '가을 맛집 브랜드 25' 가 두 줄로 적혀 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:40:53.398Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 509,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p08__kr29cm_Dc8RZMAjXm8_00.jpg",
+    "ms": 11546,
+    "bytes": 1056814,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_08",
+      "file_ref": "p08__kr29cm_Dc8RZMAjXm8_00.jpg",
+      "input_index": 7,
+      "color": {
+        "hue_mean": 223,
+        "sat_mean": 0.259,
+        "bright_mean": 0.473,
+        "palette_hex": [
+          "#66666e",
+          "#080d16",
+          "#41403f"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "체크 셔츠",
+        "흰 티셔츠",
+        "청바지",
+        "흰 천 가방",
+        "창문"
+      ],
+      "has_face": false,
+      "text_in_image": "OF DOORS",
+      "describable_facts": [
+        "사람 한 명의 목 아래부터 허벅지까지가 화면을 채우고 있고 얼굴은 보이지 않는다",
+        "파란색 체크무늬 셔츠를 앞을 열어 입고 있다",
+        "안에 흰색 상의를 입고 있다",
+        "진한 청색 청바지를 입고 있다",
+        "흰색 천 가방을 어깨에 비스듬히 메고 있다",
+        "셔츠 양쪽 소매가 걷어 올려져 있다",
+        "왼쪽 배경에 창문이 있고 창밖으로 초록색 나무가 보인다",
+        "오른쪽 배경 패널에 'OF DOORS' 와 'de las puertas' 글자가 적혀 있다",
+        "화면 왼쪽 위에서 밝은 빛이 들어와 셔츠와 청바지에 밝은 반사가 생겼다",
+        "화면 하단에 흰색 한글 문구와 불꽃 하트 이모지가 겹쳐져 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:41:04.950Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 500,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p09__kr29cm_DdDx752PuVM_00.jpg",
+    "ms": 9112,
+    "bytes": 142500,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_09",
+      "file_ref": "p09__kr29cm_DdDx752PuVM_00.jpg",
+      "input_index": 8,
+      "color": {
+        "hue_mean": 34.6,
+        "sat_mean": 0.216,
+        "bright_mean": 0.649,
+        "palette_hex": [
+          "#c7c7bc",
+          "#776146",
+          "#dadbd0"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "개",
+        "병",
+        "소파",
+        "니트 옷"
+      ],
+      "has_face": false,
+      "text_in_image": null,
+      "describable_facts": [
+        "흰 털의 개 한 마리가 정면을 향해 앉아 있다",
+        "개는 분홍색 니트 옷을 입고 있다",
+        "개의 머리 위에 어두운 액체가 담긴 병이 세워져 있다",
+        "병에는 흰 뚜껑이 달려 있고 몸통에 남색 라벨이 붙어 있다",
+        "라벨에 한글 글자가 인쇄되어 있으나 좌우가 반전되어 보인다",
+        "개는 격자무늬가 있는 베이지색 소파 위에 있다",
+        "배경 상단은 밝은 흰색 벽면이다",
+        "개의 두 앞발이 화면 아래쪽에 보인다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:41:14.062Z"
+    },
+    "usage": {
+      "input_tokens": 3814,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 371,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p10__kr29cm_DdIt_2szpfb_00.jpg",
+    "ms": 12267,
+    "bytes": 233043,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_10",
+      "file_ref": "p10__kr29cm_DdIt_2szpfb_00.jpg",
+      "input_index": 9,
+      "color": {
+        "hue_mean": 152.8,
+        "sat_mean": 0.344,
+        "bright_mean": 0.515,
+        "palette_hex": [
+          "#0d0f13",
+          "#3e3f42",
+          "#654b3c"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "노트북",
+        "털 가방",
+        "반지",
+        "목걸이"
+      ],
+      "has_face": true,
+      "text_in_image": "POV : 쇼핑 카드값 때문에 출근하는 나",
+      "describable_facts": [
+        "사람 한 명이 화면 상단을 차지하며 정면을 향해 있다",
+        "밝은 하늘색 니트 상의를 입고 있다",
+        "양손을 가슴 앞쪽으로 모으고 있고 손톱이 길게 정리되어 있다",
+        "여러 손가락에 반지를 끼고 있다",
+        "은색 체인 목걸이 두 개가 보이며 하나에는 검은 타원형 펜던트가 달려 있다",
+        "머리카락은 밝은 갈색이며 뒤로 묶여 있다",
+        "화면 왼쪽 아래에 열린 노트북의 키보드와 옆면이 보인다",
+        "화면 오른쪽 아래에 검은색과 흰색이 섞인 털 재질 가방이 놓여 있다",
+        "천장에 사각 패널과 원형 조명이 보인다",
+        "화면 하단 중앙에 검은 배경의 흰 글자 자막이 있다",
+        "자막에 'POV : 쇼핑 카드값 때문에 출근하는 나'라고 적혀 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:41:26.332Z"
+    },
+    "usage": {
+      "input_tokens": 6050,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 526,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p11__kr29cm_DdOTLpSIBNf_00.jpg",
+    "ms": 40286,
+    "bytes": 333339,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_11",
+      "file_ref": "p11__kr29cm_DdOTLpSIBNf_00.jpg",
+      "input_index": 10,
+      "color": {
+        "hue_mean": 349.6,
+        "sat_mean": 0.214,
+        "bright_mean": 0.57,
+        "palette_hex": [
+          "#c0c0b9",
+          "#141219",
+          "#969999"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "봉제 인형",
+        "침대",
+        "베개",
+        "가디건",
+        "캐릭터 스티커"
+      ],
+      "has_face": true,
+      "text_in_image": "마루는 강쥐에 대해 어디까지 알고 계세요? 9",
+      "describable_facts": [
+        "사람 한 명이 화면 오른쪽에 앉아 손으로 턱을 괴고 정면을 보고 있다",
+        "머리를 위로 묶었고 앞머리가 이마를 덮고 있다",
+        "검은색과 흰색이 섞인 털 재질 겉옷을 입고 있다",
+        "안에 연한 하늘색 상의를 입고 있다",
+        "파란 하트 무늬가 있는 갈색 바지를 입고 있다",
+        "화면 왼쪽 침대 위에 주황색 머리에 노란 옷을 입은 큰 봉제 인형이 놓여 있다",
+        "침대에는 흰색 침구와 하늘색 베개가 있다",
+        "화면 오른쪽 아래에 노란 옷을 입은 캐릭터 그림이 겹쳐져 있다",
+        "화면 아래쪽에 흰색 한글 글자 '마루는 강쥐에 대해 어디까지 알고 계세요? 9'가 적혀 있다",
+        "화면 위쪽에 흰색 손글씨체로 '비밀 최초 공개'가 적혀 있다",
+        "화면 가운데에 흰색 손글씨체로 '언니 이것도 몰라?'가 적혀 있다",
+        "배경 벽은 밝은 베이지색이다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:42:06.619Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 615,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p12__kr29cm_DdTSeJJxy7l_00.jpg",
+    "ms": 12796,
+    "bytes": 286968,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_12",
+      "file_ref": "p12__kr29cm_DdTSeJJxy7l_00.jpg",
+      "input_index": 11,
+      "color": {
+        "hue_mean": 7.7,
+        "sat_mean": 0.198,
+        "bright_mean": 0.681,
+        "palette_hex": [
+          "#9a9891",
+          "#c1c5bd",
+          "#bd8f9d"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "개",
+        "이어폰",
+        "포장 봉지",
+        "침구",
+        "분홍색 손그림 낙서"
+      ],
+      "has_face": false,
+      "text_in_image": "Kangaroo & blueberry, rosemary",
+      "describable_facts": [
+        "흰색과 갈색 털의 개 한 마리가 분홍색 줄무늬 침구 위에 앞다리를 뻗고 엎드려 정면을 보고 있다",
+        "개의 양쪽 귀에 흰색 유선 이어폰이 걸려 있고 케이블이 아래로 늘어져 있다",
+        "개의 오른쪽에 노란색 파우치 포장이 세워져 있다",
+        "포장에 'Crunchips', 'Kangaroo & blueberry, rosemary', 'Natural Pet food', '85g' 이라고 적혀 있다",
+        "포장 아래쪽에 짙은 색 조각 이미지가 인쇄되어 있다",
+        "배경 벽에 분홍색으로 '강아지'와 '먹방'이라는 글자와 동물 얼굴 그림이 그려져 있다",
+        "화면 위쪽 약 3분의 1은 밝은 회백색 벽면이다",
+        "사진 왼쪽 상단 모서리에 검은색 물체 일부가 들어와 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:42:19.416Z"
+    },
+    "usage": {
+      "input_tokens": 6006,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 523,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p13__c29_Dc-2OOrFBnb_01.jpg",
+    "ms": 1,
+    "bytes": 743673,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_13",
+      "file_ref": "p13__c29_Dc-2OOrFBnb_01.jpg",
+      "input_index": 12,
+      "color": {
+        "hue_mean": 53,
+        "sat_mean": 0.288,
+        "bright_mean": 0.375,
+        "palette_hex": [
+          "#16150f",
+          "#434040",
+          "#6b6765"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "비니",
+        "스마트폰",
+        "숄더백",
+        "재킷",
+        "울타리",
+        "석벽",
+        "관목"
+      ],
+      "has_face": true,
+      "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+      "describable_facts": [
+        "사람 한 명이 측면을 향해 서 있다",
+        "한쪽 팔을 머리 위로 올리고 있다",
+        "파란색과 노란색 줄무늬가 있는 회색 니트 모자를 쓰고 있다",
+        "회색 소매의 상의 위에 남색 조끼형 상의를 겹쳐 입고 있다",
+        "한 손에 스마트폰을 들고 있다",
+        "한쪽 어깨에 황록색 가방을 메고 있다",
+        "팔에 초록색 옷을 걸치고 있다",
+        "긴 검은 머리가 어깨 아래로 내려와 있다",
+        "배경에 검은색 금속 울타리와 회색 돌담이 있다",
+        "울타리 뒤로 초록 잎의 관목과 나무가 보인다",
+        "햇빛이 강하게 비쳐 바닥과 벽에 그림자가 생겼다",
+        "화면 하단에 흰색 한글 문구가 두 줄로 얹혀 있다",
+        "문구 끝에 분홍색 하트 이모지가 있다"
+      ],
+      "quality_flags": [
+        "duplicate_of:ph_01"
+      ],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:39:20.870Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 534,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p14__c29_Dc7cY9WiUbs_08.jpg",
+    "ms": 9982,
+    "bytes": 217887,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_14",
+      "file_ref": "p14__c29_Dc7cY9WiUbs_08.jpg",
+      "input_index": 13,
+      "color": {
+        "hue_mean": 16,
+        "sat_mean": 0.126,
+        "bright_mean": 0.617,
+        "palette_hex": [
+          "#dbd1c1",
+          "#e4dccb",
+          "#4b4849"
+        ]
+      },
+      "composition": "negative_space",
+      "scale": "closeup",
+      "subjects": [
+        "스프링 노트",
+        "스티커",
+        "분홍색 라벨"
+      ],
+      "has_face": false,
+      "text_in_image": "미래의 나를 오늘로 초대하기",
+      "describable_facts": [
+        "검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다",
+        "노트 표지는 흰색에 가까운 크림색이다",
+        "분홍색 배경에 검은 글씨로 '미래의 나를 오늘로 초대하기'가 적힌 직사각형 라벨이 붙어 있다",
+        "라벨 아래에 얼굴과 팔다리가 그려진 펼친 책 모양 캐릭터 스티커 두 개가 나란히 붙어 있다",
+        "두 캐릭터 스티커는 각각 한쪽 팔을 위로 들고 있다",
+        "노트 아래쪽 절반가량은 아무것도 없는 빈 면이다",
+        "배경은 회색 얼룩 무늬의 어두운 표면이다",
+        "노트 오른쪽 옆면은 검은색이다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:42:29.413Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 449,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  },
+  {
+    "file": "p15__c29_DdDCDKgFCLE_06.jpg",
+    "ms": 13189,
+    "bytes": 209896,
+    "ok": true,
+    "a": {
+      "schema_version": "1.0",
+      "photo_id": "ph_15",
+      "file_ref": "p15__c29_DdDCDKgFCLE_06.jpg",
+      "input_index": 14,
+      "color": {
+        "hue_mean": 348.8,
+        "sat_mean": 0.32,
+        "bright_mean": 0.456,
+        "palette_hex": [
+          "#161318",
+          "#c6b799",
+          "#b49976"
+        ]
+      },
+      "composition": "full_frame",
+      "scale": "midshot",
+      "subjects": [
+        "사람",
+        "민소매 상의",
+        "반팔 티셔츠",
+        "케이블 니트",
+        "검은 가방",
+        "식물",
+        "텍스트"
+      ],
+      "has_face": true,
+      "text_in_image": "세컨드솔트",
+      "describable_facts": [
+        "위아래 두 장의 사진이 하나의 이미지로 세로로 붙어 있다",
+        "위쪽 사진에는 사람 한 명이 바닥에 비스듬히 기대 앉아 있다",
+        "위쪽 인물은 흰 반팔 티셔츠 위에 연한 녹색 민소매 상의를 겹쳐 입고 있다",
+        "위쪽 인물은 연한 색 바지를 입고 있다",
+        "위쪽 인물의 뒤로 짙은 초록색 잎이 무성하게 보인다",
+        "위쪽 사진 오른쪽 아래에 '세컨드솔트'와 '#Y2K #러블리 #캐주얼' 글자가 흰색으로 적혀 있다",
+        "위쪽 인물의 왼팔 안쪽에 작은 문양이 보인다",
+        "아래쪽 사진에는 크림색 케이블 니트를 입은 사람의 상체가 보인다",
+        "아래쪽 인물의 얼굴은 화면 위쪽으로 잘려 보이지 않는다",
+        "아래쪽 인물은 검은 가방을 어깨에 메고 한 손으로 끈을 잡고 있다",
+        "아래쪽 사진 오른쪽에 유리창과 초록 잎이 보인다",
+        "아래쪽 사진 오른쪽 아래에 '세인'과 '#타임리스 #데일리룩 #부드러움' 글자가 흰색으로 적혀 있다"
+      ],
+      "quality_flags": [],
+      "analysis_source": "vision_model",
+      "model": "claude-opus-5",
+      "analyzed_at": "2026-09-18T03:42:42.605Z"
+    },
+    "usage": {
+      "input_tokens": 4529,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 669,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "inference_geo": "global"
+    }
+  }
+]

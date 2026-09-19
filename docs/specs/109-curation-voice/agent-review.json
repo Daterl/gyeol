@@ -1,0 +1,77 @@
+{
+  "ph_01": {
+    "visual_observation": "회색 비니·어두운 상의·초록 식물",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_02": {
+    "visual_observation": "짙은 옷·가방과 회색 벽",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_03": {
+    "visual_observation": "연한 카디건·흰 치마·주황 벽",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_04": {
+    "visual_observation": "갈색 겉옷과 갈색 계열 배경",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_05": {
+    "visual_observation": "짙은 파랑 상의와 초록 식물",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_06": {
+    "visual_observation": "회색 배경과 검은 옷",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_07": {
+    "visual_observation": "어두운 무늬 천·흰 옷·노란 문구",
+    "s4": "PASS",
+    "agent_suitability": "X: 역할만 남아 반복적"
+  },
+  "ph_08": {
+    "visual_observation": "갈색 셔츠와 회색 타일",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_09": {
+    "visual_observation": "흰 상의와 흰 벽",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_10": {
+    "visual_observation": "회색 양말·붉은 신발·검은 가방",
+    "s4": "PASS",
+    "agent_suitability": "X: 역할만 남아 반복적"
+  },
+  "ph_11": {
+    "visual_observation": "흰 바탕이 넓은 인물·영문 카드",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_12": {
+    "visual_observation": "갈색 가방과 회색 벽",
+    "s4": "PASS",
+    "agent_suitability": "O: 시각 대비와 자리 설명이 자연스러움"
+  },
+  "ph_13": {
+    "visual_observation": "흰 카디건과 주황 벽",
+    "s4": "PASS",
+    "agent_suitability": "X: 역할만 남아 반복적"
+  },
+  "ph_14": {
+    "visual_observation": "짙은 옷·붉은 가방과 밝은 실내 합성",
+    "s4": "PASS",
+    "agent_suitability": "X: 역할만 남아 반복적"
+  },
+  "ph_15": {
+    "visual_observation": "흰 티셔츠 중심의 네 사진 합성",
+    "s4": "PASS",
+    "agent_suitability": "X: 역할만 남아 반복적"
+  }
+}

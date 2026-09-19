@@ -30,6 +30,7 @@ build/
 
 # 테스트 / 도구
 coverage/
+.vitest/
 .nyc_output/
 .eslintcache
 

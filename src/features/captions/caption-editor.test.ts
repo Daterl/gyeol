@@ -33,6 +33,7 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
   await store.getState().loadFeed(async () => response());
   await store.getState().generate(undefined, previewOutput);
   expect(store.getState().request.status).toBe('ready');
+  expect(exportText(store.getState().exportDraft())).toContain('[AI 쓸 거리]');
   const omitted = store
     .getState()
     .draft?.slots.find((slot) => slot.caption_state === 'omitted');
@@ -54,8 +55,11 @@ test('preview has proposed/omitted/user states, fills only requested slot and ex
     renderToStaticMarkup(
       createElement(CaptionEditor, { store, id, mock: true }),
     ),
-  ).toContain('제안됨');
+  ).toContain('쓸 거리 제안');
   store.getState().editCaption(id, '내가 쓴 문장');
+  expect(exportText(store.getState().exportDraft())).toContain(
+    '[내 문장] 내가 쓴 문장',
+  );
   expect(
     renderToStaticMarkup(
       createElement(CaptionEditor, { store, id, mock: true }),
@@ -114,7 +118,7 @@ test('caption failure never offers a photo upload retry', async () => {
     createElement(PhotoInput, { mock: true }),
   );
   expect(markup).not.toContain('>다시 시도하기</button>');
-  expect(markup).toContain('>이 사진들로 시작하기</button>');
+  expect(markup).toContain('>큐레이션 만들기</button>');
 });
 
 test('companion follows the actual editor lifecycle and cancellation', async () => {
