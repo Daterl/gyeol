@@ -1,0 +1,544 @@
+{
+  "environment": "local-node-library",
+  "node": "v22.22.3",
+  "started_at": "2026-09-19T04:44:09.574Z",
+  "status": "MEASURED",
+  "results": [
+    {
+      "prompt": "",
+      "status": "MEASURED",
+      "configured_model": "claude-haiku-4-5-20251001",
+      "responses": [
+        {
+          "model": "claude-haiku-4-5-20251001",
+          "usage": {
+            "input_tokens": 12658,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "output_tokens": 2824,
+            "service_tier": "standard",
+            "inference_geo": "not_available"
+          },
+          "stop_reason": "end_turn"
+        }
+      ],
+      "output": {
+        "output": {
+          "title": "사진을 잇는 순서",
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "measurement_1",
+              "caption_state": "filled",
+              "text": "회색 니트 비니와 긴팔 상의를 입고 어깨에 가방을 맨 사람이 측면으로 서서 한쪽 팔을 머리 위로 들어 올리고 있다. 배경에 검은 울타리와 초록 잎의 나무가 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_1",
+                  "note": "회색 니트 비니, 긴팔 상의, 어깨 가방, 팔 제스처, 배경의 울타리와 나무"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "photo_id": "measurement_2",
+              "caption_state": "filled",
+              "text": "단발머리의 사람이 흰 바탕에 분홍·연두색 캐릭터 무늬가 있는 긴소매 상의를 입고 둥근 원숭이 모양 봉제 인형을 안고 있다. 등에는 베이지색 봉제 인형 가방을 메고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_2",
+                  "note": "단발머리, 캐릭터 무늬 상의, 원숭이 인형, 봉제 인형 가방"
+                }
+              ]
+            },
+            {
+              "position": 3,
+              "photo_id": "measurement_3",
+              "caption_state": "filled",
+              "text": "검은색 반팔 상의와 남색 바지를 입은 사람이 회색 콘크리트 벽 앞에 서서 위쪽을 바라보고 있다. 갈색 스웨이드 숄더백을 어깨에 메고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_3",
+                  "note": "검은색 반팔 상의, 남색 바지, 위를 보는 포즈, 갈색 스웨이드 숄더백"
+                }
+              ]
+            },
+            {
+              "position": 4,
+              "photo_id": "measurement_4",
+              "caption_state": "filled",
+              "text": "연한 회백색 줄무늬 종이 위에 초록색 배경의 라벨 스티커와 빨간 얼굴의 캐릭터 스티커가 붙어 있다. 캐릭터 표면에 별 모양 홀로그램 입자가 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_4",
+                  "note": "라벨 스티커, 캐릭터 스티커, 홀로그램 입자"
+                }
+              ]
+            },
+            {
+              "position": 5,
+              "photo_id": "measurement_5",
+              "caption_state": "filled",
+              "text": "파란색 체크무늬 셔츠와 흰색 상의, 청바지를 입은 사람이 유리문 앞에 서서 오른쪽 소매를 걷어 올리고 있다. 흰색 천 가방을 어깨에 메고 있고, 배경에 초록색 나뭇잎이 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_5",
+                  "note": "파란색 체크무늬 셔츠, 청바지, 흰색 천 가방, 소매를 걷어 올린 모습"
+                }
+              ]
+            },
+            {
+              "position": 6,
+              "photo_id": "measurement_6",
+              "caption_state": "filled",
+              "text": "크림색 니트 가디건을 입은 사람이 앉아 있으며, 가디건에 흰 꽃 모양 자수가 있다. 파란색과 검은색 체크 무늬 하의를 입고 있고, 배경에 주황빛 벽돌 벽이 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_6",
+                  "note": "크림색 니트 가디건, 흰 꽃 자수, 체크 무늬 하의, 벽돌 배경"
+                }
+              ]
+            },
+            {
+              "position": 7,
+              "photo_id": "measurement_7",
+              "caption_state": "filled",
+              "text": "분홍색 털 카펫 위에 여러 켤레의 신발이 원형으로 놓여 있다. 신발 색상은 남색, 분홍, 하늘색, 갈색, 검정, 베이지, 보라, 진분홍으로 다양하며, 끈에 리본과 금속 장식이 달려 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_7",
+                  "note": "다채로운 색상의 신발들, 원형 배치, 리본과 금속 장식"
+                }
+              ]
+            },
+            {
+              "position": 8,
+              "photo_id": "measurement_8",
+              "caption_state": "filled",
+              "text": "파란색 카디건과 흰색 상의, 회색 넓은 바지를 입은 사람이 보도 위에 서서 검은색 끈 가방을 들고 있다. 한쪽 손을 나무 줄기에 대고 있고, 배경에 건물과 유리창이 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_8",
+                  "note": "파란색 카디건, 회색 넓은 바지, 검은색 끈 가방, 나무 줄기 포즈"
+                }
+              ]
+            },
+            {
+              "position": 9,
+              "photo_id": "measurement_9",
+              "caption_state": "filled",
+              "text": "올리브색 재킷을 입은 사람의 상반신이 보이며, 목에 크림색 스카프를 여러 겹 둘러 있다. 검은색 하의에 은색 버클 벨트를 매고 있고, 왼손이 주머니에 들어가 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_9",
+                  "note": "올리브색 재킷, 크림색 스카프, 검은색 하의, 은색 버클 벨트"
+                }
+              ]
+            },
+            {
+              "position": 10,
+              "photo_id": "measurement_10",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "확인한 사실이 제한적이어서 설명을 보탠 추가 가치가 크지 않습니다.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_10",
+                  "note": "개, 분홍색 옷, 병"
+                }
+              ]
+            },
+            {
+              "position": 11,
+              "photo_id": "measurement_11",
+              "caption_state": "filled",
+              "text": "갈색 오버사이즈 재킷을 입은 사람이 휴대폰을 얼굴 앞에 들고 있다. 검은색 우븐 패턴의 숄더백을 왼쪽 어깨에 메고 있고, 연한 하늘색 주름 치마를 입고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_11",
+                  "note": "갈색 오버사이즈 재킷, 휴대폰 들기, 검은색 숄더백, 하늘색 치마"
+                }
+              ]
+            },
+            {
+              "position": 12,
+              "photo_id": "measurement_12",
+              "caption_state": "filled",
+              "text": "갈색 가죽 부츠를 신은 다리가 화면 중앙에 있고, 부츠에 버클 스트랩이 감겨 있다. 오른쪽 위에서 갈색 구두 한 켤레를 손으로 들고 있으며, 바닥은 밝은 회갈색 콘크리트이다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_12",
+                  "note": "갈색 부츠, 버클 스트랩, 손으로 든 갈색 구두"
+                }
+              ]
+            },
+            {
+              "position": 13,
+              "photo_id": "measurement_13",
+              "caption_state": "filled",
+              "text": "보라빛 파란색 오버사이즈 재킷을 입은 사람이 벽 앞에 서 있다. 연한 하늘색 데님 바지와 검은색 샌들을 신고 있으며, 검은색 가방 끈이 왼쪽 어깨에 걸려 있다. 배경의 벽은 흰색과 초록색으로 칠해져 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_13",
+                  "note": "보라빛 파란색 오버사이즈 재킷, 하늘색 데님 바지, 검은색 샌들, 배경 벽"
+                }
+              ]
+            },
+            {
+              "position": 14,
+              "photo_id": "measurement_14",
+              "caption_state": "filled",
+              "text": "회색 니트 모자에 'NAUTICA' 글자가 있고, 회색빛 파란색 플리스 상의를 입은 사람이 한쪽 팔을 머리 근처에 들어 올리고 있다. 배경에 초록색 풀과 주황색 꽃, 건물이 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_14",
+                  "note": "'NAUTICA' 모자, 플리스 상의, 팔 제스처, 배경의 식물과 건물"
+                }
+              ]
+            },
+            {
+              "position": 15,
+              "photo_id": "measurement_15",
+              "caption_state": "filled",
+              "text": "밝은 하늘색 니트 상의를 입은 사람이 양손을 가슴 앞에 모으고 있다. 머리를 뒤로 묶었고, 목에 가는 체인 목걸이 두 개를 하고 있으며, 손가락에 여러 개의 반지를 끼고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_15",
+                  "note": "하늘색 니트 상의, 손 제스처, 체인 목걸이, 반지"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "wall_ms": 20714.178
+    },
+    {
+      "prompt": "차분하고 담백하게, 사진에 보이는 것만 짧은 한국어로 써 주세요.",
+      "status": "MEASURED",
+      "configured_model": "claude-haiku-4-5-20251001",
+      "responses": [
+        {
+          "model": "claude-haiku-4-5-20251001",
+          "usage": {
+            "input_tokens": 13191,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "output_tokens": 2188,
+            "service_tier": "standard",
+            "inference_geo": "not_available"
+          },
+          "stop_reason": "end_turn"
+        }
+      ],
+      "output": {
+        "output": {
+          "title": "옷과 물건을 차분하게 담은 열다섯 장",
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "measurement_2",
+              "caption_state": "filled",
+              "text": "한 사람이 옆으로 몸을 돌린 채 카메라를 향해 고개를 돌리고 있다. 분홍·연두색 캐릭터 무늬 긴소매 상의에 베이지색 원숭이 봉제 인형을 안고 있고, 같은 색 봉제 가방을 등에 메고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_2",
+                  "note": "사람의 자세, 상의 무늬, 안고 있는 인형과 등의 가방"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "photo_id": "measurement_1",
+              "caption_state": "filled",
+              "text": "카메라 쪽을 향해 서 있는 사람이 한쪽 팔을 머리 위로 들어올리고 있다. 회색·남색 긴팔 상의에 연두색 가방과 청록색 재킷을 걸치고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_1",
+                  "note": "팔의 높이, 상의 색과 구성, 가방과 재킷"
+                }
+              ]
+            },
+            {
+              "position": 3,
+              "photo_id": "measurement_4",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_4",
+                  "note": "스티커와 라벨이 주요 피사체"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.834"
+                }
+              ]
+            },
+            {
+              "position": 4,
+              "photo_id": "measurement_3",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_3",
+                  "note": "사람이 벽 앞에 서 있는 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.8"
+                }
+              ]
+            },
+            {
+              "position": 5,
+              "photo_id": "measurement_10",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_10",
+                  "note": "흰 개가 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.846"
+                }
+              ]
+            },
+            {
+              "position": 6,
+              "photo_id": "measurement_11",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_11",
+                  "note": "사람이 휴대폰을 들고 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.849"
+                }
+              ]
+            },
+            {
+              "position": 7,
+              "photo_id": "measurement_13",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_13",
+                  "note": "사람이 벽 앞에 서 있는 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.882"
+                }
+              ]
+            },
+            {
+              "position": 8,
+              "photo_id": "measurement_9",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_9",
+                  "note": "사람의 상반신이 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.883"
+                }
+              ]
+            },
+            {
+              "position": 9,
+              "photo_id": "measurement_7",
+              "caption_state": "filled",
+              "text": "분홍색 카펫 위에 여러 색의 신발이 원형으로 놓여 있다. 끈에 리본과 금속 참 장식이 달려 있고, 일부 신발 안창에 'Clarks ORIGINALS' 글자가 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_7",
+                  "note": "신발들의 배치와 색상, 끈의 장식"
+                }
+              ]
+            },
+            {
+              "position": 10,
+              "photo_id": "measurement_12",
+              "caption_state": "filled",
+              "text": "갈색 가죽 부츠와 버클 스트랩이 달린 갈색 구두가 있다. 앉아 있는 사람이 보라색 상의와 갈색 코듀로이 하의를 입고 있고, 손가락에 반지를 끼고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_12",
+                  "note": "신발의 종류와 재질, 사람의 옷과 액세서리"
+                }
+              ]
+            },
+            {
+              "position": 11,
+              "photo_id": "measurement_5",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_5",
+                  "note": "사람이 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.898"
+                }
+              ]
+            },
+            {
+              "position": 12,
+              "photo_id": "measurement_6",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_6",
+                  "note": "사람이 앉아 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.933"
+                }
+              ]
+            },
+            {
+              "position": 13,
+              "photo_id": "measurement_8",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과 겹치는 내용이 많아 사진만 두는 편을 제안해요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_8",
+                  "note": "사람이 서서 옷을 입은 장면"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "adjacent_overlap 0.926"
+                }
+              ]
+            },
+            {
+              "position": 14,
+              "photo_id": "measurement_15",
+              "caption_state": "filled",
+              "text": "하늘색 니트 상의를 입은 사람이 양손을 가슴 앞에 모으고 있다. 손가락에 반지 여러 개를 끼고 있으며, 목에는 체인 목걸이 두 개가 걸려 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_15",
+                  "note": "상의 색상, 손과 목의 액세서리"
+                }
+              ]
+            },
+            {
+              "position": 15,
+              "photo_id": "measurement_14",
+              "caption_state": "filled",
+              "text": "회색 니트 모자와 회색빛 파란색 플리스 상의를 입은 사람이 한쪽 팔을 들어 머리 근처에 손을 대고 있다. 모자와 상의 라벨에 'NAUTICA' 글자가 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_14",
+                  "note": "모자의 글자, 상의의 색상과 무늬, 팔의 자세"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "wall_ms": 15394.529332999999
+    }
+  ],
+  "billing": {
+    "status": "PENDING",
+    "actual_usd": null,
+    "estimated_usd": null
+  },
+  "quality": "PENDING: compare captions with source photos; contract checks are not visual quality",
+  "server_deadline": "PENDING: not a Vercel function measurement",
+  "analysis_revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "photo_count": 15
+}

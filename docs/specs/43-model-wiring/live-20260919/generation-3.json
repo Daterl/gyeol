@@ -1,0 +1,168 @@
+{
+  "environment": "local-node-library",
+  "node": "v22.22.3",
+  "started_at": "2026-09-19T04:42:27.336Z",
+  "status": "MEASURED",
+  "results": [
+    {
+      "prompt": "",
+      "status": "MEASURED",
+      "configured_model": "claude-haiku-4-5-20251001",
+      "responses": [
+        {
+          "model": "claude-haiku-4-5-20251001",
+          "usage": {
+            "input_tokens": 6147,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "output_tokens": 767,
+            "service_tier": "standard",
+            "inference_geo": "not_available"
+          },
+          "stop_reason": "end_turn"
+        }
+      ],
+      "output": {
+        "output": {
+          "title": "사진을 잇는 순서",
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "measurement_1",
+              "caption_state": "filled",
+              "text": "옆을 보며 서 있고, 파란색과 연두색 줄무늬 비니를 쓰고 팔을 올린 손이 머리 근처에 있다. 회색 소매와 남색 몸판의 상의를 입었고 한 손에 스마트폰을 들었다. 어깨에 연두색 가방을 메고 팔에 청록색 재킷이 걸려 있다. 배경에 검은색 철제 울타리와 돌 벽돌 담이 있고, 초록색 나뭇잎과 관목이 보인다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_1",
+                  "note": "사진 속 인물의 자세, 복장, 소품, 배경"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "photo_id": "measurement_2",
+              "caption_state": "filled",
+              "text": "몸을 옆으로 돌린 채 고개를 카메라 쪽으로 돌리고 있다. 단발머리에 앞머리가 있고, 흰 바탕에 작은 분홍색 무늬가 반복된 긴소매 옷을 입었다. 팔로 큰 원숭이 모양 봉제 인형을 안고 있고, 등에는 베이지색 봉제 인형 형태의 가방을 메고 있다. 배경은 베이지에서 흰색으로 이어지는 단색 그러데이션이다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_2",
+                  "note": "사진 속 인물의 자세, 머리 스타일, 복장, 소품, 배경"
+                }
+              ]
+            },
+            {
+              "position": 3,
+              "photo_id": "measurement_3",
+              "caption_state": "filled",
+              "text": "거친 질감의 회색 콘크리트 벽 앞에 서서 고개를 들어 위쪽을 바라보고 있다. 검은색 반팔 상의와 짙은 남색 바지를 입었고, 갈색 스웨이드 질감의 숄더백을 어깨에 메고 있다. 귀에 금색 귀걸이가 보이고, 머리카락은 길고 어두운 색이다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_3",
+                  "note": "사진 속 인물의 자세, 복장, 소품, 배경"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "wall_ms": 6436.337334
+    },
+    {
+      "prompt": "차분하고 담백하게, 사진에 보이는 것만 짧은 한국어로 써 주세요.",
+      "status": "MEASURED",
+      "configured_model": "claude-haiku-4-5-20251001",
+      "responses": [
+        {
+          "model": "claude-haiku-4-5-20251001",
+          "usage": {
+            "input_tokens": 5935,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "output_tokens": 544,
+            "service_tier": "standard",
+            "inference_geo": "not_available"
+          },
+          "stop_reason": "end_turn"
+        }
+      ],
+      "output": {
+        "output": {
+          "title": "세 장면의 톤을 잇는 순서",
+          "slots": [
+            {
+              "position": 1,
+              "photo_id": "measurement_2",
+              "caption_state": "filled",
+              "text": "단발머리에 분홍색 무늬 긴소매 옷을 입고, 원숭이 봉제 인형을 안은 채 고개를 카메라 쪽으로 돌리고 있다. 등에는 베이지색 봉제 인형 가방을 메고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_2",
+                  "note": "단발머리, 분홍색 무늬 긴소매, 원숭이 봉제 인형, 베이지색 가방"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "photo_id": "measurement_3",
+              "caption_state": "filled",
+              "text": "회색 콘크리트 벽 앞에 서서 위쪽을 바라보고 있다. 검은색 반팔 상의와 짙은 남색 바지에 갈색 스웨이드 숄더백을 어깨에 메고 있다.",
+              "omit_reason": null,
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_3",
+                  "note": "회색 콘크리트 벽, 검은색 반팔 상의, 짙은 남색 바지, 갈색 스웨이드 숄더백"
+                }
+              ]
+            },
+            {
+              "position": 3,
+              "photo_id": "measurement_1",
+              "caption_state": "omitted",
+              "text": null,
+              "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+              "evidence": [
+                {
+                  "kind": "uploaded_photo",
+                  "ref": "measurement_1",
+                  "note": "세 번째 슬롯"
+                },
+                {
+                  "kind": "rule",
+                  "ref": "gyeol.omit.overlap",
+                  "note": "인물 복장 설명이 앞 슬롯과 유사한 패턴"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "wall_ms": 5372.048458
+    }
+  ],
+  "billing": {
+    "status": "PENDING",
+    "actual_usd": null,
+    "estimated_usd": null
+  },
+  "quality": "PENDING: compare captions with source photos; contract checks are not visual quality",
+  "server_deadline": "PENDING: not a Vercel function measurement",
+  "analysis_revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "photo_count": 3
+}

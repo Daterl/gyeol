@@ -1,0 +1,266 @@
+{
+  "status": "MEASURED",
+  "started_at": "2026-09-19T04:40:36.868Z",
+  "revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "environment": "local-node-library",
+  "node": "v22.22.3",
+  "requested_count": 3,
+  "processing": "sequential",
+  "cache": "reset before every photo",
+  "configured_model": "claude-opus-5",
+  "timeout_ms": 20000,
+  "results": [
+    {
+      "photo_id": "measurement_1",
+      "input_bytes": 743673,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+      "status": "MEASURED",
+      "wall_ms": 12779.4405,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 12755.96875,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:49.655Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 504,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_1",
+        "file_ref": "measurement_1",
+        "input_index": 0,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니",
+          "스마트폰",
+          "숄더백",
+          "재킷",
+          "울타리",
+          "돌담",
+          "나무"
+        ],
+        "has_face": true,
+        "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에 서서 옆을 보고 있다",
+          "파란색과 연두색 줄무늬가 있는 회색 비니를 쓰고 있다",
+          "오른팔을 머리 위로 올려 손을 머리 근처에 두고 있다",
+          "회색 소매와 남색 몸판의 긴팔 상의를 입고 있다",
+          "한 손에 스마트폰을 들고 있다",
+          "어깨에 연두색 가방을 메고 있다",
+          "팔에 청록색 재킷이 걸려 있다",
+          "배경에 검은색 철제 울타리와 돌 벽돌 담이 있다",
+          "울타리 뒤로 초록색 나뭇잎과 관목이 보인다",
+          "화면 하단에 흰색 한글 글자 두 줄과 분홍색 하트 이모지가 겹쳐져 있다",
+          "강한 햇빛이 비쳐 바닥과 담에 그림자가 생겼다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:49.655Z"
+      }
+    },
+    {
+      "photo_id": "measurement_2",
+      "input_bytes": 180807,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "5b488aabf8695911cc7cced0913d49da1c58297dd60a36cbc6a23f9ba6c3a1c4",
+      "status": "MEASURED",
+      "wall_ms": 8699.938250000001,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 8682.608500000002,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:58.355Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 538,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_2",
+        "file_ref": "measurement_2",
+        "input_index": 1,
+        "color": {
+          "hue_mean": 24.2,
+          "sat_mean": 0.161,
+          "bright_mean": 0.742,
+          "palette_hex": [
+            "#f2dfcc",
+            "#46413d",
+            "#e7e1e0"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "원숭이 인형",
+          "봉제 인형 가방",
+          "패턴 원피스",
+          "텍스트"
+        ],
+        "has_face": true,
+        "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+        "describable_facts": [
+          "사람 한 명이 몸을 옆으로 돌린 채 고개를 카메라 쪽으로 돌리고 있다",
+          "단발머리에 앞머리가 있다",
+          "흰 바탕에 작은 분홍색 무늬가 반복된 긴소매 옷을 입고 있다",
+          "팔로 큰 원숭이 모양 봉제 인형을 안고 있다",
+          "등에는 베이지색 봉제 인형 형태의 가방을 메고 있고 어깨끈이 보인다",
+          "배경은 베이지에서 흰색으로 이어지는 단색 그러데이션이다",
+          "화면 왼쪽 위와 오른쪽 위에 체크·물방울 무늬의 도형 그래픽이 배치되어 있다",
+          "화면 왼쪽 아래에 흰색 한글 문구 두 줄이 있다",
+          "문구 옆에 원숭이 이모지와 노란 하트 이모지가 있다",
+          "오른쪽 아래에 '© HINAKUU' 라는 작은 글자가 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:58.355Z"
+      }
+    },
+    {
+      "photo_id": "measurement_3",
+      "input_bytes": 560254,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "521209dd0adba1d283ebb5dade22a8a290d9425b41e0a94dfc033829b93bece1",
+      "status": "MEASURED",
+      "wall_ms": 10177.348167,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 10166.328209,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:08.533Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 449,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_3",
+        "file_ref": "measurement_3",
+        "input_index": 2,
+        "color": {
+          "hue_mean": 214.9,
+          "sat_mean": 0.195,
+          "bright_mean": 0.432,
+          "palette_hex": [
+            "#97968e",
+            "#090c13",
+            "#71726c"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "숄더백",
+          "콘크리트 벽",
+          "귀걸이"
+        ],
+        "has_face": true,
+        "text_in_image": "29CM",
+        "describable_facts": [
+          "사람 한 명이 거친 질감의 회색 콘크리트 벽 앞에 서 있다",
+          "인물이 고개를 들어 위쪽을 바라보고 있다",
+          "인물은 검은색 반팔 상의와 짙은 남색 바지를 입고 있다",
+          "갈색 스웨이드 질감의 숄더백을 어깨에 메고 있다",
+          "가방 끈이 어깨에서 대각선으로 내려온다",
+          "인물의 귀에 금색 귀걸이가 보인다",
+          "머리카락은 길고 어두운 색이다",
+          "화면 오른쪽 아래에 흰색으로 '29CM'이 적혀 있다",
+          "화면 왼쪽 아래에 흰색으로 'Content by 29CM'이 적혀 있다",
+          "배경 벽이 화면 대부분을 차지한다",
+          "빛이 화면 위쪽에서 들어온다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:08.533Z"
+      }
+    }
+  ],
+  "billing": {
+    "status": "PENDING",
+    "actual_usd": null,
+    "estimated_usd": null,
+    "reason": "Provider usage is not billed cost; failed and retried requests may also be billed."
+  },
+  "quality": {
+    "status": "PENDING",
+    "reason": "Compare recorded analysis against original photos; contract validity does not establish visual truth."
+  },
+  "server_deadline": {
+    "status": "PENDING",
+    "reason": "Local calls do not measure Vercel function limits or round trips."
+  },
+  "unique_image_count": 3,
+  "total_ms": 31656.774333,
+  "completed_count": 3,
+  "failed_count": 0,
+  "unattempted_count": 0,
+  "usage_coverage": 3
+}

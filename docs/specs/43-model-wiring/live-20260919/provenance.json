@@ -1,0 +1,13 @@
+{
+  "base_revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "measurement_scripts": "working-tree additions/changes in the accompanying PR; application libraries unchanged",
+  "sha256": {
+    "scripts/measure-model.js": "85390166e492f7e3720561a61a81ef73af49faad868a3957e4d3df2ce8a4489b",
+    "scripts/measure-generation.js": "ced8660fe879413659c7cce01112287f9b7670e5869678715671a125e19103bf",
+    "lib/model.js": "53bf710e2fc9eaa2b5a1d70d80795335916931e26a67d90478d4dbd24a55e43c",
+    "lib/photo_analysis.js": "df87529e184a401d4b59767a204ff18a295e2ca07964116a6146b2be991e3d5b",
+    "lib/output-generation.js": "a725f9dc30d2f89acc872b9d6722dda45a2c4b4cde83eab34787cf4705d7e2cb",
+    "prompts/input/photo_analysis.md": "9bee68333cc2c5f0d556720570ad7a53b1d2b22ec3efa9991dddcda670444672",
+    "config/models.json": "63a973a8bb3673e9a68e9cff4184dcd7344fb01aab6ecd2004e85f3e07ebf1b5"
+  }
+}
