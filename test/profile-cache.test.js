@@ -240,7 +240,9 @@ test('REST adapter sends documented private create/CAS and origin-read protocol'
     return Response.json({ status: 'reserved' }, { headers: { etag: '"read"' } });
   } });
   await storage.write(key, { status: 'reserved' });
-  assert.equal(calls[0].init.headers['x-access'], 'private');
+  // Independent wire oracle: vercel/storage@31245dc, putOptionHeaderMap.access.
+  assert.equal(calls[0].init.headers['x-vercel-blob-access'], 'private');
+  assert.equal(calls[0].init.headers['x-access'], undefined);
   assert.equal(calls[0].init.headers['x-add-random-suffix'], '0');
   assert.equal(calls[0].init.headers['x-allow-overwrite'], '0');
   assert.equal(calls[0].init.headers['x-api-version'], '12');
