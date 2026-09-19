@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // #129 — 타이틀·캡션·비움 이유를 사진의 describable_facts 와 전수 대조한 표를 만든다.
+// 관측 사실 자체는 원본 사진 15장을 에이전트가 직접 열어 확인했고 그 결과는 verdicts.photos 에 있다.
 // 판정은 docs/submission/factuality-verdicts.json 에 손으로 적혀 있고, 이 스크립트는
 // 원문을 붙이고 빠진 줄을 거부하고 숫자를 센다. 새 모델 호출은 하지 않는다.
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = new URL('../', import.meta.url);
@@ -65,17 +66,45 @@ export function audit() {
   });
   if (byKey.size) throw new Error(`원본에 없는 판정 줄: ${[...byKey.keys()].join(', ')}`);
 
+  // 표에 나오는 모든 사진은 원본 육안 확인 기록이 있어야 한다.
+  const photos = new Map(verdicts.photos.items.map((p) => [p.photo_id, p]));
+  for (const r of rows) {
+    if (r.photo_id && !photos.has(r.photo_id)) throw new Error(`사진 육안 확인 기록 없음: ${r.photo_id}`);
+  }
+  for (const p of photos.values()) {
+    if (!['confirmed', 'imprecise'].includes(p.image_check)) {
+      throw new Error(`알 수 없는 image_check: ${p.photo_id} = ${p.image_check}`);
+    }
+  }
+
+  // 원본 디렉터리가 이 기계에 있으면 sha256 을 실제로 맞춰 본다. 없으면 건너뛴다.
+  let imagesVerified = null;
+  if (existsSync(verdicts.photos.images_dir)) {
+    imagesVerified = 0;
+    for (const p of photos.values()) {
+      const got = createHash('sha256')
+        .update(readFileSync(`${verdicts.photos.images_dir}/${p.file_ref}`))
+        .digest('hex');
+      if (got !== p.sha256) throw new Error(`사진 sha256 불일치: ${p.photo_id} ${p.file_ref}`);
+      imagesVerified += 1;
+    }
+  }
+
   const counts = {
     total: rows.length,
     supported: rows.filter((r) => r.verdict === 'supported').length,
     distorted: rows.filter((r) => r.verdict === 'distorted').length,
     absent: rows.filter((r) => r.verdict === 'absent').length,
     unsupported_place_person_time: rows.filter((r) => r.unsupported_ppt).length,
+    photos: photos.size,
+    distinct_photos: new Set([...photos.values()].map((p) => p.sha256)).size,
+    images_confirmed: [...photos.values()].filter((p) => p.image_check === 'confirmed').length,
+    images_imprecise: [...photos.values()].filter((p) => p.image_check === 'imprecise').length,
   };
-  return { verdicts, rows, counts, facts, digests: { generation: sha(genRaw), observations: sha(inputsRaw) } };
+  return { verdicts, rows, counts, facts, photos, imagesVerified, digests: { generation: sha(genRaw), observations: sha(inputsRaw) } };
 }
 
-function render({ verdicts, rows, counts, facts, digests }) {
+function render({ verdicts, rows, counts, facts, photos, imagesVerified, digests }) {
   const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
   const src = (r) =>
     r.verdict === 'absent'
@@ -99,7 +128,8 @@ function render({ verdicts, rows, counts, facts, digests }) {
     `- 관측 사실: \`${verdicts.source.observations}\` 의 \`describable_facts\` (sha256:${digests.observations})`,
     `- 대조한 주체: ${verdicts.reviewer.name}, ${verdicts.reviewer.reviewed_at}`,
     `- 대조 근거: ${verdicts.reviewer.basis}`,
-    `- 사람 인수: ${verdicts.reviewer.human_signoff ?? '**PENDING** — 원본 사진 이미지가 저장소에 없어 사진 대조는 못 했다. 사람이 원본을 보고 이 표를 확인하기 전까지 인수가 아니다.'}`,
+    `- 원본 사진: \`${verdicts.photos.images_dir}\` 의 ${counts.photos}장 (서로 다른 파일 ${counts.distinct_photos}개). ${verdicts.photos.inspected_by}, ${verdicts.photos.inspected_at}`,
+    `- 사람 인수: ${verdicts.reviewer.human_signoff ?? '**PENDING** — 여기까지는 전부 에이전트가 판정했다. 사람이 확인하기 전까지 인수가 아니다.'}`,
     '',
     '## 센 숫자',
     '',
@@ -110,8 +140,25 @@ function render({ verdicts, rows, counts, facts, digests }) {
     `| 사실은 있으나 어긋나게 옮겼다 | ${counts.distorted} |`,
     `| 어느 관측 사실에도 없다 | ${counts.absent} |`,
     `| **사진에 없는 장소·인물·시간이 들어간 문장** | **${counts.unsupported_place_person_time}** |`,
+    `| 원본을 열어 확인한 사진 | ${counts.photos} (서로 다른 파일 ${counts.distinct_photos}) |`,
+    `| 인용한 관측 사실이 사진과 맞는 사진 | ${counts.images_confirmed} |`,
+    `| 인용한 관측 사실이 사진과 어긋나는 사진 | ${counts.images_imprecise} |`,
     '',
     `장소·인물·시간을 지어낸 문장은 ${counts.unsupported_place_person_time}개다. 대신 걸린 것은 타이틀 ${counts.absent}개가 관측 사실에 아예 근거가 없다는 것과, 캡션·비움 이유 ${counts.distorted}개가 있는 사실을 어긋나게 옮겼다는 것이다.`,
+    '',
+    `원본 사진 ${counts.photos}장을 전부 열어 이 표가 인용한 관측 사실을 확인했다. ${counts.images_confirmed}장은 사진과 맞고, ${counts.images_imprecise}장(cq_10)은 관측 단계에서 색 이름이 어긋나 있다 — 생성 문장이 아니라 그 앞 단계의 오차다. 사진 ${counts.photos}장 중 서로 다른 파일은 ${counts.distinct_photos}개이며 cq_01 과 cq_13 은 sha256 이 같다.`,
+    '',
+    '## 어느 사진 파일인가 — cq_01..cq_15 대응',
+    '',
+    `- 대응 출처: ${verdicts.photos.mapping_source}`,
+    `- 확인 방법: ${verdicts.photos.method}`,
+    `- sha256 실제 대조: ${imagesVerified === null ? '이 기계에 원본 디렉터리가 없어 건너뜀 (기록된 값만 싣는다)' : `${imagesVerified}/${counts.photos}장 일치`}`,
+    '',
+    '| 사진 | 파일 | sha256 | 사진과 맞나 | 무엇을 봤나 |',
+    '|---|---|---|---|---|',
+    ...[...photos.values()].map(
+      (p) => `| ${p.photo_id} | \`${p.file_ref}\` | \`${p.sha256.slice(0, 12)}\` | ${p.image_check} | ${esc(p.note)} |`,
+    ),
     '',
     '## 표',
     '',
@@ -123,7 +170,16 @@ function render({ verdicts, rows, counts, facts, digests }) {
       `| ${r.run} | ${r.position ?? '—'} | ${r.photo_id ?? '—'} | ${r.kind} | ${esc(r.text)} | ${r.verdict} | ${src(r)} | ${esc(r.note ?? '')} |`,
     );
   }
-  lines.push('', '## 이 표가 못 보는 것', '', '- 원본 사진 이미지를 보지 않았다. 관측 사실 기록이 원본과 다르면 이 표도 같이 틀린다 (`docs/specs/101-caption-quality/report.md` 에 기록된 관측 오류 참고).', '- 실행 시점의 실제 모델 재호출이 아니라 2026-09-18 에 기록된 실행 결과를 읽는다.', '- 판정은 사람 인수 전까지 PENDING 이다.', '');
+  lines.push(
+    '',
+    '## 이 표가 못 보는 것',
+    '',
+    '- 사진 확인은 **이 표가 인용한 describable_facts 만** 대상으로 했다. 인용되지 않은 사실의 정확성은 확인 범위 밖이다.',
+    '- 원본은 긴 변 1400px 로 축소해 열었다. 그보다 작은 글자·질감은 판별하지 못했을 수 있다.',
+    '- 실행 시점의 실제 모델 재호출이 아니라 2026-09-18 에 기록된 실행 결과를 읽는다.',
+    '- **판정 주체는 전부 에이전트다.** 사람 인수는 PENDING 이고, 에이전트 육안 확인이 사람 인수를 대신하지 않는다.',
+    '',
+  );
   return lines.join('\n');
 }
 

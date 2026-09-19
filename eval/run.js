@@ -21,7 +21,7 @@ for(const name of ['quiet','detail']) {
     if(actual.pass) failed=true;
   }
 }
-console.log('E4/E5/E7: 자동 판정 없음. 실사진 15장 1벌 전수 대조는 docs/submission/factuality-audit.md (사람 인수 PENDING).');
+console.log('E4/E5/E7: 자동 판정 없음. 실사진 15장 1벌 전수 대조와 원본 사진 육안 확인은 docs/submission/factuality-audit.md (에이전트 판정, 사람 인수 PENDING).');
 process.exitCode=failed?1:0;
 
 const { evaluateModelPath } = await import('./model-path.js');
