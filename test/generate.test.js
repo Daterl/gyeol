@@ -88,6 +88,8 @@ test('model request whitelists photo facts and applied language values in all an
     for(const slot of sent.slots) {
       assert.deepEqual(Object.keys(slot).sort(),['caption_inputs','photo_id','position']);
       assert.deepEqual(Object.keys(slot.caption_inputs),['describable_facts']);
+      const original=requested.feed.slots.find(item=>item.photo_id===slot.photo_id);
+      assert.deepEqual(slot.caption_inputs.describable_facts,original.caption_inputs.describable_facts.map((text,fact_index)=>({fact_index,text})));
     }
     assert.ok(!JSON.stringify(sent).match(/rationale|narrative_role|adjacent_overlap|is_visual_peak|omit_suggestion/));
     assert.deepEqual(requested.feed.slots[0].rationale,rationale);
@@ -671,6 +673,8 @@ test('#123 provider schema requires a fact index but public all/slot responses n
     const modelSlot=mode==='all'?schema.properties.output.properties.slots.items:schema.properties.slot;
     assert.ok(modelSlot.required.includes('fact_index'));
     assert.equal(modelSlot.properties.fact_index.type,'integer');
+    assert.deepEqual(modelSlot.properties.evidence.items.properties.kind.enum,['rule'],
+      'provider schema must reserve canonical photo notes for the server');
     for(const slot of mode==='all'?actual.output.slots:[actual.slot]) {
       const facts=req.feed.slots.find(s=>s.photo_id===slot.photo_id).caption_inputs.describable_facts;
       assert.equal(slot.evidence[0].note,facts.at(-1));
@@ -780,4 +784,60 @@ test('#147 disclosure notes and evidence reject forgery while missing legacy met
   assert.throws(()=>validateGenerateResponse(stale,req),/omission.omitted/);
   delete stale.omission;
   assert.doesNotThrow(()=>validateGenerateResponse(stale,req));
+});
+
+// Formatting repair must not relax the selected-fact boundary.
+test('#123 repairs an escaped hint line break but still rejects invented seeds',async()=>{
+  const req=input('slot');
+  const slot=indexedSlot(req);
+  slot.text=slot.text.replace('\n','\\n');
+  const actual=await generateOutput(req,options({slot}));
+  assert.equal(actual.slot.text,indexedSlot(req).text);
+  slot.text='쓸 거리: 관측하지 않은 우주선\\n이 중 기억에 남은 건?';
+  await assert.rejects(generateOutput(req,options({slot})),{code:'MODEL_CONTRACT'});
+});
+
+test('#123 retries a rejected hint selection once and validates the fresh result',async()=>{
+  const req=input('slot');
+  let calls=0;
+  const fetchImpl=async(url,options)=>{
+    if(url.includes('/models/')) return transport({})(url,options);
+    calls++;
+    const slot=indexedSlot(req);
+    if(calls===1) slot.text=hint('관측하지 않은 우주선');
+    else assert.match(JSON.parse(options.body).system,/이전 응답은/);
+    return wire({slot});
+  };
+  const actual=await generateOutput(req,{apiKey:'fake-key',fetchImpl});
+  assert.equal(calls,2);
+  assert.equal(actual.slot.text,indexedSlot(req).text);
+  let rejectedCalls=0;
+  const invalid={slot:{...indexedSlot(req),text:hint('관측하지 않은 우주선')}};
+  await assert.rejects(generateOutput(req,{apiKey:'fake-key',fetchImpl:async(...args)=>{
+    if(args[0].endsWith('/messages')) rejectedCalls++;
+    return transport(invalid)(...args);
+  }}),{code:'MODEL_CONTRACT'});
+  assert.equal(rejectedCalls,2);
+});
+
+test('#123 invented indexed photo notes fail immediately without a repair call',async()=>{
+  const req=input('slot');
+  const slot={...indexedSlot(req),evidence:[{kind:'uploaded_photo',ref:'ph_01',note:'관측하지 않은 우주선'}]};
+  const seen=[];
+  await assert.rejects(generateOutput(req,{apiKey:'fake-key',fetchImpl:transport({slot},seen)}),{code:'MODEL_CONTRACT'});
+  assert.equal(seen.filter(call=>call.url.endsWith('/messages')).length,1);
+});
+
+test('#123 exhausted shared deadline prevents a second selection request',async(t)=>{
+  let now=0;
+  t.mock.method(performance,'now',()=>now);
+  const req=input('slot');
+  const invalid={slot:{...indexedSlot(req),text:hint('관측하지 않은 우주선')}};
+  let calls=0;
+  const fetchImpl=async(...args)=>{
+    if(args[0].endsWith('/messages')) { calls++; now=101; }
+    return transport(invalid)(...args);
+  };
+  await assert.rejects(generateOutput(req,{apiKey:'fake-key',fetchImpl,timeoutMs:100}),{code:'MODEL_TIMEOUT'});
+  assert.equal(calls,1);
 });

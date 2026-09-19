@@ -1,0 +1,1314 @@
+[
+  {
+    "phase": "schema-only-failure",
+    "analyses_ref": "baseline.json",
+    "started_at": "2026-09-19T04:37:48.009Z",
+    "status": "failed",
+    "vision_model": "claude-opus-5",
+    "output_model": "claude-haiku-4-5-20251001",
+    "method": "15 real images analyzed once; five fresh POST handler calls each for 3 and 15 photos; no generation retries or mocks",
+    "runs": [
+      {
+        "count": 3,
+        "run": 1,
+        "status": 502,
+        "elapsed_ms": 7451,
+        "body": {
+          "error": {
+            "code": "MODEL_CONTRACT",
+            "message": "문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.",
+            "retryable": true
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBMsWTVHt9h2e4oCWEq",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니와 함께한 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[{\"kind\":\"ig_post\",\"ref\":\"ph_01\",\"note\":\"\"}]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 장면이라 설명이 겹쳐요.\",\"fact_index\":0,\"evidence\":[{\"kind\":\"ig_post\",\"ref\":\"ph_01\",\"note\":\"\"}]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷 · 베이지색 배낭\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[{\"kind\":\"ig_post\",\"ref\":\"ph_03\",\"note\":\"\"}]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6233,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 307,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ]
+      }
+    ],
+    "reused_analyses": "docs/specs/123-generation/baseline.json",
+    "error": {
+      "code": "ERR_ASSERTION",
+      "message": "{\"error\":{\"code\":\"MODEL_CONTRACT\",\"message\":\"문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.\",\"retryable\":true}}\n\n502 !== 200\n"
+    },
+    "finished_at": "2026-09-19T04:37:55.561Z"
+  },
+  {
+    "phase": "prompt-only-failure",
+    "analyses_ref": "baseline.json",
+    "started_at": "2026-09-19T04:38:58.018Z",
+    "status": "failed",
+    "vision_model": "claude-opus-5",
+    "output_model": "claude-haiku-4-5-20251001",
+    "method": "15 real images analyzed once; five fresh POST handler calls each for 3 and 15 photos; no generation retries or mocks",
+    "runs": [
+      {
+        "count": 3,
+        "run": 1,
+        "status": 502,
+        "elapsed_ms": 7659,
+        "body": {
+          "error": {
+            "code": "MODEL_CONTRACT",
+            "message": "문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.",
+            "retryable": true
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBT2U71kA1SJrFCy6ST",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 비니 · 조끼\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 장면이라 사진만 두는 편을 제안해요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷 · 배낭\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6623,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 238,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ]
+      }
+    ],
+    "reused_analyses": "docs/specs/123-generation/baseline.json",
+    "error": {
+      "code": "ERR_ASSERTION",
+      "message": "{\"error\":{\"code\":\"MODEL_CONTRACT\",\"message\":\"문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.\",\"retryable\":true}}\n\n502 !== 200\n"
+    },
+    "finished_at": "2026-09-19T04:39:05.706Z"
+  },
+  {
+    "phase": "phrase-failure",
+    "analyses_ref": "baseline.json",
+    "started_at": "2026-09-19T04:39:54.065Z",
+    "status": "failed",
+    "vision_model": "claude-opus-5",
+    "output_model": "claude-haiku-4-5-20251001",
+    "method": "15 real images analyzed once; five fresh POST handler calls each for 3 and 15 photos; no generation retries or mocks",
+    "runs": [
+      {
+        "count": 3,
+        "run": 1,
+        "status": 200,
+        "elapsed_ms": 3963,
+        "body": {
+          "output": {
+            "title": "비니를 입은 사람의 움직임",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 비니는 파란색과 노란색 줄무늬다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과 같은 장면이라 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "사람 한 명이 옆을 향해 서 있다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBXCPXYQWJtvGoJN7Fy",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"비니를 입은 사람의 움직임\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 비니는 파란색과 노란색 줄무늬다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 장면이라 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":0,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 253,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 2,
+        "status": 200,
+        "elapsed_ms": 3833,
+        "body": {
+          "output": {
+            "title": "비니를 쓴 사람, 다양한 앵글",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 파란색과 노란색 줄무늬\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과 구도와 피복이 동일해, 이 자리는 사진만 두는 편을 제안해요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBXUdptwvm6s9UAA9Ve",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"비니를 쓴 사람, 다양한 앵글\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 구도와 피복이 동일해, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 260,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 3,
+        "status": 502,
+        "elapsed_ms": 3771,
+        "body": {
+          "error": {
+            "code": "MODEL_CONTRACT",
+            "message": "문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.",
+            "retryable": true
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBXm2Jxo2Myt9uRoV4p",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 쓴 사람의 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 배경과 의상이 반복되어, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 270,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ]
+      }
+    ],
+    "reused_analyses": "docs/specs/123-generation/baseline.json",
+    "error": {
+      "code": "ERR_ASSERTION",
+      "message": "{\"error\":{\"code\":\"MODEL_CONTRACT\",\"message\":\"문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.\",\"retryable\":true}}\n\n502 !== 200\n"
+    },
+    "finished_at": "2026-09-19T04:40:06.143Z"
+  },
+  {
+    "phase": "retry-failure",
+    "analyses_ref": "baseline.json",
+    "started_at": "2026-09-19T04:41:21.567Z",
+    "status": "failed",
+    "vision_model": "claude-opus-5",
+    "output_model": "claude-haiku-4-5-20251001",
+    "method": "15 real images analyzed once; five fresh POST handler calls each for 3 and 15 photos; no generation retries or mocks",
+    "runs": [
+      {
+        "count": 3,
+        "run": 1,
+        "status": 200,
+        "elapsed_ms": 3767,
+        "body": {
+          "output": {
+            "title": "줄무늬 비니를 쓴 모습",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 비니는 파란색과 노란색 줄무늬다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과 같은 장면이 반복되어, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBdcDu8giw4CWFx5uYn",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 쓴 모습\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 비니는 파란색과 노란색 줄무늬다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 장면이 반복되어, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 260,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 2,
+        "status": 200,
+        "elapsed_ms": 7649,
+        "body": {
+          "output": {
+            "title": "비니와 겹쳐 입은 옷",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "두 사진의 묘사가 일치해, 이 자리는 사진만 두는 편을 제안해요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "사람 한 명이 옆을 향해 서 있다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과 동일한 내용이 반복되어, 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "사람 한 명이 옆을 향해 서 있다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 2,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 2자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 2/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBdsqkcSExoBMpw9Abd",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 매개로\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침이 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 회색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 261,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          },
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBeAsScojTGQBxEmKCC",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"비니와 겹쳐 입은 옷\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"두 사진의 묘사가 일치해, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":0,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 동일한 내용이 반복되어, 사진만 두어도 좋아요.\",\"fact_index\":0,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6815,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 251,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 3,
+        "status": 200,
+        "elapsed_ms": 6985,
+        "body": {
+          "output": {
+            "title": "줄무늬 비니를 쓴 모습",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 파란색과 노란색 줄무늬\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과의 겹침이 높아, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBeSeDHwHcYGAcAgrTN",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 쓴 모습\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 겹치는 요소가 많아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 258,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          },
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBehSChdWCqmkdwsKHy",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 쓴 모습\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침이 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6815,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 252,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 4,
+        "status": 200,
+        "elapsed_ms": 3369,
+        "body": {
+          "output": {
+            "title": "비니를 쓴 날",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 비니\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 배낭\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBexPNfH5thejVha5ou",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"비니를 쓴 날\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 배낭\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 232,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 3,
+        "run": 5,
+        "status": 200,
+        "elapsed_ms": 3564,
+        "body": {
+          "output": {
+            "title": "줄무늬 비니를 쓴 모습",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 파란색과 노란색 줄무늬\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과 같은 장면이라 설명이 겹칩니다. 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 청록색 재킷\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "청록색 재킷을 입고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 1,
+            "total": 3,
+            "note_key": "omission.some",
+            "note": "3자리 중 1자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 1/3로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBfD4RQZSit3SHv9qSd",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"줄무늬 비니를 쓴 모습\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 장면이라 설명이 겹칩니다. 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 6695,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 262,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 15,
+        "run": 1,
+        "status": 200,
+        "elapsed_ms": 17453,
+        "body": {
+          "output": {
+            "title": "물품과 의상을 함께 담은 순간들",
+            "slots": [
+              {
+                "position": 1,
+                "photo_id": "ph_14",
+                "caption_state": "seed",
+                "text": "쓸 거리: 후드에 둥근 귀 모양 장식 두 개가 달려 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_14",
+                    "note": "후드에 둥근 귀 모양 장식 두 개가 달려 있다"
+                  }
+                ]
+              },
+              {
+                "position": 2,
+                "photo_id": "ph_09",
+                "caption_state": "seed",
+                "text": "쓸 거리: 앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_09",
+                    "note": "앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 3,
+                "photo_id": "ph_15",
+                "caption_state": "seed",
+                "text": "쓸 거리: 오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_15",
+                    "note": "오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 4,
+                "photo_id": "ph_01",
+                "caption_state": "seed",
+                "text": "쓸 거리: 비니는 파란색과 노란색 줄무늬다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_01",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 5,
+                "photo_id": "ph_12",
+                "caption_state": "seed",
+                "text": "쓸 거리: 팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_12",
+                    "note": "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 6,
+                "photo_id": "ph_02",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_02",
+                    "note": "비니는 파란색과 노란색 줄무늬다"
+                  }
+                ]
+              },
+              {
+                "position": 7,
+                "photo_id": "ph_13",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_13",
+                    "note": "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 8,
+                "photo_id": "ph_08",
+                "caption_state": "seed",
+                "text": "쓸 거리: 갈색 토트백이 벤치 위에 놓여 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_08",
+                    "note": "갈색 토트백이 벤치 위에 놓여 있다"
+                  }
+                ]
+              },
+              {
+                "position": 9,
+                "photo_id": "ph_04",
+                "caption_state": "seed",
+                "text": "쓸 거리: 파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_04",
+                    "note": "파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 10,
+                "photo_id": "ph_11",
+                "caption_state": "seed",
+                "text": "쓸 거리: 스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_11",
+                    "note": "스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다"
+                  }
+                ]
+              },
+              {
+                "position": 11,
+                "photo_id": "ph_07",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "확인한 관측 사실이 충분하지 않아, 사진만 두는 편을 제안해요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_07",
+                    "note": "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 12,
+                "photo_id": "ph_05",
+                "caption_state": "seed",
+                "text": "쓸 거리: 파란색과 회색 줄무늬 비니를 쓰고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_05",
+                    "note": "파란색과 회색 줄무늬 비니를 쓰고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 13,
+                "photo_id": "ph_06",
+                "caption_state": "omitted",
+                "text": null,
+                "omit_reason": "앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.",
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_06",
+                    "note": "사람 한 명이 앉아 있다"
+                  }
+                ]
+              },
+              {
+                "position": 14,
+                "photo_id": "ph_10",
+                "caption_state": "seed",
+                "text": "쓸 거리: 베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_10",
+                    "note": "베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다"
+                  }
+                ]
+              },
+              {
+                "position": 15,
+                "photo_id": "ph_03",
+                "caption_state": "seed",
+                "text": "쓸 거리: 베이지색 배낭을 메고 있다\n이 중 기억에 남은 건?",
+                "omit_reason": null,
+                "evidence": [
+                  {
+                    "kind": "uploaded_photo",
+                    "ref": "ph_03",
+                    "note": "베이지색 배낭을 메고 있다"
+                  }
+                ]
+              }
+            ]
+          },
+          "omission": {
+            "omitted": 4,
+            "total": 15,
+            "note_key": "omission.some",
+            "note": "15자리 중 4자리는 사진만 두는 편이 낫다고 봤어요.",
+            "evidence": [
+              {
+                "kind": "rule",
+                "ref": "gyeol.omit.disclosure",
+                "note": "생성 결과의 omitted 슬롯을 세어 4/15로 적었다"
+              }
+            ]
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBfUW7Xymhr6kPbFjhR",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"사진 모음\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_14\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 회색 후드 집업\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_09\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 네이비색 하프집 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_15\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 회색 후드 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":4,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":5,\"photo_id\":\"ph_12\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 크림색 원숭이 얼굴 모양의 봉제 인형\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":6,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":7,\"photo_id\":\"ph_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":3,\"evidence\":[]},{\"position\":8,\"photo_id\":\"ph_08\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 토트백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":9,\"photo_id\":\"ph_04\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":10,\"photo_id\":\"ph_11\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 네이비색 하프집업 스웨트셔츠\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":11,\"photo_id\":\"ph_07\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 가죽 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":12,\"photo_id\":\"ph_05\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 회색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":13,\"photo_id\":\"ph_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":1,\"evidence\":[]},{\"position\":14,\"photo_id\":\"ph_10\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":15,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 회색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 11003,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 1161,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          },
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBg36BFBjLiLBfWvFts",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"물품과 의상을 함께 담은 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_14\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 후드에 둥근 귀 모양 장식 두 개가 달려 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_09\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_15\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":4,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 비니는 파란색과 노란색 줄무늬다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":5,\"photo_id\":\"ph_12\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":6,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":7,\"photo_id\":\"ph_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":3,\"evidence\":[]},{\"position\":8,\"photo_id\":\"ph_08\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 토트백이 벤치 위에 놓여 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":9,\"photo_id\":\"ph_04\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":10,\"photo_id\":\"ph_11\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":5,\"evidence\":[]},{\"position\":11,\"photo_id\":\"ph_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"확인한 관측 사실이 충분하지 않아, 사진만 두는 편을 제안해요.\",\"fact_index\":0,\"evidence\":[]},{\"position\":12,\"photo_id\":\"ph_05\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 회색 줄무늬 비니를 쓰고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":13,\"photo_id\":\"ph_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과의 겹침 신호가 높아, 이 자리는 사진만 두어도 좋아요.\",\"fact_index\":0,\"evidence\":[]},{\"position\":14,\"photo_id\":\"ph_10\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":15,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 배낭을 메고 있다\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 11123,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 1368,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ],
+        "verified": true
+      },
+      {
+        "count": 15,
+        "run": 2,
+        "status": 502,
+        "elapsed_ms": 16936,
+        "body": {
+          "error": {
+            "code": "MODEL_CONTRACT",
+            "message": "문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.",
+            "retryable": true
+          }
+        },
+        "provider": [
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBgkjhxzrVZgCeVA8gp",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"옷과 소품으로 표현한 개성\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_14\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 회색 후드 집업\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_09\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 네이비색 하프집 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_15\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 귀가 달린 회색 후드 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":4,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":5,\"photo_id\":\"ph_12\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 크림색 원숭이 얼굴 모양의 봉제 인형\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":6,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"4번 사진과 의류 구성이 거의 같아 설명이 겹칩니다.\",\"fact_index\":2,\"evidence\":[]},{\"position\":7,\"photo_id\":\"ph_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"5번 사진과 의류와 소품이 거의 같아 설명이 겹칩니다.\",\"fact_index\":3,\"evidence\":[]},{\"position\":8,\"photo_id\":\"ph_08\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 가죽 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":9,\"photo_id\":\"ph_04\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 회색 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":10,\"photo_id\":\"ph_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"2번 사진과 같은 'HAAG' 스웨트셔츠 착용 장면이라 설명을 반복하기보다 사진으로 남기는 편을 제안해요.\",\"fact_index\":5,\"evidence\":[]},{\"position\":11,\"photo_id\":\"ph_07\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 토트백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":5,\"evidence\":[]},{\"position\":12,\"photo_id\":\"ph_05\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 노란색 숄더백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":13,\"photo_id\":\"ph_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"8번 사진과 갈색 가죽 재킷, 흰색 상의, 갈색 토트백의 조합이 같아 설명이 겹칩니다.\",\"fact_index\":1,\"evidence\":[]},{\"position\":14,\"photo_id\":\"ph_10\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":15,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 배낭\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 11003,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 1188,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          },
+          {
+            "model": "claude-haiku-4-5-20251001",
+            "id": "msg_011CfCBhP7DeroQWyAGLUKcx",
+            "type": "message",
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"output\":{\"title\":\"옷과 소품을 담은 순간들\",\"slots\":[{\"position\":1,\"photo_id\":\"ph_14\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 회색 후드 집업\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":1,\"evidence\":[]},{\"position\":2,\"photo_id\":\"ph_09\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 네이비색 하프집 상의\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":3,\"photo_id\":\"ph_15\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 체크무늬 치마\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":6,\"evidence\":[]},{\"position\":4,\"photo_id\":\"ph_01\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]},{\"position\":5,\"photo_id\":\"ph_12\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 크림색 원숭이 얼굴 모양의 봉제 인형\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":6,\"photo_id\":\"ph_02\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 구성이라, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":7,\"photo_id\":\"ph_13\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"앞 사진과 같은 내용이라, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":4,\"evidence\":[]},{\"position\":8,\"photo_id\":\"ph_08\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 갈색 토트백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":5,\"evidence\":[]},{\"position\":9,\"photo_id\":\"ph_04\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 파란색과 노란색 줄무늬가 있는 회색 비니\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":3,\"evidence\":[]},{\"position\":10,\"photo_id\":\"ph_11\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"이전 사진과 유사한 스웨트셔츠 착장이라, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":5,\"evidence\":[]},{\"position\":11,\"photo_id\":\"ph_07\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"갈색 가죽 재킷 구성이 반복되어, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":2,\"evidence\":[]},{\"position\":12,\"photo_id\":\"ph_05\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 노란색 숄더백\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":5,\"evidence\":[]},{\"position\":13,\"photo_id\":\"ph_06\",\"caption_state\":\"omitted\",\"text\":null,\"omit_reason\":\"갈색 재킷과 토트백 조합이 이미 나왔기에, 이 자리는 사진만 두는 편을 제안해요.\",\"fact_index\":1,\"evidence\":[]},{\"position\":14,\"photo_id\":\"ph_10\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 베이지색 가방\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":4,\"evidence\":[]},{\"position\":15,\"photo_id\":\"ph_03\",\"caption_state\":\"seed\",\"text\":\"쓸 거리: 청록색 재킷\\n이 중 기억에 남은 건?\",\"omit_reason\":null,\"fact_index\":2,\"evidence\":[]}]}}"
+              }
+            ],
+            "container": null,
+            "stop_reason": "end_turn",
+            "stop_sequence": null,
+            "stop_details": null,
+            "usage": {
+              "input_tokens": 11123,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "output_tokens": 1182,
+              "service_tier": "standard",
+              "inference_geo": "not_available"
+            }
+          }
+        ]
+      }
+    ],
+    "reused_analyses": "docs/specs/123-generation/baseline.json",
+    "error": {
+      "code": "ERR_ASSERTION",
+      "message": "{\"error\":{\"code\":\"MODEL_CONTRACT\",\"message\":\"문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.\",\"retryable\":true}}\n\n502 !== 200\n"
+    },
+    "finished_at": "2026-09-19T04:42:21.413Z"
+  }
+]
