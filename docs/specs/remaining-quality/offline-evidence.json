@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "created_at": "2026-09-19T04:44:16.796Z",
-  "code_revision": "a4110c19ec71c6c40a4385cf17879d89bec53e4f",
+  "created_at": "2026-09-19T11:28:37.494Z",
+  "code_revision": "0926d139f8d4095bee0a2e420b088b33c3a968c4",
   "provenance": {
     "analysis": "Recorded real-photo vision observations from #101; not revalidated against image bytes",
     "source": "docs/specs/101-caption-quality/inputs.json",
@@ -23,7 +23,7 @@
     "rows": [
       {
         "photo_id": "control_0",
-        "value": "다음 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 묶음을 열어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 묶음을 열어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -34,16 +34,6 @@
             "kind": "uploaded_photo",
             "ref": "control_0",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_1",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_0",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -54,7 +44,7 @@
       },
       {
         "photo_id": "control_1",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -65,16 +55,6 @@
             "kind": "uploaded_photo",
             "ref": "control_1",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_0",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_1",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -85,7 +65,7 @@
       },
       {
         "photo_id": "control_2",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -96,16 +76,6 @@
             "kind": "uploaded_photo",
             "ref": "control_2",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_1",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_2",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -116,7 +86,7 @@
       },
       {
         "photo_id": "control_3",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -127,16 +97,6 @@
             "kind": "uploaded_photo",
             "ref": "control_3",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_2",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_3",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -147,7 +107,7 @@
       },
       {
         "photo_id": "control_4",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -158,16 +118,6 @@
             "kind": "uploaded_photo",
             "ref": "control_4",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_3",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_4",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -178,7 +128,7 @@
       },
       {
         "photo_id": "control_5",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -189,16 +139,6 @@
             "kind": "uploaded_photo",
             "ref": "control_5",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_4",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_5",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -209,7 +149,7 @@
       },
       {
         "photo_id": "control_6",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -220,16 +160,6 @@
             "kind": "uploaded_photo",
             "ref": "control_6",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_5",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_6",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -240,7 +170,7 @@
       },
       {
         "photo_id": "control_7",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -251,16 +181,6 @@
             "kind": "uploaded_photo",
             "ref": "control_7",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_6",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_7",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -271,7 +191,7 @@
       },
       {
         "photo_id": "control_8",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -282,16 +202,6 @@
             "kind": "uploaded_photo",
             "ref": "control_8",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_7",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_8",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -302,7 +212,7 @@
       },
       {
         "photo_id": "control_9",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -313,16 +223,6 @@
             "kind": "uploaded_photo",
             "ref": "control_9",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_8",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_9",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -333,7 +233,7 @@
       },
       {
         "photo_id": "control_10",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -344,16 +244,6 @@
             "kind": "uploaded_photo",
             "ref": "control_10",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_9",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_10",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -364,7 +254,7 @@
       },
       {
         "photo_id": "control_11",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -375,16 +265,6 @@
             "kind": "uploaded_photo",
             "ref": "control_11",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_10",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_11",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -395,7 +275,7 @@
       },
       {
         "photo_id": "control_12",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -406,16 +286,6 @@
             "kind": "uploaded_photo",
             "ref": "control_12",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_11",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_12",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -426,7 +296,7 @@
       },
       {
         "photo_id": "control_13",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 흐름을 이어가요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -437,16 +307,6 @@
             "kind": "uploaded_photo",
             "ref": "control_13",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_12",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_13",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -457,7 +317,7 @@
       },
       {
         "photo_id": "control_14",
-        "value": "앞 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진으로 묶음을 마무리해요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+        "value": "이 사진으로 묶음을 마무리해요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
         "evidence": [
           {
             "kind": "uploaded_photo",
@@ -468,16 +328,6 @@
             "kind": "uploaded_photo",
             "ref": "control_14",
             "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_13",
-            "note": "사람 한 명이 측면을 향해 서 있다"
-          },
-          {
-            "kind": "uploaded_photo",
-            "ref": "control_14",
-            "note": "사람 한 명이 측면을 향해 서 있다"
           },
           {
             "kind": "rule",
@@ -1001,7 +851,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.565Z"
+          "created_at": "2026-09-19T11:28:37.463Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -1129,7 +979,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.583Z"
+          "created_at": "2026-09-19T11:28:37.465Z"
         },
         "current_photos": []
       },
@@ -1262,7 +1112,7 @@
             "photo_id": "cq_03",
             "narrative_role": "opener",
             "rationale": {
-              "value": "다음 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+              "value": "다음 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
               "confidence": 0.4,
               "evidence": [
                 {
@@ -1314,6 +1164,11 @@
                   "kind": "rule",
                   "ref": "order.observed_placement",
                   "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+                },
+                {
+                  "kind": "rule",
+                  "ref": "order.profile_palette_unavailable",
+                  "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
                 }
               ]
             },
@@ -1481,7 +1336,7 @@
           "output_count": 3,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-19T04:44:16.588Z",
+        "generated_at": "2026-09-19T11:28:37.467Z",
         "omit_summary": {
           "recommended_count": 0,
           "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
@@ -1592,7 +1447,7 @@
             "evidence": []
           },
           "rationale": {
-            "value": "다음 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "value": "다음 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
             "confidence": 0.4,
             "evidence": [
               {
@@ -1644,6 +1499,11 @@
                 "kind": "rule",
                 "ref": "order.observed_placement",
                 "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
               }
             ]
           },
@@ -2365,7 +2225,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.608Z"
+          "created_at": "2026-09-19T11:28:37.480Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -2429,7 +2289,7 @@
             "carousel_count": 0
           },
           "raw_freetext": "짧게, 조용하게",
-          "created_at": "2026-09-19T04:44:16.609Z"
+          "created_at": "2026-09-19T11:28:37.482Z"
         },
         "current_photos": []
       },
@@ -2498,7 +2358,7 @@
             "photo_id": "cq_02",
             "narrative_role": "opener",
             "rationale": {
-              "value": "다음 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+              "value": "다음 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
               "confidence": 0.5,
               "evidence": [
                 {
@@ -2540,6 +2400,11 @@
                   "kind": "rule",
                   "ref": "order.observed_placement",
                   "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+                },
+                {
+                  "kind": "rule",
+                  "ref": "order.profile_palette_unavailable",
+                  "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
                 }
               ]
             },
@@ -2707,7 +2572,7 @@
           "output_count": 3,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-19T04:44:16.610Z",
+        "generated_at": "2026-09-19T11:28:37.482Z",
         "omit_summary": {
           "recommended_count": 0,
           "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
@@ -2815,7 +2680,7 @@
             "evidence": []
           },
           "rationale": {
-            "value": "다음 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "value": "다음 사진 관측: “사람 한 명이 거울 앞에서 휴대폰을 들고 서 있다”. 이 사진 관측: “사람 한 명이 앉아 있고 얼굴 위쪽은 화면 밖으로 잘려 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
             "confidence": 0.5,
             "evidence": [
               {
@@ -2857,6 +2722,11 @@
                 "kind": "rule",
                 "ref": "order.observed_placement",
                 "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
               }
             ]
           },
@@ -5207,7 +5077,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.622Z"
+          "created_at": "2026-09-19T11:28:37.485Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -5335,7 +5205,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.650Z"
+          "created_at": "2026-09-19T11:28:37.486Z"
         },
         "current_photos": []
       },
@@ -5554,7 +5424,7 @@
             "photo_id": "cq_04",
             "narrative_role": "opener",
             "rationale": {
-              "value": "다음 사진 관측: “사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “위아래 두 장의 사진이 하나의 이미지로 붙어 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+              "value": "다음 사진 관측: “사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “위아래 두 장의 사진이 하나의 이미지로 붙어 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
               "confidence": 0.4,
               "evidence": [
                 {
@@ -5606,6 +5476,11 @@
                   "kind": "rule",
                   "ref": "order.observed_placement",
                   "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+                },
+                {
+                  "kind": "rule",
+                  "ref": "order.profile_palette_unavailable",
+                  "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
                 }
               ]
             },
@@ -6585,7 +6460,7 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-19T04:44:16.651Z",
+        "generated_at": "2026-09-19T11:28:37.487Z",
         "omit_summary": {
           "recommended_count": 0,
           "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
@@ -6868,7 +6743,7 @@
             "evidence": []
           },
           "rationale": {
-            "value": "다음 사진 관측: “사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “위아래 두 장의 사진이 하나의 이미지로 붙어 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "value": "다음 사진 관측: “사람 한 명의 상반신이 화면을 채우고 있고 얼굴은 화면 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “위아래 두 장의 사진이 하나의 이미지로 붙어 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
             "confidence": 0.4,
             "evidence": [
               {
@@ -6920,6 +6795,11 @@
                 "kind": "rule",
                 "ref": "order.observed_placement",
                 "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
               }
             ]
           },
@@ -10399,7 +10279,7 @@
             "carousel_count": 26
           },
           "raw_freetext": null,
-          "created_at": "2026-09-19T04:44:16.695Z"
+          "created_at": "2026-09-19T11:28:37.490Z"
         },
         "target": {
           "schema_version": "1.0",
@@ -10463,7 +10343,7 @@
             "carousel_count": 0
           },
           "raw_freetext": "짧게, 조용하게",
-          "created_at": "2026-09-19T04:44:16.695Z"
+          "created_at": "2026-09-19T11:28:37.491Z"
         },
         "current_photos": []
       },
@@ -10618,7 +10498,7 @@
             "photo_id": "cq_14",
             "narrative_role": "opener",
             "rationale": {
-              "value": "다음 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+              "value": "다음 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
               "confidence": 0.5,
               "evidence": [
                 {
@@ -10660,6 +10540,11 @@
                   "kind": "rule",
                   "ref": "order.observed_placement",
                   "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+                },
+                {
+                  "kind": "rule",
+                  "ref": "order.profile_palette_unavailable",
+                  "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
                 }
               ]
             },
@@ -11639,7 +11524,7 @@
           "output_count": 15,
           "unique_photo_ids": true
         },
-        "generated_at": "2026-09-19T04:44:16.696Z",
+        "generated_at": "2026-09-19T11:28:37.491Z",
         "omit_summary": {
           "recommended_count": 0,
           "message": "중복은 관측됐지만 이번 입력에서 비교 대상을 확정할 수 없어 빼기를 권하는 사진은 없습니다."
@@ -11915,7 +11800,7 @@
             "evidence": []
           },
           "rationale": {
-            "value": "다음 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "value": "다음 사진 관측: “사람 한 명이 측면을 향해 서 있다”. 이 사진 관측: “검은 스프링으로 제본된 노트의 윗부분이 화면 대부분을 차지한다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
             "confidence": 0.5,
             "evidence": [
               {
@@ -11957,6 +11842,11 @@
                 "kind": "rule",
                 "ref": "order.observed_placement",
                 "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
               }
             ]
           },
