@@ -552,6 +552,53 @@ test('seed text must stay a short hint the user finishes, never a finished capti
   await assert.rejects(generateOutput(input(),options(blank)),{code:'MODEL_CONTRACT'},'빈 소재');
 });
 
+// #101 실측 회귀: haiku 16회 중 4회가 verbatim 거절로 죽었고, 성공한 회차에도 관측문을
+// 그대로 옮긴 홑낱말 소재('접시')가 149개 중 7개 있었다. 아래 네 경우가 그 실패 모양이다.
+test('a bare word is not usable writing material, and a rejected seed comes back with its own words',async()=>{
+  const bare=seedOutput();
+  bare.output.slots[0].text='쓸 거리: 카드\n이 중 기억에 남은 건?';
+  await assert.rejects(generateOutput(input(),options(bare)),{code:'MODEL_CONTRACT'},'수식 없는 홑낱말');
+
+  // 사실 자체가 한 어절이면 더 오려 낼 것이 없다. 그 자리는 막지 않는다.
+  const single=input();
+  for(const slot of single.feed.slots) slot.caption_inputs.describable_facts=['카드'];
+  for(const photo of single.context.photos) photo.describable_facts=['카드'];
+  const oneWord=seedOutput(single.feed);
+  assert.equal((await generateOutput(single,options(oneWord))).output.slots[0].text,'쓸 거리: 카드\n이 중 기억에 남은 건?');
+
+  // mode=all 에서 한 자리가 걸리면 그 자리만 mode=slot 으로 다시 묻는다. 열다섯 자리를 통째로
+  // 다시 생성하면 같은 자리가 또 걸린다 — 실모델 16회 중 7회가 그렇게 죽었다.
+  const sent=[];
+  const repairing=async(url,options)=>{
+    if(url.includes('/models/')) return Response.json({id:'test-text-model',capabilities:{image_input:{supported:false},structured_outputs:{supported:true}}});
+    const body=JSON.parse(options.body);
+    sent.push({system:body.system,ask:JSON.parse(body.messages[0].content[0].text)});
+    if(sent.length===1) return wire(bare);
+    return wire({slot:seedOutput().output.slots[0]});
+  };
+  const ok=await generateOutput(input(),{apiKey:'fake-key',fetchImpl:repairing});
+  assert.equal(ok.output.slots[0].text,'쓸 거리: 단색 카드\n이 중 기억에 남은 건?');
+  assert.deepEqual(ok.output.slots.map(slot=>slot.photo_id),['ph_01','ph_02','ph_03'],'성한 자리는 그대로 둔다');
+  assert.equal(sent.length,2,'걸린 자리 하나만 다시 묻는다');
+  assert.equal(sent[1].ask.mode,'slot');
+  assert.deepEqual(sent[1].ask.slots.map(slot=>slot.photo_id),['ph_01'],'다시 묻는 범위는 걸린 자리뿐이다');
+
+  // mode=slot 은 좁힐 범위가 없으므로 같은 요청을 다시 보내되, 교정에 걸린 소재와 고른 사실을 싣는다.
+  const one=input('slot');
+  const oneBare={slot:{...seedOutput().output.slots[0],text:'쓸 거리: 카드\n이 중 기억에 남은 건?'}};
+  const systems=[];
+  const slotFetch=async(url,options)=>{
+    if(url.includes('/models/')) return Response.json({id:'test-text-model',capabilities:{image_input:{supported:false},structured_outputs:{supported:true}}});
+    systems.push(JSON.parse(options.body).system);
+    return wire(systems.length===1?oneBare:{slot:seedOutput().output.slots[0]});
+  };
+  assert.equal((await generateOutput(one,{apiKey:'fake-key',fetchImpl:slotFetch})).slot.text,'쓸 거리: 단색 카드\n이 중 기억에 남은 건?');
+  assert.equal(systems.length,2);
+  assert.ok(systems[1].includes('"카드"'),'교정이 거절된 소재를 인용해야 한다');
+  assert.ok(systems[1].includes('"단색 카드"'),'교정이 모델이 고른 사실을 인용해야 한다');
+  assert.ok(!systems[0].includes('이전 응답은'),'첫 호출에는 교정이 붙지 않는다');
+});
+
 test('an empty fact list uses one fixed note instead of an invented limitation sentence',async()=>{
   const blank=()=>{
     const value=input();
