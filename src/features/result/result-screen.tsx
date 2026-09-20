@@ -81,25 +81,23 @@ export function ResultScreen({
         id={headingId}
         ref={heading}
         tabIndex={-1}
-        className="text-2xl font-semibold tracking-tight"
+        className="text-2xl font-semibold tracking-tight focus-visible:outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4"
       >
         이 순서로 놓아봤어요.
       </h2>
       <p className="mt-3 text-muted-foreground">
         {order.length}장의 사진, 마음에 드는 흐름으로 고쳐 보세요.
       </p>
-      <div className="my-4 border-y border-line py-3 text-sm leading-6 text-muted-foreground">
-        <p>
-          {sampleImages
-            ? 'AI로 만든 이미지와 사전 작성한 순서·문장 예시예요. 실제 계정이나 실시간 모델 분석 결과는 아니에요.'
-            : photoOnly
+      {!sampleImages && (
+        <div className="my-4 border-y border-line py-3 text-sm leading-6 text-muted-foreground">
+          <p>
+            {photoOnly
               ? '개인화 정보 없이 사진을 바탕으로 준비했어요. 계정 취향이나 문체를 추측하지 않았어요.'
               : feed.applied_profile.disclosure === 'target_only'
                 ? '현재 스타일은 순서와 문장에 반영하지 않았어요. 입력한 지향만 사용했어요.'
                 : '기존 계정과 입력한 지향을 함께 보고 조정했어요.'}
-        </p>
-        {!sampleImages &&
-          context.photos.some(
+          </p>
+          {context.photos.some(
             (photo) => photo.analysis_source === 'heuristic',
           ) && (
             <p>
@@ -107,10 +105,11 @@ export function ResultScreen({
               유지했으니 직접 옮겨 보세요.
             </p>
           )}
-        {feed.applied_profile.deltas.map((delta) => (
-          <p key={delta.field}>{deltaSentence(delta)}</p>
-        ))}
-      </div>
+          {feed.applied_profile.deltas.map((delta) => (
+            <p key={delta.field}>{deltaSentence(delta)}</p>
+          ))}
+        </div>
+      )}
       <p className="mb-3 text-sm text-muted-foreground">
         {moved
           ? '순서를 직접 바꿨어요. 아래 근거는 처음 제안한 자리의 설명이며 다시 계산하지 않았어요.'
@@ -119,7 +118,6 @@ export function ResultScreen({
       <p role="status" className="sr-only">
         {announcement}
       </p>
-      <OutputControls store={store} mock={mock} />
       {feed.concept ? (
         <section className="mb-8 border-t border-line pt-6">
           <p className="text-sm leading-7">{feed.concept.value}</p>
@@ -313,6 +311,7 @@ export function ResultScreen({
           );
         })}
       </ol>
+      <OutputControls store={store} mock={mock} />
     </section>
   );
 }
