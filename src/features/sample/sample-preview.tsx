@@ -26,7 +26,7 @@ export function SamplePreview() {
   return (
     <section
       aria-label="합성 샘플"
-      className="overflow-hidden border-y border-line bg-card sm:rounded-xl sm:border"
+      className="overflow-hidden rounded-xl border border-line bg-card"
     >
       <div
         className={
