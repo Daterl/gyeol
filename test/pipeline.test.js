@@ -249,3 +249,20 @@ test('tied measurements preserve input order and never promote a model observati
     assert.doesNotMatch(slot.rationale.value,/순서를 정한 근거는 아니|관측: /);
   }
 });
+
+// #109 회귀: 입력 순서를 보존한 묶음에서는 **어떤 규칙도 자리를 고르지 않았다.** 그때 R2·R3 의 선택
+// 근거를 말하면, 같은 문단이 두 문장 앞에서 "밝기와 색이 서로 거의 같다"고 한 것과 어긋나는 거짓이
+// 화면에 오른다 — 인용을 끊어 막으려던 ③ 과 같은 종류의 거짓이다.
+test('a preserved order never claims a rule chose the slot',async()=>{
+  const body=input();
+  assert.equal(new Set(body.photos.map(p=>p.color.bright_mean)).size,1,'이 대조군은 밝기가 전부 같아야 의미가 있다');
+  const {feed}=await buildFeed(body);
+  const closer=feed.slots.at(-1);
+  assert.equal(closer.narrative_role,'closer');
+  for(const slot of feed.slots) {
+    assert.doesNotMatch(slot.rationale.value,/남은 사진 중/,`${slot.photo_id}: 고르지 않은 규칙을 선택 근거로 말했다`);
+    assert.ok(!slot.rationale.evidence.some(e=>e.ref==='order.closer_rule'||e.ref==='order.turn_rule'),
+      `${slot.photo_id}: 규칙 선택 근거를 근거 목록에 실었다`);
+  }
+  assert.match(closer.rationale.value,/비슷한 톤으로 묶음을 마무리해요/);
+});
