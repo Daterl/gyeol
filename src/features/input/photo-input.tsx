@@ -170,7 +170,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           {profile ? (
             <fieldset
               disabled={!draftReady || loading || normalizing}
-              className="min-w-0 border-y border-line bg-card py-6 sm:rounded-xl sm:border sm:p-6"
+              className="min-w-0 rounded-xl border border-line bg-card p-5 sm:p-6"
             >
               <legend className="mb-4 font-semibold">2. 사진 고르기</legend>
               <PhotoPicker
@@ -196,7 +196,7 @@ export function PhotoInput({ mock = false }: { mock?: boolean }) {
           ) : (
             <SamplePreview />
           )}
-          <div className="space-y-6 border-y border-line bg-card py-6 sm:rounded-xl sm:border sm:p-6 lg:sticky lg:top-6">
+          <div className="order-first space-y-6 rounded-xl border border-line bg-card p-5 sm:p-6 lg:order-none lg:sticky lg:top-6">
             <ProfileConnection
               initialUrl={restoredUrl}
               disabled={!draftReady || loading || normalizing}
