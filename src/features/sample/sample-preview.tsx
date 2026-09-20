@@ -52,18 +52,22 @@ export function SamplePreview() {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-0.5" aria-hidden="true">
-              {Object.values(sample.images).map((image) => (
-                <Image
-                  key={image.src}
-                  src={image.src}
-                  alt=""
-                  width={1122}
-                  height={1122}
-                  sizes="(min-width:1024px) 20vw, 33vw"
-                  className="aspect-square h-auto w-full object-cover"
-                />
-              ))}
+            <div className="relative" aria-hidden="true">
+              <Image
+                src={Object.values(sample.images)[0].src}
+                alt=""
+                width={1122}
+                height={1403}
+                sizes="(min-width:1024px) 38vw, 100vw"
+                loading="eager"
+                className="aspect-[4/5] h-auto w-full object-cover"
+              />
+              <span className="absolute right-3 top-3 rounded-full bg-black/55 p-2">
+                <span className="relative block size-7">
+                  <span className="absolute left-0 top-0 size-5 rounded-md border-2 border-white" />
+                  <span className="absolute bottom-0 right-0 size-5 rounded-md bg-white" />
+                </span>
+              </span>
             </div>
           </div>
         )}
