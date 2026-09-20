@@ -137,10 +137,13 @@ test('logical revisions isolate public management CAS from Blob ETag variants', 
     },
     async put(pathname, body, options) {
       const current = values.get(pathname);
+      // `allowOverwrite` is what the real SDK honors when no ifMatch is sent; without it a write
+      // over an existing object is the absence guard. Modeling only ifMatch made this double
+      // fail closed and hid that the ETag path never matched in production (#210).
       if (
         (options.ifMatch !== undefined &&
           (!current || options.ifMatch !== current.etag)) ||
-        (options.ifMatch === undefined && current)
+        (options.ifMatch === undefined && current && !options.allowOverwrite)
       )
         throw new BlobPreconditionFailedError();
       const value = {

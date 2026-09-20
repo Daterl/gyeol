@@ -38,7 +38,8 @@ test('3/15 photo-only result slots retain ID, source position and evidence after
     const original = structuredClone(store.getState().original);
     store.getState().movePhoto('qa_0', count - 1);
     const markup = renderToStaticMarkup(createElement(ResultScreen, { store }));
-    expect(markup.match(/근거 보기/g) ?? []).toHaveLength(count);
+    // 슬롯마다 하나 + 묶음 컨셉 하나. #109 이후 컨셉은 톤이 고른 묶음에서도 나온다.
+    expect(markup.match(/근거 보기/g) ?? []).toHaveLength(count + 1);
     expect(markup).toContain('개인화 정보 없이');
     expect(markup).toContain('다시 계산하지 않았어요');
     expect(markup).toContain(`${count}번 사진 이동`);
@@ -112,7 +113,7 @@ test('feed-level concept renders above the ordered list and survives a reorder',
     expect(slot.rationale.value).not.toMatch(/흐름으로 엮어요|뚜렷하지/);
 });
 
-test('a feed without a measurable concept renders no concept section', async () => {
+test('an evenly toned bundle still gets a concept, and it never claims a contrast', async () => {
   const photos = Array.from({ length: 4 }, (_, i) => ({
     ...fixture.context.photos[0],
     photo_id: `fl_${i}`,
@@ -135,8 +136,10 @@ test('a feed without a measurable concept renders no concept section', async () 
       identity: { current: { kind: 'none' }, target: { kind: 'none' } },
     }),
   );
-  expect(store.getState().original?.feed.concept).toBeUndefined();
+  // #109: 측정 범위가 좁다는 것도 잰 결과다. 화면을 비우는 대신 좁다고 말한다.
+  expect(store.getState().original?.feed.concept?.value).toMatch(/톤이 고르게/);
   const markup = renderToStaticMarkup(createElement(ResultScreen, { store }));
-  expect(markup).not.toContain('묶음 근거 보기');
+  expect(markup).toContain('묶음 근거 보기');
+  expect(markup).not.toContain('어우러지는');
   expect(markup).not.toContain('뚜렷하지');
 });
