@@ -22,26 +22,32 @@ const order = (): OrderRequest => ({
   schema_version: '1.0',
   session_id: fixture.feed.session_id,
 });
+const session = () =>
+  Response.json({ csrfToken: 'csrf-test', expires_at: Date.now() + 60000 });
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   vi.useRealTimers();
 });
 
 test('typed feed and generation requests reject mismatched identities and malformed success', async () => {
-  const fetcher = vi.fn().mockResolvedValueOnce(Response.json(response()));
+  const replies = [Response.json(response())];
+  const fetcher = vi.fn(async (url: string) =>
+    url === '/api/profile/session' ? session() : (replies.shift() as Response),
+  );
   vi.stubGlobal('fetch', fetcher);
   expect((await orderPhotos(order())).feed.feed_id).toBe(fixture.feed.feed_id);
   const wrong = response();
   wrong.feed.session_id = 'other-session';
-  fetcher.mockResolvedValueOnce(Response.json(wrong));
+  replies.push(Response.json(wrong));
   await expect(orderPhotos(order())).rejects.toMatchObject({
     code: 'INVALID_RESPONSE',
   });
-  fetcher.mockResolvedValueOnce(Response.json({ slots: [] }));
+  replies.push(Response.json({ slots: [] }));
   await expect(
     generateOutput({ ...response(), mode: 'all', schema_version: '1.0' }),
   ).rejects.toMatchObject({ code: 'INVALID_RESPONSE' });
-  fetcher.mockResolvedValueOnce(Response.json({ output: fixture.all_omitted }));
+  replies.push(Response.json({ output: fixture.all_omitted }));
   expect(
     await generateOutput({ ...response(), mode: 'all', schema_version: '1.0' }),
   ).toEqual({ output: fixture.all_omitted });
@@ -59,7 +65,10 @@ test('analyze response must preserve photo ID, input index and file reference', 
     schema_version: '1.0',
     session_id: 'test-session',
   };
-  const fetcher = vi.fn().mockResolvedValueOnce(Response.json(photo));
+  const replies = [Response.json(photo)];
+  const fetcher = vi.fn(async (url: string) =>
+    url === '/api/profile/session' ? session() : (replies.shift() as Response),
+  );
   vi.stubGlobal('fetch', fetcher);
   expect(await analyzePhoto(upload)).toEqual(photo);
   for (const patch of [
@@ -67,11 +76,150 @@ test('analyze response must preserve photo ID, input index and file reference', 
     { input_index: 19 },
     { file_ref: 'other.jpg' },
   ]) {
-    fetcher.mockResolvedValueOnce(Response.json({ ...photo, ...patch }));
+    replies.push(Response.json({ ...photo, ...patch }));
     await expect(analyzePhoto(upload)).rejects.toMatchObject({
       code: 'INVALID_RESPONSE',
     });
   }
+});
+
+test('parallel paid analyses share one browser session bootstrap', async () => {
+  const now = Date.now() + 120000;
+  vi.spyOn(Date, 'now').mockReturnValue(now);
+  let bootstraps = 0;
+  const fetcher = vi.fn(async (url: string, options: RequestInit) => {
+    if (url === '/api/profile/session') {
+      bootstraps++;
+      await Promise.resolve();
+      return Response.json({
+        csrfToken: 'parallel-csrf',
+        expires_at: now + 60000,
+      });
+    }
+    expect(options.headers).toMatchObject({
+      'X-Gyeol-CSRF': 'parallel-csrf',
+    });
+    const body = JSON.parse(String(options.body));
+    return Response.json({
+      ...response().context.photos[0],
+      photo_id: body.photo_id,
+      input_index: body.input_index,
+      file_ref: body.file_ref,
+    });
+  });
+  vi.stubGlobal('fetch', fetcher);
+  await Promise.all(
+    Array.from({ length: 8 }, (_, index) =>
+      analyzePhoto({
+        collection: 'selected',
+        file_ref: `parallel-${index}.jpg`,
+        image_base64: 'AA==',
+        input_index: index,
+        media_type: 'image/jpeg',
+        photo_id: `parallel-${index}`,
+        schema_version: '1.0',
+        session_id: 'body-session-is-untrusted',
+      }),
+    ),
+  );
+  expect(bootstraps).toBe(1);
+});
+
+test('a rotated cookie CSRF mismatch reboots the browser capability once', async () => {
+  const now = Date.now() + 240000;
+  vi.spyOn(Date, 'now').mockReturnValue(now);
+  const photo = response().context.photos[0];
+  const fetcher = vi
+    .fn()
+    .mockResolvedValueOnce(
+      Response.json({ csrfToken: 'stale-csrf', expires_at: now + 60000 }),
+    )
+    .mockResolvedValueOnce(
+      Response.json(
+        {
+          error: {
+            code: 'FORBIDDEN',
+            message: 'rotated cookie',
+            retryable: false,
+          },
+        },
+        { status: 403 },
+      ),
+    )
+    .mockResolvedValueOnce(
+      Response.json({ csrfToken: 'fresh-csrf', expires_at: now + 60000 }),
+    )
+    .mockResolvedValueOnce(Response.json(photo));
+  vi.stubGlobal('fetch', fetcher);
+  await expect(
+    analyzePhoto({
+      collection: 'selected',
+      file_ref: photo.file_ref,
+      image_base64: 'AA==',
+      input_index: photo.input_index,
+      media_type: 'image/jpeg',
+      photo_id: photo.photo_id,
+      schema_version: '1.0',
+      session_id: 'cookie-rotation',
+    }),
+  ).resolves.toEqual(photo);
+  expect(fetcher.mock.calls.map(([url]) => url)).toEqual([
+    '/api/profile/session',
+    '/api/analyze',
+    '/api/profile/session',
+    '/api/analyze',
+  ]);
+  expect(fetcher.mock.calls[1]?.[1].headers['X-Gyeol-CSRF']).toBe('stale-csrf');
+  expect(fetcher.mock.calls[3]?.[1].headers['X-Gyeol-CSRF']).toBe('fresh-csrf');
+});
+
+test('a paid model 401 refreshes the browser capability once', async () => {
+  const now = Date.now() + 360000;
+  vi.spyOn(Date, 'now').mockReturnValue(now);
+  const photo = response().context.photos[0];
+  const fetcher = vi
+    .fn()
+    .mockResolvedValueOnce(
+      Response.json({ csrfToken: 'expired-csrf', expires_at: now + 60000 }),
+    )
+    .mockResolvedValueOnce(
+      Response.json(
+        {
+          error: {
+            code: 'UNAUTHORIZED',
+            message: 'expired session',
+            retryable: false,
+          },
+        },
+        { status: 401 },
+      ),
+    )
+    .mockResolvedValueOnce(
+      Response.json({ csrfToken: 'renewed-csrf', expires_at: now + 60000 }),
+    )
+    .mockResolvedValueOnce(Response.json(photo));
+  vi.stubGlobal('fetch', fetcher);
+  await expect(
+    analyzePhoto({
+      collection: 'selected',
+      file_ref: photo.file_ref,
+      image_base64: 'AA==',
+      input_index: photo.input_index,
+      media_type: 'image/jpeg',
+      photo_id: photo.photo_id,
+      schema_version: '1.0',
+      session_id: 'expired-session',
+    }),
+  ).resolves.toEqual(photo);
+  expect(fetcher.mock.calls.map(([url]) => url)).toEqual([
+    '/api/profile/session',
+    '/api/analyze',
+    '/api/profile/session',
+    '/api/analyze',
+  ]);
+  expect(fetcher.mock.calls[3]?.[1].headers['X-Gyeol-CSRF']).toBe(
+    'renewed-csrf',
+  );
 });
 
 test('HTTP, platform HTML 413, JSON, network and server error remain explicit failures', async () => {
