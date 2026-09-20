@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {handleFeed} from '../lib/pipeline.js';
 import {handleGenerate} from '../lib/output-generation.js';
 import {validateGenerateResponse} from '../lib/interaction.js';
+process.env.GYEOL_MODEL_PROVIDER_ENABLED='1';
 const read=async path=>JSON.parse(await readFile(new URL(path,import.meta.url),'utf8'));
 const fixture=await read('../fixtures/curation-handoff.sample.json');
 const profile=await read('../fixtures/curation.sample.json');

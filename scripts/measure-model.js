@@ -27,7 +27,8 @@ export async function measureModel(files, {
   };
   // Preflight the entire batch before incurring any model cost.
   if (![1, 3, 15].includes(files.length)) return { ...report, status: 'FAILED', code: 'INPUT_COUNT' };
-  if (modelRoute(apiKey).source === 'heuristic') return { ...report, reason: 'missing_api_key', source: 'heuristic' };
+  const route = modelRoute(apiKey);
+  if (route.source === 'heuristic') return { ...report, reason: route.reason, source: 'heuristic' };
   const inputs = [];
   try {
     for (const file of files) {

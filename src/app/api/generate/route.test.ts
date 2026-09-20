@@ -35,3 +35,27 @@ test('Next Node adapter rejects unsupported methods and missing-key generation w
   }
   expect(fetcher).not.toHaveBeenCalled();
 });
+
+test('provider-disabled generation fails closed without outbound calls', async () => {
+  vi.stubEnv('ANTHROPIC_API_KEY', 'configured-but-disabled');
+  vi.stubEnv('GYEOL_MODEL_PROVIDER_ENABLED', 'true');
+  const fetcher = vi.fn();
+  vi.stubGlobal('fetch', fetcher);
+  const response = await POST(
+    new Request('http://localhost/api/generate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        schema_version: '1.0',
+        mode: 'all',
+        feed: fixture.feed,
+        context: fixture.context,
+      }),
+    }),
+  );
+  expect(response.status).toBe(503);
+  expect(await response.json()).toMatchObject({
+    error: { code: 'GENERATION_UNAVAILABLE', retryable: false },
+  });
+  expect(fetcher).not.toHaveBeenCalled();
+});

@@ -3,6 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {buildArtifact, validateArtifact, renderReview} from '../scripts/remaining-quality.mjs';
+process.env.GYEOL_MODEL_PROVIDER_ENABLED='1';
 const originalFetch=globalThis.fetch;
 let artifact;
 try {

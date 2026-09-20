@@ -8,7 +8,7 @@ import { Console } from 'node:console';
 import { readdir, readFile } from 'node:fs/promises';
 import { relative, join, extname } from 'node:path';
 import { analyzePhoto, analysisCounters, resetAnalysisState, AnalysisUnavailableError } from '../lib/photo_analysis.js';
-import { ModelError } from '../lib/model.js';
+import { ModelError, modelRoute } from '../lib/model.js';
 
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']);
 const [folder, limitArg] = process.argv.slice(2);
@@ -58,7 +58,8 @@ const audit = new Console(process.stderr);
 const log = (...args) => audit.log(...args);
 log(`\n입력 폴더: ${folder}`);
 log(`이미지 ${inputs.length}장 · 호출 단위: 사진 1장 = 호출 1회 (배치 경로 없음)`);
-log(`모델 키: ${process.env.ANTHROPIC_API_KEY ? '있음 → 모델 경로 시도' : '없음 → 휴리스틱 경로만'}\n`);
+const route = modelRoute();
+log(`모델 경로: ${route.source === 'vision_model' ? '활성' : `휴리스틱만 (${route.reason})`}\n`);
 
 log('— 산출물 요약 —');
 audit.table([...first.results].map(({ analysis, measurement }) => ({
