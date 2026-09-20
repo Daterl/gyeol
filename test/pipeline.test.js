@@ -234,7 +234,7 @@ test('#69 P2 flipping an unobserved photo’s composition constant changes nothi
 
 // #144 integration of #145: content observations explain the preserved slot but
 // must not change a tied measurement order or pretend they were ordering scores.
-test('tied measurements preserve input order while each slot cites own and adjacent observations',async()=>{
+test('tied measurements preserve input order and never promote a model observation to the screen',async()=>{
   const body=input();
   body.photos=body.photos.map((photo,index)=>({...photo,analysis_source:'vision_model',model:'offline-fixture',describable_facts:[['가방이 보인다','신발이 놓여 있다','개가 앉아 있다'][index]]}));
   const {feed}=await buildFeed(body);
@@ -242,10 +242,10 @@ test('tied measurements preserve input order while each slot cites own and adjac
   for(const [index,slot] of feed.slots.entries()) {
     assert.match(slot.rationale.value,/그대로/);
     assert.ok(slot.rationale.evidence.some(e=>e.ref==='order.no_measured_difference'));
-    for(const photo of [body.photos[index],body.photos[index===0?1:index-1]]) {
-      assert.ok(slot.rationale.value.includes(photo.describable_facts[0]));
-      assert.ok(slot.rationale.evidence.some(e=>e.kind==='uploaded_photo' && e.ref===photo.photo_id && e.note===photo.describable_facts[0]));
-    }
-    assert.match(slot.rationale.value,/순서를 정한 근거는 아니/);
+    // #109: 모델 관측은 화면 문장으로 올라오지 않는다. 캡션 재료로만 남는다.
+    for(const photo of body.photos) assert.ok(!slot.rationale.value.includes(photo.describable_facts[0]));
+    assert.deepEqual(slot.caption_inputs.describable_facts,body.photos[index].describable_facts);
+    // 인용이 없으니 "그 인용은 근거가 아니다"라는 고지도 없다.
+    assert.doesNotMatch(slot.rationale.value,/순서를 정한 근거는 아니|관측: /);
   }
 });
