@@ -171,6 +171,7 @@ test('HTTP adapters expose start, current share/image, rotation and revoke witho
   );
   assert.equal(shared.status, 200);
   assert.equal(shared.headers.get('cache-control'), 'no-store');
+  assert.equal(shared.headers.get('x-share-etag'), published.etag);
   assert.equal((await shared.json()).version, 1);
   const image = await handleShare(
     new Request(`http://localhost/api/share/${started.shareId}/image/p_0`),

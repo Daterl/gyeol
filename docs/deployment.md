@@ -19,9 +19,13 @@ codex mcp list
 
 GitHub Vercel App은 `Only select repositories → Daterl/gyeol`로 설치했다. Vercel에는 빈 프로젝트를 생성하고 원본 Git 저장소를 연결했다. MCP 접근 범위는 gyeol 한 개이며 전체 현재/향후 프로젝트 접근은 선택하지 않았다.
 
-Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치를 develop으로 바꾼 뒤에도 Vercel Production 설정에서 main을 다시 확인했다. 환경변수는 아직 없으며 실제 모델 A1 실측은 pending이다.
+Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치를 develop으로 바꾼 뒤에도 Vercel Production 설정에서 main을 다시 확인했다. 2026-09-20 실측 기준 Production·Preview Blob 연결을 완료했고, Production에는 Anthropic key/workspace와 signing/session/origin/share/cron/receipt 변수를 설정했다. Production 모델 flag `1`과 실사진 15/15 live 분석도 통과했다. #207 배포 전에 새 model budget 두 값이 더 필요하며, `APIFY_TOKEN`은 별도 #68 범위다.
 
 `ANTHROPIC_API_KEY`만 설정해서는 모델을 호출하지 않는다. 서버 전용 `GYEOL_MODEL_PROVIDER_ENABLED=1`을 함께 설정해야 `/api/analyze`가 모델 경로를 사용하고 `/api/generate`가 생성 요청을 허용한다. 미설정·`0`·`true`·오타는 모두 비활성으로 처리한다.
+
+모델 활성화는 다음 순서를 지킨다. 먼저 Private Blob의 `BLOB_READ_WRITE_TOKEN`, 서로 다른 32자 이상 난수 `GYEOL_BROWSER_SESSION_SECRET`, 정확한 HTTPS origin `GYEOL_APP_ORIGIN`을 설정한다. 그다음 `GYEOL_MODEL_GLOBAL_REQUESTS_PER_HOUR`, `GYEOL_MODEL_SESSION_REQUESTS_PER_HOUR`를 모두 양의 정수로 설정한다. session 값은 global 이하이어야 한다. 마지막에만 `GYEOL_MODEL_PROVIDER_ENABLED=1`을 설정한다. 예산이 없거나 잘못됐거나 Blob limiter가 실패하면 `503 MODEL_ACCESS_UNAVAILABLE`, 세션이 잘못되면 `401 UNAUTHORIZED` 또는 `403 FORBIDDEN`, 예산이 끝나면 `429 RATE_LIMITED`로 provider 호출 전에 실패한다. 첫 배포 제안은 global/session `600/40` 요청/시간이다. session 40은 15장 분석을 브라우저가 각 1회 재시도한 30요청, 최초 생성 1요청, 편집 생성 8요청까지 수용한다. provider 내부의 제한된 재시도는 새 HTTP admission을 만들지 않지만 실제 최대 비용은 별도로 관측한다.
+
+브라우저는 `/api/profile/session`의 signed HttpOnly cookie와 CSRF를 `/api/analyze`, `/api/generate`에도 재사용한다. 브라우저 밖 운영 검증이 필요할 때만 다른 모든 비밀값과 다른 `GYEOL_MODEL_API_ACCESS_KEY`를 `Authorization: Bearer`로 보낸다. 이 경로는 Origin·cookie·CSRF가 함께 오면 거부하며 같은 durable 예산을 소비한다. `GYEOL_MODEL_API_ACCESS_KEY`는 선택값이고 일반 브라우저 동작에는 설정하지 않아도 된다.
 
 `GYEOL_ANALYSIS_RECEIPT_SECRET`은 32자 이상의 서버 전용 값으로 Preview와 Production에 각각 설정한다. 분석 응답과 피드 요청 사이의 동일 바이트 중복 근거만 인증하며 `ANTHROPIC_API_KEY`, `APIFY_TOKEN`, `APIFY_INGEST_RECEIPT_SECRET`과 값을 공유하지 않는다. 미설정이면 분석과 순서 기능은 동작하지만 중복 사진 빼기 권고는 정직하게 0개로 남는다.
 

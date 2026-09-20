@@ -23,7 +23,14 @@ async function ready() {
   await store.getState().loadFeed(async () => response());
   vi.stubGlobal(
     'fetch',
-    vi.fn().mockResolvedValue(Response.json({ output: output() })),
+    vi.fn(async (url: string) =>
+      url === '/api/profile/session'
+        ? Response.json({
+            csrfToken: 'csrf-test',
+            expires_at: Date.now() + 60000,
+          })
+        : Response.json({ output: output() }),
+    ),
   );
   await store.getState().generate();
   return store;

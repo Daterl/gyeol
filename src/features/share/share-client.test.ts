@@ -168,7 +168,16 @@ function server() {
         photoId: image[2],
       });
     const share = url.pathname.match(/^\/api\/share\/([^/]+)$/);
-    if (share) return handleShare(request, { service, shareId: share[1] });
+    if (share) {
+      const response = await handleShare(request, {
+        service,
+        shareId: share[1],
+      });
+      // Production may assign its own HTTP response validator. Management CAS
+      // must use the dedicated Blob ETag header instead.
+      response.headers.set('ETag', '"platform-response-etag"');
+      return response;
+    }
     return new Response(null, { status: 404 });
   };
   const uploadPhoto: PhotoUploader = async ({ photo, receipt, session }) => {
