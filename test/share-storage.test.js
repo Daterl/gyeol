@@ -473,6 +473,52 @@ test('key rotation immediately rejects the old key and revoke writes a PII-free 
   assert.ok(revoked.etag);
 });
 
+test('management writes survive a store whose ETag never matches a conditional write', async () => {
+  // Reproduces what production Private Blob does (#210): the ETag `get` returns never matches
+  // what `put` compares `ifMatch` against, so every rotate and revoke died with CONFLICT while
+  // the in-memory store passed. Creation still guards on absence, which the store answers.
+  const backing = new MemoryBlobStore();
+  const store = Object.create(backing);
+  store.put = (path, body, options = {}) =>
+    options.ifMatch === undefined
+      ? backing.put(path, body, options)
+      : Promise.reject(new ShareError('CONFLICT'));
+  const { service } = fixture({ store });
+  const staged = await stage(service, ['a', 'b', 'c']);
+  const published = await service.publish({
+    receipt: staged.pending.receipt,
+    uploadToken: staged.session.uploadToken,
+    managementKey: staged.pending.managementKey,
+    curation: curation(staged.expected.map(photo => photo.id)),
+  });
+  const rotated = await service.rotateKey({
+    shareId: staged.pending.shareId,
+    managementKey: staged.pending.managementKey,
+    nextManagementKey,
+    ifMatch: published.etag,
+    caller: 'cas',
+  });
+  assert.notEqual(rotated.etag, published.etag);
+  // A stale revision must still be refused; dropping the Blob ETag must not drop the guard.
+  await throwsCode(
+    service.revoke({
+      shareId: staged.pending.shareId,
+      managementKey: rotated.managementKey,
+      ifMatch: published.etag,
+      caller: 'cas',
+    }),
+    'CONFLICT',
+  );
+  const revoked = await service.revoke({
+    shareId: staged.pending.shareId,
+    managementKey: rotated.managementKey,
+    ifMatch: rotated.etag,
+    caller: 'cas',
+  });
+  assert.ok(revoked.etag);
+  await throwsCode(service.readShare(staged.pending.shareId), 'GONE');
+});
+
 test('daily cleanup removes abandoned uploads, receipts and non-current version objects only after 24 hours', async () => {
   const { service, store, advance } = fixture();
   const staged = await stage(service, ['a', 'b', 'c']);
