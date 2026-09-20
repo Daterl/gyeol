@@ -10,6 +10,7 @@ import { buildFeed } from '../lib/pipeline.js';
 import { validateGenerateResponse } from '../lib/interaction.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+const modelAccessKey = 'production-regression-model-access-key-32';
 const fixture = JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json', import.meta.url), 'utf8'));
 const listener = createServer();
 listener.listen(0, '127.0.0.1');
@@ -19,7 +20,10 @@ await new Promise(resolve => listener.close(resolve));
 const server = spawn(process.execPath, [
   '--import', fileURLToPath(new URL('../test/support/generation-provider.mjs', import.meta.url)),
   'node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(port),
-], { cwd: root, env: { ...process.env, ANTHROPIC_API_KEY: 'production-regression-fake-key', ANTHROPIC_WORKSPACE_ID: '', GYEOL_MODEL_PROVIDER_ENABLED: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
+], { cwd: root, env: { ...process.env, ANTHROPIC_API_KEY: 'production-regression-fake-key', ANTHROPIC_WORKSPACE_ID: '',
+  BLOB_READ_WRITE_TOKEN: 'vercel_blob_rw_modeltest_fixture', GYEOL_MODEL_API_ACCESS_KEY: modelAccessKey,
+  GYEOL_MODEL_GLOBAL_REQUESTS_PER_HOUR: '100', GYEOL_MODEL_SESSION_REQUESTS_PER_HOUR: '40',
+  GYEOL_MODEL_PROVIDER_ENABLED: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
 let serverLog = '';
 server.stdout.on('data', chunk => { serverLog += chunk; });
 server.stderr.on('data', chunk => { serverLog += chunk; });
@@ -48,7 +52,9 @@ try {
         const input = { schema_version: '1.0', mode, ...built,
           ...(mode === 'slot' ? { photo_id: built.feed.slots[0].photo_id } : {}) };
         lastInput = input;
-        const response = await fetch(`${base}/api/generate`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(input), signal: AbortSignal.timeout(10000) });
+        const response = await fetch(`${base}/api/generate`, { method: 'POST', headers: {
+          'content-type': 'application/json', authorization: `Bearer ${modelAccessKey}`,
+        }, body: JSON.stringify(input), signal: AbortSignal.timeout(10000) });
         const value = await response.json();
         assert.equal(response.status, 200, `${count}/${prompt ? 'written' : 'empty'}/${mode}: ${JSON.stringify(value)}`);
         assert.equal(response.headers.get('cache-control'), 'no-store');
@@ -71,7 +77,9 @@ try {
     const hidden = new URL(matches[0] + '.missing-test', assets);
     await rename(asset, hidden);
     try {
-      const response = await fetch(`${base}/api/generate`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(lastInput), signal: AbortSignal.timeout(10000) });
+      const response = await fetch(`${base}/api/generate`, { method: 'POST', headers: {
+        'content-type': 'application/json', authorization: `Bearer ${modelAccessKey}`,
+      }, body: JSON.stringify(lastInput), signal: AbortSignal.timeout(10000) });
       assert.equal(response.status, 500, `Missing ${stem} must fail closed`);
       assert.equal((await response.json()).error.code, 'INTERNAL_ERROR');
       console.log(`PASS missing bundled ${stem}: HTTP 500, no partial-prompt success`);

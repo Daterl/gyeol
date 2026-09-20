@@ -127,12 +127,63 @@ async function post(
     clearTimeout(timeout);
   }
 }
+type BrowserSession = { csrfToken: string; expires_at: number };
+let modelSession: BrowserSession | null = null;
+let modelSessionRequest: Promise<BrowserSession> | null = null;
+const validateBrowserSession = (value: unknown) => {
+  const result = value as { csrfToken?: unknown; expires_at?: unknown };
+  if (
+    typeof result.csrfToken !== 'string' ||
+    !result.csrfToken ||
+    typeof result.expires_at !== 'number' ||
+    result.expires_at <= Date.now()
+  )
+    throw new Error('Invalid session');
+};
+async function modelPost(
+  path: string,
+  body: unknown,
+  validate: (value: unknown) => void,
+  signal?: AbortSignal,
+) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if (!modelSession || modelSession.expires_at <= Date.now()) {
+      modelSessionRequest ??= post(
+        '/api/profile/session',
+        {},
+        validateBrowserSession,
+        signal,
+      ) as Promise<BrowserSession>;
+      try {
+        modelSession = await modelSessionRequest;
+      } finally {
+        modelSessionRequest = null;
+      }
+    }
+    try {
+      return await post(path, body, validate, signal, {
+        'X-Gyeol-CSRF': modelSession.csrfToken,
+      });
+    } catch (error) {
+      if (
+        error instanceof ApiError &&
+        [401, 403].includes(error.status) &&
+        attempt === 0
+      ) {
+        modelSession = null;
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw new ApiError('UNAUTHORIZED', '앱 세션을 다시 시작해 주세요.', 401);
+}
 export async function analyzePhoto(
   request: UploadRequest,
   signal?: AbortSignal,
   mock = false,
 ): Promise<PhotoAnalysis> {
-  return (await post(
+  return (await (mock ? post : modelPost)(
     mock ? '/api/analyze?mock=1' : '/api/analyze',
     request,
     (value) => {
@@ -200,7 +251,7 @@ export async function generateOutput(
   signal?: AbortSignal,
 ): Promise<GenerateResponse> {
   validateGenerateRequest(request);
-  return (await post(
+  return (await modelPost(
     '/api/generate',
     request,
     (value) => {
@@ -212,7 +263,7 @@ export async function generateOutput(
 
 // Tokens stay in this component-owned client, never localStorage or a URL.
 export function createProfileClient() {
-  let session: { csrfToken: string; expires_at: number } | null = null;
+  let session: BrowserSession | null = null;
   return async function profile(
     request: ProfileConnectionRequest,
     signal?: AbortSignal,
@@ -222,21 +273,10 @@ export function createProfileClient() {
         session = (await post(
           '/api/profile/session',
           {},
-          (value) => {
-            const result = value as {
-              csrfToken?: unknown;
-              expires_at?: unknown;
-            };
-            if (
-              typeof result.csrfToken !== 'string' ||
-              !result.csrfToken ||
-              typeof result.expires_at !== 'number' ||
-              result.expires_at <= Date.now()
-            )
-              throw new Error('Invalid session');
-          },
+          validateBrowserSession,
           signal,
         )) as typeof session;
+        modelSession = session;
       }
       if (!session)
         throw new ApiError('INVALID_SESSION', '연결 세션을 확인하지 못했어요.');

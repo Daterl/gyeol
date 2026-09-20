@@ -15,8 +15,25 @@ for (let index = 0; index < parts.length; index++) {
 }
 
 const originalFetch = globalThis.fetch;
+const counters = new Map();
+let version = 0;
 globalThis.fetch = async (url, options) => {
   const target = new URL(typeof url === 'string' || url instanceof URL ? url : url.url);
+  if (target.hostname === 'modeltest.private.blob.vercel-storage.com') {
+    const row = counters.get(target.pathname.slice(1));
+    return row ? Response.json(row.value, { headers: { etag: row.etag } }) : new Response(null, { status: 404 });
+  }
+  if (target.origin === 'https://vercel.com' && target.pathname === '/api/blob/') {
+    const key = target.searchParams.get('pathname');
+    const current = counters.get(key);
+    const ifMatch = options.headers['x-if-match'];
+    if ((ifMatch && current?.etag !== ifMatch) || (!ifMatch && current)) {
+      return Response.json({ error: { code: 'precondition_failed' } }, { status: 412 });
+    }
+    const row = { value: JSON.parse(options.body), etag: `v${++version}` };
+    counters.set(key, row);
+    return Response.json({ pathname: key, etag: row.etag });
+  }
   if (target.origin !== 'https://api.anthropic.com') return originalFetch(url, options);
   if (target.pathname.startsWith('/v1/models/')) return Response.json({ id: 'production-test-model' });
   assert.equal(target.pathname, '/v1/messages');
