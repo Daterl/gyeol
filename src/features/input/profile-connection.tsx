@@ -164,16 +164,18 @@ export function ProfileConnection({
     }
   }
   return (
-    <section
-      className="space-y-3 border-y border-line py-5"
-      aria-labelledby="profile-heading"
-    >
-      <h2 id="profile-heading" className="font-semibold">
-        1. 공개 프로필 연결
-      </h2>
+    <section className="space-y-3" aria-labelledby="profile-heading">
+      <div className="flex items-center gap-3">
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-sm font-semibold text-paper">
+          1
+        </span>
+        <h2 id="profile-heading" className="font-semibold">
+          공개 프로필 연결
+        </h2>
+      </div>
       <p className="text-sm text-muted-foreground">
-        OAuth나 계정 소유권 인증이 아니에요. 공개 게시물의 일부만 참고하며 수집
-        시점과 표본에 따라 스타일이 다르게 보일 수 있어요.
+        공개 게시물만 참고해요. 계정 소유권을 인증하거나 비공개 콘텐츠를 보지
+        않아요.
       </p>
       <label className="block text-sm">
         공개 Instagram 프로필 URL
@@ -203,8 +205,8 @@ export function ProfileConnection({
           onChange={(event) => setConfirmed(event.target.checked)}
           className="mt-1 size-5 shrink-0"
         />
-        캐시가 없거나 만료되면 유료 수집이 시작될 수 있음을 확인했어요. 24시간
-        안에는 저장된 결과를 사용해요.
+        새로 불러올 때 수집 비용이 발생할 수 있어요. 24시간 안에는 저장된 결과를
+        사용해요.
       </label>
       <div className="flex flex-wrap gap-2">
         <Button
