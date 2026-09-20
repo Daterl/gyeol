@@ -84,6 +84,25 @@ test('Next adapters reject invalid upload and obsolete optional-profile feed req
   });
 });
 
+test('mock analysis rejects a request without browser capability before reading the upload', async () => {
+  const response = await protectedAnalyze(
+    new Request(`${origin}/api/analyze?mock=1`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin,
+        'sec-fetch-site': 'same-origin',
+      },
+      body: '{invalid-json',
+    }),
+    { browser },
+  );
+  expect(response.status).toBe(401);
+  expect(await response.json()).toMatchObject({
+    error: { code: 'UNAUTHORIZED' },
+  });
+});
+
 test('provider-disabled analysis stays heuristic without outbound calls', async () => {
   vi.stubEnv('ANTHROPIC_API_KEY', 'configured-but-disabled');
   vi.stubEnv('GYEOL_MODEL_PROVIDER_ENABLED', 'true');

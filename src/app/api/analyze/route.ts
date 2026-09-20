@@ -25,8 +25,6 @@ export async function protectedAnalyze(
   options: ModelAccessOptions = {},
 ) {
   if (request.method !== 'POST') return runAnalyze(request);
-  if (new URL(request.url).searchParams.get('mock') === '1')
-    return runAnalyze(request);
   let sessionId: string;
   try {
     sessionId = authenticateModelRequest(request, options);
