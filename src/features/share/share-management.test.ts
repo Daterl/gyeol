@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import {
   loadShareManagement,
+  parseShareManagementTransfer,
   removeShareManagement,
   SHARE_MANAGEMENT_KEY,
   type ShareManagementRecord,
@@ -79,4 +80,48 @@ test('mixed or malformed variants are removed and storage failure is contained',
   expect(loadShareManagement(unavailable).available).toBe(false);
   expect(saveShareManagement(unavailable, { ...base, etag: null })).toBe(false);
   expect(removeShareManagement(unavailable)).toBe(false);
+});
+
+test('one tab never removes a different share saved by another tab', () => {
+  const storage = memoryStorage();
+  const first = { ...base, etag: '"first"' } as const;
+  const second = {
+    ...base,
+    shareId: 'another_share',
+    managementKey: `${'B'.repeat(42)}A`,
+    etag: '"second"',
+  } as const;
+  expect(saveShareManagement(storage, second)).toBe(true);
+  expect(removeShareManagement(storage, first)).toBe(true);
+  expect(loadShareManagement(storage).record).toEqual(second);
+  expect(removeShareManagement(storage, second)).toBe(true);
+  expect(loadShareManagement(storage).record).toBeNull();
+});
+
+test('management transfer accepts only a share id or public share URL with a canonical key', () => {
+  const managementKey = 'A'.repeat(43);
+  const expected = { shareId: 'share_id', managementKey };
+
+  expect(parseShareManagementTransfer('share_id', managementKey)).toEqual(
+    expected,
+  );
+  expect(
+    parseShareManagementTransfer(
+      'https://gyeol.example/share/share_id/',
+      ` ${managementKey} `,
+    ),
+  ).toEqual(expected);
+  expect(
+    parseShareManagementTransfer('/share/share_id', managementKey),
+  ).toEqual(expected);
+
+  for (const reference of [
+    'https://gyeol.example/not-share/share_id',
+    'https://gyeol.example/share/share_id?managementKey=secret',
+    'https://gyeol.example/share/share_id#secret',
+    'https://user:secret@gyeol.example/share/share_id',
+  ]) {
+    expect(parseShareManagementTransfer(reference, managementKey)).toBeNull();
+  }
+  expect(parseShareManagementTransfer('share_id', 'not-a-key')).toBeNull();
 });

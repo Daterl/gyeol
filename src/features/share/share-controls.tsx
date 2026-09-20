@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import type { ConfirmedCuration } from '../editor/curation-store';
 import type { SelectedPhoto } from '../editor/store';
@@ -13,6 +13,7 @@ import {
 } from './share-client';
 import {
   loadShareManagement,
+  parseShareManagementTransfer,
   removeShareManagement,
   type ShareManagementRecord,
   saveShareManagement,
@@ -66,10 +67,17 @@ export function ShareControls({
   const [managementSaved, setManagementSaved] = useState(true);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
+  const [managementReference, setManagementReference] = useState('');
+  const [managementKey, setManagementKey] = useState('');
+  const [managementKeyVisible, setManagementKeyVisible] = useState(false);
   const sharePath = published
     ? `/share/${encodeURIComponent(published.shareId)}`
     : '';
-  const rotating = published ? 'nextManagementKey' in published : false;
+  const nextManagementKey =
+    published && 'nextManagementKey' in published
+      ? published.nextManagementKey
+      : null;
+  const rotating = nextManagementKey !== null;
 
   useEffect(() => {
     const restored = loadShareManagement(window.localStorage);
@@ -107,6 +115,19 @@ export function ShareControls({
     );
   }
 
+  function rejectUnauthorized(error: unknown, rejected: PublishedShare) {
+    if (!(error instanceof ShareApiError) || error.code !== 'UNAUTHORIZED')
+      return false;
+    const removed = removeShareManagement(window.localStorage, rejected);
+    setPublished(null);
+    setManagementSaved(removed);
+    setManagementReference(`/share/${rejected.shareId}`);
+    setManagementKey('');
+    setManagementKeyVisible(false);
+    setNotice('관리 키가 맞지 않아요. 키를 다시 입력해 주세요.');
+    return true;
+  }
+
   async function publish() {
     setBusy(true);
     setNotice('공유 링크를 만들고 있어요.');
@@ -126,6 +147,7 @@ export function ShareControls({
           }
           setPublished(pending);
           setManagementSaved(true);
+          setManagementKeyVisible(true);
         },
         photos: await sharePhotosFor(confirmed, photos),
       });
@@ -141,6 +163,40 @@ export function ShareControls({
       );
     } catch (error) {
       setNotice(errorMessage(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function connectManagement(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const transfer = parseShareManagementTransfer(
+      managementReference,
+      managementKey,
+    );
+    if (!transfer) {
+      setNotice('공유 링크 또는 ID와 관리 키 형식을 확인해 주세요.');
+      return;
+    }
+    setBusy(true);
+    setNotice('공유 링크를 확인하고 있어요.');
+    try {
+      const result = await client.read(transfer.shareId);
+      if (!result.etag) throw new ShareApiError('INVALID_RESPONSE');
+      acceptPublished(
+        {
+          v: 1,
+          ...transfer,
+          etag: result.etag,
+          confirmed: null,
+        },
+        '공유 링크를 찾았고 관리 키를 이 브라우저에 저장했어요. 잘못된 키는 관리 작업 때 거부돼요.',
+      );
+      setManagementKeyVisible(false);
+      setManagementReference('');
+      setManagementKey('');
+    } catch {
+      setNotice('공유 링크를 확인하지 못했어요. 링크 또는 ID를 확인해 주세요.');
     } finally {
       setBusy(false);
     }
@@ -199,14 +255,17 @@ export function ShareControls({
         '새 확정본을 공유 링크에 반영했어요.',
       );
     } catch (error) {
+      if (rejectUnauthorized(error, published)) return;
       if (error instanceof ShareApiError && error.code === 'CONFLICT') {
         try {
           const latest = await client.read(published.shareId);
-          if (latest.etag)
+          if (latest.etag) {
             acceptPublished(
               { ...published, etag: latest.etag },
               '최신 공유 상태를 불러왔어요. 다시 반영해 주세요.',
             );
+            return;
+          }
         } catch {}
       }
       setNotice(errorMessage(error));
@@ -255,7 +314,21 @@ export function ShareControls({
         },
         '링크 관리 키를 새로 바꿨어요.',
       );
-    } catch {
+      setManagementKeyVisible(true);
+    } catch (error) {
+      if (rejectUnauthorized(error, pending)) return;
+      if (error instanceof ShareApiError && error.code === 'CONFLICT') {
+        try {
+          const latest = await client.read(pending.shareId);
+          if (latest.etag) {
+            acceptPublished(
+              { ...pending, etag: latest.etag },
+              '최신 공유 상태를 불러왔어요. 같은 새 관리 키로 다시 시도해 주세요.',
+            );
+            return;
+          }
+        } catch {}
+      }
       setNotice(
         '관리 키 교체 완료 여부를 확인하지 못했어요. 저장된 새 키로 다시 시도해 주세요.',
       );
@@ -275,7 +348,7 @@ export function ShareControls({
     setBusy(true);
     try {
       await client.revoke(published);
-      const removed = removeShareManagement(window.localStorage);
+      const removed = removeShareManagement(window.localStorage, published);
       setPublished(null);
       setManagementSaved(removed);
       setNotice(
@@ -284,6 +357,19 @@ export function ShareControls({
           : '공유 링크를 비활성화했지만 브라우저의 관리 정보를 지우지 못했어요.',
       );
     } catch (error) {
+      if (rejectUnauthorized(error, published)) return;
+      if (error instanceof ShareApiError && error.code === 'CONFLICT') {
+        try {
+          const latest = await client.read(published.shareId);
+          if (latest.etag) {
+            acceptPublished(
+              { ...published, etag: latest.etag },
+              '최신 공유 상태를 불러왔어요. 공유 중지를 다시 눌러 주세요.',
+            );
+            return;
+          }
+        } catch {}
+      }
       setNotice(errorMessage(error));
     } finally {
       setBusy(false);
@@ -291,7 +377,8 @@ export function ShareControls({
   }
 
   function detach() {
-    const pendingPublish = published?.etag === null;
+    if (!published) return;
+    const pendingPublish = published.etag === null;
     if (
       !window.confirm(
         pendingPublish
@@ -300,13 +387,14 @@ export function ShareControls({
       )
     )
       return;
-    if (!removeShareManagement(window.localStorage)) {
+    if (!removeShareManagement(window.localStorage, published)) {
       setManagementSaved(false);
       setNotice('브라우저의 링크 관리 정보를 지우지 못했어요.');
       return;
     }
     setPublished(null);
     setManagementSaved(true);
+    setManagementKeyVisible(false);
     setNotice(
       pendingPublish
         ? '게시 결과 확인을 중단하고 이 브라우저의 관리 정보를 지웠어요.'
@@ -331,12 +419,63 @@ export function ShareControls({
     }
   }
 
+  async function copyManagementKey(key: string) {
+    try {
+      await navigator.clipboard.writeText(key);
+      setNotice('관리 키를 복사했어요.');
+    } catch {
+      setNotice('관리 키를 복사하지 못했어요. 직접 선택해 복사해 주세요.');
+    }
+  }
+
   return (
     <div className="mt-4 space-y-3 border-t border-line pt-4">
       {!published ? (
-        <Button type="button" disabled={busy} onClick={publish}>
-          {busy ? '공유 링크 만드는 중…' : '공유 링크 만들기'}
-        </Button>
+        <>
+          <Button type="button" disabled={busy} onClick={publish}>
+            {busy ? '처리 중…' : '공유 링크 만들기'}
+          </Button>
+          <details className="text-sm">
+            <summary className="cursor-pointer font-medium">
+              기존 공유 링크 관리하기
+            </summary>
+            <form className="mt-3 space-y-3" onSubmit={connectManagement}>
+              <label className="block space-y-1">
+                <span>공유 링크 또는 ID</span>
+                <input
+                  className="min-h-11 w-full rounded-lg border border-line bg-card px-3"
+                  value={managementReference}
+                  onChange={(event) =>
+                    setManagementReference(event.target.value)
+                  }
+                  autoCapitalize="none"
+                  placeholder="https://…/share/…"
+                  required
+                />
+              </label>
+              <label className="block space-y-1">
+                <span>관리 키</span>
+                <input
+                  className="min-h-11 w-full rounded-lg border border-line bg-card px-3 font-mono"
+                  type="password"
+                  value={managementKey}
+                  onChange={(event) => setManagementKey(event.target.value)}
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  required
+                />
+              </label>
+              <p className="text-xs text-muted-foreground">
+                잃어버린 관리 키는 복구할 수 없어요. 공개 링크와 분리해 안전하게
+                보관해 주세요. 키가 맞는지는 실제 관리 작업 때 확인돼요.
+              </p>
+              <Button type="submit" variant="outline" disabled={busy}>
+                관리 연결
+              </Button>
+            </form>
+          </details>
+        </>
       ) : (
         <>
           {published.etag === null ? (
@@ -437,6 +576,56 @@ export function ShareControls({
               ? '관리 정보는 이 브라우저에 저장돼요. 브라우저 데이터를 지우면 이 링크를 다시 관리할 수 없어요.'
               : '관리 정보를 저장하지 못해 이 탭에서만 링크를 관리할 수 있어요.'}
           </p>
+          <div className="space-y-2 rounded-lg border border-line p-3">
+            <p className="text-xs font-medium">관리 키</p>
+            <input
+              aria-label="현재 관리 키"
+              className="min-h-11 w-full rounded-md border border-line bg-card px-3 font-mono text-xs"
+              type={managementKeyVisible ? 'text' : 'password'}
+              value={published.managementKey}
+              readOnly
+            />
+            <Button
+              type="button"
+              variant="outline"
+              disabled={busy}
+              onClick={() => setManagementKeyVisible((visible) => !visible)}
+            >
+              {managementKeyVisible ? '관리 키 숨기기' : '관리 키 보기'}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={busy}
+              onClick={() => copyManagementKey(published.managementKey)}
+            >
+              관리 키 복사
+            </Button>
+            {nextManagementKey && (
+              <>
+                <p className="text-xs font-medium">교체 확인 중인 새 관리 키</p>
+                <input
+                  aria-label="교체 확인 중인 새 관리 키"
+                  className="min-h-11 w-full rounded-md border border-line bg-card px-3 font-mono text-xs"
+                  type={managementKeyVisible ? 'text' : 'password'}
+                  value={nextManagementKey}
+                  readOnly
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={busy}
+                  onClick={() => copyManagementKey(nextManagementKey)}
+                >
+                  새 관리 키 복사
+                </Button>
+              </>
+            )}
+            <p className="text-xs text-muted-foreground">
+              잃어버린 관리 키는 복구할 수 없어요. 공개 링크와 분리해 안전하게
+              보관해 주세요.
+            </p>
+          </div>
         </>
       )}
       <p role="status" aria-live="polite" className="text-sm">
