@@ -199,7 +199,7 @@ test('upload-to-feed keeps selected IDs, sends each file once and uses the no-mo
     '/api/feed',
   ]);
 });
-test('photo analysis runs four at a time and preserves selection order', async () => {
+test('photo analysis runs eight at a time and preserves selection order', async () => {
   const photos = Array.from({ length: 8 }, (_, index) => ({
     file: jpeg(`${index}.jpg`),
     photo_id: `parallel_${index}`,
@@ -250,6 +250,39 @@ test('cancellation before upload sends no file', async () => {
   expect(fetcher).not.toHaveBeenCalled();
 });
 
+test('cancellation while eight analyses are running stops all work before feed', async () => {
+  const controller = new AbortController();
+  let started = 0;
+  const watchdog = setTimeout(() => controller.abort(), 250);
+  const fetcher = vi.fn((url: string, options: RequestInit) => {
+    if (!url.startsWith('/api/analyze'))
+      return Promise.resolve(Response.json({}));
+    if (++started === 8) queueMicrotask(() => controller.abort());
+    return new Promise<Response>((_, reject) => {
+      const signal = options.signal as AbortSignal;
+      signal.addEventListener('abort', () => reject(signal.reason), {
+        once: true,
+      });
+    });
+  });
+  vi.stubGlobal('fetch', fetcher);
+
+  const submission = submitPhotos(
+    many(15),
+    [],
+    fields,
+    controller.signal,
+    true,
+  );
+  try {
+    await expect(submission).rejects.toMatchObject({ code: 'CANCELLED' });
+  } finally {
+    clearTimeout(watchdog);
+  }
+  expect(started).toBe(8);
+  expect(fetcher).not.toHaveBeenCalledWith('/api/feed', expect.anything());
+});
+
 // --- #126 병렬 분석 ---
 const many = (count: number): SelectedPhoto[] =>
   Array.from({ length: count }, (_, i) => ({
@@ -263,7 +296,7 @@ const analysisFor = (body: {
   file_ref: string;
   input_index: number;
 }) => ({ ...fixture.context.photos[0], ...body });
-// 실제 /api/feed 파이프라인을 그대로 부른다 — 재색인한 photos 를 서버가 정말 받는지가 이 이슈의 DoD 다.
+// 성공한 선택만 다시 제출했을 때 실제 /api/feed 파이프라인이 받는지 확인한다.
 const feedFor = async (body: unknown) => {
   const { buildFeed } = await import('../../../lib/pipeline.js');
   return Response.json(await buildFeed(body));
@@ -366,6 +399,9 @@ test('429·타임아웃은 다시 시도하고 인증 오류는 재시도 없이
         return errorBody('MODEL_HTTP', true);
       // ph_1: 인증 오류 — 재시도하지 않고 바로 버린다.
       if (body.photo_id === 'ph_1') return errorBody('MODEL_KEY_MISSING', true);
+      // ph_2: 첫 시도만 타임아웃 — 두 번째에 성공해야 한다.
+      if (body.photo_id === 'ph_2' && attempts.ph_2 === 1)
+        return errorBody('TIMEOUT', true);
       return Response.json(analysisFor(body));
     }),
   );
@@ -374,4 +410,5 @@ test('429·타임아웃은 다시 시도하고 인증 오류는 재시도 없이
   ).rejects.toMatchObject({ code: 'ANALYSIS_FAILED' });
   expect(attempts.ph_0).toBe(2);
   expect(attempts.ph_1).toBe(1);
+  expect(attempts.ph_2).toBe(2);
 });
