@@ -51,7 +51,7 @@ export function PhotoPicker({
         </span>
       </legend>
       {photos.length > 0 && (
-        <ul className="mb-4 grid grid-cols-2 gap-3 min-[390px]:grid-cols-3 sm:grid-cols-5">
+        <ul className="mb-4 grid grid-cols-3 gap-1">
           {photos.map((photo, index) => (
             <li key={photo.photo_id} className="min-w-0">
               <a
@@ -63,7 +63,7 @@ export function PhotoPicker({
               >
                 <Image
                   alt={`${index + 1}번 선택 사진: ${photo.file.name}`}
-                  className="aspect-[4/5] w-full object-cover"
+                  className="aspect-square w-full object-cover"
                   width={160}
                   height={200}
                   src={photo.url}
