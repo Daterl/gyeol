@@ -69,6 +69,8 @@ Preview 환경·Blob 원자성·실제 제공자·브라우저 통합 검증은 
 
 위 예시는 `curation` 객체의 필드 설명이며 실제 성공에는 모든 입력 사진이 들어간다. 모든 `curation.slots[].included`는 최초 제안에서 `true`다. `exclusion_candidate`는 `feed.slots[].omit_suggestion`의 근거 있는 제안이며, `recommended:true`여도 사진을 제외하지 않는다. 제외·복원·재정렬·캡션 편집 및 공유 확정은 후속 프리뷰 계약이다. 캡션 초안은 기존 `/api/generate`에서 생성한다.
 
+큐레이션 하나는 포함 사진 3~15장의 **단일 캐러셀**이다. 프리뷰와 확정본은 편집한 `output.slots`를 `position` 오름차순으로 읽고, 그 첫 included 사진을 커버로 쓴다. 제외는 해당 사진을 캐러셀에서만 빼며 ID·근거·캡션 초안을 지우지 않는다. 복원과 재정렬 뒤에도 같은 규칙으로 커버를 다시 정한다. 새 content type·별도 cover 필드·스키마 마이그레이션은 만들지 않는다.
+
 작성한 프롬프트는 `curation.prompt.text`와 `context.target.raw_freetext`에 trim한 원문을 남기며 `prompt.evidence`는 `[{kind:"user_text",ref:context.target.profile_id,note:"사용자가 입력한 큐레이션 방향"}]`다. 프로필 provenance에는 서버 저장소에서 확인한 수집 시각·출처와 근거 URL만 넣는다. 공개 프로필 연결은 계정 소유권 인증이 아니다. 이 작성 중 응답은 공유 manifest가 아니며 프로필 PII 공유는 별도 명시적 선택이 필요하다.
 
 오류: 형식·사진 수·추가 필드는 `400 INVALID_REQUEST`, 확인할 수 없는 연결은 `422 PROFILE_NOT_VERIFIED`, 명확히 확인된 만료는 `422 PROFILE_SNAPSHOT_EXPIRED`, 저장소 장애·설정 누락은 `503 PROFILE_RESOLVER_UNAVAILABLE`다. 응답은 `no-store`다.
