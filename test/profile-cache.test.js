@@ -262,6 +262,11 @@ test('REST adapter separates conflicts, absence, auth/network/malformed response
   const key = profileCacheKey(URL);
   const make = fetchImpl => createPrivateBlobStorage({ token: TOKEN, fetchImpl });
   assert.equal(await make(async () => Response.json({ error: { code: 'precondition_failed' } }, { status: 412 })).write(key, {}), null);
+  for (const operation of ['read', 'write']) {
+    await assert.rejects(make(async () => Response.json({ error: { code: 'rate_limited' } }, {
+      status: 429, headers: { 'retry-after': '1' },
+    }))[operation](key, {}), { code: 'RATE_LIMITED', retryAfter: 1 });
+  }
   assert.equal(await make(async () => new Response(null, { status: 404 })).read(key), null);
   for (const fn of [async () => { throw new Error('network'); }, async () => Response.json({ error: { code: 'forbidden' } }, { status: 403 }),
     async () => Response.json({ pathname: key }), async () => new Response('invalid JSON')]) {

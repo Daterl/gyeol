@@ -118,7 +118,7 @@ test('private share adapter translates definite conditional conflicts and unknow
   await assert.rejects(() => store.list('shares/'), { code: 'STORAGE_ERROR' });
 });
 
-test('Blob ETags survive the public HTTP boundary for rotate and revoke CAS', async () => {
+test('logical revisions isolate public management CAS from Blob ETag variants', async () => {
   let revision = 0;
   const values = new Map();
   const client = {
@@ -149,7 +149,7 @@ test('Blob ETags survive the public HTTP boundary for rotate and revoke CAS', as
         etag: `"blob-${++revision}"`,
       };
       values.set(pathname, value);
-      return { etag: value.etag, pathname };
+      return { etag: `"write-${revision}"`, pathname };
     },
     async list({ prefix }) {
       return {
@@ -210,7 +210,8 @@ test('Blob ETags survive the public HTTP boundary for rotate and revoke CAS', as
     { service, shareId },
   );
   const currentEtag = publicRead.headers.get('x-share-etag');
-  assert.equal(currentEtag, manifest.etag);
+  assert.match(currentEtag, /^"[a-f0-9]{64}"$/);
+  assert.notEqual(currentEtag, manifest.etag);
 
   const manage = (action, key, etag) =>
     handleManage(
