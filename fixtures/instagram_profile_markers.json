@@ -1,0 +1,23 @@
+{
+  "_source": "Verbatim slices of https://www.instagram.com/<handle>/ fetched logged-out with a Googlebot User-Agent on 2026-09-18. HTTP 200, no cost. Full pages are 1.1-2.1MB, so only the region carrying the marker is kept.",
+  "private": {
+    "handle": "hauny_bee",
+    "http_status": 200,
+    "html": "ting_ruling\":null,\"has_any_clips\":false,\"is_private\":true},\"xig_logged_out_dynamic_dialog_info\":{\"shared_entity_id\":\"6024842245\",\"user\":{\"pk\":\"6024842245\",\"username\":\"hauny_bee\",\"profile_pic_url\":\"https:\\/\\/scontent-gmp1-1.cdninstagram.com\\/v\\/t51.2885-19\\/43779382_719334041756804_4371260277547597824_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=102&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2Zp"
+  },
+  "public": {
+    "handle": "hong_a1302",
+    "http_status": 200,
+    "html": "ating_ruling\":null,\"has_any_clips\":true,\"is_private\":false},\"xig_logged_out_dynamic_dialog_info\":{\"shared_entity_id\":\"4261541625\",\"user\":{\"pk\":\"4261541625\",\"username\":\"hong_a1302\",\"profile_pic_url\":\"https:\\/\\/scontent-gmp1-1.cdninstagram.com\\/v\\/t51.2885-19\\/317259947_1712178705849601_3603159677789441739_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=108&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InBy"
+  },
+  "missing": {
+    "handle": "gyeol68nonexistentaccount9z",
+    "http_status": 200,
+    "html": "alse}],1]],\"require\":[[\"CometPrelude\"],[\"JSScheduler\"],[\"ServerJS\"],[\"ScheduledApplyEach\"],[\"CometResourceScheduler\"],[\"PolarisErrorRoot.entrypoint\"],[\"PolarisErrorRoot.react\"],[\"CometPlatformRootClient\",\"initialize\",[\"__inst_af5d41d9_0_0_3u\",\"RequireDeferredReference\"],[{\"ConfigOrBuilder\":{\"__m\":\"__inst_af5d41d9_0_0_3u\"},\"backgroundRouteInfo\":{\"route\":null,\"timeSpentMetaData\":null},\"additional_ro"
+  },
+  "public_dotted": {
+    "handle": "29cm.official",
+    "http_status": 200,
+    "html": "ating_ruling\":null,\"has_any_clips\":true,\"is_private\":false},\"xig_logged_out_dynamic_dialog_info\":{\"shared_entity_id\":\"14829120\",\"user\":{\"pk\":\"14829120\",\"username\":\"29cm.official\",\"profile_pic_url\":\"https:\\/\\/scontent-gmp1-1.cdninstagram.com\\/v\\/t51.2885-19\\/462632175_403035459337568_4253474768896955062_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=1&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2Zp"
+  }
+}

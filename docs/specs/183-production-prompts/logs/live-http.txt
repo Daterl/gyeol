@@ -1,0 +1,4 @@
+PASS 3 photos / empty prompt: HTTP 200, contract, photo IDs/order/evidence (4729 ms)
+PASS 3 photos / written prompt: HTTP 200, contract, photo IDs/order/evidence (3835 ms)
+PASS 15 photos / empty prompt: HTTP 200, contract, photo IDs/order/evidence (8841 ms)
+PASS 15 photos / written prompt: HTTP 200, contract, photo IDs/order/evidence (16715 ms)

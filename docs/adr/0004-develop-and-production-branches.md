@@ -13,8 +13,8 @@
 
 | 브랜치 / PR | 용도 | Vercel |
 |---|---|---|
-| `develop` | GitHub 기본 브랜치·개발 통합 | Preview |
-| `feat/*`, `fix/*`, `docs/*` → `develop` | 최신 origin/develop에서 분기, 사람 리뷰 후 squash merge | Preview |
+| `develop` | GitHub 기본 브랜치·개발 통합 | 사용자가 GitHub Actions에서 수동 Preview 실행 |
+| `feat/*`, `fix/*`, `docs/*` → `develop` | 최신 origin/develop에서 분기, 사람 리뷰 후 squash merge | 자동 Preview 없음 |
 | `develop` → `main` | 배포할 변경이 준비됐을 때 만드는 릴리스 PR, 사람 리뷰 후 merge commit | main 반영 시 Production |
 
 main의 최신 merge `e9020fcf0b757177142f5fef259764795439e6c5`에서 develop을 만들었다. 기존 미커밋 변경과 작업 브랜치는 보존한다. 전환 시 열린 PR은 0개였으며, 이미 병합된 PR의 base는 소급 변경하지 않는다. 새 작업은 origin/develop 기준으로 시작한다.
@@ -28,7 +28,7 @@ AI는 로컬 구현·검증과 Draft PR 생성까지 진행한다. 사람 리뷰
 - 원격 main과 새 develop이 생성 시 같은 SHA인지 확인했다.
 - GitHub `default_branch=develop` 확인. 로컬 remote HEAD도 develop으로 맞춘다.
 - [Vercel Production 설정](https://vercel.com/jangwons-projects-c001fb62/gyeol/settings/environments/production)의 Branch Tracking 입력값이 **main**임을 GitHub 기본 브랜치 변경 후 직접 확인했다. Vercel 설정은 변경하지 않았다.
-- Preview 배포 자체를 끄는 정책은 아니다. 검토용 Preview는 계속 사용하며 main의 공개 URL 갱신만 릴리스 시점으로 제한한다.
+- 2026-09-20부터 Preview는 비용과 배포 노이즈를 줄이기 위해 자동 실행하지 않는다. GitHub Actions의 `Vercel Preview (manual)`을 실행하면 최신 develop을 배포한다. main 반영 시 Production 자동 배포는 유지한다.
 - 첫 develop 변경의 Preview 배포와 이후 실제 릴리스는 각각 실행 후 증거를 기록한다. 브랜치 생성 자체를 릴리스 기능 검증 완료로 표시하지 않는다.
 
-작업 순서: `origin/develop → 작업 브랜치 → Draft PR(base: develop) → 사람 merge → Preview 검증 → 릴리스 PR(base: main) → 사람 merge → Production 검증`.
+작업 순서: `origin/develop → 작업 브랜치 → Draft PR(base: develop) → 사람 merge → 필요할 때 수동 Preview → 릴리스 PR(base: main) → 사람 merge → Production 검증`.

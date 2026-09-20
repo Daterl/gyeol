@@ -1,0 +1,67 @@
+
+> gyeol@0.1.0 test:production
+> next build && node scripts/test-production-generation.mjs
+
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 725ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.9s
+  Running TypeScript ...
+  Finished TypeScript in 1508ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/4) ...
+  Generating static pages using 11 workers (1/4) 
+  Generating static pages using 11 workers (2/4) 
+  Generating static pages using 11 workers (3/4) 
+✓ Generating static pages using 11 workers (4/4) in 74ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/analyze
+├ ƒ /api/feed
+├ ƒ /api/generate
+├ ƒ /api/ingest
+├ ƒ /api/manage/[shareId]
+├ ƒ /api/profile
+├ ƒ /api/profile-cache/cleanup
+├ ƒ /api/profile/session
+├ ƒ /api/share-blob-upload
+├ ƒ /api/share-cleanup
+├ ƒ /api/share-upload
+├ ƒ /api/share/[shareId]
+├ ƒ /api/share/[shareId]/image/[photoId]
+├ ○ /icon.svg
+└ ƒ /share/[shareId]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+▲ Next.js 16.3.5
+- Local:         http://127.0.0.1:59324
+- Network:       http://127.0.0.1:59324
+✓ Ready in 84ms
+✓ Running next.config.ts took 17ms
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 3/empty/all: {"error":{"code":"MODEL_HTTP","message":"문장을 만들지 못했어요. 입력을 확인하거나 나중에 다시 시도해 주세요.","retryable":false}}
+
+502 !== 200
+
+    at file:///Users/chowonjae/orca/workspaces/gyeol/issue-183-20260919/scripts/test-production-generation.mjs:51:16
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 502,
+  expected: 200,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

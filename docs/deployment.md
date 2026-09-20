@@ -21,9 +21,15 @@ GitHub Vercel App은 `Only select repositories → Daterl/gyeol`로 설치했다
 
 Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치를 develop으로 바꾼 뒤에도 Vercel Production 설정에서 main을 다시 확인했다. 환경변수는 아직 없으며 실제 모델 A1 실측은 pending이다.
 
+`ANTHROPIC_API_KEY`만 설정해서는 모델을 호출하지 않는다. 서버 전용 `GYEOL_MODEL_PROVIDER_ENABLED=1`을 함께 설정해야 `/api/analyze`가 모델 경로를 사용하고 `/api/generate`가 생성 요청을 허용한다. 미설정·`0`·`true`·오타는 모두 비활성으로 처리한다.
+
+`GYEOL_ANALYSIS_RECEIPT_SECRET`은 32자 이상의 서버 전용 값으로 Preview와 Production에 각각 설정한다. 분석 응답과 피드 요청 사이의 동일 바이트 중복 근거만 인증하며 `ANTHROPIC_API_KEY`, `APIFY_TOKEN`, `APIFY_INGEST_RECEIPT_SECRET`과 값을 공유하지 않는다. 미설정이면 분석과 순서 기능은 동작하지만 중복 사진 빼기 권고는 정직하게 0개로 남는다.
+
 ## 개발과 공개 배포 분리
 
-[ADR-0004](adr/0004-develop-and-production-branches.md)에 따라 작업 브랜치와 기능 PR의 기준은 **develop**이다. develop/작업 브랜치는 Preview에서 확인한다. 배포할 때만 **develop → main** 릴리스 PR을 사람이 merge commit으로 병합한다. main 반영이 Production 자동 배포를 일으키며, Preview 통과를 Production 인수로 기록하지 않는다. Vercel 보호 설정·환경변수·Production 추적 브랜치는 이번 전환에서 변경하지 않았다.
+[ADR-0004](adr/0004-develop-and-production-branches.md)에 따라 작업 브랜치와 기능 PR의 기준은 **develop**이다. develop/작업 브랜치 push는 자동 배포하지 않는다. 필요할 때 GitHub Actions의 `Vercel Preview (manual)`을 실행하면 Deploy Hook이 최신 develop을 Preview로 배포한다. 배포할 때만 **develop → main** 릴리스 PR을 사람이 merge commit으로 병합한다. main 반영이 Production 자동 배포를 일으키며, Preview 통과를 Production 인수로 기록하지 않는다.
+
+Vercel Git 설정은 `main: true`, `**: false`다. `**`는 `/`가 들어간 작업 브랜치까지 포함한다. 겹치는 규칙 중 하나가 `true`면 배포하는 Vercel 규칙에 따라 main만 자동 Production 대상이고 나머지는 수동 Preview 대상이다. Deploy Hook URL은 GitHub Actions secret `VERCEL_PREVIEW_DEPLOY_HOOK`에만 저장하며 문서·로그에 기록하지 않는다.
 
 ## 인수 증거
 

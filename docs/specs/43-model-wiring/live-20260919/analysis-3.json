@@ -1,0 +1,275 @@
+{
+  "status": "MEASURED",
+  "started_at": "2026-09-19T04:38:46.936Z",
+  "revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "environment": "local-node-library",
+  "node": "v22.22.3",
+  "requested_count": 3,
+  "processing": "sequential",
+  "cache": "reset before every photo",
+  "configured_model": "claude-opus-5",
+  "timeout_ms": 20000,
+  "results": [
+    {
+      "photo_id": "measurement_1",
+      "input_bytes": 743673,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+      "status": "MEASURED",
+      "wall_ms": 11944.588792,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 11925.621125,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:38:58.886Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 494,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_1",
+        "file_ref": "measurement_1",
+        "input_index": 0,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니",
+          "스마트폰",
+          "숄더백",
+          "재킷",
+          "울타리",
+          "돌담",
+          "나무"
+        ],
+        "has_face": true,
+        "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+        "describable_facts": [
+          "사람 한 명이 화면 가운데에 옆을 보고 서 있다",
+          "파란색과 연두색 줄무늬가 들어간 회색 비니를 쓰고 있다",
+          "회색 소매와 남색 몸판의 긴팔 상의를 입고 있다",
+          "오른팔을 머리 위로 들어 올리고 있다",
+          "한 손에 스마트폰을 들고 있다",
+          "어깨에 올리브색 가방을 메고 있다",
+          "팔에 청록색 재킷을 걸치고 있다",
+          "뒤에 검은색 금속 울타리와 회색 돌담이 있다",
+          "울타리 뒤로 초록 잎의 나무와 관목이 보인다",
+          "화면 아래쪽에 흰색 한글 글자와 분홍색 하트 이모지가 겹쳐져 있다",
+          "강한 햇빛이 비쳐 바닥과 벽에 그림자가 생겼다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:38:58.886Z"
+      }
+    },
+    {
+      "photo_id": "measurement_2",
+      "input_bytes": 743673,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+      "status": "MEASURED",
+      "wall_ms": 13284.998749999999,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 13266.896375,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:39:12.171Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 556,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_2",
+        "file_ref": "measurement_2",
+        "input_index": 1,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "니트 비니",
+          "스마트폰",
+          "숄더백",
+          "재킷",
+          "돌담",
+          "울타리",
+          "나뭇잎"
+        ],
+        "has_face": true,
+        "text_in_image": "가을 출근룩 고민돼서",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에 서서 측면으로 얼굴을 보이고 있다",
+          "회색 바탕에 파란색과 노란색 줄무늬가 있는 니트 모자를 쓰고 있다",
+          "오른팔을 머리 위로 올려 손을 머리 근처에 두고 있다",
+          "회색 소매와 남색 몸판이 대비되는 긴팔 상의를 입고 있다",
+          "한 손에 스마트폰을 들고 있다",
+          "어깨에 올리브색 가방을 메고 있다",
+          "팔에 청록색 겉옷을 걸치고 있다",
+          "긴 검은 머리가 어깨 아래로 내려와 있다",
+          "배경에 검은색 금속 울타리와 회색 돌담이 있다",
+          "울타리 뒤로 초록색 잎이 무성한 식물이 보인다",
+          "햇빛이 강해 배경 바닥에 뚜렷한 그림자가 생겼다",
+          "화면 하단에 흰색 한글 문구가 두 줄로 겹쳐져 있다",
+          "문구 끝에 분홍색 하트 이모지가 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:39:12.171Z"
+      }
+    },
+    {
+      "photo_id": "measurement_3",
+      "input_bytes": 399210,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3463a0661c083d4e9aad05a6b54df5e4a92075c0f0aa499266ead76174e792a2",
+      "status": "MEASURED",
+      "wall_ms": 9300.784833000002,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 9271.805,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:39:21.472Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 528,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_3",
+        "file_ref": "measurement_3",
+        "input_index": 2,
+        "color": {
+          "hue_mean": 177.5,
+          "sat_mean": 0.254,
+          "bright_mean": 0.317,
+          "palette_hex": [
+            "#121919",
+            "#384041",
+            "#223435"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "fullshot",
+        "subjects": [
+          "사람",
+          "줄무늬 비니",
+          "청록색 재킷",
+          "베이지색 백팩",
+          "가방 참",
+          "회색 바지",
+          "유리문",
+          "벽돌 벽"
+        ],
+        "has_face": true,
+        "text_in_image": "꺅 월요일 -!",
+        "describable_facts": [
+          "사람 한 명이 옆으로 서서 고개를 돌려 카메라 쪽을 보고 있다",
+          "파랑·연두·회색 가로 줄무늬 비니를 쓰고 있다",
+          "청록색 재킷과 회색 바지를 입고 있다",
+          "베이지색 백팩을 한쪽 어깨로 메고 있다",
+          "백팩 끈에 붉은 원형 참과 주황색 털뭉치가 달린 흰 파우치가 걸려 있다",
+          "화면 오른쪽에 어두운 벽돌 벽과 유리면이 보인다",
+          "화면 왼쪽 배경에 유리문과 금속 기둥, 바깥 건물이 보인다",
+          "바닥은 어두운 색이며 반사가 보인다",
+          "화면 상단 오른쪽에 흰색 기호로 그려진 테두리와 글자가 겹쳐져 있다",
+          "화면 오른쪽 중간에 흰색 원형 기호 세 개가 세로로 배치되어 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:39:21.472Z"
+      }
+    }
+  ],
+  "billing": {
+    "status": "PENDING",
+    "actual_usd": null,
+    "estimated_usd": null,
+    "reason": "Provider usage is not billed cost; failed and retried requests may also be billed."
+  },
+  "quality": {
+    "status": "PENDING",
+    "reason": "Compare recorded analysis against original photos; contract validity does not establish visual truth."
+  },
+  "server_deadline": {
+    "status": "PENDING",
+    "reason": "Local calls do not measure Vercel function limits or round trips."
+  },
+  "unique_image_count": 2,
+  "total_ms": 34530.425208,
+  "completed_count": 3,
+  "failed_count": 0,
+  "unattempted_count": 0,
+  "usage_coverage": 3
+}

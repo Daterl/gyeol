@@ -37,10 +37,11 @@ E4/E5/E7 및 사진에 없는 장소·인물·시간·감정 여부는 원본 �
 
 ## 실행 방법
 
-1. `.env.example`을 `.env`로 복사하고 `ANTHROPIC_API_KEY`를 넣는다. `.env`는 gitignore 대상이다.
-2. `node --env-file-if-exists=.env scripts/measure-model.js fixtures/jpeg/solid_white_baseline.jpg`로 한 장을 호출한다. 15장 측정은 파일 경로 15개를 인자로 준다.
+1. 서버 전용 환경 파일의 `ANTHROPIC_API_KEY`와 계정에 필요한 `ANTHROPIC_WORKSPACE_ID`를 설정한다. 비밀값을 로그·커밋에 남기지 않는다.
+2. `node --env-file=/private/path/.env.local scripts/measure-model.js photo1.jpg photo2.jpg photo3.jpg`로 3장을 호출한다. 1장 진단 또는 15장 측정도 지원하며 파일 경로를 해당 수만큼 전달한다. 품질 검증에는 합성 단색 fixture 대신 원본 사진을 쓴다.
 3. 기존 HTTP 진입점은 `node --env-file-if-exists=.env scripts/server.js`의 `/api/analyze`다. POST 입력은 `photo_id`, `input_index`, `file_ref`, `image_base64`, 선택 `media_type`이다.
-4. 현재 Next.js 앱에는 `/api/analyze` 어댑터가 없다. 이번 변경은 기존 라이브러리·Node HTTP 진입점 배선이며 Next.js/UI 통합 완료를 뜻하지 않는다.
+4. 현재 Next.js `/api/analyze` 어댑터는 `src/app/api/analyze/route.ts`에 있다. 측정 스크립트는 라이브러리를 직접 호출하므로 Next.js/Vercel HTTP 왕복과 구분한다.
+5. 저장한 분석 JSON을 `scripts/measure-generation.js analysis.json`에 전달하면 빈/작성 지향으로 생성 2회를 측정한다. 같은 환경 파일을 로드하고 완전한 3장/15장 실모델 분석을 사용한다.
 
 이 명세의 모델 실패 전파·재시도 정책은 이전 사진 분석 명세의 자동 폴백 정책을 대체한다. 이전 이슈 보고서는 당시 검증 기록으로 보존한다.
 
@@ -48,9 +49,9 @@ E4/E5/E7 및 사진에 없는 장소·인물·시간·감정 여부는 원본 �
 실제 HTTP 대신 주입 fetch로 정상·HTTP 오류·타임아웃·거절·잘린 응답·깨진 JSON을 재현한다.
 서로 다른 유효 모델 응답을 기존 프로필/순서 경로로 보내 불변식만 대조한다.
 실호출 실행기는 키가 없으면 PENDING과 사유를 출력하고 네트워크를 호출하지 않는다.
-키 설정 뒤 사진 파일을 1개 또는 15개 순차 실행하며 실제 elapsed_ms와 usage만 기록한다. 금액은 실제 청구 증거 없이는 PENDING이다.
+키 설정 뒤 사진 파일을 1개·3개·15개 순차 실행한다. 입력 해시·크기·해상도, 시간, usage, 원본 대조용 분석과 안전한 실패 코드를 기록한다. 금액은 실제 청구 증거 없이는 PENDING이다.
 
 공식 계약 확인: 2026-09-17, [Messages](https://platform.claude.com/docs/en/api/messages/create), [Models](https://platform.claude.com/docs/en/api/models/list).
-계정 접근·실제 응답·지연·비용은 키 부재로 PENDING이다. 계정 접근은 사진 요청마다 다시 확인하며 GET 시간도 elapsed_ms에 포함한다. attempts는 Messages POST 응답 횟수이며 전체 HTTP 요청 횟수가 아니다.
+과거 키 부재 기록과 구분한 현재 실호출 결과·품질 발견·비용 및 배포 잔여는 [2026-09-19 보고서](live-20260919/report.md)에 있다. 계정 접근은 사진 요청마다 다시 확인하며 GET 시간도 elapsed_ms에 포함한다. attempts는 Messages POST 응답 횟수이며 전체 HTTP 요청 횟수가 아니다.
 프롬프트 캐싱·effort 설정은 효과와 모델 지원을 실측하지 않았으므로 요청에서 생략한다.
 호출자가 일부 사진 오류를 받으면 그 사진을 성공 슬롯으로 대체하지 말고 오류를 표시하고 재요청해야 한다. 이 PR은 다중 사진 작업의 UI/재개 동작을 만들지 않는다.

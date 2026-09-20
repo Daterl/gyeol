@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-09-19T04:44:00Z",
+  "productSha": "a4110c19ec71c6c40a4385cf17879d89bec53e4f",
+  "browser": "151.0.7922.34",
+  "surface": "local production build; synthetic sample; viewport emulation, not physical mobile",
+  "widths": [
+    {
+      "width": 360,
+      "overflow": 0,
+      "profileRequired": true,
+      "keyboardSkipLink": true,
+      "editedCaptionPosition": 2,
+      "download": "JSON parsed"
+    },
+    {
+      "width": 390,
+      "overflow": 0,
+      "profileRequired": true,
+      "keyboardSkipLink": true,
+      "editedCaptionPosition": 2,
+      "download": "JSON parsed"
+    },
+    {
+      "width": 430,
+      "overflow": 0,
+      "profileRequired": true,
+      "keyboardSkipLink": true,
+      "editedCaptionPosition": 2,
+      "download": "JSON parsed"
+    },
+    {
+      "width": 1280,
+      "overflow": 0,
+      "profileRequired": true,
+      "keyboardSkipLink": true,
+      "editedCaptionPosition": 2,
+      "download": "JSON parsed"
+    }
+  ],
+  "routes": [
+    {
+      "path": "/api/share-upload",
+      "status": 503,
+      "error": "NOT_CONFIGURED",
+      "cacheControl": "no-store"
+    },
+    {
+      "path": "/api/share/acceptance-probe",
+      "status": 503,
+      "error": "NOT_CONFIGURED",
+      "cacheControl": "no-store"
+    },
+    {
+      "path": "/api/share/acceptance-probe/image/acceptance-photo",
+      "status": 503,
+      "error": "NOT_CONFIGURED",
+      "cacheControl": "no-store"
+    },
+    {
+      "path": "/api/manage/acceptance-probe",
+      "status": 503,
+      "error": "NOT_CONFIGURED",
+      "cacheControl": "no-store"
+    },
+    {
+      "path": "/api/share-blob-upload",
+      "status": 503,
+      "error": "NOT_CONFIGURED",
+      "cacheControl": "no-store"
+    }
+  ],
+  "preview": {
+    "url": "https://gyeol-photos-155o7c7ie-jangwons-projects-c001fb62.vercel.app",
+    "status": 302,
+    "redirectOrigin": "https://vercel.com",
+    "redirectPath": "/sso-api"
+  }
+}

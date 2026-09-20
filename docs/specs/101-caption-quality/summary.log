@@ -1,0 +1,39 @@
+{
+  "before": {
+    "attempts": 12,
+    "success": 10,
+    "failures": [
+      {
+        "run": 9,
+        "code": "MODEL_TIMEOUT",
+        "message": "Model operation exceeded its deadline."
+      },
+      {
+        "run": 10,
+        "code": "MODEL_CONTRACT",
+        "message": "Model output does not match the requested photo contract."
+      }
+    ],
+    "filled": 116,
+    "omitted": 34,
+    "mean_caption_length": 98.6,
+    "description_marker_count": 104,
+    "formal_description_ending_count": 0,
+    "uploaded_photo_notes": 150,
+    "unmatched_notes": 149,
+    "banned_hits": []
+  },
+  "after": {
+    "attempts": 12,
+    "success": 12,
+    "failures": [],
+    "filled": 141,
+    "omitted": 39,
+    "mean_caption_length": 40.5,
+    "description_marker_count": 75,
+    "formal_description_ending_count": 0,
+    "uploaded_photo_notes": 180,
+    "unmatched_notes": 7,
+    "banned_hits": []
+  }
+}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useId, useRef } from 'react';
 import { Button } from '../../components/ui/button';
 import type { SelectedPhoto } from '../editor/store';
+import { MAX_SELECTED_PHOTOS } from './input';
 
 export function PhotoPicker({
   label,
@@ -50,25 +51,19 @@ export function PhotoPicker({
         </span>
       </legend>
       {photos.length > 0 && (
-        <ul className="mb-4 grid grid-cols-2 gap-3 min-[390px]:grid-cols-3 sm:grid-cols-5">
+        <ul className="mb-4 grid grid-cols-3 gap-1">
           {photos.map((photo, index) => (
             <li key={photo.photo_id} className="min-w-0">
-              <a
-                href={photo.url}
-                target="_blank"
-                rel="noreferrer"
-                className="block bg-card"
-                aria-label={`${index + 1}번 ${photo.file.name} 원본 보기`}
-              >
+              <div className="bg-card">
                 <Image
                   alt={`${index + 1}번 선택 사진: ${photo.file.name}`}
-                  className="aspect-[4/5] w-full object-cover"
+                  className="aspect-square w-full object-cover"
                   width={160}
                   height={200}
                   src={photo.url}
                   unoptimized
                 />
-              </a>
+              </div>
               <div className="flex items-center justify-between gap-1 border-b border-line py-1">
                 <span className="font-mono text-sm">
                   {String(index + 1).padStart(2, '0')}
@@ -99,7 +94,7 @@ export function PhotoPicker({
               : '사진을 여기에 놓아 주세요.'}
           </p>
           <p className="mt-1 text-sm text-muted-foreground" id={hint}>
-            JPEG·PNG·WebP, 한 장 3MB · 최대 20장
+            JPEG·PNG·WebP · 최대 {MAX_SELECTED_PHOTOS}장
           </p>
         </div>
         <Button
@@ -109,7 +104,7 @@ export function PhotoPicker({
           variant="outline"
           className="min-h-11 px-5"
           onClick={() => input.current?.click()}
-          disabled={photos.length === 20}
+          disabled={photos.length >= MAX_SELECTED_PHOTOS}
           aria-describedby={hint}
         >
           {label === '올릴 사진' ? '사진 고르기' : '기존 사진 고르기'}

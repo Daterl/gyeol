@@ -11,9 +11,15 @@ import { previewOutput } from './preview-output';
 export function OutputControls({
   store,
   mock = false,
+  confirmPaid = false,
+  generationDisabled = false,
+  allowExport = true,
 }: {
   store: EditorStore;
   mock?: boolean;
+  confirmPaid?: boolean;
+  generationDisabled?: boolean;
+  allowExport?: boolean;
 }) {
   const draft = useStore(store, (state) => state.draft);
   const request = useStore(store, (state) => state.request);
@@ -34,12 +40,20 @@ export function OutputControls({
       <Button
         type="button"
         className="min-h-11"
-        disabled={loading}
-        onClick={() =>
+        disabled={loading || generationDisabled}
+        onClick={() => {
+          if (
+            confirmPaid &&
+            !mock &&
+            !window.confirm(
+              '문장 생성에 유료 모델 호출이 발생할 수 있어요. 계속할까요?',
+            )
+          )
+            return;
           void store
             .getState()
-            .generate(undefined, mock ? previewOutput : undefined)
-        }
+            .generate(undefined, mock ? previewOutput : undefined);
+        }}
       >
         {loading
           ? request.operation === 'feed'
@@ -50,6 +64,7 @@ export function OutputControls({
             : '제목과 문장 제안받기'}
       </Button>
       {draft &&
+        allowExport &&
         (['json', 'txt'] as const).map((format) => (
           <Button
             key={format}
@@ -59,7 +74,11 @@ export function OutputControls({
             disabled={!draft.title.trim()}
             onClick={() => {
               try {
-                downloadOutput(store.getState().exportDraft(), format);
+                const state = store.getState();
+                const output = state.exportDraft();
+                const feed = state.original?.feed;
+                if (!feed) throw new Error('Missing feed');
+                downloadOutput(output, feed, format);
                 setNotice(
                   `${format === 'json' ? 'JSON' : '텍스트'} 파일을 준비했어요.`,
                 );
@@ -107,10 +126,14 @@ export function CaptionEditor({
   store,
   id,
   mock = false,
+  confirmPaid = false,
+  generationDisabled = false,
 }: {
   store: EditorStore;
   id: string;
   mock?: boolean;
+  confirmPaid?: boolean;
+  generationDisabled?: boolean;
 }) {
   const slot = useStore(store, (state) =>
     state.draft?.slots.find((item) => item.photo_id === id),
@@ -140,14 +163,14 @@ export function CaptionEditor({
         </p>
       )}
       <label className="mt-3 block text-sm">
-        {slot.position}번 사진의 문장
+        {slot.position}번 사진에 내가 쓸 문장
         <textarea
           rows={3}
           value={slot.text ?? ''}
           onChange={(event) =>
             store.getState().editCaption(id, event.target.value)
           }
-          placeholder="이대로 비워 두어도 괜찮아요."
+          placeholder="제안된 쓸 거리를 지우고 내 말로 써 보세요. 이대로 비워 두어도 괜찮아요."
           className="mt-2 w-full rounded-md border border-line bg-card p-3 text-base"
         />
       </label>
@@ -157,12 +180,20 @@ export function CaptionEditor({
             type="button"
             variant="outline"
             className="min-h-11"
-            disabled={loading}
-            onClick={() =>
+            disabled={loading || generationDisabled}
+            onClick={() => {
+              if (
+                confirmPaid &&
+                !mock &&
+                !window.confirm(
+                  '문장 생성에 유료 모델 호출이 발생할 수 있어요. 계속할까요?',
+                )
+              )
+                return;
               void store
                 .getState()
-                .generate(id, mock ? previewOutput : undefined)
-            }
+                .generate(id, mock ? previewOutput : undefined);
+            }}
           >
             그래도 채우기
           </Button>

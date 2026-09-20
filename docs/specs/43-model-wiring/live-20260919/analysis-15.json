@@ -1,0 +1,1216 @@
+{
+  "status": "MEASURED",
+  "started_at": "2026-09-19T04:39:21.577Z",
+  "revision": "fa586eefc1b85b0873ffe17aef5a2bcfd8434225",
+  "environment": "local-node-library",
+  "node": "v22.22.3",
+  "requested_count": 15,
+  "processing": "sequential",
+  "cache": "reset before every photo",
+  "configured_model": "claude-opus-5",
+  "timeout_ms": 20000,
+  "results": [
+    {
+      "photo_id": "measurement_1",
+      "input_bytes": 743673,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+      "status": "MEASURED",
+      "wall_ms": 13296.682083,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 13276.895959,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:39:34.891Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 515,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_1",
+        "file_ref": "measurement_1",
+        "input_index": 0,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니 모자",
+          "스마트폰",
+          "숄더백",
+          "재킷",
+          "돌담",
+          "울타리",
+          "나무"
+        ],
+        "has_face": true,
+        "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에 서서 옆을 보고 있다",
+          "파란색과 연두색 줄무늬가 있는 회색 비니를 쓰고 있다",
+          "한쪽 팔을 머리 위로 들어 올리고 있다",
+          "다른 손에 스마트폰을 들고 있다",
+          "회색 소매와 남색 몸판의 상의를 입고 있다",
+          "청록색 재킷을 팔에 걸치고 있다",
+          "올리브색 가방을 어깨에 메고 있다",
+          "긴 검은 머리가 어깨 아래로 내려와 있다",
+          "뒤에 검은 금속 울타리와 돌담이 있다",
+          "울타리 뒤로 초록 잎의 나무와 관목이 보인다",
+          "햇빛이 강해 돌담과 바닥에 그림자가 뚜렷하다",
+          "화면 하단에 흰 글씨 두 줄과 분홍 하트 이모지가 겹쳐져 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:39:34.892Z"
+      }
+    },
+    {
+      "photo_id": "measurement_2",
+      "input_bytes": 743673,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3572e38d964856409c149e19c3fb2d933dc97365d876cae5d2a4f86e1a7abcf3",
+      "status": "MEASURED",
+      "wall_ms": 12621.358334,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 12587.452125,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:39:47.513Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 522,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_2",
+        "file_ref": "measurement_2",
+        "input_index": 1,
+        "color": {
+          "hue_mean": 53,
+          "sat_mean": 0.288,
+          "bright_mean": 0.375,
+          "palette_hex": [
+            "#16150f",
+            "#434040",
+            "#6b6765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니",
+          "스마트폰",
+          "숄더백",
+          "재킷",
+          "돌담",
+          "울타리",
+          "관목"
+        ],
+        "has_face": true,
+        "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에 서서 측면을 향해 얼굴을 왼쪽으로 돌리고 있다",
+          "파란색과 연두색 줄무늬가 있는 회색 비니를 쓰고 있다",
+          "회색 소매와 남색 몸판이 있는 상의를 입고 있다",
+          "오른팔을 머리 위로 들어 올리고 있다",
+          "한 손에 케이스를 씌운 스마트폰을 들고 있다",
+          "어깨에 올리브색 가방을 메고 있다",
+          "팔에 청록색 재킷을 걸치고 있다",
+          "뒤쪽에 검은 금속 울타리와 회색 돌담이 있다",
+          "울타리 뒤로 초록 잎의 관목과 나무가 보인다",
+          "햇빛이 강해 바닥과 벽에 그림자가 뚜렷하다",
+          "화면 하단에 흰색 한글 글자 두 줄과 분홍색 하트 이모지가 겹쳐져 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:39:47.513Z"
+      }
+    },
+    {
+      "photo_id": "measurement_3",
+      "input_bytes": 399210,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "3463a0661c083d4e9aad05a6b54df5e4a92075c0f0aa499266ead76174e792a2",
+      "status": "MEASURED",
+      "wall_ms": 8766.197874999998,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 8729.235084000004,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:39:56.279Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 545,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_3",
+        "file_ref": "measurement_3",
+        "input_index": 2,
+        "color": {
+          "hue_mean": 177.5,
+          "sat_mean": 0.254,
+          "bright_mean": 0.317,
+          "palette_hex": [
+            "#121919",
+            "#384041",
+            "#223435"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "fullshot",
+        "subjects": [
+          "사람",
+          "줄무늬 비니",
+          "청록색 재킷",
+          "베이지색 백팩",
+          "키링",
+          "회색 바지",
+          "유리문",
+          "벽돌 벽"
+        ],
+        "has_face": true,
+        "text_in_image": "꺅 월요일 -!",
+        "describable_facts": [
+          "사람 한 명이 몸을 옆으로 돌린 채 고개를 카메라 쪽으로 돌리고 서 있다",
+          "파랑·연두·회색 가로 줄무늬 비니를 쓰고 있다",
+          "청록색 재킷과 회색 바지, 흰색 운동화를 착용하고 있다",
+          "베이지색 백팩을 양어깨에 메고 있다",
+          "백팩에 자주색 원형 키링과 주황색 털뭉치가 달린 흰색 파우치가 걸려 있다",
+          "오른쪽 배경에 검은 벽돌 벽과 유리문이 있다",
+          "왼쪽 배경에 유리벽과 출입 게이트로 보이는 구조물이 있다",
+          "바닥이 반사되어 인물의 형태가 비친다",
+          "화면 상단 오른쪽에 흰색 선으로 된 말풍선 형태의 그래픽이 겹쳐져 있다",
+          "그래픽 안에 '꺅 월요일 -!' 과 얼굴 모양 기호가 적혀 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:39:56.279Z"
+      }
+    },
+    {
+      "photo_id": "measurement_4",
+      "input_bytes": 541269,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "569e617bc954fbcb84101610936ef283f031fce395de0fa58a609702cc05c2c2",
+      "status": "MEASURED",
+      "wall_ms": 11626.272790999996,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 11621.505250000002,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:07.906Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 555,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_4",
+        "file_ref": "measurement_4",
+        "input_index": 3,
+        "color": {
+          "hue_mean": 201.7,
+          "sat_mean": 0.198,
+          "bright_mean": 0.661,
+          "palette_hex": [
+            "#ccdfe3",
+            "#dfebea",
+            "#c1c7c3"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니 모자",
+          "노트북",
+          "책상",
+          "사탕 봉지",
+          "젤리",
+          "블라인드 창"
+        ],
+        "has_face": true,
+        "text_in_image": "HARIBO Goldbears",
+        "describable_facts": [
+          "네 장의 사진이 2x2 격자로 배치되어 있다",
+          "같은 사람이 회색·파랑·연두 줄무늬 비니를 쓰고 있다",
+          "회색 스웨터를 입고 안에 짙은 색 상의를 입고 있다",
+          "흰색 책상 위에 검은 노트북이 놓여 있다",
+          "왼쪽 위 사진에서 한 손으로 턱을 괴고 있다",
+          "오른쪽 위 사진에서 손을 들어 올리고 있다",
+          "왼쪽 아래 사진에서 작은 봉지를 손에 들고 카메라 쪽으로 보이고 있다",
+          "봉지에 'HARIBO Goldbears'가 인쇄되어 있다",
+          "오른쪽 아래 사진에서 손가락으로 주황색 곰 모양 젤리를 집어 들고 있다",
+          "뒤쪽 벽면에 가로 블라인드가 쳐진 창이 있고 밝은 빛이 들어온다",
+          "창 너머로 건물과 크레인이 보인다",
+          "왼쪽에 검은 사무용 의자 등받이가 보인다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:07.906Z"
+      }
+    },
+    {
+      "photo_id": "measurement_5",
+      "input_bytes": 683407,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "9b6385f1d2db748cd3f42427c2517ea7ec9f1ac1ccf4088e2d9e122f7e77d7a8",
+      "status": "MEASURED",
+      "wall_ms": 9481.151999999995,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 9473.425958,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:17.387Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 576,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_5",
+        "file_ref": "measurement_5",
+        "input_index": 4,
+        "color": {
+          "hue_mean": 124.1,
+          "sat_mean": 0.251,
+          "bright_mean": 0.467,
+          "palette_hex": [
+            "#121313",
+            "#c3c2bc",
+            "#3f3f3a"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "비니",
+          "라글란 티셔츠",
+          "재킷",
+          "숄더백",
+          "블록 담장",
+          "철제 울타리",
+          "나뭇잎"
+        ],
+        "has_face": true,
+        "text_in_image": "올가을 유행템 '래글런 티셔츠'",
+        "describable_facts": [
+          "사람 한 명이 서서 고개를 숙이고 두 손으로 청록색 재킷을 들고 있다",
+          "회색 바탕에 파랑과 연두 줄무늬가 있는 비니를 쓰고 있다",
+          "상의는 몸통이 남색이고 소매가 회색인 긴팔 티셔츠다",
+          "가슴 부분에 붉은 작은 자수와 글자가 있다",
+          "겨자색 스웨이드 질감의 숄더백을 오른쪽 어깨에 메고 있다",
+          "하의는 회색 무늬가 있는 바지다",
+          "뒤에 회색 블록 담장과 검은 철제 울타리가 있다",
+          "담장 위와 오른쪽에 초록 잎의 식물이 보인다",
+          "햇빛이 강해 담장에 뚜렷한 그림자가 생겨 있다",
+          "화면 오른쪽 위에 검은 바탕 흰 글씨 자막이 있다",
+          "화면 왼쪽 중앙에 '비니+아우터+팬츠의 오묘한 컬러 플레이' 자막이 있다",
+          "바닥에 회색 보도블록이 보인다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:17.387Z"
+      }
+    },
+    {
+      "photo_id": "measurement_6",
+      "input_bytes": 398489,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "14383c7c0563a99f532f8643df607868f76f77f78b3457d6b119f80839a700cb",
+      "status": "MEASURED",
+      "wall_ms": 14094.692875000008,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 14080.226500000004,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:31.481Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 508,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_6",
+        "file_ref": "measurement_6",
+        "input_index": 5,
+        "color": {
+          "hue_mean": 228.9,
+          "sat_mean": 0.198,
+          "bright_mean": 0.51,
+          "palette_hex": [
+            "#bdc4bc",
+            "#10131c",
+            "#423b3a"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "가죽 재킷",
+          "일회용 컵",
+          "휴대폰",
+          "토트백",
+          "창문",
+          "식물"
+        ],
+        "has_face": true,
+        "text_in_image": "차분한 가을 무드의 브라운&네이비 컬러 매치",
+        "describable_facts": [
+          "사람 한 명이 옆모습으로 앉아 있다",
+          "오른손에 뚜껑과 빨대가 꽂힌 흰색 일회용 컵을 들고 빨대를 입에 물고 있다",
+          "왼손에 휴대폰을 들고 아래를 내려다보고 있다",
+          "갈색 가죽 재킷 안에 흰색 상의를 입고 있다",
+          "짙은 색 바지를 입고 다리를 꼬고 앉아 있다",
+          "오른쪽 아래에 갈색 토트백이 놓여 있다",
+          "목에 흰색 줄이 걸려 있다",
+          "배경 오른쪽에 유리창과 그 너머 초록 잎이 보인다",
+          "화면 왼쪽은 밝은 흰색 벽면과 회색 테이블로 비어 있다",
+          "이미지 중앙 오른쪽에 검은 배경의 흰 글자 자막 상자가 있다",
+          "머리카락은 검고 길다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:31.481Z"
+      }
+    },
+    {
+      "photo_id": "measurement_7",
+      "input_bytes": 321760,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "177697a9844cda46e54807ac1a9d543934e5cc0f7f131c643d67b854b15617a8",
+      "status": "MEASURED",
+      "wall_ms": 8526.040416999997,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 8486.28291699999,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:40.007Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 510,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_7",
+        "file_ref": "measurement_7",
+        "input_index": 6,
+        "color": {
+          "hue_mean": 9.6,
+          "sat_mean": 0.178,
+          "bright_mean": 0.494,
+          "palette_hex": [
+            "#161417",
+            "#463d36",
+            "#dbe1e4"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "가죽 재킷",
+          "흰 티셔츠",
+          "일회용 컵",
+          "휴대폰",
+          "토트백",
+          "바지"
+        ],
+        "has_face": false,
+        "text_in_image": "카펜터 디테일이 포인트",
+        "describable_facts": [
+          "사람 한 명이 갈색 가죽 재킷과 흰 티셔츠, 짙은 색 바지를 입고 서 있다",
+          "한 손으로 뚜껑과 빨대가 꽂힌 흰색 컵을 들고 빨대를 입에 물고 있다",
+          "인물의 얼굴 윗부분은 화면 밖으로 잘려 있다",
+          "다른 손에 휴대폰을 들고 있고 팔에 갈색 가방 끈이 걸려 있다",
+          "바닥은 회색 사각 타일로 포장되어 있다",
+          "배경에 흰색 벽과 유리창이 있고 창 안쪽에 금속 용기들이 보인다",
+          "화면 왼쪽 아래에 바지 옆주머니를 근접 촬영한 작은 사진이 겹쳐져 있다",
+          "작은 사진 위에 검은 배경의 흰 글씨로 '카펜터 디테일이 포인트'가 적혀 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:40.007Z"
+      }
+    },
+    {
+      "photo_id": "measurement_8",
+      "input_bytes": 539205,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "52dc54ddcaf8ad3cd8f52145a1ae95ee4a83c9221830a22993e158c7d47d6040",
+      "status": "MEASURED",
+      "wall_ms": 9185.336542000005,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 9180.948916000008,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:40:49.193Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 590,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_8",
+        "file_ref": "measurement_8",
+        "input_index": 7,
+        "color": {
+          "hue_mean": 33.3,
+          "sat_mean": 0.256,
+          "bright_mean": 0.43,
+          "palette_hex": [
+            "#151413",
+            "#706e6c",
+            "#443c3c"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "갈색 토트백",
+          "갈색 가죽 재킷",
+          "스마트폰",
+          "플라스틱 컵 음료",
+          "나무 벤치",
+          "관목"
+        ],
+        "has_face": true,
+        "text_in_image": "Latte",
+        "describable_facts": [
+          "사람 한 명이 흰색 반팔 티셔츠와 짙은 색 바지를 입고 있다",
+          "사람이 한 손에 스마트폰을 들고 고개를 숙여 화면을 보고 있다",
+          "갈색 가죽 재킷이 팔에 걸쳐져 있다",
+          "갈색 토트백이 나무 벤치 위에 놓여 있다",
+          "뚜껑에 빨대가 꽂힌 플라스틱 컵에 흰색 음료가 들어 있다",
+          "컵 뚜껑에 'Latte'라고 손글씨가 적혀 있다",
+          "오른쪽에 초록색 관목이 있다",
+          "벤치는 붉은 갈색 나무판과 회색 테두리로 되어 있다",
+          "강한 직사광선이 비쳐 바닥과 인물에 뚜렷한 그림자가 생겼다",
+          "오른쪽 위에 같은 인물이 토트백을 어깨에 메고 서 있는 작은 사진이 겹쳐져 있다",
+          "배경에 어두운 유리로 된 건물 외벽과 출입문이 보인다",
+          "배경 오른쪽 위에 한국어와 영어가 적힌 안내판이 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:40:49.193Z"
+      }
+    },
+    {
+      "photo_id": "measurement_9",
+      "input_bytes": 649553,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "6d4d32aadea32673a9c53f0a60a3270edb89ee879d01a3f9cd15cca5008c21f5",
+      "status": "MEASURED",
+      "wall_ms": 11228.381916999992,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 11223.517124999998,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:00.421Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 711,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_9",
+        "file_ref": "measurement_9",
+        "input_index": 8,
+        "color": {
+          "hue_mean": 57.5,
+          "sat_mean": 0.31,
+          "bright_mean": 0.368,
+          "palette_hex": [
+            "#161711",
+            "#3e3d3f"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "스웨트셔츠",
+          "휴대폰",
+          "캔버스 가방",
+          "청바지",
+          "벽돌 담",
+          "화단",
+          "나무"
+        ],
+        "has_face": true,
+        "text_in_image": "HAAG",
+        "describable_facts": [
+          "사람 한 명이 벽돌 담 위에 앉아 있다",
+          "앉은 사람은 옆모습으로 보이며 얼굴이 아래를 향하고 있다",
+          "남색 하프집업 스웨트셔츠에 'HAAG' 흰 글자가 크게 붙어 있다",
+          "스웨트셔츠 안에 가로 줄무늬 상의를 겹쳐 입었다",
+          "연한 색 청바지를 입고 있다",
+          "한 손으로 휴대폰을 들고 있다",
+          "무릎 위에 크림색 캔버스 가방이 놓여 있고 'haag' 소문자 글자가 보인다",
+          "가방 아래쪽에 'pocket' 글자가 보인다",
+          "뒤쪽에 붉은 꽃이 핀 화단과 초록 잎이 있다",
+          "앞쪽 아래는 붉은 벽돌 담이다",
+          "햇빛이 강해 잎과 옷에 밝은 부분과 그늘이 뚜렷하다",
+          "오른쪽 아래에 다른 사진이 사각형으로 겹쳐 올려져 있다",
+          "겹쳐진 작은 사진에는 같은 남색 'HAAG' 상의를 입고 서서 크림색 가방을 든 사람이 있다",
+          "작은 사진 배경에 노란 검정 줄무늬가 있는 기둥이 있다",
+          "화면 오른쪽 위에 흰 글자가 든 검은 텍스트 박스가 있다",
+          "화면 아래쪽 가운데에 흰 글자가 든 검은 텍스트 박스가 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:00.421Z"
+      }
+    },
+    {
+      "photo_id": "measurement_10",
+      "input_bytes": 536709,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "e61c4b3496d08726d721d96b1d7d7d7d409764452c4601d9b4118c0b9d9ffb00",
+      "status": "MEASURED",
+      "wall_ms": 9557.890958999997,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 9543.731708000007,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:09.979Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 554,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_10",
+        "file_ref": "measurement_10",
+        "input_index": 9,
+        "color": {
+          "hue_mean": 60.8,
+          "sat_mean": 0.265,
+          "bright_mean": 0.458,
+          "palette_hex": [
+            "#0f1215",
+            "#989590",
+            "#c3c0ba"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "줄무늬 상의",
+          "네이비 후드 스웨트셔츠",
+          "베이지 천 가방",
+          "청바지",
+          "나무 벽",
+          "아스팔트 바닥"
+        ],
+        "has_face": false,
+        "text_in_image": "일교차가 심한 가을에 스웨트셔츠를 아우터처럼!",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에 서 있고 얼굴은 화면 위쪽으로 잘려 보이지 않는다",
+          "회색과 흰색 가로 줄무늬 상의를 입고 있다",
+          "네이비색 후드 스웨트셔츠를 어깨에 걸쳐 앞으로 늘어뜨리고 있다",
+          "오른손으로 어깨에 멘 베이지색 천 가방의 끈을 잡고 있다",
+          "연한 색 청바지를 입고 있다",
+          "배경 왼쪽 위에 가로결의 나무 벽이 있다",
+          "바닥은 회색 아스팔트이며 그림자가 드리워져 있다",
+          "화면 왼쪽 아래에 같은 인물이 전신으로 찍힌 작은 사진이 겹쳐져 있다",
+          "검은 사각형 안에 흰 글씨로 문구가 적혀 있다",
+          "햇빛이 화면 오른쪽 위에서 들어와 강한 그림자를 만든다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:09.979Z"
+      }
+    },
+    {
+      "photo_id": "measurement_11",
+      "input_bytes": 555953,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "22baf70665ff8b47c1d8f7ce8232041f0dadd82e28bea80579a5d99dc9263738",
+      "status": "MEASURED",
+      "wall_ms": 13104.432958999998,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 13099.355749999988,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:23.084Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 573,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_11",
+        "file_ref": "measurement_11",
+        "input_index": 10,
+        "color": {
+          "hue_mean": 251.5,
+          "sat_mean": 0.317,
+          "bright_mean": 0.455,
+          "palette_hex": [
+            "#111017",
+            "#3a3846",
+            "#464765"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "closeup",
+        "subjects": [
+          "사람",
+          "반집업 맨투맨",
+          "건물",
+          "오토바이",
+          "나무",
+          "보도블록"
+        ],
+        "has_face": true,
+        "text_in_image": "HAAG",
+        "describable_facts": [
+          "사람 한 명이 화면 중앙에서 팔을 뻗어 카메라를 향해 있다",
+          "인물은 긴 검은 머리를 하고 있다",
+          "남색 하프집업 스웨트셔츠를 입고 있으며 앞면에 밝은 베이지색 대문자 'HAAG'가 붙어 있다",
+          "스웨트셔츠 안에 가로 줄무늬가 있는 밝은색 상의를 겹쳐 입었다",
+          "지퍼가 가슴 아래까지 내려가 있다",
+          "인물의 시선은 카메라 오른쪽을 향한다",
+          "배경에 유리창이 많은 고층 건물들과 전선이 보인다",
+          "배경 오른쪽에 'GS25' 간판이 있는 상가가 있다",
+          "배경 오른쪽 도로변에 오토바이 여러 대가 서 있다",
+          "배경 왼쪽에 나무와 주황색 크레인 구조물이 있다",
+          "화면 오른쪽 아래에 원통형 콘크리트 구조물이 있다",
+          "하늘은 맑고 푸른색이다",
+          "화면 왼쪽 중간에 검은 사각 배경의 흰 글씨 자막이 겹쳐져 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:23.084Z"
+      }
+    },
+    {
+      "photo_id": "measurement_12",
+      "input_bytes": 180807,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "5b488aabf8695911cc7cced0913d49da1c58297dd60a36cbc6a23f9ba6c3a1c4",
+      "status": "MEASURED",
+      "wall_ms": 8957.066749999998,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 8952.386041000005,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:32.040Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 559,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_12",
+        "file_ref": "measurement_12",
+        "input_index": 11,
+        "color": {
+          "hue_mean": 24.2,
+          "sat_mean": 0.161,
+          "bright_mean": 0.742,
+          "palette_hex": [
+            "#f2dfcc",
+            "#46413d",
+            "#e7e1e0"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "원숭이 봉제인형",
+          "봉제인형 백팩",
+          "패턴 원피스"
+        ],
+        "has_face": true,
+        "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+        "describable_facts": [
+          "사람 한 명이 몸을 옆으로 돌린 채 고개를 카메라 쪽으로 돌리고 있다",
+          "단발 길이의 검은 머리에 앞머리가 있다",
+          "흰 바탕에 작은 캐릭터 무늬가 반복된 긴소매 옷을 입고 있다",
+          "큰 원숭이 모양 봉제인형을 두 팔로 안고 있다",
+          "등에 갈색 봉제인형 형태의 백팩을 메고 있고 베이지색 끈이 양어깨에 걸쳐 있다",
+          "배경은 베이지에서 흰색으로 이어지는 단색 그라데이션이다",
+          "화면 왼쪽 위에 체크·물방울·단색 무늬의 도형 그래픽 네 개가 있다",
+          "화면 아래쪽에 흰색 한글 문구 두 줄이 있다",
+          "문구 끝에 얼굴을 가린 원숭이 이모지와 노란 하트 이모지가 있다",
+          "오른쪽 아래 구석에 '© HINAKUU' 라는 작은 글자가 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:32.041Z"
+      }
+    },
+    {
+      "photo_id": "measurement_13",
+      "input_bytes": 180807,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "5b488aabf8695911cc7cced0913d49da1c58297dd60a36cbc6a23f9ba6c3a1c4",
+      "status": "MEASURED",
+      "wall_ms": 8090.923584000004,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 8084.256833000007,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:40.132Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 516,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_13",
+        "file_ref": "measurement_13",
+        "input_index": 12,
+        "color": {
+          "hue_mean": 24.2,
+          "sat_mean": 0.161,
+          "bright_mean": 0.742,
+          "palette_hex": [
+            "#f2dfcc",
+            "#46413d",
+            "#e7e1e0"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "원숭이 인형",
+          "봉제 인형 가방",
+          "패턴 원피스"
+        ],
+        "has_face": true,
+        "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+        "describable_facts": [
+          "한 사람이 몸을 옆으로 돌린 채 고개를 카메라 쪽으로 돌리고 있다",
+          "짧은 단발머리에 앞머리가 있다",
+          "흰 바탕에 작은 캐릭터 무늬가 반복된 긴소매 옷을 입고 있다",
+          "팔로 큰 베이지색 원숭이 모양 봉제 인형을 안고 있다",
+          "등에는 갈색 봉제 인형 형태의 가방을 메고 있고 끈이 어깨를 지난다",
+          "배경은 베이지에서 밝은 크림색으로 이어지는 단색이다",
+          "화면 왼쪽 위와 오른쪽 위에 체크·물방울 무늬의 도형 그래픽이 배치되어 있다",
+          "화면 아래쪽에 흰색 한글 문구와 이모지가 두 줄로 얹혀 있다",
+          "오른쪽 아래에 '© HINAKUU' 표기가 작게 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:40.132Z"
+      }
+    },
+    {
+      "photo_id": "measurement_14",
+      "input_bytes": 232772,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "d6ddda93a95ba3a50c6da8b0e3c818e00402c7bfa9e8a5cbf30cbe49ebc19d41",
+      "status": "MEASURED",
+      "wall_ms": 15237.05004099998,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 15232.457834,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:41:55.369Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 565,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_14",
+        "file_ref": "measurement_14",
+        "input_index": 13,
+        "color": {
+          "hue_mean": 21.5,
+          "sat_mean": 0.16,
+          "bright_mean": 0.834,
+          "palette_hex": [
+            "#f4e0c8",
+            "#b4a4a2",
+            "#c4b5b5"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "midshot",
+        "subjects": [
+          "사람",
+          "회색 후드 집업",
+          "인형 키링",
+          "체크무늬 치마",
+          "캐릭터 일러스트"
+        ],
+        "has_face": true,
+        "text_in_image": "BOCBOK",
+        "describable_facts": [
+          "사람 한 명이 화면 가운데에 서서 양손을 얼굴 옆으로 들고 있다",
+          "회색 집업 후드를 머리에 쓰고 있으며 후드 양옆에 둥근 귀 모양 장식이 달려 있다",
+          "왼손에 끈이 달린 털 소재 인형 키링을 들고 있다",
+          "후드 집업 가슴 부분에 분홍색 사각 패치가 붙어 있다",
+          "후드 집업 아래로 격자무늬 치마가 보인다",
+          "배경은 연한 베이지색 단색이다",
+          "상단에 흰 물방울무늬가 들어간 연두색 글자 'BOCBOK'이 크게 배치되어 있다",
+          "화면 중앙 왼쪽에 연노란 배경의 한글 문구 '바나나를 사랑하는 쿠숭이와 복복이 만났어요'가 있다",
+          "오른쪽 어깨 부근에 흰색 캐릭터 일러스트가 겹쳐져 있다",
+          "오른쪽 하단에 '© HINAKUU' 표기가 있다",
+          "시선은 화면 왼쪽을 향하고 있다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:41:55.369Z"
+      }
+    },
+    {
+      "photo_id": "measurement_15",
+      "input_bytes": 198600,
+      "width": 1080,
+      "height": 1350,
+      "media_type": "image/jpeg",
+      "sha256": "ff1dadce2ed803d60a811604e5fe6a8f20270c06e7f4447e37554a46ab10a6a4",
+      "status": "MEASURED",
+      "wall_ms": 13716.56349999999,
+      "execution": {
+        "source": "vision_model",
+        "reason": "api_key_present",
+        "elapsed_ms": 13712.225999999995,
+        "attempts": 1,
+        "verified_at": "2026-09-19T04:42:09.085Z",
+        "cache_hit": false
+      },
+      "usage": {
+        "input_tokens": 4529,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 609,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "global"
+      },
+      "analysis": {
+        "schema_version": "1.0",
+        "photo_id": "measurement_15",
+        "file_ref": "measurement_15",
+        "input_index": 14,
+        "color": {
+          "hue_mean": 24.2,
+          "sat_mean": 0.126,
+          "bright_mean": 0.833,
+          "palette_hex": [
+            "#cbbfbb",
+            "#f1dec7",
+            "#f4ede3"
+          ]
+        },
+        "composition": "full_frame",
+        "scale": "fullshot",
+        "subjects": [
+          "사람",
+          "회색 후드집업",
+          "원숭이 모양 봉제인형",
+          "체크무늬 치마",
+          "격자무늬 배경"
+        ],
+        "has_face": true,
+        "text_in_image": "포토카드를 넣을 수 있는 PVC 주머니",
+        "describable_facts": [
+          "다섯 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다",
+          "회색 후드집업을 입은 사람이 여러 사진에 등장한다",
+          "후드에 둥근 귀 모양 장식이 달려 있다",
+          "한 사진에서 사람이 작은 카드를 옷의 투명 주머니에 넣고 있다",
+          "한 사진에서 사람이 원숭이 얼굴 모양의 봉제인형을 두 손으로 안고 있다",
+          "한 사진에는 크림색 배경 위에 엎드린 원숭이 봉제인형만 놓여 있다",
+          "한 사진에서 사람이 뒤돌아 서 있고 후드집업 등판에 원숭이 얼굴 도안이 있다",
+          "사람이 체크무늬 치마를 입고 있다",
+          "노란 배경의 글상자에 '포토카드를 넣을 수 있는 PVC 주머니'라고 적혀 있다",
+          "노란 배경의 글상자에 '등 뒤에도 쿠숭이 있숭'이라고 적혀 있다",
+          "오른쪽 아래에 '© HINAKUU' 표기가 있다",
+          "각 사진의 배경은 크림색 단색이다"
+        ],
+        "quality_flags": [],
+        "analysis_source": "vision_model",
+        "model": "claude-opus-5",
+        "analyzed_at": "2026-09-19T04:42:09.085Z"
+      }
+    }
+  ],
+  "billing": {
+    "status": "PENDING",
+    "actual_usd": null,
+    "estimated_usd": null,
+    "reason": "Provider usage is not billed cost; failed and retried requests may also be billed."
+  },
+  "quality": {
+    "status": "PENDING",
+    "reason": "Compare recorded analysis against original photos; contract validity does not establish visual truth."
+  },
+  "server_deadline": {
+    "status": "PENDING",
+    "reason": "Local calls do not measure Vercel function limits or round trips."
+  },
+  "unique_image_count": 13,
+  "total_ms": 167490.40929200003,
+  "completed_count": 15,
+  "failed_count": 0,
+  "unattempted_count": 0,
+  "usage_coverage": 15
+}

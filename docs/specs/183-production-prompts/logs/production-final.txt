@@ -1,0 +1,55 @@
+
+> gyeol@0.1.0 test:production
+> next build && node scripts/test-production-generation.mjs
+
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 14ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 887ms
+  Running TypeScript ...
+  Finished TypeScript in 1195ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/4) ...
+  Generating static pages using 11 workers (1/4) 
+  Generating static pages using 11 workers (2/4) 
+  Generating static pages using 11 workers (3/4) 
+✓ Generating static pages using 11 workers (4/4) in 186ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/analyze
+├ ƒ /api/feed
+├ ƒ /api/generate
+├ ƒ /api/ingest
+├ ƒ /api/manage/[shareId]
+├ ƒ /api/profile
+├ ƒ /api/profile-cache/cleanup
+├ ƒ /api/profile/session
+├ ƒ /api/share-blob-upload
+├ ƒ /api/share-cleanup
+├ ƒ /api/share-upload
+├ ƒ /api/share/[shareId]
+├ ƒ /api/share/[shareId]/image/[photoId]
+├ ○ /icon.svg
+└ ƒ /share/[shareId]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+PASS 3 photos / empty prompt / all: HTTP 200, response contract, exact complete system prompt
+PASS 3 photos / empty prompt / slot: HTTP 200, response contract, exact complete system prompt
+PASS 3 photos / written prompt / all: HTTP 200, response contract, exact complete system prompt
+PASS 3 photos / written prompt / slot: HTTP 200, response contract, exact complete system prompt
+PASS 15 photos / empty prompt / all: HTTP 200, response contract, exact complete system prompt
+PASS 15 photos / empty prompt / slot: HTTP 200, response contract, exact complete system prompt
+PASS 15 photos / written prompt / all: HTTP 200, response contract, exact complete system prompt
+PASS 15 photos / written prompt / slot: HTTP 200, response contract, exact complete system prompt
+PASS missing-prompt oracle: all four individual omissions rejected
+PASS missing bundled style_guard: HTTP 500, no partial-prompt success
+PASS missing bundled title: HTTP 500, no partial-prompt success
+PASS missing bundled caption: HTTP 500, no partial-prompt success
+PASS missing bundled omit_reason: HTTP 500, no partial-prompt success

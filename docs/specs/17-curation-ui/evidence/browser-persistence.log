@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "touchContext": true,
+  "differentAccountBlocked": true,
+  "freshSnapshotBlocked": true,
+  "sameReferenceResumes": true,
+  "signedProfileReferenceOnly": true,
+  "immutableThenReconfirmed": true,
+  "legacyLocalStorageIndexedDbMigration": true,
+  "reloadPreserves": [
+    "photos",
+    "normalizedWebP",
+    "prompt",
+    "title",
+    "caption",
+    "order",
+    "exclude",
+    "crop",
+    "profileSharing",
+    "confirmation reference"
+  ],
+  "restoredAndExpiredConnectionsBlocked": true,
+  "transientReadPreservesData": true,
+  "resetClearsMetadataAndIndexedDB": true,
+  "feedCalls": 1,
+  "generationCalls": 2,
+  "consoleErrors": []
+}

@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { analyzeWithModel, modelRoute } from '../lib/model.js';
+import { analyzeWithModel, modelRoute, requestStructuredModel } from '../lib/model.js';
 import { analyzePhoto, resetAnalysisState, analysisCounters } from '../lib/photo_analysis.js';
 import handler from '../api/analyze.js';
+
+process.env.GYEOL_MODEL_PROVIDER_ENABLED = '1';
 
 const bytes = await readFile(new URL('../fixtures/jpeg/solid_white_baseline.jpg', import.meta.url));
 const observation = { color: { hue_mean: 0, sat_mean: 0, bright_mean: 1, palette_hex: ['#ffffff'] },
@@ -18,6 +20,30 @@ const fetchFor = callback => async (url, options) => url.includes('/models/') ? 
 test('missing key reports heuristic route and direct model calls fail without network', async () => {
   assert.deepEqual(modelRoute('  '), { source: 'heuristic', reason: 'missing_api_key' });
   await assert.rejects(analyzeWithModel({ ...args, apiKey: '', fetchImpl: () => { throw new Error('must not call'); } }), { code: 'MODEL_KEY_MISSING' });
+});
+
+test('provider calls require the exact opt-in value and recheck before transport', async () => {
+  const previous = process.env.GYEOL_MODEL_PROVIDER_ENABLED;
+  let calls = 0;
+  try {
+    for (const value of [undefined, '0', 'true', 'typo']) {
+      if (value === undefined) delete process.env.GYEOL_MODEL_PROVIDER_ENABLED;
+      else process.env.GYEOL_MODEL_PROVIDER_ENABLED = value;
+      assert.deepEqual(modelRoute('fake-key'), { source: 'heuristic', reason: 'provider_disabled' });
+      await assert.rejects(requestStructuredModel({ ...args, content: [], fetchImpl: () => { calls++; throw new Error('must not call'); } }), { code: 'MODEL_KEY_MISSING' });
+    }
+    assert.equal(calls, 0);
+    process.env.GYEOL_MODEL_PROVIDER_ENABLED = '1';
+    assert.deepEqual(modelRoute('fake-key'), { source: 'vision_model', reason: 'api_key_present' });
+    await analyzeWithModel({ ...args, fetchImpl: async url => {
+      calls++;
+      return response(url.includes('/models/') ? { id: 'test-model' } : message());
+    } });
+    assert.equal(calls, 2);
+  } finally {
+    if (previous === undefined) delete process.env.GYEOL_MODEL_PROVIDER_ENABLED;
+    else process.env.GYEOL_MODEL_PROVIDER_ENABLED = previous;
+  }
 });
 
 test('wire format carries exactly one image and returns observed usage/model/time', async () => {
@@ -77,7 +103,7 @@ test('refusal, truncation, malformed JSON and non-object responses fail explicit
   await assert.rejects(analyzeWithModel({ ...args, mediaType: 'image/svg+xml' }), { code: 'MODEL_MEDIA_UNSUPPORTED' });
 });
 
-test('key alone activates production client and loaded prompt; invalid response is not cached', async () => {
+test('enabled key activates production client and loaded prompt; invalid response is not cached', async () => {
   resetAnalysisState();
   const oldKey = process.env.ANTHROPIC_API_KEY;
   const oldFetch = globalThis.fetch;

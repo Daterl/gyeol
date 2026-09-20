@@ -1,0 +1,5084 @@
+{
+  "3/empty": {
+    "feed": {
+      "schema_version": "1.1",
+      "feed_id": "fd_plan_photo_b4dac173_a8c294aa",
+      "session_id": "eval-3",
+      "applied_profile": {
+        "target_profile_id": null,
+        "photo_plan_id": "plan_photo_b4dac173",
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 94.5,
+              "sat_mean": 0.28,
+              "bright_mean": 0.36,
+              "palette_hex": [
+                "#16150f",
+                "#434040",
+                "#6b6765"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 1,
+              "negative_space": 0
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0.6666666666666666,
+              "fullshot": 0.33333333333333337
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "사람",
+              "비니",
+              "가방",
+              "휴대폰",
+              "담장"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_01",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "지향을 넣지 않아, 올린 사진에서 보이는 것만으로 이 사진을 첫 자리에 뒀어요. 이 사진으로 묶음을 열어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1",
+                "note": "서사 규칙 R1 — 지향이 없으면 첫 자리는 기본 규칙(관측된 밝기) 점수가 가장 높은 사진. 지향이 없어 올린 사진에서 관측된 밝기·채도·색 거리만으로 정했다 (지향 방향 점수는 쓰지 않았다)"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1.decision",
+                "note": "밝기 0.375 · 한 색이 넓게 깔리지 않은 화면이라 첫 자리 기본 규칙에 입력 3장 중 가장 잘 맞아 1번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.placement_limit",
+                "note": "서로 구분할 모델 관측이 부족하다. 비교할 인접 사진이 없거나, 인접 사진과의 밝기·채도 차이도 설명 임계값 미만이다. 추가 구도·관계·시간은 추정하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": true
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_02",
+          "narrative_role": "turn",
+          "rationale": {
+            "value": "이 사진을 전환 자리에 두어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3",
+                "note": "서사 규칙 R3 — 전환 자리는 남은 사진 중 채도가 가장 높은 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3.decision",
+                "note": "채도 0.288 로 남은 사진 중 가장 진해 2번 전환 자리에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.placement_limit",
+                "note": "서로 구분할 모델 관측이 부족하다. 비교할 인접 사진이 없거나, 인접 사진과의 밝기·채도 차이도 설명 임계값 미만이다. 추가 구도·관계·시간은 추정하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 1,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_03",
+          "narrative_role": "closer",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다”. 이 사진으로 묶음을 마무리해요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "측정값 — 밝기 0.317 · 채도 0.254 · 한 색이 넓게 깔리지 않음 · 주요 색 #121919"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2",
+                "note": "서사 규칙 R2 — 마지막 자리는 남은 사진 중 가장 어두운 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2.decision",
+                "note": "밝기 0.317 로 남은 사진 중 가장 어두워 마지막 3번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "청록색 재킷을 입고 있다",
+              "베이지색 배낭을 메고 있다",
+              "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+              "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+              "뒤로 유리문과 유리벽이 있다",
+              "유리에 반사된 형상이 보인다",
+              "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+              "바닥에 어두운 색 매트가 깔려 있다"
+            ],
+            "adjacent_overlap": 0.926,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 3,
+        "output_count": 3,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-19T11:30:43.223Z",
+      "omit_summary": {
+        "recommended_count": 0,
+        "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+      }
+    },
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "c29_Dc-2OOrFBnb_01.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "c29_Dc-2OOrFBnb_02.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 177.5,
+            "sat_mean": 0.254,
+            "bright_mean": 0.317,
+            "palette_hex": [
+              "#121919",
+              "#384041",
+              "#223435"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "청록색 재킷",
+            "베이지색 배낭",
+            "유리문",
+            "회색 바지",
+            "운동화"
+          ],
+          "has_face": true,
+          "text_in_image": "꺅 월요일-!",
+          "describable_facts": [
+            "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "청록색 재킷을 입고 있다",
+            "베이지색 배낭을 메고 있다",
+            "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+            "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+            "뒤로 유리문과 유리벽이 있다",
+            "유리에 반사된 형상이 보인다",
+            "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+            "바닥에 어두운 색 매트가 깔려 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:26.143Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-19T11:30:43.222Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "kind": "photo_plan",
+        "plan_id": "plan_photo_b4dac173",
+        "source": "photo_only",
+        "sample_size": 3,
+        "completeness": {
+          "visual": 0.8,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 94.5,
+              "sat_mean": 0.28,
+              "bright_mean": 0.36,
+              "palette_hex": [
+                "#16150f",
+                "#434040",
+                "#6b6765"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 1,
+              "negative_space": 0
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0.6666666666666666,
+              "fullshot": 0.33333333333333337
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "사람",
+              "비니",
+              "가방",
+              "휴대폰",
+              "담장"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=3",
+                "note": "사진 3장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        },
+        "target_profile": null,
+        "created_at": "2026-09-19T11:30:43.221Z",
+        "disclaimer": "업로드한 사진 3장에서 관측된 값이며 사용자의 취향·과거 습관이 아니다"
+      },
+      "current_photos": []
+    }
+  },
+  "3/written": {
+    "feed": {
+      "schema_version": "1.0",
+      "feed_id": "fd_tgt_ft_86554f9e_a8c294aa",
+      "session_id": "eval-3",
+      "applied_profile": {
+        "target_profile_id": "tgt_ft_86554f9e",
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "tone_words": {
+            "value": [
+              "사진의 분위기를"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:raw",
+                "note": "사용자가 쓴 표현을 그대로 옮겼다"
+              }
+            ]
+          }
+        },
+        "language": {
+          "ending_style": {
+            "value": "다",
+            "confidence": 0.6,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:담백",
+                "note": "입력 문장에서 \"담백\" 를 찾았다"
+              },
+              {
+                "kind": "rule",
+                "ref": "docs/specs/10-target-profile/spec.md#3",
+                "note": "담백·문어체 → 다체"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_01",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "이 사진으로 묶음을 열어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1",
+                "note": "서사 규칙 R1 — 첫 자리는 지향 방향 점수가 가장 높은 사진. 지향에 구성비도 방향을 정할 문구도 없고 캡션 길이 근거가 없어 기본 규칙만 썼다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1.decision",
+                "note": "밝기 0.375 · 한 색이 넓게 깔리지 않은 화면이라 첫 자리 기본 규칙에 입력 3장 중 가장 잘 맞아 1번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.placement_limit",
+                "note": "서로 구분할 모델 관측이 부족하다. 비교할 인접 사진이 없거나, 인접 사진과의 밝기·채도 차이도 설명 임계값 미만이다. 추가 구도·관계·시간은 추정하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": true
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_02",
+          "narrative_role": "turn",
+          "rationale": {
+            "value": "이 사진을 전환 자리에 두어요. 인접 사진과 구분할 관측이 부족해 이 자리의 내용상 이유는 설명하기 어려워요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3",
+                "note": "서사 규칙 R3 — 전환 자리는 남은 사진 중 채도가 가장 높은 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3.decision",
+                "note": "채도 0.288 로 남은 사진 중 가장 진해 2번 전환 자리에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.placement_limit",
+                "note": "서로 구분할 모델 관측이 부족하다. 비교할 인접 사진이 없거나, 인접 사진과의 밝기·채도 차이도 설명 임계값 미만이다. 추가 구도·관계·시간은 추정하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 1,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_03",
+          "narrative_role": "closer",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다”. 이 사진으로 묶음을 마무리해요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "측정값 — 밝기 0.317 · 채도 0.254 · 한 색이 넓게 깔리지 않음 · 주요 색 #121919"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2",
+                "note": "서사 규칙 R2 — 마지막 자리는 남은 사진 중 가장 어두운 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2.decision",
+                "note": "밝기 0.317 로 남은 사진 중 가장 어두워 마지막 3번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "청록색 재킷을 입고 있다",
+              "베이지색 배낭을 메고 있다",
+              "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+              "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+              "뒤로 유리문과 유리벽이 있다",
+              "유리에 반사된 형상이 보인다",
+              "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+              "바닥에 어두운 색 매트가 깔려 있다"
+            ],
+            "adjacent_overlap": 0.926,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 3,
+        "output_count": 3,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-19T11:30:43.226Z",
+      "omit_summary": {
+        "recommended_count": 0,
+        "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+      }
+    },
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "c29_Dc-2OOrFBnb_01.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "c29_Dc-2OOrFBnb_02.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 177.5,
+            "sat_mean": 0.254,
+            "bright_mean": 0.317,
+            "palette_hex": [
+              "#121919",
+              "#384041",
+              "#223435"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "청록색 재킷",
+            "베이지색 배낭",
+            "유리문",
+            "회색 바지",
+            "운동화"
+          ],
+          "has_face": true,
+          "text_in_image": "꺅 월요일-!",
+          "describable_facts": [
+            "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "청록색 재킷을 입고 있다",
+            "베이지색 배낭을 메고 있다",
+            "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+            "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+            "뒤로 유리문과 유리벽이 있다",
+            "유리에 반사된 형상이 보인다",
+            "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+            "바닥에 어두운 색 매트가 깔려 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:26.143Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-19T11:30:43.226Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "profile_id": "tgt_ft_86554f9e",
+        "axis": "target",
+        "present": true,
+        "source": "freetext",
+        "account_scope": "n/a",
+        "sample_size": 1,
+        "completeness": {
+          "visual": 0.2,
+          "language": 0.2,
+          "sequence": 0
+        },
+        "visual": {
+          "tone_words": {
+            "value": [
+              "사진의 분위기를"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:raw",
+                "note": "사용자가 쓴 표현을 그대로 옮겼다"
+              }
+            ]
+          }
+        },
+        "language": {
+          "ending_style": {
+            "value": "다",
+            "confidence": 0.6,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:담백",
+                "note": "입력 문장에서 \"담백\" 를 찾았다"
+              },
+              {
+                "kind": "rule",
+                "ref": "docs/specs/10-target-profile/spec.md#3",
+                "note": "담백·문어체 → 다체"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        },
+        "raw_freetext": "사진의 분위기를 짧고 담백하게 기록해 줘",
+        "created_at": "2026-09-19T11:30:43.226Z"
+      },
+      "current_photos": []
+    }
+  },
+  "15/empty": {
+    "feed": {
+      "schema_version": "1.1",
+      "feed_id": "fd_plan_photo_5c21dd5d_a76d20ec",
+      "session_id": "eval-15",
+      "applied_profile": {
+        "target_profile_id": null,
+        "photo_plan_id": "plan_photo_5c21dd5d",
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 89.67,
+              "sat_mean": 0.23,
+              "bright_mean": 0.54,
+              "palette_hex": [
+                "#16150f",
+                "#434040",
+                "#6b6765"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 1,
+              "negative_space": 0
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0.8666666666666667,
+              "fullshot": 0.1333333333333333
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "사람",
+              "휴대폰",
+              "비니",
+              "식물",
+              "가죽 재킷"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "concept": {
+        "value": "밝고 어두운 화면이 어우러지는 흐름으로 엮어요.",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_03",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.317 · 채도 0.254"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_04",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.661 · 채도 0.198"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_05",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.467 · 채도 0.251"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_06",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.51 · 채도 0.198"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_07",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.494 · 채도 0.178"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_08",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.43 · 채도 0.256"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_09",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_10",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.458 · 채도 0.265"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_11",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.455 · 채도 0.317"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_12",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_13",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_14",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.834 · 채도 0.16"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_15",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.833 · 채도 0.126"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.bundle_concept",
+            "note": "컨셉은 채도 범위, 밝기 범위 순으로 0.25 이상일 때만 설명한다. 임계값은 설계 상수이며 미달이면 컨셉을 내지 않는다."
+          }
+        ]
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_14",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "지향을 넣지 않아, 올린 사진에서 보이는 것만으로 이 사진을 첫 자리에 뒀어요. 다음 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진 관측: “사람 한 명이 정면을 향해 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "측정값 — 밝기 0.834 · 채도 0.16 · 한 색이 넓게 깔리지 않음 · 주요 색 #f4e0c8"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1",
+                "note": "서사 규칙 R1 — 지향이 없으면 첫 자리는 기본 규칙(관측된 밝기) 점수가 가장 높은 사진. 지향이 없어 올린 사진에서 관측된 밝기·채도·색 거리만으로 정했다 (지향 방향 점수는 쓰지 않았다)"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1.decision",
+                "note": "밝기 0.834 · 한 색이 넓게 깔리지 않은 화면이라 첫 자리 기본 규칙에 입력 15장 중 가장 잘 맞아 1번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "사람 한 명이 정면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 정면을 향해 서 있다",
+              "회색 후드 집업을 입고 후드를 머리에 쓰고 있다",
+              "후드에 둥근 귀 모양 장식 두 개가 달려 있다",
+              "양손을 위로 들어 각각 키링을 들고 있다",
+              "왼쪽 손에 든 키링은 베이지색 케이스 형태다",
+              "상의 가슴 오른쪽에 초록 모자를 쓴 캐릭터 자수가 있다",
+              "상의 왼쪽 가슴 아래에 사각형 패치가 붙어 있다",
+              "하의는 보라색과 검은색 체크 무늬 치마다",
+              "배경은 연한 베이지색 단색이다",
+              "화면 상단에 물방울 무늬가 들어간 연두색 큰 글자가 있다",
+              "화면 중앙에 검은 띠 위 흰 글씨로 한국어 문구가 적혀 있다",
+              "오른쪽 하단에 작은 글씨가 있다"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_09",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 정면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "측정값 — 밝기 0.368 · 채도 0.31 · 한 색이 넓게 깔리지 않음 · 주요 색 #161711"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.284 로 남은 사진 중 가장 멀어 2번에 뒀다 (밝기 0.368 · 채도 0.31)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.834 · 채도 0.16"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "사람 한 명이 정면을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 벽돌 화단 가장자리에 앉아 있다",
+              "앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다",
+              "상의 안에 가로 줄무늬 상의를 겹쳐 입었다",
+              "청바지를 입고 있다",
+              "양손으로 흰색 스마트폰을 들고 화면을 내려다보고 있다",
+              "머리카락은 길고 검은색이며 뒤로 넘겨져 있다",
+              "옆에 베이지색 천 가방이 놓여 있다",
+              "가방에 'haa'로 시작하는 글자가 보인다",
+              "배경에 초록 잎과 붉은 꽃이 있는 식물들이 있다",
+              "화면 오른쪽 아래에 작은 사각형 사진이 겹쳐져 있다",
+              "겹쳐진 작은 사진 속 인물도 'HAAG' 글자가 있는 네이비 상의를 입고 있다",
+              "화면 오른쪽 위에 검은 배경의 한국어 텍스트 상자가 있다",
+              "화면 아래쪽에 검은 배경의 한국어 텍스트 상자가 있다"
+            ],
+            "adjacent_overlap": 0.716,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_15",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진 관측: “여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "측정값 — 밝기 0.833 · 채도 0.126 · 한 색이 넓게 깔리지 않음 · 주요 색 #cbbfbb"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.292 로 남은 사진 중 가장 멀어 3번에 뒀다 (밝기 0.833 · 채도 0.126)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다",
+              "한 사람이 귀가 달린 회색 후드 상의를 입고 있다",
+              "왼쪽 위 사진에서 인물이 상의 앞주머니를 양손으로 벌리고 있다",
+              "오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다",
+              "가운데 왼쪽 사진에 작은 동물 모양 인형이 단독으로 놓여 있다",
+              "오른쪽 아래 사진에서 인물이 뒤돌아 옆을 향해 서 있고 체크무늬 치마를 입고 있다",
+              "왼쪽 아래 사진에서 인물이 후드를 쓰고 한 손을 얼굴 옆에 들고 있다",
+              "노란 배경에 검은 글씨로 '포토카드를 넣을 수 있는 PVC 주머니'라고 적혀 있다",
+              "노란 배경에 검은 글씨로 '등 뒤에도 쿠션이 있숭'이라고 적혀 있다",
+              "배경은 회색과 연두색 격자무늬다",
+              "오른쪽 아래 모서리에 작은 글자가 표기되어 있다"
+            ],
+            "adjacent_overlap": 0.708,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_01",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다”. 이 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.282 로 남은 사진 중 가장 멀어 4번에 뒀다 (밝기 0.375 · 채도 0.288)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.833 · 채도 0.126"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0.718,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_12",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "측정값 — 밝기 0.742 · 채도 0.161 · 한 색이 넓게 깔리지 않음 · 주요 색 #f2dfcc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 5번에 뒀다 (밝기 0.742 · 채도 0.161)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+              "사람은 단발머리에 앞머리가 있다",
+              "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+              "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+              "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+              "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+              "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+              "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+              "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+              "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_02",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 6번에 뒀다 (밝기 0.375 · 채도 0.288)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_13",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "측정값 — 밝기 0.742 · 채도 0.161 · 한 색이 넓게 깔리지 않음 · 주요 색 #f2dfcc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 7번에 뒀다 (밝기 0.742 · 채도 0.161)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+              "사람은 단발머리에 앞머리가 있다",
+              "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+              "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+              "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+              "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+              "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+              "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+              "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+              "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_08",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진 관측: “사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "측정값 — 밝기 0.43 · 채도 0.256 · 한 색이 넓게 깔리지 않음 · 주요 색 #151413"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.186 로 남은 사진 중 가장 멀어 8번에 뒀다 (밝기 0.43 · 채도 0.256)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다",
+              "흰색 반팔 상의와 어두운 색 바지를 입고 있다",
+              "긴 검은 머리를 내리고 있다",
+              "갈색 가죽 재킷이 무릎 위에 걸쳐져 있다",
+              "갈색 토트백이 벤치 위에 놓여 있다",
+              "뚜껑에 빨대가 꽂힌 흰색 일회용 컵이 벤치 위에 놓여 있다",
+              "벤치 뒤로 초록색 관목이 줄지어 있다",
+              "배경에 유리문과 회색 건물 외벽이 보인다",
+              "햇빛이 강해 바닥과 벤치에 뚜렷한 그림자가 생겨 있다",
+              "오른쪽 위에 같은 인물을 담은 작은 사진이 겹쳐져 있다"
+            ],
+            "adjacent_overlap": 0.814,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_04",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다”. 이 사진 관측: “네 장의 사진이 2x2 격자로 배치되어 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "측정값 — 밝기 0.661 · 채도 0.198 · 한 색이 넓게 깔리지 않음 · 주요 색 #ccdfe3"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.17 로 남은 사진 중 가장 멀어 9번에 뒀다 (밝기 0.661 · 채도 0.198)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.43 · 채도 0.256"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "네 장의 사진이 2x2 격자로 배치되어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "네 장의 사진이 2x2 격자로 배치되어 있다",
+              "같은 사람이 네 칸 모두에 등장한다",
+              "파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다",
+              "회색 니트 상의를 입고 있다",
+              "앞에 열린 노트북이 놓여 있고 키보드가 보인다",
+              "오른쪽 아래 칸에서 손가락으로 작은 주황색 젤리를 들어 카메라 쪽으로 내밀고 있다",
+              "왼쪽 아래 칸에서 'HARIBO'라고 적힌 작은 봉지를 들고 있다",
+              "왼쪽 위 칸에서 한 손으로 턱을 괴고 있다",
+              "뒤쪽에 창문과 블라인드가 보인다",
+              "배경이 밝고 흰 톤이다"
+            ],
+            "adjacent_overlap": 0.83,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_11",
+          "narrative_role": "turn",
+          "rationale": {
+            "value": "앞 사진 관측: “네 장의 사진이 2x2 격자로 배치되어 있다”. 이 사진 관측: “사람 한 명이 화면 중앙에서 정면을 보고 있다”. 이 사진을 전환 자리에 두어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "측정값 — 밝기 0.455 · 채도 0.317 · 한 색이 넓게 깔리지 않음 · 주요 색 #111017"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3",
+                "note": "서사 규칙 R3 — 전환 자리는 남은 사진 중 채도가 가장 높은 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3.decision",
+                "note": "채도 0.317 로 남은 사진 중 가장 진해 10번 전환 자리에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.661 · 채도 0.198"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "네 장의 사진이 2x2 격자로 배치되어 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "사람 한 명이 화면 중앙에서 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 화면 중앙에서 정면을 보고 있다",
+              "한쪽 팔을 화면 왼쪽 바깥으로 뻗고 있다",
+              "긴 검은 머리를 내린 상태다",
+              "네이비색 하프집업 스웨트셔츠를 입고 있고 지퍼가 가슴 아래까지 내려와 있다",
+              "스웨트셔츠 안에 가로 줄무늬 상의를 입고 있다",
+              "스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다",
+              "배경에 여러 층 건물과 도로가 보인다",
+              "배경 오른쪽에 오토바이 여러 대가 세워져 있다",
+              "화면 왼쪽에 초록 잎의 나무가 있다",
+              "화면 왼쪽 중간에 검은 배경의 한글 텍스트 상자가 겹쳐져 있다",
+              "하늘이 건물 사이로 밝게 보인다"
+            ],
+            "adjacent_overlap": 0.85,
+            "is_visual_peak": true
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_07",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 화면 중앙에서 정면을 보고 있다”. 이 사진 관측: “사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "측정값 — 밝기 0.494 · 채도 0.178 · 한 색이 넓게 깔리지 않음 · 주요 색 #161417"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.085 로 남은 사진 중 가장 멀어 11번에 뒀다 (밝기 0.494 · 채도 0.178)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.455 · 채도 0.317"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "사람 한 명이 화면 중앙에서 정면을 보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다",
+              "얼굴은 화면 위쪽에서 잘려 턱 아래만 보인다",
+              "갈색 가죽 재킷 안에 흰색 상의를 입고 있다",
+              "진한 색 긴 바지를 입고 있다",
+              "오른손에 휴대폰을 들고 있다",
+              "오른팔에 갈색 토트백을 걸고 있다",
+              "왼쪽 아래에 바지 뒷면을 확대한 작은 사진이 겹쳐져 있다",
+              "작은 사진 위에 흰 배경의 검은 글씨로 '카펜터 디테일이 포인트✨' 라고 적혀 있다",
+              "배경에 흰색 벽과 유리창이 있다",
+              "바닥은 회색 보도블록이다"
+            ],
+            "adjacent_overlap": 0.915,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 12,
+          "photo_id": "ph_05",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다”. 이 사진 관측: “사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "측정값 — 밝기 0.467 · 채도 0.251 · 한 색이 넓게 깔리지 않음 · 주요 색 #121313"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.058 로 남은 사진 중 가장 멀어 12번에 뒀다 (밝기 0.467 · 채도 0.251)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.494 · 채도 0.178"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "회색 소매가 달린 남색 계열 상의를 입고 있다",
+              "회색 트레이닝 팬츠를 입고 있다",
+              "오른쪽 어깨에 노란색 숄더백을 메고 있다",
+              "팔에 청록색 겉옷을 걸치고 있다",
+              "뒤에 회색 돌담과 검은 철제 울타리가 있다",
+              "화면 오른쪽 위에 흰 글씨의 검은 자막 상자가 있다",
+              "화면 왼쪽 중앙에 흰 바탕의 글자 상자가 있다",
+              "왼쪽 상자에 '비니+아우터+팬츠의 오묘한 컬러 플레이♥'라고 적혀 있다",
+              "햇빛이 인물의 왼쪽 위에서 비친다"
+            ],
+            "adjacent_overlap": 0.942,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 13,
+          "photo_id": "ph_06",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다”. 이 사진 관측: “사람 한 명이 앉아 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "측정값 — 밝기 0.51 · 채도 0.198 · 한 색이 넓게 깔리지 않음 · 주요 색 #bdc4bc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.06 로 남은 사진 중 가장 멀어 13번에 뒀다 (밝기 0.51 · 채도 0.198)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.467 · 채도 0.251"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "사람 한 명이 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 앉아 있다",
+              "갈색 가죽 재킷과 흰색 상의를 입고 있다",
+              "검은색 긴 바지를 입고 있다",
+              "오른손에 흰색 일회용 컵을 들고 빨대를 입에 물고 있다",
+              "왼손에 스마트폰을 들고 있다",
+              "긴 검은 머리를 하고 있다",
+              "오른쪽 아래에 갈색 토트백이 놓여 있다",
+              "뒤쪽에 큰 유리창이 있고 밖에 초록색 나뭇잎이 보인다",
+              "왼쪽 배경은 밝은 흰색 벽면이다",
+              "화면 중앙 아래에 흰 글씨가 적힌 어두운 사각형 자막 상자가 있다"
+            ],
+            "adjacent_overlap": 0.94,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 14,
+          "photo_id": "ph_10",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 앉아 있다”. 이 사진 관측: “한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "측정값 — 밝기 0.458 · 채도 0.265 · 한 색이 넓게 깔리지 않음 · 주요 색 #0f1215"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.083 로 남은 사진 중 가장 멀어 14번에 뒀다 (밝기 0.458 · 채도 0.265)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.51 · 채도 0.198"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "사람 한 명이 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다",
+              "회색과 흰색 줄무늬 상의를 입고 있다",
+              "남색 니트가 어깨에 둘러져 있다",
+              "베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다",
+              "하의는 연한 청바지다",
+              "배경 왼쪽에 회색 나무 판자 벽이 있고 오른쪽 아래는 아스팔트 바닥이다",
+              "왼쪽 아래에 같은 인물의 전신이 담긴 작은 사진이 겹쳐져 있다",
+              "작은 사진 오른쪽에 검은 바탕의 흰 글자 문구 박스가 있다",
+              "햇빛이 들어와 벽과 바닥에 그림자가 드리워져 있다"
+            ],
+            "adjacent_overlap": 0.917,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 15,
+          "photo_id": "ph_03",
+          "narrative_role": "closer",
+          "rationale": {
+            "value": "앞 사진 관측: “한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다”. 이 사진으로 묶음을 마무리해요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "측정값 — 밝기 0.317 · 채도 0.254 · 한 색이 넓게 깔리지 않음 · 주요 색 #121919"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2",
+                "note": "서사 규칙 R2 — 마지막 자리는 남은 사진 중 가장 어두운 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2.decision",
+                "note": "밝기 0.317 로 남은 사진 중 가장 어두워 마지막 15번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.458 · 채도 0.265"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "청록색 재킷을 입고 있다",
+              "베이지색 배낭을 메고 있다",
+              "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+              "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+              "뒤로 유리문과 유리벽이 있다",
+              "유리에 반사된 형상이 보인다",
+              "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+              "바닥에 어두운 색 매트가 깔려 있다"
+            ],
+            "adjacent_overlap": 0.893,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 15,
+        "output_count": 15,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-19T11:30:43.228Z",
+      "omit_summary": {
+        "recommended_count": 0,
+        "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+      }
+    },
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "c29_Dc-2OOrFBnb_01.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "c29_Dc-2OOrFBnb_02.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 177.5,
+            "sat_mean": 0.254,
+            "bright_mean": 0.317,
+            "palette_hex": [
+              "#121919",
+              "#384041",
+              "#223435"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "청록색 재킷",
+            "베이지색 배낭",
+            "유리문",
+            "회색 바지",
+            "운동화"
+          ],
+          "has_face": true,
+          "text_in_image": "꺅 월요일-!",
+          "describable_facts": [
+            "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "청록색 재킷을 입고 있다",
+            "베이지색 배낭을 메고 있다",
+            "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+            "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+            "뒤로 유리문과 유리벽이 있다",
+            "유리에 반사된 형상이 보인다",
+            "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+            "바닥에 어두운 색 매트가 깔려 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:26.143Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_04",
+          "file_ref": "c29_Dc-2OOrFBnb_03.jpg",
+          "input_index": 3,
+          "color": {
+            "hue_mean": 201.7,
+            "sat_mean": 0.198,
+            "bright_mean": 0.661,
+            "palette_hex": [
+              "#ccdfe3",
+              "#dfebea",
+              "#c1c7c3"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "노트북",
+            "젤리 포장지",
+            "책상"
+          ],
+          "has_face": true,
+          "text_in_image": "HARIBO",
+          "describable_facts": [
+            "네 장의 사진이 2x2 격자로 배치되어 있다",
+            "같은 사람이 네 칸 모두에 등장한다",
+            "파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다",
+            "회색 니트 상의를 입고 있다",
+            "앞에 열린 노트북이 놓여 있고 키보드가 보인다",
+            "오른쪽 아래 칸에서 손가락으로 작은 주황색 젤리를 들어 카메라 쪽으로 내밀고 있다",
+            "왼쪽 아래 칸에서 'HARIBO'라고 적힌 작은 봉지를 들고 있다",
+            "왼쪽 위 칸에서 한 손으로 턱을 괴고 있다",
+            "뒤쪽에 창문과 블라인드가 보인다",
+            "배경이 밝고 흰 톤이다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:33.271Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_05",
+          "file_ref": "c29_Dc-2OOrFBnb_04.jpg",
+          "input_index": 4,
+          "color": {
+            "hue_mean": 124.1,
+            "sat_mean": 0.251,
+            "bright_mean": 0.467,
+            "palette_hex": [
+              "#121313",
+              "#c3c2bc",
+              "#3f3f3a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "니트 상의",
+            "트레이닝 팬츠",
+            "숄더백",
+            "청록색 겉옷",
+            "돌담",
+            "철제 울타리"
+          ],
+          "has_face": true,
+          "text_in_image": "올가을 유행템 '래글런 티셔츠'",
+          "describable_facts": [
+            "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "회색 소매가 달린 남색 계열 상의를 입고 있다",
+            "회색 트레이닝 팬츠를 입고 있다",
+            "오른쪽 어깨에 노란색 숄더백을 메고 있다",
+            "팔에 청록색 겉옷을 걸치고 있다",
+            "뒤에 회색 돌담과 검은 철제 울타리가 있다",
+            "화면 오른쪽 위에 흰 글씨의 검은 자막 상자가 있다",
+            "화면 왼쪽 중앙에 흰 바탕의 글자 상자가 있다",
+            "왼쪽 상자에 '비니+아우터+팬츠의 오묘한 컬러 플레이♥'라고 적혀 있다",
+            "햇빛이 인물의 왼쪽 위에서 비친다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:44.352Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_06",
+          "file_ref": "c29_Dc-2OOrFBnb_05.jpg",
+          "input_index": 5,
+          "color": {
+            "hue_mean": 228.9,
+            "sat_mean": 0.198,
+            "bright_mean": 0.51,
+            "palette_hex": [
+              "#bdc4bc",
+              "#10131c",
+              "#423b3a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "가죽 재킷",
+            "일회용 컵",
+            "스마트폰",
+            "토트백",
+            "창문"
+          ],
+          "has_face": true,
+          "text_in_image": "차분한 가을 무드의 브라운&네이비 컬러 매치",
+          "describable_facts": [
+            "사람 한 명이 앉아 있다",
+            "갈색 가죽 재킷과 흰색 상의를 입고 있다",
+            "검은색 긴 바지를 입고 있다",
+            "오른손에 흰색 일회용 컵을 들고 빨대를 입에 물고 있다",
+            "왼손에 스마트폰을 들고 있다",
+            "긴 검은 머리를 하고 있다",
+            "오른쪽 아래에 갈색 토트백이 놓여 있다",
+            "뒤쪽에 큰 유리창이 있고 밖에 초록색 나뭇잎이 보인다",
+            "왼쪽 배경은 밝은 흰색 벽면이다",
+            "화면 중앙 아래에 흰 글씨가 적힌 어두운 사각형 자막 상자가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:52.011Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_07",
+          "file_ref": "c29_Dc-2OOrFBnb_06.jpg",
+          "input_index": 6,
+          "color": {
+            "hue_mean": 9.6,
+            "sat_mean": 0.178,
+            "bright_mean": 0.494,
+            "palette_hex": [
+              "#161417",
+              "#463d36",
+              "#dbe1e4"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "가죽 재킷",
+            "흰 티셔츠",
+            "진한 색 바지",
+            "일회용 음료컵",
+            "토트백",
+            "휴대폰",
+            "건물 창문"
+          ],
+          "has_face": false,
+          "text_in_image": "카펜터 디테일이 포인트✨",
+          "describable_facts": [
+            "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다",
+            "얼굴은 화면 위쪽에서 잘려 턱 아래만 보인다",
+            "갈색 가죽 재킷 안에 흰색 상의를 입고 있다",
+            "진한 색 긴 바지를 입고 있다",
+            "오른손에 휴대폰을 들고 있다",
+            "오른팔에 갈색 토트백을 걸고 있다",
+            "왼쪽 아래에 바지 뒷면을 확대한 작은 사진이 겹쳐져 있다",
+            "작은 사진 위에 흰 배경의 검은 글씨로 '카펜터 디테일이 포인트✨' 라고 적혀 있다",
+            "배경에 흰색 벽과 유리창이 있다",
+            "바닥은 회색 보도블록이다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:01.710Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_08",
+          "file_ref": "c29_Dc-2OOrFBnb_07.jpg",
+          "input_index": 7,
+          "color": {
+            "hue_mean": 33.3,
+            "sat_mean": 0.256,
+            "bright_mean": 0.43,
+            "palette_hex": [
+              "#151413",
+              "#706e6c",
+              "#443c3c"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "휴대폰",
+            "가죽 재킷",
+            "갈색 토트백",
+            "일회용 컵",
+            "벽돌 벤치",
+            "관목"
+          ],
+          "has_face": true,
+          "text_in_image": null,
+          "describable_facts": [
+            "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다",
+            "흰색 반팔 상의와 어두운 색 바지를 입고 있다",
+            "긴 검은 머리를 내리고 있다",
+            "갈색 가죽 재킷이 무릎 위에 걸쳐져 있다",
+            "갈색 토트백이 벤치 위에 놓여 있다",
+            "뚜껑에 빨대가 꽂힌 흰색 일회용 컵이 벤치 위에 놓여 있다",
+            "벤치 뒤로 초록색 관목이 줄지어 있다",
+            "배경에 유리문과 회색 건물 외벽이 보인다",
+            "햇빛이 강해 바닥과 벤치에 뚜렷한 그림자가 생겨 있다",
+            "오른쪽 위에 같은 인물을 담은 작은 사진이 겹쳐져 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:09.587Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_09",
+          "file_ref": "c29_Dc-2OOrFBnb_08.jpg",
+          "input_index": 8,
+          "color": {
+            "hue_mean": 57.5,
+            "sat_mean": 0.31,
+            "bright_mean": 0.368,
+            "palette_hex": [
+              "#161711",
+              "#3e3d3f"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "네이비 하프집 스웨트셔츠",
+            "베이지 토트백",
+            "청바지",
+            "벽돌 화단",
+            "식물",
+            "스마트폰"
+          ],
+          "has_face": true,
+          "text_in_image": "HAAG",
+          "describable_facts": [
+            "사람 한 명이 벽돌 화단 가장자리에 앉아 있다",
+            "앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다",
+            "상의 안에 가로 줄무늬 상의를 겹쳐 입었다",
+            "청바지를 입고 있다",
+            "양손으로 흰색 스마트폰을 들고 화면을 내려다보고 있다",
+            "머리카락은 길고 검은색이며 뒤로 넘겨져 있다",
+            "옆에 베이지색 천 가방이 놓여 있다",
+            "가방에 'haa'로 시작하는 글자가 보인다",
+            "배경에 초록 잎과 붉은 꽃이 있는 식물들이 있다",
+            "화면 오른쪽 아래에 작은 사각형 사진이 겹쳐져 있다",
+            "겹쳐진 작은 사진 속 인물도 'HAAG' 글자가 있는 네이비 상의를 입고 있다",
+            "화면 오른쪽 위에 검은 배경의 한국어 텍스트 상자가 있다",
+            "화면 아래쪽에 검은 배경의 한국어 텍스트 상자가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:19.043Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_10",
+          "file_ref": "c29_Dc-2OOrFBnb_09.jpg",
+          "input_index": 9,
+          "color": {
+            "hue_mean": 60.8,
+            "sat_mean": 0.265,
+            "bright_mean": 0.458,
+            "palette_hex": [
+              "#0f1215",
+              "#989590",
+              "#c3c0ba"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "줄무늬 상의",
+            "남색 니트",
+            "베이지색 가방",
+            "청바지",
+            "아스팔트 바닥"
+          ],
+          "has_face": false,
+          "text_in_image": "일교차가 심한 가을에 스웨트셔츠를 아우터처럼!",
+          "describable_facts": [
+            "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다",
+            "회색과 흰색 줄무늬 상의를 입고 있다",
+            "남색 니트가 어깨에 둘러져 있다",
+            "베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다",
+            "하의는 연한 청바지다",
+            "배경 왼쪽에 회색 나무 판자 벽이 있고 오른쪽 아래는 아스팔트 바닥이다",
+            "왼쪽 아래에 같은 인물의 전신이 담긴 작은 사진이 겹쳐져 있다",
+            "작은 사진 오른쪽에 검은 바탕의 흰 글자 문구 박스가 있다",
+            "햇빛이 들어와 벽과 바닥에 그림자가 드리워져 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:27.799Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_11",
+          "file_ref": "c29_Dc-2OOrFBnb_10.jpg",
+          "input_index": 10,
+          "color": {
+            "hue_mean": 251.5,
+            "sat_mean": 0.317,
+            "bright_mean": 0.455,
+            "palette_hex": [
+              "#111017",
+              "#3a3846",
+              "#464765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "네이비 하프집 스웨트셔츠",
+            "줄무늬 상의",
+            "건물",
+            "도로",
+            "오토바이",
+            "가로수"
+          ],
+          "has_face": true,
+          "text_in_image": "HAAG",
+          "describable_facts": [
+            "사람 한 명이 화면 중앙에서 정면을 보고 있다",
+            "한쪽 팔을 화면 왼쪽 바깥으로 뻗고 있다",
+            "긴 검은 머리를 내린 상태다",
+            "네이비색 하프집업 스웨트셔츠를 입고 있고 지퍼가 가슴 아래까지 내려와 있다",
+            "스웨트셔츠 안에 가로 줄무늬 상의를 입고 있다",
+            "스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다",
+            "배경에 여러 층 건물과 도로가 보인다",
+            "배경 오른쪽에 오토바이 여러 대가 세워져 있다",
+            "화면 왼쪽에 초록 잎의 나무가 있다",
+            "화면 왼쪽 중간에 검은 배경의 한글 텍스트 상자가 겹쳐져 있다",
+            "하늘이 건물 사이로 밝게 보인다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:39.209Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_12",
+          "file_ref": "c29_Dc-GJ-iCezC_00.jpg",
+          "input_index": 11,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.161,
+            "bright_mean": 0.742,
+            "palette_hex": [
+              "#f2dfcc",
+              "#46413d",
+              "#e7e1e0"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "원숭이 모양 인형",
+            "곰 모양 인형",
+            "배낭 끈"
+          ],
+          "has_face": true,
+          "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+          "describable_facts": [
+            "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+            "사람은 단발머리에 앞머리가 있다",
+            "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+            "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+            "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+            "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+            "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+            "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+            "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+            "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:49.152Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_13",
+          "file_ref": "c29_Dc-GJ-iCezC_01.jpg",
+          "input_index": 12,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.161,
+            "bright_mean": 0.742,
+            "palette_hex": [
+              "#f2dfcc",
+              "#46413d",
+              "#e7e1e0"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "원숭이 모양 인형",
+            "곰 모양 인형",
+            "배낭 끈"
+          ],
+          "has_face": true,
+          "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+          "describable_facts": [
+            "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+            "사람은 단발머리에 앞머리가 있다",
+            "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+            "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+            "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+            "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+            "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+            "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+            "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+            "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:49.152Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_14",
+          "file_ref": "c29_Dc-GJ-iCezC_02.jpg",
+          "input_index": 13,
+          "color": {
+            "hue_mean": 21.5,
+            "sat_mean": 0.16,
+            "bright_mean": 0.834,
+            "palette_hex": [
+              "#f4e0c8",
+              "#b4a4a2",
+              "#c4b5b5"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "후드 집업",
+            "키링",
+            "체크 무늬 치마"
+          ],
+          "has_face": true,
+          "text_in_image": "BOGBOK",
+          "describable_facts": [
+            "사람 한 명이 정면을 향해 서 있다",
+            "회색 후드 집업을 입고 후드를 머리에 쓰고 있다",
+            "후드에 둥근 귀 모양 장식 두 개가 달려 있다",
+            "양손을 위로 들어 각각 키링을 들고 있다",
+            "왼쪽 손에 든 키링은 베이지색 케이스 형태다",
+            "상의 가슴 오른쪽에 초록 모자를 쓴 캐릭터 자수가 있다",
+            "상의 왼쪽 가슴 아래에 사각형 패치가 붙어 있다",
+            "하의는 보라색과 검은색 체크 무늬 치마다",
+            "배경은 연한 베이지색 단색이다",
+            "화면 상단에 물방울 무늬가 들어간 연두색 큰 글자가 있다",
+            "화면 중앙에 검은 띠 위 흰 글씨로 한국어 문구가 적혀 있다",
+            "오른쪽 하단에 작은 글씨가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:59.529Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_15",
+          "file_ref": "c29_Dc-GJ-iCezC_03.jpg",
+          "input_index": 14,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.126,
+            "bright_mean": 0.833,
+            "palette_hex": [
+              "#cbbfbb",
+              "#f1dec7",
+              "#f4ede3"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "회색 후드 상의",
+            "동물 모양 인형",
+            "격자무늬 배경",
+            "사진 콜라주"
+          ],
+          "has_face": true,
+          "text_in_image": "포토카드를 넣을 수 있는 PVC 주머니",
+          "describable_facts": [
+            "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다",
+            "한 사람이 귀가 달린 회색 후드 상의를 입고 있다",
+            "왼쪽 위 사진에서 인물이 상의 앞주머니를 양손으로 벌리고 있다",
+            "오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다",
+            "가운데 왼쪽 사진에 작은 동물 모양 인형이 단독으로 놓여 있다",
+            "오른쪽 아래 사진에서 인물이 뒤돌아 옆을 향해 서 있고 체크무늬 치마를 입고 있다",
+            "왼쪽 아래 사진에서 인물이 후드를 쓰고 한 손을 얼굴 옆에 들고 있다",
+            "노란 배경에 검은 글씨로 '포토카드를 넣을 수 있는 PVC 주머니'라고 적혀 있다",
+            "노란 배경에 검은 글씨로 '등 뒤에도 쿠션이 있숭'이라고 적혀 있다",
+            "배경은 회색과 연두색 격자무늬다",
+            "오른쪽 아래 모서리에 작은 글자가 표기되어 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:37:11.199Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-19T11:30:43.227Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "kind": "photo_plan",
+        "plan_id": "plan_photo_5c21dd5d",
+        "source": "photo_only",
+        "sample_size": 15,
+        "completeness": {
+          "visual": 0.8,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {
+          "palette": {
+            "value": {
+              "hue_mean": 89.67,
+              "sat_mean": 0.23,
+              "bright_mean": 0.54,
+              "palette_hex": [
+                "#16150f",
+                "#434040",
+                "#6b6765"
+              ]
+            },
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 색 평균과 최빈 색 3개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "composition_mix": {
+            "value": {
+              "full_frame": 1,
+              "negative_space": 0
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 구도 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "scale_mix": {
+            "value": {
+              "closeup": 0,
+              "midshot": 0.8666666666666667,
+              "fullshot": 0.1333333333333333
+            },
+            "confidence": 0.9,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장의 스케일 비율"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          },
+          "subjects": {
+            "value": [
+              "사람",
+              "휴대폰",
+              "비니",
+              "식물",
+              "가죽 재킷"
+            ],
+            "confidence": 0.8,
+            "evidence": [
+              {
+                "kind": "aggregate",
+                "ref": "photo_analysis:n=15",
+                "note": "사진 15장에서 관측된 피사체 최빈 5개"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "분석 출처 vision_model · 밝기 0.375 · 채도 0.288"
+              }
+            ]
+          }
+        },
+        "language": null,
+        "sequence": {
+          "carousel_count": 0
+        },
+        "target_profile": null,
+        "created_at": "2026-09-19T11:30:43.227Z",
+        "disclaimer": "업로드한 사진 15장에서 관측된 값이며 사용자의 취향·과거 습관이 아니다"
+      },
+      "current_photos": []
+    }
+  },
+  "15/written": {
+    "feed": {
+      "schema_version": "1.0",
+      "feed_id": "fd_tgt_ft_86554f9e_a76d20ec",
+      "session_id": "eval-15",
+      "applied_profile": {
+        "target_profile_id": "tgt_ft_86554f9e",
+        "current_profile_id": null,
+        "corrected": false,
+        "disclosure": "target_only",
+        "deltas": [],
+        "visual": {
+          "tone_words": {
+            "value": [
+              "사진의 분위기를"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:raw",
+                "note": "사용자가 쓴 표현을 그대로 옮겼다"
+              }
+            ]
+          }
+        },
+        "language": {
+          "ending_style": {
+            "value": "다",
+            "confidence": 0.6,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:담백",
+                "note": "입력 문장에서 \"담백\" 를 찾았다"
+              },
+              {
+                "kind": "rule",
+                "ref": "docs/specs/10-target-profile/spec.md#3",
+                "note": "담백·문어체 → 다체"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        }
+      },
+      "concept": {
+        "value": "밝고 어두운 화면이 어우러지는 흐름으로 엮어요.",
+        "confidence": 1,
+        "evidence": [
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_01",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_02",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_03",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.317 · 채도 0.254"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_04",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.661 · 채도 0.198"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_05",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.467 · 채도 0.251"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_06",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.51 · 채도 0.198"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_07",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.494 · 채도 0.178"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_08",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.43 · 채도 0.256"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_09",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_10",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.458 · 채도 0.265"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_11",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.455 · 채도 0.317"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_12",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_13",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_14",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.834 · 채도 0.16"
+          },
+          {
+            "kind": "uploaded_photo",
+            "ref": "ph_15",
+            "note": "묶음·인접 비교 측정값 — 밝기 0.833 · 채도 0.126"
+          },
+          {
+            "kind": "rule",
+            "ref": "order.bundle_concept",
+            "note": "컨셉은 채도 범위, 밝기 범위 순으로 0.25 이상일 때만 설명한다. 임계값은 설계 상수이며 미달이면 컨셉을 내지 않는다."
+          }
+        ]
+      },
+      "slots": [
+        {
+          "position": 1,
+          "photo_id": "ph_14",
+          "narrative_role": "opener",
+          "rationale": {
+            "value": "다음 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진 관측: “사람 한 명이 정면을 향해 서 있다”. 이 사진으로 묶음을 열어요. 관측 내용은 순서를 정한 근거는 아니에요. 프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "측정값 — 밝기 0.834 · 채도 0.16 · 한 색이 넓게 깔리지 않음 · 주요 색 #f4e0c8"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1",
+                "note": "서사 규칙 R1 — 첫 자리는 지향 방향 점수가 가장 높은 사진. 지향에 구성비도 방향을 정할 문구도 없고 캡션 길이 근거가 없어 기본 규칙만 썼다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R1.decision",
+                "note": "밝기 0.834 · 한 색이 넓게 깔리지 않은 화면이라 첫 자리 기본 규칙에 입력 15장 중 가장 잘 맞아 1번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "사람 한 명이 정면을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              },
+              {
+                "kind": "rule",
+                "ref": "order.profile_palette_unavailable",
+                "note": "프로필의 색은 측정하지 않아 프로필 색에 맞춘 순서는 제안하지 않아요."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 정면을 향해 서 있다",
+              "회색 후드 집업을 입고 후드를 머리에 쓰고 있다",
+              "후드에 둥근 귀 모양 장식 두 개가 달려 있다",
+              "양손을 위로 들어 각각 키링을 들고 있다",
+              "왼쪽 손에 든 키링은 베이지색 케이스 형태다",
+              "상의 가슴 오른쪽에 초록 모자를 쓴 캐릭터 자수가 있다",
+              "상의 왼쪽 가슴 아래에 사각형 패치가 붙어 있다",
+              "하의는 보라색과 검은색 체크 무늬 치마다",
+              "배경은 연한 베이지색 단색이다",
+              "화면 상단에 물방울 무늬가 들어간 연두색 큰 글자가 있다",
+              "화면 중앙에 검은 띠 위 흰 글씨로 한국어 문구가 적혀 있다",
+              "오른쪽 하단에 작은 글씨가 있다"
+            ],
+            "adjacent_overlap": 0,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 2,
+          "photo_id": "ph_09",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 정면을 향해 서 있다”. 이 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "측정값 — 밝기 0.368 · 채도 0.31 · 한 색이 넓게 깔리지 않음 · 주요 색 #161711"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.284 로 남은 사진 중 가장 멀어 2번에 뒀다 (밝기 0.368 · 채도 0.31)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.834 · 채도 0.16"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_14",
+                "note": "사람 한 명이 정면을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 벽돌 화단 가장자리에 앉아 있다",
+              "앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다",
+              "상의 안에 가로 줄무늬 상의를 겹쳐 입었다",
+              "청바지를 입고 있다",
+              "양손으로 흰색 스마트폰을 들고 화면을 내려다보고 있다",
+              "머리카락은 길고 검은색이며 뒤로 넘겨져 있다",
+              "옆에 베이지색 천 가방이 놓여 있다",
+              "가방에 'haa'로 시작하는 글자가 보인다",
+              "배경에 초록 잎과 붉은 꽃이 있는 식물들이 있다",
+              "화면 오른쪽 아래에 작은 사각형 사진이 겹쳐져 있다",
+              "겹쳐진 작은 사진 속 인물도 'HAAG' 글자가 있는 네이비 상의를 입고 있다",
+              "화면 오른쪽 위에 검은 배경의 한국어 텍스트 상자가 있다",
+              "화면 아래쪽에 검은 배경의 한국어 텍스트 상자가 있다"
+            ],
+            "adjacent_overlap": 0.716,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 3,
+          "photo_id": "ph_15",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 벽돌 화단 가장자리에 앉아 있다”. 이 사진 관측: “여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "측정값 — 밝기 0.833 · 채도 0.126 · 한 색이 넓게 깔리지 않음 · 주요 색 #cbbfbb"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.292 로 남은 사진 중 가장 멀어 3번에 뒀다 (밝기 0.833 · 채도 0.126)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.368 · 채도 0.31"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_09",
+                "note": "사람 한 명이 벽돌 화단 가장자리에 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다",
+              "한 사람이 귀가 달린 회색 후드 상의를 입고 있다",
+              "왼쪽 위 사진에서 인물이 상의 앞주머니를 양손으로 벌리고 있다",
+              "오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다",
+              "가운데 왼쪽 사진에 작은 동물 모양 인형이 단독으로 놓여 있다",
+              "오른쪽 아래 사진에서 인물이 뒤돌아 옆을 향해 서 있고 체크무늬 치마를 입고 있다",
+              "왼쪽 아래 사진에서 인물이 후드를 쓰고 한 손을 얼굴 옆에 들고 있다",
+              "노란 배경에 검은 글씨로 '포토카드를 넣을 수 있는 PVC 주머니'라고 적혀 있다",
+              "노란 배경에 검은 글씨로 '등 뒤에도 쿠션이 있숭'이라고 적혀 있다",
+              "배경은 회색과 연두색 격자무늬다",
+              "오른쪽 아래 모서리에 작은 글자가 표기되어 있다"
+            ],
+            "adjacent_overlap": 0.708,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 4,
+          "photo_id": "ph_01",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다”. 이 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.282 로 남은 사진 중 가장 멀어 4번에 뒀다 (밝기 0.375 · 채도 0.288)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.833 · 채도 0.126"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_15",
+                "note": "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0.718,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 5,
+          "photo_id": "ph_12",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "측정값 — 밝기 0.742 · 채도 0.161 · 한 색이 넓게 깔리지 않음 · 주요 색 #f2dfcc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 5번에 뒀다 (밝기 0.742 · 채도 0.161)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_01",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+              "사람은 단발머리에 앞머리가 있다",
+              "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+              "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+              "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+              "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+              "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+              "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+              "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+              "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 6,
+          "photo_id": "ph_02",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "측정값 — 밝기 0.375 · 채도 0.288 · 한 색이 넓게 깔리지 않음 · 주요 색 #16150f"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 6번에 뒀다 (밝기 0.375 · 채도 0.288)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_12",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆을 향해 서 있다",
+              "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+              "비니는 파란색과 노란색 줄무늬다",
+              "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+              "한 손에 휴대폰을 들고 있다",
+              "연두색 천 가방을 어깨에 메고 있다",
+              "초록색 옷이 허리에 둘러져 있다",
+              "긴 검은 머리가 앞으로 내려와 있다",
+              "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+              "담장 위쪽에 초록 식물이 보인다",
+              "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+              "햇빛이 강해 그림자가 뚜렷하다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 7,
+          "photo_id": "ph_13",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 옆을 향해 서 있다”. 이 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "측정값 — 밝기 0.742 · 채도 0.161 · 한 색이 넓게 깔리지 않음 · 주요 색 #f2dfcc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.227 로 남은 사진 중 가장 멀어 7번에 뒀다 (밝기 0.742 · 채도 0.161)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.375 · 채도 0.288"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_02",
+                "note": "사람 한 명이 옆을 향해 서 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+              "사람은 단발머리에 앞머리가 있다",
+              "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+              "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+              "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+              "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+              "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+              "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+              "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+              "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+            ],
+            "adjacent_overlap": 0.773,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 8,
+          "photo_id": "ph_08",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다”. 이 사진 관측: “사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "측정값 — 밝기 0.43 · 채도 0.256 · 한 색이 넓게 깔리지 않음 · 주요 색 #151413"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.186 로 남은 사진 중 가장 멀어 8번에 뒀다 (밝기 0.43 · 채도 0.256)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.742 · 채도 0.161"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_13",
+                "note": "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다",
+              "흰색 반팔 상의와 어두운 색 바지를 입고 있다",
+              "긴 검은 머리를 내리고 있다",
+              "갈색 가죽 재킷이 무릎 위에 걸쳐져 있다",
+              "갈색 토트백이 벤치 위에 놓여 있다",
+              "뚜껑에 빨대가 꽂힌 흰색 일회용 컵이 벤치 위에 놓여 있다",
+              "벤치 뒤로 초록색 관목이 줄지어 있다",
+              "배경에 유리문과 회색 건물 외벽이 보인다",
+              "햇빛이 강해 바닥과 벤치에 뚜렷한 그림자가 생겨 있다",
+              "오른쪽 위에 같은 인물을 담은 작은 사진이 겹쳐져 있다"
+            ],
+            "adjacent_overlap": 0.814,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 9,
+          "photo_id": "ph_04",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다”. 이 사진 관측: “네 장의 사진이 2x2 격자로 배치되어 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "측정값 — 밝기 0.661 · 채도 0.198 · 한 색이 넓게 깔리지 않음 · 주요 색 #ccdfe3"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.17 로 남은 사진 중 가장 멀어 9번에 뒀다 (밝기 0.661 · 채도 0.198)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.43 · 채도 0.256"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_08",
+                "note": "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "네 장의 사진이 2x2 격자로 배치되어 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "네 장의 사진이 2x2 격자로 배치되어 있다",
+              "같은 사람이 네 칸 모두에 등장한다",
+              "파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다",
+              "회색 니트 상의를 입고 있다",
+              "앞에 열린 노트북이 놓여 있고 키보드가 보인다",
+              "오른쪽 아래 칸에서 손가락으로 작은 주황색 젤리를 들어 카메라 쪽으로 내밀고 있다",
+              "왼쪽 아래 칸에서 'HARIBO'라고 적힌 작은 봉지를 들고 있다",
+              "왼쪽 위 칸에서 한 손으로 턱을 괴고 있다",
+              "뒤쪽에 창문과 블라인드가 보인다",
+              "배경이 밝고 흰 톤이다"
+            ],
+            "adjacent_overlap": 0.83,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 10,
+          "photo_id": "ph_11",
+          "narrative_role": "turn",
+          "rationale": {
+            "value": "앞 사진 관측: “네 장의 사진이 2x2 격자로 배치되어 있다”. 이 사진 관측: “사람 한 명이 화면 중앙에서 정면을 보고 있다”. 이 사진을 전환 자리에 두어요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "측정값 — 밝기 0.455 · 채도 0.317 · 한 색이 넓게 깔리지 않음 · 주요 색 #111017"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3",
+                "note": "서사 규칙 R3 — 전환 자리는 남은 사진 중 채도가 가장 높은 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R3.decision",
+                "note": "채도 0.317 로 남은 사진 중 가장 진해 10번 전환 자리에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.661 · 채도 0.198"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_04",
+                "note": "네 장의 사진이 2x2 격자로 배치되어 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "사람 한 명이 화면 중앙에서 정면을 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 화면 중앙에서 정면을 보고 있다",
+              "한쪽 팔을 화면 왼쪽 바깥으로 뻗고 있다",
+              "긴 검은 머리를 내린 상태다",
+              "네이비색 하프집업 스웨트셔츠를 입고 있고 지퍼가 가슴 아래까지 내려와 있다",
+              "스웨트셔츠 안에 가로 줄무늬 상의를 입고 있다",
+              "스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다",
+              "배경에 여러 층 건물과 도로가 보인다",
+              "배경 오른쪽에 오토바이 여러 대가 세워져 있다",
+              "화면 왼쪽에 초록 잎의 나무가 있다",
+              "화면 왼쪽 중간에 검은 배경의 한글 텍스트 상자가 겹쳐져 있다",
+              "하늘이 건물 사이로 밝게 보인다"
+            ],
+            "adjacent_overlap": 0.85,
+            "is_visual_peak": true
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 11,
+          "photo_id": "ph_07",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 화면 중앙에서 정면을 보고 있다”. 이 사진 관측: “사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "측정값 — 밝기 0.494 · 채도 0.178 · 한 색이 넓게 깔리지 않음 · 주요 색 #161417"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.085 로 남은 사진 중 가장 멀어 11번에 뒀다 (밝기 0.494 · 채도 0.178)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.455 · 채도 0.317"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_11",
+                "note": "사람 한 명이 화면 중앙에서 정면을 보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다",
+              "얼굴은 화면 위쪽에서 잘려 턱 아래만 보인다",
+              "갈색 가죽 재킷 안에 흰색 상의를 입고 있다",
+              "진한 색 긴 바지를 입고 있다",
+              "오른손에 휴대폰을 들고 있다",
+              "오른팔에 갈색 토트백을 걸고 있다",
+              "왼쪽 아래에 바지 뒷면을 확대한 작은 사진이 겹쳐져 있다",
+              "작은 사진 위에 흰 배경의 검은 글씨로 '카펜터 디테일이 포인트✨' 라고 적혀 있다",
+              "배경에 흰색 벽과 유리창이 있다",
+              "바닥은 회색 보도블록이다"
+            ],
+            "adjacent_overlap": 0.915,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 12,
+          "photo_id": "ph_05",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다”. 이 사진 관측: “사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "측정값 — 밝기 0.467 · 채도 0.251 · 한 색이 넓게 깔리지 않음 · 주요 색 #121313"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.058 로 남은 사진 중 가장 멀어 12번에 뒀다 (밝기 0.467 · 채도 0.251)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.494 · 채도 0.178"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_07",
+                "note": "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "회색 소매가 달린 남색 계열 상의를 입고 있다",
+              "회색 트레이닝 팬츠를 입고 있다",
+              "오른쪽 어깨에 노란색 숄더백을 메고 있다",
+              "팔에 청록색 겉옷을 걸치고 있다",
+              "뒤에 회색 돌담과 검은 철제 울타리가 있다",
+              "화면 오른쪽 위에 흰 글씨의 검은 자막 상자가 있다",
+              "화면 왼쪽 중앙에 흰 바탕의 글자 상자가 있다",
+              "왼쪽 상자에 '비니+아우터+팬츠의 오묘한 컬러 플레이♥'라고 적혀 있다",
+              "햇빛이 인물의 왼쪽 위에서 비친다"
+            ],
+            "adjacent_overlap": 0.942,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 13,
+          "photo_id": "ph_06",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다”. 이 사진 관측: “사람 한 명이 앉아 있다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "측정값 — 밝기 0.51 · 채도 0.198 · 한 색이 넓게 깔리지 않음 · 주요 색 #bdc4bc"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.06 로 남은 사진 중 가장 멀어 13번에 뒀다 (밝기 0.51 · 채도 0.198)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.467 · 채도 0.251"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_05",
+                "note": "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "사람 한 명이 앉아 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 앉아 있다",
+              "갈색 가죽 재킷과 흰색 상의를 입고 있다",
+              "검은색 긴 바지를 입고 있다",
+              "오른손에 흰색 일회용 컵을 들고 빨대를 입에 물고 있다",
+              "왼손에 스마트폰을 들고 있다",
+              "긴 검은 머리를 하고 있다",
+              "오른쪽 아래에 갈색 토트백이 놓여 있다",
+              "뒤쪽에 큰 유리창이 있고 밖에 초록색 나뭇잎이 보인다",
+              "왼쪽 배경은 밝은 흰색 벽면이다",
+              "화면 중앙 아래에 흰 글씨가 적힌 어두운 사각형 자막 상자가 있다"
+            ],
+            "adjacent_overlap": 0.94,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 14,
+          "photo_id": "ph_10",
+          "narrative_role": "sustain",
+          "rationale": {
+            "value": "앞 사진 관측: “사람 한 명이 앉아 있다”. 이 사진 관측: “한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다”. 이 사진으로 흐름을 이어가요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "측정값 — 밝기 0.458 · 채도 0.265 · 한 색이 넓게 깔리지 않음 · 주요 색 #0f1215"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4",
+                "note": "서사 규칙 R4 — 나머지는 앞자리 사진과 측정 색이 가장 먼 사진부터"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R4.decision",
+                "note": "앞자리 사진과 측정 색 거리 0.083 로 남은 사진 중 가장 멀어 14번에 뒀다 (밝기 0.458 · 채도 0.265)"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.51 · 채도 0.198"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_06",
+                "note": "사람 한 명이 앉아 있다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다",
+              "회색과 흰색 줄무늬 상의를 입고 있다",
+              "남색 니트가 어깨에 둘러져 있다",
+              "베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다",
+              "하의는 연한 청바지다",
+              "배경 왼쪽에 회색 나무 판자 벽이 있고 오른쪽 아래는 아스팔트 바닥이다",
+              "왼쪽 아래에 같은 인물의 전신이 담긴 작은 사진이 겹쳐져 있다",
+              "작은 사진 오른쪽에 검은 바탕의 흰 글자 문구 박스가 있다",
+              "햇빛이 들어와 벽과 바닥에 그림자가 드리워져 있다"
+            ],
+            "adjacent_overlap": 0.917,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        },
+        {
+          "position": 15,
+          "photo_id": "ph_03",
+          "narrative_role": "closer",
+          "rationale": {
+            "value": "앞 사진 관측: “한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다”. 이 사진 관측: “사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다”. 이 사진으로 묶음을 마무리해요. 관측 내용은 순서를 정한 근거는 아니에요.",
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "측정값 — 밝기 0.317 · 채도 0.254 · 한 색이 넓게 깔리지 않음 · 주요 색 #121919"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2",
+                "note": "서사 규칙 R2 — 마지막 자리는 남은 사진 중 가장 어두운 사진"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.R2.decision",
+                "note": "밝기 0.317 로 남은 사진 중 가장 어두워 마지막 15번에 뒀다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "묶음·인접 비교 측정값 — 밝기 0.458 · 채도 0.265"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_10",
+                "note": "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다"
+              },
+              {
+                "kind": "uploaded_photo",
+                "ref": "ph_03",
+                "note": "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다"
+              },
+              {
+                "kind": "rule",
+                "ref": "order.observed_placement",
+                "note": "해당 사진과 인접 사진의 모델 관측을 원문으로 인용한다. 관측 문구는 자리 설명이며 순서 점수에 사용하지 않았다. 문구 차이로 피사체의 관계를 추론하지 않는다."
+              }
+            ]
+          },
+          "caption_inputs": {
+            "describable_facts": [
+              "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+              "파란색과 회색 줄무늬 비니를 쓰고 있다",
+              "청록색 재킷을 입고 있다",
+              "베이지색 배낭을 메고 있다",
+              "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+              "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+              "뒤로 유리문과 유리벽이 있다",
+              "유리에 반사된 형상이 보인다",
+              "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+              "바닥에 어두운 색 매트가 깔려 있다"
+            ],
+            "adjacent_overlap": 0.893,
+            "is_visual_peak": false
+          },
+          "omit_suggestion": {
+            "recommended": false,
+            "reason": null,
+            "evidence": []
+          }
+        }
+      ],
+      "invariants": {
+        "input_count": 15,
+        "output_count": 15,
+        "unique_photo_ids": true
+      },
+      "generated_at": "2026-09-19T11:30:43.231Z",
+      "omit_summary": {
+        "recommended_count": 0,
+        "message": "관측된 중복 근거가 없어 빼기를 권하는 사진은 없습니다."
+      }
+    },
+    "context": {
+      "photos": [
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_01",
+          "file_ref": "c29_Dc-2OOrFBnb_00.jpg",
+          "input_index": 0,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_02",
+          "file_ref": "c29_Dc-2OOrFBnb_01.jpg",
+          "input_index": 1,
+          "color": {
+            "hue_mean": 53,
+            "sat_mean": 0.288,
+            "bright_mean": 0.375,
+            "palette_hex": [
+              "#16150f",
+              "#434040",
+              "#6b6765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "가방",
+            "휴대폰",
+            "담장",
+            "식물"
+          ],
+          "has_face": true,
+          "text_in_image": "가을 출근룩 고민돼서 인플 착장 그대로 입었어요",
+          "describable_facts": [
+            "사람 한 명이 옆을 향해 서 있다",
+            "한쪽 팔을 머리 위로 올려 줄무늬 비니를 잡고 있다",
+            "비니는 파란색과 노란색 줄무늬다",
+            "회색 소매의 상의 위에 짙은 남색 조끼를 겹쳐 입고 있다",
+            "한 손에 휴대폰을 들고 있다",
+            "연두색 천 가방을 어깨에 메고 있다",
+            "초록색 옷이 허리에 둘러져 있다",
+            "긴 검은 머리가 앞으로 내려와 있다",
+            "뒤에 검은 철제 울타리와 벽돌 담장이 있다",
+            "담장 위쪽에 초록 식물이 보인다",
+            "화면 하단에 흰 글씨 자막과 분홍 하트 이모지가 있다",
+            "햇빛이 강해 그림자가 뚜렷하다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:16.830Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_03",
+          "file_ref": "c29_Dc-2OOrFBnb_02.jpg",
+          "input_index": 2,
+          "color": {
+            "hue_mean": 177.5,
+            "sat_mean": 0.254,
+            "bright_mean": 0.317,
+            "palette_hex": [
+              "#121919",
+              "#384041",
+              "#223435"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "청록색 재킷",
+            "베이지색 배낭",
+            "유리문",
+            "회색 바지",
+            "운동화"
+          ],
+          "has_face": true,
+          "text_in_image": "꺅 월요일-!",
+          "describable_facts": [
+            "사람 한 명이 옆으로 서서 고개를 카메라 쪽으로 돌리고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "청록색 재킷을 입고 있다",
+            "베이지색 배낭을 메고 있다",
+            "배낭에 붉은 원형 무늬의 흰 장식과 검은 원형 키링이 달려 있다",
+            "회색 바지와 흰색·회색 운동화를 착용하고 있다",
+            "뒤로 유리문과 유리벽이 있다",
+            "유리에 반사된 형상이 보인다",
+            "화면 오른쪽 위에 흰색 손글씨 텍스트와 도형 장식이 겹쳐져 있다",
+            "바닥에 어두운 색 매트가 깔려 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:26.143Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_04",
+          "file_ref": "c29_Dc-2OOrFBnb_03.jpg",
+          "input_index": 3,
+          "color": {
+            "hue_mean": 201.7,
+            "sat_mean": 0.198,
+            "bright_mean": 0.661,
+            "palette_hex": [
+              "#ccdfe3",
+              "#dfebea",
+              "#c1c7c3"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니 모자",
+            "노트북",
+            "젤리 포장지",
+            "책상"
+          ],
+          "has_face": true,
+          "text_in_image": "HARIBO",
+          "describable_facts": [
+            "네 장의 사진이 2x2 격자로 배치되어 있다",
+            "같은 사람이 네 칸 모두에 등장한다",
+            "파란색과 노란색 줄무늬가 있는 회색 비니를 쓰고 있다",
+            "회색 니트 상의를 입고 있다",
+            "앞에 열린 노트북이 놓여 있고 키보드가 보인다",
+            "오른쪽 아래 칸에서 손가락으로 작은 주황색 젤리를 들어 카메라 쪽으로 내밀고 있다",
+            "왼쪽 아래 칸에서 'HARIBO'라고 적힌 작은 봉지를 들고 있다",
+            "왼쪽 위 칸에서 한 손으로 턱을 괴고 있다",
+            "뒤쪽에 창문과 블라인드가 보인다",
+            "배경이 밝고 흰 톤이다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:33.271Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_05",
+          "file_ref": "c29_Dc-2OOrFBnb_04.jpg",
+          "input_index": 4,
+          "color": {
+            "hue_mean": 124.1,
+            "sat_mean": 0.251,
+            "bright_mean": 0.467,
+            "palette_hex": [
+              "#121313",
+              "#c3c2bc",
+              "#3f3f3a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "비니",
+            "니트 상의",
+            "트레이닝 팬츠",
+            "숄더백",
+            "청록색 겉옷",
+            "돌담",
+            "철제 울타리"
+          ],
+          "has_face": true,
+          "text_in_image": "올가을 유행템 '래글런 티셔츠'",
+          "describable_facts": [
+            "사람 한 명이 서 있고 고개를 숙여 아래를 보고 있다",
+            "파란색과 회색 줄무늬 비니를 쓰고 있다",
+            "회색 소매가 달린 남색 계열 상의를 입고 있다",
+            "회색 트레이닝 팬츠를 입고 있다",
+            "오른쪽 어깨에 노란색 숄더백을 메고 있다",
+            "팔에 청록색 겉옷을 걸치고 있다",
+            "뒤에 회색 돌담과 검은 철제 울타리가 있다",
+            "화면 오른쪽 위에 흰 글씨의 검은 자막 상자가 있다",
+            "화면 왼쪽 중앙에 흰 바탕의 글자 상자가 있다",
+            "왼쪽 상자에 '비니+아우터+팬츠의 오묘한 컬러 플레이♥'라고 적혀 있다",
+            "햇빛이 인물의 왼쪽 위에서 비친다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:44.352Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_06",
+          "file_ref": "c29_Dc-2OOrFBnb_05.jpg",
+          "input_index": 5,
+          "color": {
+            "hue_mean": 228.9,
+            "sat_mean": 0.198,
+            "bright_mean": 0.51,
+            "palette_hex": [
+              "#bdc4bc",
+              "#10131c",
+              "#423b3a"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "가죽 재킷",
+            "일회용 컵",
+            "스마트폰",
+            "토트백",
+            "창문"
+          ],
+          "has_face": true,
+          "text_in_image": "차분한 가을 무드의 브라운&네이비 컬러 매치",
+          "describable_facts": [
+            "사람 한 명이 앉아 있다",
+            "갈색 가죽 재킷과 흰색 상의를 입고 있다",
+            "검은색 긴 바지를 입고 있다",
+            "오른손에 흰색 일회용 컵을 들고 빨대를 입에 물고 있다",
+            "왼손에 스마트폰을 들고 있다",
+            "긴 검은 머리를 하고 있다",
+            "오른쪽 아래에 갈색 토트백이 놓여 있다",
+            "뒤쪽에 큰 유리창이 있고 밖에 초록색 나뭇잎이 보인다",
+            "왼쪽 배경은 밝은 흰색 벽면이다",
+            "화면 중앙 아래에 흰 글씨가 적힌 어두운 사각형 자막 상자가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:35:52.011Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_07",
+          "file_ref": "c29_Dc-2OOrFBnb_06.jpg",
+          "input_index": 6,
+          "color": {
+            "hue_mean": 9.6,
+            "sat_mean": 0.178,
+            "bright_mean": 0.494,
+            "palette_hex": [
+              "#161417",
+              "#463d36",
+              "#dbe1e4"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "fullshot",
+          "subjects": [
+            "사람",
+            "가죽 재킷",
+            "흰 티셔츠",
+            "진한 색 바지",
+            "일회용 음료컵",
+            "토트백",
+            "휴대폰",
+            "건물 창문"
+          ],
+          "has_face": false,
+          "text_in_image": "카펜터 디테일이 포인트✨",
+          "describable_facts": [
+            "사람 한 명이 서서 빨대가 꽂힌 일회용 컵을 들고 있다",
+            "얼굴은 화면 위쪽에서 잘려 턱 아래만 보인다",
+            "갈색 가죽 재킷 안에 흰색 상의를 입고 있다",
+            "진한 색 긴 바지를 입고 있다",
+            "오른손에 휴대폰을 들고 있다",
+            "오른팔에 갈색 토트백을 걸고 있다",
+            "왼쪽 아래에 바지 뒷면을 확대한 작은 사진이 겹쳐져 있다",
+            "작은 사진 위에 흰 배경의 검은 글씨로 '카펜터 디테일이 포인트✨' 라고 적혀 있다",
+            "배경에 흰색 벽과 유리창이 있다",
+            "바닥은 회색 보도블록이다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:01.710Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_08",
+          "file_ref": "c29_Dc-2OOrFBnb_07.jpg",
+          "input_index": 7,
+          "color": {
+            "hue_mean": 33.3,
+            "sat_mean": 0.256,
+            "bright_mean": 0.43,
+            "palette_hex": [
+              "#151413",
+              "#706e6c",
+              "#443c3c"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "휴대폰",
+            "가죽 재킷",
+            "갈색 토트백",
+            "일회용 컵",
+            "벽돌 벤치",
+            "관목"
+          ],
+          "has_face": true,
+          "text_in_image": null,
+          "describable_facts": [
+            "사람 한 명이 벽돌 벤치에 걸터앉아 양손으로 휴대폰을 들고 아래를 내려다보고 있다",
+            "흰색 반팔 상의와 어두운 색 바지를 입고 있다",
+            "긴 검은 머리를 내리고 있다",
+            "갈색 가죽 재킷이 무릎 위에 걸쳐져 있다",
+            "갈색 토트백이 벤치 위에 놓여 있다",
+            "뚜껑에 빨대가 꽂힌 흰색 일회용 컵이 벤치 위에 놓여 있다",
+            "벤치 뒤로 초록색 관목이 줄지어 있다",
+            "배경에 유리문과 회색 건물 외벽이 보인다",
+            "햇빛이 강해 바닥과 벤치에 뚜렷한 그림자가 생겨 있다",
+            "오른쪽 위에 같은 인물을 담은 작은 사진이 겹쳐져 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:09.587Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_09",
+          "file_ref": "c29_Dc-2OOrFBnb_08.jpg",
+          "input_index": 8,
+          "color": {
+            "hue_mean": 57.5,
+            "sat_mean": 0.31,
+            "bright_mean": 0.368,
+            "palette_hex": [
+              "#161711",
+              "#3e3d3f"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "네이비 하프집 스웨트셔츠",
+            "베이지 토트백",
+            "청바지",
+            "벽돌 화단",
+            "식물",
+            "스마트폰"
+          ],
+          "has_face": true,
+          "text_in_image": "HAAG",
+          "describable_facts": [
+            "사람 한 명이 벽돌 화단 가장자리에 앉아 있다",
+            "앞면에 'HAAG' 글자가 있는 네이비색 하프집 상의를 입고 있다",
+            "상의 안에 가로 줄무늬 상의를 겹쳐 입었다",
+            "청바지를 입고 있다",
+            "양손으로 흰색 스마트폰을 들고 화면을 내려다보고 있다",
+            "머리카락은 길고 검은색이며 뒤로 넘겨져 있다",
+            "옆에 베이지색 천 가방이 놓여 있다",
+            "가방에 'haa'로 시작하는 글자가 보인다",
+            "배경에 초록 잎과 붉은 꽃이 있는 식물들이 있다",
+            "화면 오른쪽 아래에 작은 사각형 사진이 겹쳐져 있다",
+            "겹쳐진 작은 사진 속 인물도 'HAAG' 글자가 있는 네이비 상의를 입고 있다",
+            "화면 오른쪽 위에 검은 배경의 한국어 텍스트 상자가 있다",
+            "화면 아래쪽에 검은 배경의 한국어 텍스트 상자가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:19.043Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_10",
+          "file_ref": "c29_Dc-2OOrFBnb_09.jpg",
+          "input_index": 9,
+          "color": {
+            "hue_mean": 60.8,
+            "sat_mean": 0.265,
+            "bright_mean": 0.458,
+            "palette_hex": [
+              "#0f1215",
+              "#989590",
+              "#c3c0ba"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "줄무늬 상의",
+            "남색 니트",
+            "베이지색 가방",
+            "청바지",
+            "아스팔트 바닥"
+          ],
+          "has_face": false,
+          "text_in_image": "일교차가 심한 가을에 스웨트셔츠를 아우터처럼!",
+          "describable_facts": [
+            "한 사람이 화면 대부분을 차지하고 서 있으며 얼굴은 프레임 위쪽에서 잘려 보이지 않는다",
+            "회색과 흰색 줄무늬 상의를 입고 있다",
+            "남색 니트가 어깨에 둘러져 있다",
+            "베이지색 가방을 한쪽 어깨에 메고 있고 오른손으로 어깨끈 부근을 잡고 있다",
+            "하의는 연한 청바지다",
+            "배경 왼쪽에 회색 나무 판자 벽이 있고 오른쪽 아래는 아스팔트 바닥이다",
+            "왼쪽 아래에 같은 인물의 전신이 담긴 작은 사진이 겹쳐져 있다",
+            "작은 사진 오른쪽에 검은 바탕의 흰 글자 문구 박스가 있다",
+            "햇빛이 들어와 벽과 바닥에 그림자가 드리워져 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:27.799Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_11",
+          "file_ref": "c29_Dc-2OOrFBnb_10.jpg",
+          "input_index": 10,
+          "color": {
+            "hue_mean": 251.5,
+            "sat_mean": 0.317,
+            "bright_mean": 0.455,
+            "palette_hex": [
+              "#111017",
+              "#3a3846",
+              "#464765"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "네이비 하프집 스웨트셔츠",
+            "줄무늬 상의",
+            "건물",
+            "도로",
+            "오토바이",
+            "가로수"
+          ],
+          "has_face": true,
+          "text_in_image": "HAAG",
+          "describable_facts": [
+            "사람 한 명이 화면 중앙에서 정면을 보고 있다",
+            "한쪽 팔을 화면 왼쪽 바깥으로 뻗고 있다",
+            "긴 검은 머리를 내린 상태다",
+            "네이비색 하프집업 스웨트셔츠를 입고 있고 지퍼가 가슴 아래까지 내려와 있다",
+            "스웨트셔츠 안에 가로 줄무늬 상의를 입고 있다",
+            "스웨트셔츠 앞면에 흰색 대문자 'HAAG'가 크게 새겨져 있다",
+            "배경에 여러 층 건물과 도로가 보인다",
+            "배경 오른쪽에 오토바이 여러 대가 세워져 있다",
+            "화면 왼쪽에 초록 잎의 나무가 있다",
+            "화면 왼쪽 중간에 검은 배경의 한글 텍스트 상자가 겹쳐져 있다",
+            "하늘이 건물 사이로 밝게 보인다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:39.209Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_12",
+          "file_ref": "c29_Dc-GJ-iCezC_00.jpg",
+          "input_index": 11,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.161,
+            "bright_mean": 0.742,
+            "palette_hex": [
+              "#f2dfcc",
+              "#46413d",
+              "#e7e1e0"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "원숭이 모양 인형",
+            "곰 모양 인형",
+            "배낭 끈"
+          ],
+          "has_face": true,
+          "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+          "describable_facts": [
+            "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+            "사람은 단발머리에 앞머리가 있다",
+            "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+            "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+            "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+            "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+            "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+            "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+            "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+            "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:49.152Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_13",
+          "file_ref": "c29_Dc-GJ-iCezC_01.jpg",
+          "input_index": 12,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.161,
+            "bright_mean": 0.742,
+            "palette_hex": [
+              "#f2dfcc",
+              "#46413d",
+              "#e7e1e0"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "원숭이 모양 인형",
+            "곰 모양 인형",
+            "배낭 끈"
+          ],
+          "has_face": true,
+          "text_in_image": "쿠숭이 컬렉션이 왜 이렇게 귀엽숭",
+          "describable_facts": [
+            "사람 한 명이 상체를 옆으로 돌리고 얼굴은 정면 쪽을 향하고 있다",
+            "사람은 단발머리에 앞머리가 있다",
+            "사람은 작은 무늬가 반복된 흰색 상의를 입고 있다",
+            "팔로 크림색 원숭이 얼굴 모양의 봉제 인형을 안고 있다",
+            "등 쪽에 베이지색 곰 모양 봉제 인형 형태의 가방을 메고 있다",
+            "배경은 연한 베이지색이며 상단에 연노랑과 연하늘색의 곡선 무늬가 흩어져 있다",
+            "화면 하단에 흰색 한글 문구 '쿠숭이 컬렉션이 / 왜 이렇게 귀엽숭'이 두 줄로 있다",
+            "문구 끝에 원숭이 이모지와 노란 하트 이모지가 있다",
+            "화면 하단으로 갈수록 어두운 그라데이션이 깔려 있다",
+            "오른쪽 아래 구석에 작은 '© HINAKUU' 표기가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:49.152Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_14",
+          "file_ref": "c29_Dc-GJ-iCezC_02.jpg",
+          "input_index": 13,
+          "color": {
+            "hue_mean": 21.5,
+            "sat_mean": 0.16,
+            "bright_mean": 0.834,
+            "palette_hex": [
+              "#f4e0c8",
+              "#b4a4a2",
+              "#c4b5b5"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "후드 집업",
+            "키링",
+            "체크 무늬 치마"
+          ],
+          "has_face": true,
+          "text_in_image": "BOGBOK",
+          "describable_facts": [
+            "사람 한 명이 정면을 향해 서 있다",
+            "회색 후드 집업을 입고 후드를 머리에 쓰고 있다",
+            "후드에 둥근 귀 모양 장식 두 개가 달려 있다",
+            "양손을 위로 들어 각각 키링을 들고 있다",
+            "왼쪽 손에 든 키링은 베이지색 케이스 형태다",
+            "상의 가슴 오른쪽에 초록 모자를 쓴 캐릭터 자수가 있다",
+            "상의 왼쪽 가슴 아래에 사각형 패치가 붙어 있다",
+            "하의는 보라색과 검은색 체크 무늬 치마다",
+            "배경은 연한 베이지색 단색이다",
+            "화면 상단에 물방울 무늬가 들어간 연두색 큰 글자가 있다",
+            "화면 중앙에 검은 띠 위 흰 글씨로 한국어 문구가 적혀 있다",
+            "오른쪽 하단에 작은 글씨가 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:36:59.529Z"
+        },
+        {
+          "schema_version": "1.0",
+          "photo_id": "ph_15",
+          "file_ref": "c29_Dc-GJ-iCezC_03.jpg",
+          "input_index": 14,
+          "color": {
+            "hue_mean": 24.2,
+            "sat_mean": 0.126,
+            "bright_mean": 0.833,
+            "palette_hex": [
+              "#cbbfbb",
+              "#f1dec7",
+              "#f4ede3"
+            ]
+          },
+          "composition": "full_frame",
+          "scale": "midshot",
+          "subjects": [
+            "사람",
+            "회색 후드 상의",
+            "동물 모양 인형",
+            "격자무늬 배경",
+            "사진 콜라주"
+          ],
+          "has_face": true,
+          "text_in_image": "포토카드를 넣을 수 있는 PVC 주머니",
+          "describable_facts": [
+            "여러 장의 사진이 격자무늬 배경 위에 콜라주로 배치되어 있다",
+            "한 사람이 귀가 달린 회색 후드 상의를 입고 있다",
+            "왼쪽 위 사진에서 인물이 상의 앞주머니를 양손으로 벌리고 있다",
+            "오른쪽 위 사진에서 인물이 크림색과 갈색의 동물 얼굴 인형을 안고 있다",
+            "가운데 왼쪽 사진에 작은 동물 모양 인형이 단독으로 놓여 있다",
+            "오른쪽 아래 사진에서 인물이 뒤돌아 옆을 향해 서 있고 체크무늬 치마를 입고 있다",
+            "왼쪽 아래 사진에서 인물이 후드를 쓰고 한 손을 얼굴 옆에 들고 있다",
+            "노란 배경에 검은 글씨로 '포토카드를 넣을 수 있는 PVC 주머니'라고 적혀 있다",
+            "노란 배경에 검은 글씨로 '등 뒤에도 쿠션이 있숭'이라고 적혀 있다",
+            "배경은 회색과 연두색 격자무늬다",
+            "오른쪽 아래 모서리에 작은 글자가 표기되어 있다"
+          ],
+          "quality_flags": [],
+          "analysis_source": "vision_model",
+          "model": "claude-opus-5",
+          "analyzed_at": "2026-09-19T04:37:11.199Z"
+        }
+      ],
+      "current": {
+        "schema_version": "1.0",
+        "profile_id": null,
+        "axis": "current",
+        "present": false,
+        "source": "none",
+        "account_scope": "n/a",
+        "sample_size": 0,
+        "completeness": {
+          "visual": 0,
+          "language": 0,
+          "sequence": 0
+        },
+        "visual": {},
+        "language": null,
+        "sequence": {},
+        "raw_freetext": null,
+        "created_at": "2026-09-19T11:30:43.231Z"
+      },
+      "target": {
+        "schema_version": "1.0",
+        "profile_id": "tgt_ft_86554f9e",
+        "axis": "target",
+        "present": true,
+        "source": "freetext",
+        "account_scope": "n/a",
+        "sample_size": 1,
+        "completeness": {
+          "visual": 0.2,
+          "language": 0.2,
+          "sequence": 0
+        },
+        "visual": {
+          "tone_words": {
+            "value": [
+              "사진의 분위기를"
+            ],
+            "confidence": 1,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:raw",
+                "note": "사용자가 쓴 표현을 그대로 옮겼다"
+              }
+            ]
+          }
+        },
+        "language": {
+          "ending_style": {
+            "value": "다",
+            "confidence": 0.6,
+            "evidence": [
+              {
+                "kind": "user_text",
+                "ref": "tgt_ft_86554f9e:담백",
+                "note": "입력 문장에서 \"담백\" 를 찾았다"
+              },
+              {
+                "kind": "rule",
+                "ref": "docs/specs/10-target-profile/spec.md#3",
+                "note": "담백·문어체 → 다체"
+              }
+            ]
+          },
+          "banned_words": [
+            "이처럼",
+            "또한",
+            "이를 통해",
+            "이러한",
+            "마침내"
+          ]
+        },
+        "sequence": {
+          "carousel_count": 0
+        },
+        "raw_freetext": "사진의 분위기를 짧고 담백하게 기록해 줘",
+        "created_at": "2026-09-19T11:30:43.231Z"
+      },
+      "current_photos": []
+    }
+  }
+}
