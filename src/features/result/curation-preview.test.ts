@@ -77,6 +77,7 @@ test('two authenticated equal digests among three photos produce one visible rec
       expect(markup).toContain('1 / 3 · 커버');
       expect(markup).toContain('사진 3장 포함');
       expect(markup).toContain('사진 제외');
+      expect(markup).not.toContain('원본 비율로 사진 보기');
       store.getState().setIncluded(candidate.photo_id, false);
       const belowMinimum = renderToStaticMarkup(
         createElement(CurationPreview, { store, mock: true }),

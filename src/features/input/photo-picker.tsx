@@ -54,13 +54,7 @@ export function PhotoPicker({
         <ul className="mb-4 grid grid-cols-3 gap-1">
           {photos.map((photo, index) => (
             <li key={photo.photo_id} className="min-w-0">
-              <a
-                href={photo.url}
-                target="_blank"
-                rel="noreferrer"
-                className="block bg-card"
-                aria-label={`${index + 1}번 ${photo.file.name} 원본 보기`}
-              >
+              <div className="bg-card">
                 <Image
                   alt={`${index + 1}번 선택 사진: ${photo.file.name}`}
                   className="aspect-square w-full object-cover"
@@ -69,7 +63,7 @@ export function PhotoPicker({
                   src={photo.url}
                   unoptimized
                 />
-              </a>
+              </div>
               <div className="flex items-center justify-between gap-1 border-b border-line py-1">
                 <span className="font-mono text-sm">
                   {String(index + 1).padStart(2, '0')}

@@ -207,13 +207,7 @@ export function ResultScreen({
                 }}
               >
                 {image ? (
-                  <a
-                    href={image.src}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${index + 1}번 ${image.alt} 원본 보기`}
-                    className="relative block aspect-[4/5] overflow-hidden border border-line bg-line-soft shadow-sm"
-                  >
+                  <div className="relative aspect-[4/5] overflow-hidden border border-line bg-line-soft shadow-sm">
                     <Image
                       src={image.src}
                       alt={image.alt}
@@ -223,7 +217,7 @@ export function ResultScreen({
                       sizes="(min-width:640px) 640px, 90vw"
                       className="object-contain"
                     />
-                  </a>
+                  </div>
                 ) : (
                   <div className="relative flex aspect-[4/5] items-center justify-center border border-line bg-line-soft p-3 text-sm shadow-sm">
                     {analysis?.file_ref ?? '사진 원본이 없어요.'}

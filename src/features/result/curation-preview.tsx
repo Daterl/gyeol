@@ -226,16 +226,6 @@ export function CurationPreview({
             ? `${index + 1}번 사진 · 제외됨`
             : `${carouselIndex + 1}번 사진${carouselIndex === 0 ? ' · 커버' : ''}`}
         </h3>
-        {photo && (
-          <a
-            href={photo.url}
-            target="_blank"
-            rel="noreferrer"
-            className="flex min-h-11 items-center text-sm underline"
-          >
-            원본 비율로 사진 보기
-          </a>
-        )}
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
