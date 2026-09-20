@@ -32,6 +32,10 @@ test('sample detail starts as one carousel slide with a count and position dots'
   expect(markup).toContain('>1/3<');
   expect(markup.match(/hidden=""/g) ?? []).toHaveLength(2);
   expect(markup.match(/size-2 rounded-full/g) ?? []).toHaveLength(3);
+  const carousel = markup.indexOf('aria-label="사진 캐러셀"');
+  expect(carousel).toBeGreaterThan(-1);
+  expect(carousel).toBeLessThan(markup.indexOf('문장은 사전 작성한 관찰 예시'));
+  expect(markup).not.toContain('실제 계정이나 실시간 모델 분석 결과');
 });
 
 test('reordering the first slide keeps that photo active', () => {
