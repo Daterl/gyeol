@@ -1,0 +1,23 @@
+name: Vercel Preview (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-preview:
+    name: Deploy latest develop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Preview
+        env:
+          VERCEL_PREVIEW_DEPLOY_HOOK: ${{ secrets.VERCEL_PREVIEW_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$VERCEL_PREVIEW_DEPLOY_HOOK" ]; then
+            echo "VERCEL_PREVIEW_DEPLOY_HOOK is not configured." >&2
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error \
+            --request POST "$VERCEL_PREVIEW_DEPLOY_HOOK"

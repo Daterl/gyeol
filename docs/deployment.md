@@ -25,7 +25,9 @@ Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치
 
 ## 개발과 공개 배포 분리
 
-[ADR-0004](adr/0004-develop-and-production-branches.md)에 따라 작업 브랜치와 기능 PR의 기준은 **develop**이다. develop/작업 브랜치는 Preview에서 확인한다. 배포할 때만 **develop → main** 릴리스 PR을 사람이 merge commit으로 병합한다. main 반영이 Production 자동 배포를 일으키며, Preview 통과를 Production 인수로 기록하지 않는다. Vercel 보호 설정·환경변수·Production 추적 브랜치는 이번 전환에서 변경하지 않았다.
+[ADR-0004](adr/0004-develop-and-production-branches.md)에 따라 작업 브랜치와 기능 PR의 기준은 **develop**이다. develop/작업 브랜치 push는 자동 배포하지 않는다. 필요할 때 GitHub Actions의 `Vercel Preview (manual)`을 실행하면 Deploy Hook이 최신 develop을 Preview로 배포한다. 배포할 때만 **develop → main** 릴리스 PR을 사람이 merge commit으로 병합한다. main 반영이 Production 자동 배포를 일으키며, Preview 통과를 Production 인수로 기록하지 않는다.
+
+Vercel Git 설정은 `main: true`, `*: false`다. 겹치는 규칙 중 하나가 `true`면 배포하는 Vercel 규칙에 따라 main만 자동 Production 대상이고 나머지는 수동 Preview 대상이다. Deploy Hook URL은 GitHub Actions secret `VERCEL_PREVIEW_DEPLOY_HOOK`에만 저장하며 문서·로그에 기록하지 않는다.
 
 ## 인수 증거
 
