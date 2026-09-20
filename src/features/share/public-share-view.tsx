@@ -133,7 +133,7 @@ export function PublicShareView({ share }: { share: PublicShare }) {
                         }
                       : undefined
                   }
-                  className="object-contain"
+                  className="object-cover"
                 />
               </li>
             ))}
