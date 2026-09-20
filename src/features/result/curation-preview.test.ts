@@ -10,7 +10,7 @@ import {
   type CurationEditorStore,
   createCurationEditorStore,
 } from '../editor/curation-store';
-import { CurationPreview } from './curation-preview';
+import { CurationPreview, carouselSwipeOffset } from './curation-preview';
 
 vi.mock('zustand', () => ({
   useStore: (
@@ -18,6 +18,13 @@ vi.mock('zustand', () => ({
     selector: (state: ReturnType<CurationEditorStore['getState']>) => unknown,
   ) => selector(store.getState()),
 }));
+
+test('a carousel swipe needs 40px and moves in the finger direction', () => {
+  expect(carouselSwipeOffset(100, 61)).toBe(0);
+  expect(carouselSwipeOffset(100, 60)).toBe(1);
+  expect(carouselSwipeOffset(100, 140)).toBe(-1);
+  expect(carouselSwipeOffset(null, 140)).toBe(0);
+});
 
 test('two authenticated equal digests among three photos produce one visible recommendation but never automatic exclusion; distinct digests produce zero', async () => {
   for (const duplicates of [true, false]) {
@@ -66,13 +73,16 @@ test('two authenticated equal digests among three photos produce one visible rec
         createElement(CurationPreview, { store, mock: true }),
       );
       expect(markup).toContain(candidate.exclusion_candidate.reason);
+      expect(markup).toContain('사진 캐러셀');
+      expect(markup).toContain('1 / 3 · 커버');
       expect(markup).toContain('사진 3장 포함');
       expect(markup).toContain('사진 제외');
       store.getState().setIncluded(candidate.photo_id, false);
       const belowMinimum = renderToStaticMarkup(
         createElement(CurationPreview, { store, mock: true }),
       );
-      expect(belowMinimum).toContain('사진 복원');
+      expect(belowMinimum).toContain('제외한 사진');
+      expect(belowMinimum).toContain('1 / 2 · 커버');
       expect(belowMinimum).toContain(
         '큐레이션을 확정하려면 사진을 3장 이상 포함해 주세요.',
       );
