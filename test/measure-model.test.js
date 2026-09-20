@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { measureModel } from '../scripts/measure-model.js';
 
+process.env.GYEOL_MODEL_PROVIDER_ENABLED = '1';
+
 const image = new URL('../fixtures/jpeg/solid_white_baseline.jpg', import.meta.url);
 const success = async ({ photoId, fileRef }) => ({
   analysis: { photo_id: photoId, file_ref: fileRef, analysis_source: 'vision_model', describable_facts: ['흰 면'] },

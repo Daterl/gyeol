@@ -13,6 +13,7 @@ import analyze from '../api/analyze.js';
 
 // No test may reach the network. A developer's exported key must not change results.
 delete process.env.ANTHROPIC_API_KEY;
+process.env.GYEOL_MODEL_PROVIDER_ENABLED = '1';
 
 const read = path => readFile(new URL('../' + path, import.meta.url));
 const svg = await read('eval/golden/case_01/photos/ph_01.svg');

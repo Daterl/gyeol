@@ -385,6 +385,7 @@ Evidence = { "kind": "ig_post"|"uploaded_photo"|"user_text"|"aggregate"|"rule",
 **환경변수** — `.env.example` 만 커밋한다. 실제 키는 절대 커밋하지 않는다.
 ```
 ANTHROPIC_API_KEY=      # 원재가 발급. 디에고는 별도 키를 따로 받는다 (누가 얼마 썼는지 보여야 한다)
+GYEOL_MODEL_PROVIDER_ENABLED=0 # 유료 호출은 정확히 1일 때만 활성화한다
 APIFY_TOKEN=            # 선택. 없으면 fixtures/ 스냅샷으로 동작한다
 ```
 Vercel 프로젝트 설정에도 **같은 이름으로** 넣는다. **로컬에서 되는데 배포에서 안 되는 이유 1순위가 이것이다**(11단계).

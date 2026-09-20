@@ -19,7 +19,7 @@ await new Promise(resolve => listener.close(resolve));
 const server = spawn(process.execPath, [
   '--import', fileURLToPath(new URL('../test/support/generation-provider.mjs', import.meta.url)),
   'node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(port),
-], { cwd: root, env: { ...process.env, ANTHROPIC_API_KEY: 'production-regression-fake-key', ANTHROPIC_WORKSPACE_ID: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
+], { cwd: root, env: { ...process.env, ANTHROPIC_API_KEY: 'production-regression-fake-key', ANTHROPIC_WORKSPACE_ID: '', GYEOL_MODEL_PROVIDER_ENABLED: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
 let serverLog = '';
 server.stdout.on('data', chunk => { serverLog += chunk; });
 server.stderr.on('data', chunk => { serverLog += chunk; });

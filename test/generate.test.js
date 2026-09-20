@@ -7,6 +7,7 @@ import {buildFeed} from '../lib/pipeline.js';
 import {extractFromReference} from '../lib/target_profile.js';
 import {buildCurrentProfile} from '../lib/current_profile.js';
 import {composeFeed} from '../lib/compose.js';
+process.env.GYEOL_MODEL_PROVIDER_ENABLED='1';
 const fixture=JSON.parse(await readFile(new URL('../fixtures/interaction.sample.json',import.meta.url),'utf8'));
 const referenceFixture=JSON.parse(await readFile(new URL('../fixtures/ref_snapshot.sample.json',import.meta.url),'utf8'));
 const input=(mode='all',source=fixture)=>({schema_version:'1.0',mode,feed:structuredClone(source.feed),context:structuredClone(source.context),...(mode==='slot'?{photo_id:'ph_01'}:{})});
