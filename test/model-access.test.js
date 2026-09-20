@@ -11,7 +11,6 @@ const epoch=1789732800000;
 const browser={origin,secret,now:()=>epoch};
 const limits={model:600};
 const sessionLimits={model:40};
-const modelEnv={GYEOL_MODEL_GLOBAL_REQUESTS_PER_HOUR:'100',GYEOL_MODEL_SESSION_REQUESTS_PER_HOUR:'40'};
 function memoryStorage() {
   const rows=new Map();let version=0;
   return {async read(key){return structuredClone(rows.get(key)??null);},async write(key,value,{ifMatch}={}) {
@@ -49,11 +48,13 @@ test('server automation needs its separate credential and limiter failures stay 
   assert.equal(calls,1);
 });
 
-test('eight parallel workers sharing one signed session survive durable CAS contention',async()=>{
-  const {cookie,csrf}=await capability();const storage=memoryStorage();
-  const sessionId=authenticateModelRequest(request({cookie,'x-gyeol-csrf':csrf}),{browser});
-  const results=await Promise.allSettled(Array.from({length:8},()=>takeModelBudget(sessionId,{storage,now:()=>epoch,env:modelEnv})));
-  assert.equal(results.filter(result=>result.status==='fulfilled').length,8);
+test('parallel model sessions fill but never exceed the global durable budget',async()=>{
+  const storage=memoryStorage();
+  const env={GYEOL_MODEL_GLOBAL_REQUESTS_PER_HOUR:'24',GYEOL_MODEL_SESSION_REQUESTS_PER_HOUR:'1'};
+  const results=await Promise.allSettled(Array.from({length:25},(_,index)=>
+    takeModelBudget(index.toString(16).padStart(64,'0'),{storage,now:()=>epoch,env})));
+  assert.equal(results.filter(result=>result.status==='fulfilled').length,24);
+  assert.deepEqual(results.filter(result=>result.status==='rejected').map(result=>result.reason.status),[429]);
 });
 
 test('model sessions sharing the legacy two-digit bucket keep independent exact budgets',async()=>{
