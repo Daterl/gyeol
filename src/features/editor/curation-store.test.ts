@@ -34,6 +34,25 @@ test('recommendations never exclude automatically; order, restore, empty caption
   });
   expect(store.getState().excluded).toEqual([]);
 });
+
+test('a confirmation is one position-sorted carousel and a restored first photo becomes its cover', async () => {
+  const store = await ready();
+  const [first, second, third] = store.getState().order;
+  store.getState().movePhoto(third, 0);
+  store.getState().setIncluded(third, false);
+  store.getState().setIncluded(third, true);
+
+  const confirmed = store.getState().confirmCuration();
+  expect(confirmed.output.slots.map(({ photo_id }) => photo_id)).toEqual([
+    third,
+    first,
+    second,
+  ]);
+  expect(confirmed.output.slots.map(({ position }) => position)).toEqual([
+    1, 2, 3,
+  ]);
+});
+
 test('confirmation is detached, deeply frozen and omits profile by default; reconfirmation replaces only the snapshot', async () => {
   const store = await ready();
   const [first, second] = store.getState().order;
