@@ -166,6 +166,10 @@ test('publish uses immutable versions, CAS and profile-off PII omission', async 
   });
   const result = await service.readShare(first.pending.shareId);
   assert.equal(result.etag, published.etag);
+  const manifest = JSON.parse(
+    (await store.get(`shares/${first.pending.shareId}/manifest.json`)).body,
+  );
+  assert.equal(manifest.revision, published.etag);
   assert.equal(result.share.version, 1);
   assert.deepEqual(result.share.curation.includeProfile, false);
   assert.equal(JSON.stringify(await store.get(`shares/${first.pending.shareId}/manifest.json`)).includes('username'), false);
@@ -202,6 +206,11 @@ test('publish uses immutable versions, CAS and profile-off PII omission', async 
     curation: curation(second.expected.map(photo => photo.id)),
     ifMatch: published.etag,
   });
+  const replacedManifest = await store.get(
+    `shares/${first.pending.shareId}/manifest.json`,
+  );
+  assert.equal(JSON.parse(replacedManifest.body).revision, replaced.etag);
+  assert.notEqual(replacedManifest.etag, replaced.etag);
   assert.equal((await service.readShare(first.pending.shareId)).share.version, 2);
   assert.deepEqual(
     (await service.readImage(first.pending.shareId, 'photo_1')).body,
@@ -459,7 +468,7 @@ test('key rotation immediately rejects the old key and revoke writes a PII-free 
   await throwsCode(service.readShare(staged.pending.shareId), 'GONE');
   await throwsCode(service.readImage(staged.pending.shareId, 'photo_1'), 'GONE');
   const tombstone = JSON.parse((await store.get(`shares/${staged.pending.shareId}/manifest.json`)).body);
-  assert.deepEqual(Object.keys(tombstone).sort(), ['currentVersion', 'objects', 'revokedAt', 'shareId', 'status']);
+  assert.deepEqual(Object.keys(tombstone).sort(), ['currentVersion', 'objects', 'revision', 'revokedAt', 'shareId', 'status']);
   assert.equal((await store.list(`shares/${staged.pending.shareId}/versions/`)).length, 0);
   assert.ok(revoked.etag);
 });
