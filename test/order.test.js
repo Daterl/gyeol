@@ -275,6 +275,24 @@ test('#127 the ordering gate answers from measured spread alone, and the band ed
   assert.throws(() => hasOrderingBasis([]), /at least one PhotoAnalysis/);
 });
 
+// #109 회귀: 중복을 뒤로 미루는 R4 규칙은 **앞자리**만 봐야 한다. placed 에 미리 들어간 turn·closer 까지
+// 세면 그 사진과 측정 색이 같은 화면이 끝까지 밀려 자기 쌍 바로 옆에 붙는다 — 피하려던 반복이 더 가까워진다.
+test('#109 a duplicate of the darkest photo is not pushed next to its own twin', () => {
+  const tone = (id, index, bright, sat, hue) => ({
+    ...structuredClone(photos20[0]), photo_id: id, input_index: index, file_ref: `${id}.jpg`,
+    color: { bright_mean: bright, sat_mean: sat, hue_mean: hue, palette_hex: ['#888888'] }
+  });
+  // ph_dark 와 ph_twin 은 측정 색이 완전히 같고, 그 밝기가 묶음에서 가장 낮아 R2 가 ph_dark 를 마지막에 둔다.
+  const photos = [
+    tone('ph_dark', 0, 0.10, 0.30, 120), tone('ph_open', 1, 0.90, 0.30, 120), tone('ph_sat', 2, 0.55, 0.80, 200),
+    tone('ph_mid', 3, 0.70, 0.20, 40), tone('ph_twin', 4, 0.10, 0.30, 120), tone('ph_last', 5, 0.45, 0.40, 300)
+  ];
+  const order = orderOf(run(photos, planFromPhotos(photos)));
+  assert.equal(order.at(-1), 'ph_dark', 'R2 가 가장 어두운 사진을 마지막에 두어야 이 검사가 의미를 갖는다');
+  const gap = Math.abs(order.indexOf('ph_dark') - order.indexOf('ph_twin'));
+  assert.ok(gap > 1, `측정 색이 같은 두 사진이 ${gap} 칸 간격으로 붙었다: ${order.join(' ')}`);
+});
+
 test('rejects inputs the contract cannot accept instead of guessing', () => {
   assert.throws(() => run(photos20.slice(0, 2)), /3\.\.20/);
   assert.throws(() => run([...photos20, { ...photos20[0], input_index: 20 }]), /3\.\.20/);
