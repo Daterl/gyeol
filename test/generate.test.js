@@ -576,10 +576,14 @@ test('a bare word is not usable writing material, and a rejected seed comes back
     if(sent.length===1) return wire(bare);
     return wire({slot:seedOutput().output.slots[0]});
   };
-  const ok=await generateOutput(input(),{apiKey:'fake-key',fetchImpl:repairing});
+  // 수리 재귀는 provider 를 새로 부른다. 예산을 함께 넘기지 않으면 한 단위가 여러 호출을 덮어
+  // 세션·전역 상한이 실제로 막는 호출량이 는다 (#185 리뷰 HIGH).
+  let admitted=0;
+  const ok=await generateOutput(input(),{apiKey:'fake-key',fetchImpl:repairing,beforeProvider:async()=>{admitted+=1;}});
   assert.equal(ok.output.slots[0].text,'쓸 거리: 단색 카드\n이 중 기억에 남은 건?');
   assert.deepEqual(ok.output.slots.map(slot=>slot.photo_id),['ph_01','ph_02','ph_03'],'성한 자리는 그대로 둔다');
   assert.equal(sent.length,2,'걸린 자리 하나만 다시 묻는다');
+  assert.equal(admitted,sent.length,'모델을 부른 횟수만큼 예산을 센다');
   assert.equal(sent[1].ask.mode,'slot');
   assert.deepEqual(sent[1].ask.slots.map(slot=>slot.photo_id),['ph_01'],'다시 묻는 범위는 걸린 자리뿐이다');
 
