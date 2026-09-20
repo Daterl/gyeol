@@ -231,7 +231,10 @@ export function createShareClient({
       const share = parsePublicShare(await response.json(), shareId);
       if (!share) throw new ShareApiError('INVALID_RESPONSE', response.status);
       return {
-        etag: response.headers.get('etag') ?? undefined,
+        etag:
+          response.headers.get('x-share-etag') ??
+          response.headers.get('etag') ??
+          undefined,
         share: share as PublicShare,
       };
     },
