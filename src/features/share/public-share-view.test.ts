@@ -37,7 +37,10 @@ test('generic shares render one ordered, overflow-contained carousel without soc
   expect(markup).toContain('overflow-x-hidden');
   expect(markup).toContain('aria-roledescription="carousel"');
   expect(markup).toContain('overflow-hidden border-y');
+  expect(markup).toContain('aspect-[4/5]');
   expect(markup).toContain('translateX(-0%)');
+  expect(markup).toContain('object-cover');
+  expect(markup).toContain('object-position:25% 75%');
   expect(markup.match(/min-w-full/g)).toHaveLength(3);
   expect(markup).toContain('1 / 3 · 표지');
   expect(markup).toContain('이전 사진');
