@@ -1,0 +1,146 @@
+{
+  "verified_at": "2026-09-19T14:04:12.804Z",
+  "shipped_threshold": 0.4,
+  "margin": 0.725,
+  "corpus": {
+    "files": 614,
+    "unique_with_signature": 291,
+    "posts": 31
+  },
+  "split": {
+    "method": "sha256(post_id)[0] % 2",
+    "fold_sizes": [
+      15,
+      16
+    ]
+  },
+  "folds": [
+    {
+      "holdout_fold": 0,
+      "dev": {
+        "posts": 16,
+        "photos": 149,
+        "cross_post_pairs": 10268,
+        "min_cross_post": 0.5514,
+        "derived_threshold": 0.39
+      },
+      "holdout": {
+        "posts": 15,
+        "photos": 142,
+        "same_post_pairs": 711,
+        "cross_post_pairs": 9300,
+        "min_cross_post": 0.6275,
+        "cross_post_below_derived": 0,
+        "cross_post_below_shipped": 0,
+        "same_post_below_derived": 0,
+        "same_post_below_shipped": 0,
+        "positives_below_shipped": [],
+        "false_positives_below_shipped": [],
+        "nearest_cross_post": [
+          {
+            "distance": 0.6275,
+            "a": "c29_Dc-2OOrFBnb_05.jpg",
+            "b": "c29_DdTPMgpiZWR_04.jpg"
+          },
+          {
+            "distance": 0.6455,
+            "a": "c29_DdLxIomoEKc_10.jpg",
+            "b": "c29_DdVKdyACaC1_10.jpg"
+          },
+          {
+            "distance": 0.6551,
+            "a": "c29_DdLxIomoEKc_00.jpg",
+            "b": "c29_DdVKeJUCZsJ_14.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "holdout_fold": 1,
+      "dev": {
+        "posts": 15,
+        "photos": 142,
+        "cross_post_pairs": 9300,
+        "min_cross_post": 0.6275,
+        "derived_threshold": 0.45
+      },
+      "holdout": {
+        "posts": 16,
+        "photos": 149,
+        "same_post_pairs": 758,
+        "cross_post_pairs": 10268,
+        "min_cross_post": 0.5514,
+        "cross_post_below_derived": 0,
+        "cross_post_below_shipped": 0,
+        "same_post_below_derived": 13,
+        "same_post_below_shipped": 8,
+        "positives_below_shipped": [
+          {
+            "distance": 0.1344,
+            "a": "hony_DdJWXXTHCMv_02.jpg",
+            "b": "hony_DdJWXXTHCMv_03.jpg"
+          },
+          {
+            "distance": 0.1998,
+            "a": "hony_DdJWXXTHCMv_08.jpg",
+            "b": "hony_DdJWXXTHCMv_16.jpg"
+          },
+          {
+            "distance": 0.2578,
+            "a": "hony_DdJWXXTHCMv_07.jpg",
+            "b": "hony_DdJWXXTHCMv_08.jpg"
+          },
+          {
+            "distance": 0.2924,
+            "a": "hony_DdJWXXTHCMv_02.jpg",
+            "b": "hony_DdJWXXTHCMv_18.jpg"
+          },
+          {
+            "distance": 0.3052,
+            "a": "hony_DdJWXXTHCMv_03.jpg",
+            "b": "hony_DdJWXXTHCMv_18.jpg"
+          },
+          {
+            "distance": 0.3064,
+            "a": "hony_DdJWXXTHCMv_07.jpg",
+            "b": "hony_DdJWXXTHCMv_16.jpg"
+          },
+          {
+            "distance": 0.3883,
+            "a": "hony_DdJWXXTHCMv_11.jpg",
+            "b": "hony_DdJWXXTHCMv_14.jpg"
+          },
+          {
+            "distance": 0.3916,
+            "a": "hony_DdJWXXTHCMv_16.jpg",
+            "b": "hony_DdJWXXTHCMv_18.jpg"
+          }
+        ],
+        "false_positives_below_shipped": [],
+        "nearest_cross_post": [
+          {
+            "distance": 0.5514,
+            "a": "c29_Dc7cY9WiUbs_03.jpg",
+            "b": "hony_DdJWXXTHCMv_09.jpg"
+          },
+          {
+            "distance": 0.5605,
+            "a": "c29_Dc-auqBCVXI_10.jpg",
+            "b": "c29_Dc7cY9WiUbs_00.jpg"
+          },
+          {
+            "distance": 0.6501,
+            "a": "c29_Dc7cY9WiUbs_00.jpg",
+            "b": "c29_DdDCDKgFCLE_11.jpg"
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "holdout 게시물은 같은 두 계정에서 왔다. 게시물 간 일반화이지 사용자 간 일반화가 아니다",
+    "\"같은 게시물\"은 사람이 붙인 유사 라벨이 아니다. 양성/오탐은 파일명을 열어 사람이 판정해야 한다",
+    "descriptor(8x8 밝기 · z-score) 자체는 전체 표본을 보고 골랐다. 이 검증은 임계값의 일반화만 본다",
+    "외부 모델 호출 0회. HTTP/배포 검증이 아니다"
+  ]
+}

@@ -6,6 +6,10 @@ import type {
 } from '@/types/contracts';
 import fixture from '../../fixtures/interaction.sample.json';
 import { REQUEST_TIMEOUT_MS } from '../../lib/interaction.js';
+import {
+  LATEST_OMIT_RULES,
+  OMIT_RULES_HEADER,
+} from '../../lib/omit-suggestion.js';
 import { analyzePhoto, generateOutput, orderPhotos } from './api';
 
 const response = (): FeedResponse =>
@@ -284,4 +288,16 @@ test('timeout and caller cancellation abort the request without automatic retry'
   await cancelled;
   expect(fetcher).toHaveBeenCalledTimes(2);
   expect(vi.getTimerCount()).toBe(0);
+});
+
+// 협상의 클라이언트 쪽 절반. 이 번들이 규칙 번호를 알리지 않으면 서버는 배포 이전 번들로 보고
+// 유사 권고를 빼고 답한다 — 기능이 조용히 사라지고 아무 검사도 실패하지 않는다.
+test('every request declares the omit-rule set this bundle can recompute', async () => {
+  const fetcher = vi.fn().mockResolvedValueOnce(Response.json(response()));
+  vi.stubGlobal('fetch', fetcher);
+  await orderPhotos(order());
+  const sent = new Headers(
+    (fetcher.mock.calls[0][1] as RequestInit).headers as HeadersInit,
+  );
+  expect(sent.get(OMIT_RULES_HEADER)).toBe(String(LATEST_OMIT_RULES));
 });

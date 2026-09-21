@@ -25,7 +25,7 @@ F2→F3의 유일한 객체이며 이 문서가 실행 계약이다. 입력 3~20
 | slots[].narrative_role | opener / sustain / turn / closer |
 | slots[].rationale | Claim<nonempty string>, F3가 다듬어도 evidence 보존 |
 | slots[].caption_inputs | describable_facts:string[], adjacent_overlap:number 0..1, is_visual_peak:boolean |
-| slots[].omit_suggestion | `{recommended:boolean,reason:string|null,evidence:Evidence[]}`. 자동 제외하지 않으며 서명된 동일 바이트 중복만 true |
+| slots[].omit_suggestion | `{recommended:boolean,reason:string|null,evidence:Evidence[]}`. 자동 제외하지 않으며 서명된 동일 바이트 중복 또는 서명된 `structure_signature` 거리가 기준 미만인 쌍만 true |
 | omit_summary | `{recommended_count:integer,message:string}`. 권고 0개도 명시 |
 | invariants | input_count/output_count:integer N, unique_photo_ids:true |
 | generated_at | ISO timestamp |
@@ -35,6 +35,10 @@ current_profile_id=null이면 corrected=false, disclosure=target_only, deltas=[]
 `validateFeed(feed, inputPhotoIds, currentProfile, targetProfile, photoAnalyses)`와 E8 평가에는 실제 CurrentProfile 입력이 필수다. 같은 방식으로 실제 TargetProfile(E9)과 실제 PhotoAnalysis 목록(E11)도 필수 인수다. `validateExport(output, feed, inputPhotoIds)`는 export의 evidence 해소(E10)를 위해 실제 입력 ID를 받는다. 인수/필드 생략과 undefined는 거부한다. 현재 프로필이 없으면 CurrentProfile 계약의 `present:false` 객체를 명시적으로 전달한다. 출력의 current_profile_id로 입력을 추측하거나 생략된 입력을 자동 보정하지 않는다.
 slots 배열의 저장 순서는 의미가 없으며 표시 순서는 position이 결정한다. 소비자는 position 오름차순으로 표시한다.
 사진 목록에서 caption_inputs.describable_facts를 복사한다. 복사원은 **그 슬롯의 photo_id와 같은** PhotoAnalysis이며, 다른 사진의 사실을 섞으면 E11로 거부한다. 비움 후보의 overlap 등은 F3의 재료이며 F2가 캡션 상태를 결정하지 않는다.
+`omit_suggestion`의 유사 판정(#97)은 두 사진 모두 서명된 `structure_signature`를 가질 때만 켜지고,
+먼저 들어온 사진을 남기고 나중 사진을 후보로 둔다. 판정을 가른 구조 거리와 기준값은 사용자가 보는
+문장과 `evidence.note`에 숫자로 함께 나타난다 — 근거에 없는 상수가 판정을 바꾸지 않는다.
+
 `omit_suggestion`은 입력 N장과 출력 N슬롯을 바꾸지 않는다. 공개 `/api/feed`는 `analysis_receipt` 두 개가 같은 세션·묶음·바이트 해시를 인증할 때만 `duplicate_of`를 관측값으로 사용하며, 호출자가 직접 보낸 중복 플래그는 제거한다.
 
 delta는 `{field:"language.caption_len.p50",target:number≥0,current:number≥0,resolved:number≥0,rule:"log_midpoint",note_key:"caption_len_gap",evidence:Evidence[1..]}`.

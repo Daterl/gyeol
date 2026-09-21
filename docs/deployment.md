@@ -27,7 +27,7 @@ Production Branch Tracking은 **main**이다. 2026-09-17 GitHub 기본 브랜치
 
 브라우저는 `/api/profile/session`의 signed HttpOnly cookie와 CSRF를 `/api/analyze`, `/api/generate`에도 재사용한다. 브라우저 밖 운영 검증이 필요할 때만 다른 모든 비밀값과 다른 `GYEOL_MODEL_API_ACCESS_KEY`를 `Authorization: Bearer`로 보낸다. 이 경로는 Origin·cookie·CSRF가 함께 오면 거부하며 같은 durable 예산을 소비한다. `GYEOL_MODEL_API_ACCESS_KEY`는 선택값이고 일반 브라우저 동작에는 설정하지 않아도 된다.
 
-`GYEOL_ANALYSIS_RECEIPT_SECRET`은 32자 이상의 서버 전용 값으로 Preview와 Production에 각각 설정한다. 분석 응답과 피드 요청 사이의 동일 바이트 중복 근거만 인증하며 `ANTHROPIC_API_KEY`, `APIFY_TOKEN`, `APIFY_INGEST_RECEIPT_SECRET`과 값을 공유하지 않는다. 미설정이면 분석과 순서 기능은 동작하지만 중복 사진 빼기 권고는 정직하게 0개로 남는다.
+`GYEOL_ANALYSIS_RECEIPT_SECRET`은 32자 이상의 서버 전용 값으로 Preview와 Production에 각각 설정한다. 분석 응답과 피드 요청 사이의 동일 바이트 중복 근거만 인증하며 `ANTHROPIC_API_KEY`, `APIFY_TOKEN`, `APIFY_INGEST_RECEIPT_SECRET`과 값을 공유하지 않는다. 미설정이면 분석과 순서 기능은 동작하지만 중복 사진과 유사 사진(#97) 빼기 권고는 정직하게 0개로 남는다. 두 권고 모두 서버가 잰 값임을 영수증으로 확인할 때만 나온다.
 
 ## 개발과 공개 배포 분리
 

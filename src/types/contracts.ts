@@ -81,6 +81,8 @@ export type PhotoAnalysis = {
   quality_flags: string[];
   scale: 'closeup' | 'midshot' | 'fullshot';
   schema_version: '1.0';
+  /** 64-cell contrast-normalised luma signature; absent when no structure was observed (#97). */
+  structure_signature?: number[];
   subjects: string[];
   text_in_image: string | null;
 };
